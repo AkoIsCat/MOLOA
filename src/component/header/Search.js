@@ -3,6 +3,7 @@ import { NavLink } from 'react-router-dom';
 import { BsSearch } from 'react-icons/bs';
 
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const BackgroundSearch = styled.div`
   width: 1302px;
@@ -63,8 +64,15 @@ const Search = () => {
   const [searchInput, setSearchInput] = useState('');
   const trimInput = searchInput.trim();
 
+  const navigate = useNavigate();
+
   const onSubmitHandler = async (e) => {
     e.preventDefault();
+
+    if (trimInput.length !== 0) {
+      navigate(`/character/${trimInput}`);
+      setSearchInput('');
+    }
 
     const response = await fetch(
       `https://lostark-bf0ba-default-rtdb.firebaseio.com/CharacterSearch/${trimInput}.json`
@@ -85,7 +93,6 @@ const Search = () => {
         }
       );
     } else {
-      let number = 0;
       // 새로운 닉네임인 경우 데이터를 추가
       const newData = {
         name: trimInput,
@@ -98,7 +105,6 @@ const Search = () => {
           body: JSON.stringify(newData),
         }
       );
-      console.log(number);
     }
   };
 
@@ -112,6 +118,7 @@ const Search = () => {
           type="text"
           placeholder="캐릭터 검색"
           onChange={(e) => setSearchInput(e.target.value)}
+          value={trimInput || ''}
         />
         <SearchIcon type="submit">
           <BsSearch />

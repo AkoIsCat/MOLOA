@@ -3,12 +3,26 @@ import React, { memo } from 'react';
 
 export const Content = memo(styled.div`
   width: ${(props) =>
-    props.main ? '164.6px' : props.equipment ? '100%' : '206px'};
+    props.main
+      ? '164.6px'
+      : props.equipment
+      ? '100%'
+      : props.collect
+      ? '263px'
+      : props.collectImg
+      ? '283px'
+      : '206px'};
   height: ${(props) => (props.carousel ? '140px' : 'auto')};
-  background: #292e33;
+  background: ${(props) => (props.collectImg ? '#1e2225' : '#292e33')};
   color: ${(props) => (props.main ? '#fff' : '#c1c1c1')};
   padding: ${(props) =>
-    props.main ? '0' : props.carousel ? '10px 0' : '10px 10px'};
+    props.main
+      ? '0'
+      : props.carousel
+      ? '10px 0'
+      : props.collectImg
+      ? '0'
+      : '10px 10px'};
   font-family: ${(props) =>
     props.main ? 'Nanum Gothic' : 'Nanum Gothic Bold'};
   border-radius: ${(props) =>
@@ -18,6 +32,8 @@ export const Content = memo(styled.div`
       ? '0 0 0 10px'
       : props.rightBtm
       ? '0 0 10px 0'
+      : props.collect
+      ? '10px'
       : ''};
   font-size: ${(props) => (props.font ? props.font : '')}px;
   line-height: ${(props) => (props.height ? props.height : '')}px;
@@ -25,6 +41,7 @@ export const Content = memo(styled.div`
   float: ${(props) => (props.main ? 'left' : '')};
   border-right: ${(props) => (props.rightBrd ? '1px solid #4b535a' : '')};
   over-flow: ${(props) => (props.carousel ? 'hidden' : '')};
+  margin-bottom: ${(props) => (props.collect ? '25px' : '')};
 `);
 
 const CommonContentBoxMain = (props) => {
@@ -42,6 +59,8 @@ const CommonContentBoxMain = (props) => {
       rightBrd={props.rightBrd}
       equipment={props.equipment}
       carousel={props.carousel}
+      collect={props.collect}
+      collectImg={props.collectImg}
     >
       {props.children}
     </Content>

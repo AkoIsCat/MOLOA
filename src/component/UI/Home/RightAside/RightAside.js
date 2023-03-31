@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { Fragment, useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import { HiOutlineTicket } from 'react-icons/hi';
 import { TbMessageCircle2Filled } from 'react-icons/tb';
@@ -74,6 +75,7 @@ const PopularText = styled.span`
       : props.index === 3
       ? '2px solid #cd7f32'
       : 'none'};
+  cursor: pointer;
 `;
 
 const CouponCode = `https://lostark-bf0ba-default-rtdb.firebaseio.com/Coupon.json`;
@@ -87,6 +89,8 @@ const RightAside = () => {
   const [couponIsLoading, setCouponIsLoading] = useState(true);
   const [popularIsLoading, setPopularIsLoading] = useState(true);
   const [discordIsLoading, setDiscordIsLoading] = useState(true);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     // 쿠폰코드
@@ -146,52 +150,65 @@ const RightAside = () => {
   }, []);
 
   // 컨텐츠 별 ItemList
-  const couponItemList = couponCode.map((items, index) =>
-    couponCode.length === index + 1 ? (
-      <CommonContentBoxMain
-        key={index}
-        id={index}
-        font="13"
-        height="20"
-        align="center"
-        border="true"
-      >
-        <LineDivision style={{ color: '#46f1ff', fontSize: '15px' }}>
-          {items.CouponName}
-        </LineDivision>
-        <LineDivision style={{ fontSize: '10px' }}>{items.Term}</LineDivision>
-        <LineDivision style={{ color: '#fff', fontSize: '12px' }}>
-          {items.Name}
-        </LineDivision>
-      </CommonContentBoxMain>
-    ) : couponCode.length === 0 ? (
-      <CommonContentBoxMain
-        key={index}
-        id={index}
-        font="13"
-        height="20"
-        align="center"
-        border="true"
-      >
-        -
-      </CommonContentBoxMain>
-    ) : (
-      <CommonContentBoxMain
-        key={index}
-        id={index}
-        font="13"
-        height="20"
-        align="center"
-      >
-        <LineDivision style={{ color: '#46f1ff', fontSize: '15px' }}>
-          {items.CouponName}
-        </LineDivision>
-        <LineDivision style={{ fontSize: '10px' }}>{items.Term}</LineDivision>
-        <LineDivision style={{ color: '#fff', fontSize: '12px' }}>
-          {items.Name}
-        </LineDivision>
-      </CommonContentBoxMain>
+  const couponItemList = couponCode ? (
+    couponCode.map((items, index) =>
+      couponCode.length === index + 1 ? (
+        <CommonContentBoxMain
+          key={index}
+          id={index}
+          font="13"
+          height="20"
+          align="center"
+          border="true"
+        >
+          <LineDivision style={{ color: '#46f1ff', fontSize: '15px' }}>
+            {items.CouponName}
+          </LineDivision>
+          <LineDivision style={{ fontSize: '10px' }}>{items.Term}</LineDivision>
+          <LineDivision style={{ color: '#fff', fontSize: '12px' }}>
+            {items.Name}
+          </LineDivision>
+        </CommonContentBoxMain>
+      ) : couponCode.length === 0 ? (
+        <CommonContentBoxMain
+          key={index}
+          id={index}
+          font="13"
+          height="20"
+          align="center"
+          border="true"
+        >
+          -
+        </CommonContentBoxMain>
+      ) : (
+        <CommonContentBoxMain
+          key={index}
+          id={index}
+          font="13"
+          height="20"
+          align="center"
+        >
+          <LineDivision style={{ color: '#46f1ff', fontSize: '15px' }}>
+            {items.CouponName}
+          </LineDivision>
+          <LineDivision style={{ fontSize: '10px' }}>{items.Term}</LineDivision>
+          <LineDivision style={{ color: '#fff', fontSize: '12px' }}>
+            {items.Name}
+          </LineDivision>
+        </CommonContentBoxMain>
+      )
     )
+  ) : (
+    <CommonContentBoxMain
+      key={1}
+      id={1}
+      font="13"
+      height="20"
+      align="center"
+      border="true"
+    >
+      -
+    </CommonContentBoxMain>
   );
 
   const discordItemList = discord.map((items, index) =>
@@ -244,7 +261,12 @@ const RightAside = () => {
           <PopularText style={{ fontSize: '17px' }} index={index + 1}>
             {index + 1}
           </PopularText>
-          <PopularText style={{ fontSize: '15px', color: '#fff' }}>
+          <PopularText
+            style={{ fontSize: '15px', color: '#fff' }}
+            onClick={() => {
+              navigate(`/character/${items.name}`);
+            }}
+          >
             {items.name}
           </PopularText>
         </LineDivision>
@@ -255,7 +277,12 @@ const RightAside = () => {
           <PopularText style={{ fontSize: '17px' }} index={index + 1}>
             {index + 1}
           </PopularText>
-          <PopularText style={{ fontSize: '15px', color: '#fff' }}>
+          <PopularText
+            style={{ fontSize: '15px', color: '#fff' }}
+            onClick={() => {
+              navigate(`/character/${items.name}`);
+            }}
+          >
             {items.name}
           </PopularText>
         </LineDivision>

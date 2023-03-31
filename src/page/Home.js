@@ -2,9 +2,9 @@ import styled from 'styled-components';
 
 import Header from '../component/header/Header';
 import Background from '../component/UI/BackBox';
-import LeftAside from '../component/UI/LeftAside/LeftAside';
-import RightAside from '../component/UI/RightAside/RightAside';
-import MainContents from '../component/UI/MainContents/MainContents';
+import LeftAside from '../component/UI/Home/LeftAside/LeftAside';
+import RightAside from '../component/UI/Home/RightAside/RightAside';
+import MainContents from '../component/UI/Home/MainContents/MainContents';
 
 // style components
 export const Container = styled.div`

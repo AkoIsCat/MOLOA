@@ -18,6 +18,22 @@ module.exports = function (app) {
     })
   );
 
+  app.use(
+    createProxyMiddleware('/characters', {
+      target: 'https://developer-lostark.game.onstove.com',
+      secure: false,
+      changeOrigin: true,
+    })
+  );
+
+  app.use(
+    createProxyMiddleware('/armories', {
+      target: 'https://developer-lostark.game.onstove.com',
+      secure: false,
+      changeOrigin: true,
+    })
+  );
+
   // app.use(
   //   createProxyMiddleware('/api', {
   //     target: 'http://localhost:3000/',

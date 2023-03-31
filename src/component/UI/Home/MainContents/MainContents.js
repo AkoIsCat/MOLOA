@@ -31,7 +31,13 @@ const MainBanner = styled.img`
   width: 100%;
   height: 100%;
   border-radius: ${(props) =>
-    props.leftBtm ? '0 0 0px 10px' : props.rightBtm ? '0 0 10px 0 ' : '10px'};
+    props.leftBtm
+      ? '0 0 0px 10px'
+      : props.rightBtm
+      ? '0 0 10px 0 '
+      : props.big
+      ? '10px'
+      : ''};
 `;
 
 const Compass = styled(AiOutlineCompass)`
@@ -59,6 +65,7 @@ const ImageContent = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-around;
+  position: relative;
 `;
 
 const CarouselWrap = styled.div`
@@ -85,16 +92,21 @@ const CarouselDate = styled.div`
 `;
 
 const IslandItem = styled.div`
-  border-radius: 10px;
-  width: 100px;
-  height: 45px;
-  border: 1px solid #c1c1c1;
-  margin: 0 auto;
+  width: 100%;
+  height: 80px;
+  border-bottom: ${(props) => (props.border ? '2px solid rgb(75, 83, 90)' : 0)};
   display: flex;
   text-align: center;
   align-items: center;
   justify-content: center;
-  margin-bottom: 20px;
+`;
+
+const Absolute = styled.div`
+  width: 100%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 `;
 
 const lostArkKey =
@@ -146,7 +158,7 @@ const MainContents = () => {
     {
       name: '모험섬',
       emergence: true,
-      image: 'none',
+      image: 'https://i.ibb.co/yp9315G/heart.png',
     },
   ]);
   const [islandList, setIslandList] = useState([]);
@@ -236,11 +248,26 @@ const MainContents = () => {
     loadEventList();
   }, []);
 
+  console.log(islandList);
   if (weekend) {
     console.log('주말이지롱롱');
   }
 
-  const islandItem = islandList.map((item, index) => (
+  const islandItem = islandList.map((item, index) =>
+    islandList.length === index + 1 ? (
+      <IslandItem key={index}>{item.ContentsName}</IslandItem>
+    ) : (
+      <IslandItem key={index} border="true">
+        {item.ContentsName}
+      </IslandItem>
+    )
+  );
+
+  const amIslandItem = amIslandList.map((item, index) => (
+    <IslandItem key={index}>{item.ContentsName}</IslandItem>
+  ));
+
+  const pmIslandItem = pmIslandList.map((item, index) => (
     <IslandItem key={index}>{item.ContentsName}</IslandItem>
   ));
 
@@ -250,7 +277,16 @@ const MainContents = () => {
       <CommonContentBoxMain key={index} id={index} main="true" rightBtm="true">
         <LineDivision>{item.name}</LineDivision>
         <LineDivision>오늘 출현 {item.emergence ? 'O' : 'X'}</LineDivision>
-        <ImageContent>{islandItem}</ImageContent>
+        <ImageContent>
+          <MainBanner src={item.image} alt="모험섬" rightBtm="true" />
+          <Absolute>
+            {!weekend
+              ? islandItem
+              : weekend && date.getHours <= 1
+              ? amIslandItem
+              : pmIslandItem}
+          </Absolute>
+        </ImageContent>
       </CommonContentBoxMain>
     ) : // 첫 요소
     index === 0 ? (
@@ -315,6 +351,7 @@ const MainContents = () => {
         <MainBanner
           src="https://cdn-lostark.game.onstove.com/uploadfiles/banner/638964cdc5074a51a5a295f35a267aa0.jpg"
           alt="업데이트 이미지"
+          big="true"
         />
       </HeadStyle>
       <InnerContent height="360px">

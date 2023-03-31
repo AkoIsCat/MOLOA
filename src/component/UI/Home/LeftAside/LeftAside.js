@@ -3,7 +3,7 @@ import React, { Fragment, useEffect, useState } from 'react';
 
 import { HiOutlineSpeakerphone } from 'react-icons/hi';
 import ContentBox from './ContentBox';
-import SmallMenu from '../SmallMenu';
+import SmallMenu from '../../SmallMenu';
 
 // 원하는 Content의 height를 입력해야함
 const InnerContent = styled.div`

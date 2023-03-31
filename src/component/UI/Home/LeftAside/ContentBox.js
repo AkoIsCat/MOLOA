@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 import React, { Fragment } from 'react';
 import ContentBoxMain from './ContentBoxMain';
-import Loading from '../Loading';
+import Loading from '../../Loading';
 
 const Head = styled.div`
   width: 216px;
@@ -75,15 +75,6 @@ const ContentBox = (props) => {
       </Type>
     )
   );
-
-  /* 
-  {currentDate.getHours() - item.getHours() < 24 &&
-          currentDate.getMinutes() - item.getMinutes() < 60
-            ? `${currentDate.getHours() - item.getHours() - 1}시간 전`
-            : currentDate.getMinutes() - item.getMinutes() < 0
-            ? `${60 + (currentDate.getMinutes() - item.getMinutes())}분 전`
-            : `${currentDate.getMinutes() - item.getMinutes()}분 전`}
-  */
 
   const notiList = item.map((items, index) =>
     item.length === index + 1 ? (

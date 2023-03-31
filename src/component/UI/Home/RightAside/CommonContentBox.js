@@ -1,20 +1,28 @@
 import styled from 'styled-components';
 import React, { Fragment, memo } from 'react';
-import Loading from '../Loading';
+import Loading from '../../Loading';
 
 export const Head = memo(styled.div`
   width: ${(props) =>
-    props.main ? '652px' : props.equipment ? props.equipment : '216px'};
+    props.main
+      ? '652px'
+      : props.equipment
+      ? props.equipment
+      : props.collect
+      ? '283px'
+      : '216px'};
   height: 45px;
   background: #292e33;
   font-family: 'Nanum Gothic';
   color: #fff;
-  padding-left: 10px;
+  padding-left: ${(props) => (props.collect ? '' : '10px')};
   font-size: 15px;
   line-height: 45px;
   display: flex;
   align-items: center;
+  justify-content: ${(props) => (props.collect ? 'center' : '')};
   border-radius: ${(props) => (props.border ? '10px' : '10px 10px 0 0')};
+  border-bottom: ${(props) => (props.collect ? '3px solid #4b535a' : '')};
 `);
 
 const BottomLine = styled.div`
@@ -37,7 +45,12 @@ const BottomLineInner = styled.div`
 const CommonContentBox = (props) => {
   return (
     <Fragment>
-      <Head main={props.main} border={props.border} equipment={props.equipment}>
+      <Head
+        main={props.main}
+        border={props.border}
+        equipment={props.equipment}
+        collect={props.collect}
+      >
         {props.title}
         {props.icon}
       </Head>

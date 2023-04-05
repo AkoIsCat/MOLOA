@@ -29,6 +29,8 @@ const MainContent = styled.main`
   margin: 20px;
 `;
 
+console.log('홈');
+
 const Home = () => {
   return (
     <Background>

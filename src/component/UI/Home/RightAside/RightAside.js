@@ -149,6 +149,8 @@ const RightAside = () => {
     loadPopularCharacter();
   }, []);
 
+  console.log('right Aside');
+
   // 컨텐츠 별 ItemList
   const couponItemList = couponCode ? (
     couponCode.map((items, index) =>

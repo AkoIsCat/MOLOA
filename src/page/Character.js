@@ -4,9 +4,13 @@ import Aside from '../component/UI/Character/Side/Aside';
 import Header from '../component/header/Header';
 import Background from '../component/UI/BackBox';
 import { Container } from './Home';
+import Avatar from '../component/UI/Character/Content/Avatar';
+
+import { BsDot } from 'react-icons/bs';
 
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import { Fragment } from 'react';
 
 const ContainerBox = styled(Container)`
   height: auto;
@@ -46,7 +50,7 @@ const Section = styled.section`
   padding-bottom: 30px;
 `;
 
-// 3 0.35
+// 네비
 const Navigation = styled.nav`
   width: 354px;
   height: 41px;
@@ -98,6 +102,7 @@ const InnerSection = styled.div`
   align-items: center;
 `;
 
+// 컨텐츠 박스
 const ContentWrap = styled.div`
   width: 95%;
   height: 95%;
@@ -105,7 +110,6 @@ const ContentWrap = styled.div`
   border-radius: 10px;
   display: flex;
   flex-direction: column;
-  align-items: center;
   padding: 30px 0;
 
   .image {
@@ -126,63 +130,66 @@ const ContentWrap = styled.div`
   }
 `;
 
-const ListWrap = styled.div`
+const TrueInner = styled.div`
+  width: auto;
   display: flex;
   flex-direction: column;
+  margin: 0 40px;
+  justify-content: space-between;
 
-  .content {
+  div {
     display: flex;
-    width: 600px;
-    height: auto;
-    margin: 10px;
-    justify-content: center;
+    margin-bottom: 13px;
 
-    .trueInner {
-      width: auto;
+    .desc {
       display: flex;
       flex-direction: column;
-      margin: 0 40px;
-
-      div {
-        display: flex;
-        margin: 5px 0;
-
-        .desc {
-          display: flex;
-          flex-direction: column;
-        }
-      }
-    }
-
-    .falseInner {
-      width: auto;
-      display: flex;
-      flex-direction: column;
-      div {
-        display: flex;
-        margin-bottom: 10px;
-
-        .desc {
-          display: flex;
-          flex-direction: column;
-        }
-      }
-    }
-
-    p {
-      margin: 0;
       font-family: 'Nanum Gothic';
-      color: #fff;
-      margin: 4px 0 4px 7px;
-    }
 
-    .type {
-      font-size: 13px;
-    }
+      .type {
+        font-size: 15px;
+        color: #fff;
+        margin: 5px;
+      }
 
-    .name {
-      font-size: 14px;
-      font-family: 'Nanum Gothic Bold';
+      .name {
+        color: #fff;
+        margin: 5px;
+      }
+    }
+  }
+`;
+
+const FalseInner = styled.div`
+  width: auto;
+  display: flex;
+  flex-direction: column;
+  margin: 0 40px;
+
+  div {
+    display: flex;
+    margin-bottom: 10px;
+
+    .desc {
+      display: flex;
+      flex-direction: column;
+      font-family: 'Nanum Gothic';
+
+      .type {
+        color: #fff;
+        margin: 5px;
+      }
+
+      .name {
+        color: #fff;
+        margin: 5px;
+      }
+
+      div {
+        margin: 0;
+        color: #fff;
+        height: 20px;
+      }
     }
   }
 `;
@@ -190,15 +197,8 @@ const ListWrap = styled.div`
 const ImageBox = styled.div`
   width: 55px;
   height: 55px;
-  background: ${(props) =>
-    props.exist === '전설'
-      ? 'linear-gradient(135deg, #362003 0%, #9e5f04 100%)'
-      : props.exist === '영웅'
-      ? 'linear-gradient(135deg, #261331 0%, #480d5d 100%)'
-      : props.exist === '희귀'
-      ? 'linear-gradient(135deg, #111f2c 0%, #113d5d 100%)'
-      : '#292e33'};
   border-radius: 10px;
+  background: #292e33;
 
   img {
     object-fit: contain;
@@ -215,8 +215,110 @@ const ImageBoxColor = styled.div`
       ? 'linear-gradient(135deg, #261331 0%, #480d5d 100%)'
       : props.exist === '희귀'
       ? 'linear-gradient(135deg, #111f2c 0%, #113d5d 100%)'
+      : props.exist === '고대'
+      ? 'linear-gradient(135deg, #3d3325 0%, #dcc999 100%)'
+      : props.exist === '유물'
+      ? 'linear-gradient(135deg, #341a09 0%, #a24006 100%)'
       : '#292e33'};
   border-radius: 10px;
+`;
+
+const FlexWrap = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: center;
+`;
+
+const PercentBar = styled.div`
+  width: 190px;
+  height: 20px;
+  margin: 0 5px;
+  display: flex;
+
+  p {
+    width: 40px;
+    color: ${(props) =>
+      props.quality === 0
+        ? '#fff'
+        : props.quality > 0 && props.quality < 11
+        ? '#ff0000'
+        : props.quality < 30
+        ? '#ffd200'
+        : props.quality >= 30 && props.quality < 70
+        ? '#91fe02'
+        : props.quality >= 70 && props.quality < 90
+        ? '#00b5ff'
+        : props.quality >= 90 && props.quality < 100
+        ? '#ce43fc'
+        : '#fe9600'};
+    margin: 2px 5px;
+    text-align: center;
+  }
+
+  div {
+    width: 100%;
+    height: 20px;
+    background: #292e33;
+    border-radius: 10px;
+
+    div {
+      width: ${(props) => props.quality}%;
+      background: ${(props) =>
+        props.quality === 0
+          ? '#fff'
+          : props.quality < 30
+          ? '#ffd200'
+          : props.quality >= 30 && props.quality < 70
+          ? '#91fe02'
+          : props.quality >= 70 && props.quality < 90
+          ? '#00b5ff'
+          : props.quality >= 90 && props.quality < 100
+          ? '#ce43fc'
+          : '#fe9600'};
+    }
+  }
+`;
+
+const MountedEngraving = styled.div`
+  display: flex;
+  align-items: center;
+  width: auto;
+
+  img {
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    margin-right: 5px;
+  }
+
+  div {
+    width: auto;
+    margin: 0 15px 0 0;
+    display: flex;
+    flex-direction: column;
+
+    p {
+      font-size: 15px;
+      margin: 0 0px 5px 5px;
+      font-family: 'Nanum Gothic';
+      color: #fff;
+    }
+
+    .name {
+      color: ${(props) =>
+        props.grade === '+12'
+          ? '#e66519'
+          : props.grade === ' +9'
+          ? '#9e24ca'
+          : props.grade === ' +6'
+          ? '#113d5d'
+          : props.grade === ' +3'
+          ? '#46812d'
+          : ''};
+    }
+  }
 `;
 
 const lostArkKey =
@@ -422,123 +524,341 @@ const Character = () => {
     loadGems();
     loadColosseums();
     loadCollectibles();
-  }, [loadCharacterUrl, isExist, commonCharacterUrl, id]);
+  }, [loadCharacterUrl, commonCharacterUrl, id]);
 
-  // ------------------------- 아바타 탭
-  const trueInner = [
-    { type: '무기 아바타' },
-    { type: '머리 아바타' },
-    { type: '상의 아바타' },
-    { type: '하의 아바타' },
-  ];
+  // console.log(engraving);
 
-  const falseInner = [
+  // ------------------------- 장비 탭
+
+  // 장비 정보 조회
+  const equipmentList = [
     {
-      type: '무기 덧입기 아바타',
-      TypeAs: '무기 아바타',
+      Type: '투구',
+      Tooltip: '머리장식',
     },
     {
-      type: '머리 덧입기 아바타',
-      TypeAs: '머리 아바타',
+      Type: '어깨',
+      Tooltip: '견갑',
     },
     {
-      type: '상의 덧입기 아바타',
-      TypeAs: '상의 아바타',
+      Type: '상의',
+      Tooltip: '상의',
     },
     {
-      type: '하의 덧입기 아바타',
-      TypeAs: '하의 아바타',
+      Type: '하의',
+      Tooltip: '하의',
     },
     {
-      type: '얼굴1 아바타',
-      TypeAs: '얼굴1 아바타',
+      Type: '장갑',
+      Tooltip: '장갑',
     },
     {
-      type: '얼굴2 아바타',
-      TypeAs: '얼굴2 아바타',
-    },
-    {
-      type: '악기 아바타',
-      TypeAs: '악기 아바타',
+      Type: '무기',
+      Tooltip: '수호의 바다 절망의 대지 투쟁의 산맹 진리의 창공 ',
     },
   ];
 
-  const isInnerFalse = avatars && avatars.filter((item) => !item.IsInner);
+  const accessoriesList = [
+    { Type: '목걸이' },
+    { Type: '귀걸이' },
+    { Type: '귀걸이' },
+    { Type: '반지' },
+    { Type: '반지' },
+    { Type: '팔찌' },
+    { Type: '어빌리티 스톤' },
+  ];
 
-  const avatarItem = avatars && (
+  const filterAccessories =
+    equipment &&
+    equipment.filter(
+      (item) =>
+        item.Type !== '투구' &&
+        item.Type !== '무기' &&
+        item.Type !== '상의' &&
+        item.Type !== '하의' &&
+        item.Type !== '어깨' &&
+        item.Type !== '장갑' &&
+        item.Type !== '부적' &&
+        item.Type !== '나침반'
+    );
+
+  // 아이템 정렬
+  const equipmentTooltip = [];
+
+  equipment &&
+    equipment.map((item) => equipmentTooltip.push(JSON.parse(item.Tooltip)));
+
+  const sortEquipmentTooltip = [
+    equipmentTooltip[1],
+    equipmentTooltip[5],
+    equipmentTooltip[2],
+    equipmentTooltip[3],
+    equipmentTooltip[4],
+    equipmentTooltip[0],
+  ];
+
+  const sortAccessoriesTooltip = [
+    equipmentTooltip[6],
+    equipmentTooltip[7],
+    equipmentTooltip[8],
+    equipmentTooltip[9],
+    equipmentTooltip[10],
+    equipmentTooltip[11],
+    equipmentTooltip[12],
+  ];
+
+  const stoneAndBracelet = [];
+  // equipment에서 스톤과 팔찌를 추출한다.
+  if (equipment) {
+    for (const key in equipment) {
+      if (
+        equipment[key].Type !== '무기' &&
+        equipment[key].Type !== '투구' &&
+        equipment[key].Type !== '상의' &&
+        equipment[key].Type !== '하의' &&
+        equipment[key].Type !== '장갑' &&
+        equipment[key].Type !== '어깨' &&
+        equipment[key].Type !== '나침반' &&
+        equipment[key].Type !== '부적' &&
+        equipment[key].Type !== '목걸이' &&
+        equipment[key].Type !== '귀걸이' &&
+        equipment[key].Type !== '반지'
+      ) {
+        stoneAndBracelet.push({ ...equipmentTooltip[key] });
+      }
+    }
+  }
+
+  let stoneIndex = -1;
+  let braceletIndex = -1;
+  const breceletEffectList = [];
+  // 팔찌효과 추출
+  if (stoneAndBracelet) {
+    // 어빌리티 스톤 각인 활성화가 들어있는 인덱스를 탐색하는 for..in문
+    for (const key in stoneAndBracelet[0]) {
+      if (stoneAndBracelet[0][key].type === 'IndentStringGroup') {
+        stoneIndex = key;
+        break;
+      }
+    }
+    // 팔찌에서 팔찌 효과가 들어있는 인덱스를 탐색
+    if (stoneAndBracelet[1] !== undefined) {
+      for (const key in stoneAndBracelet[1]) {
+        if (stoneAndBracelet[1][key].type === 'ItemPartBox') {
+          braceletIndex = key;
+          break;
+        }
+      }
+      const braceletEffect =
+        stoneAndBracelet &&
+        stoneAndBracelet[1] !== undefined &&
+        stoneAndBracelet[1][braceletIndex].value['Element_001'];
+
+      const braceletElements = braceletEffect.split('<BR>');
+      const regularExpressionResult = [];
+      for (let i = 0; i < braceletElements.length; i++) {
+        const text = braceletElements[i]
+          .replace(/<[^>]+>/g, '')
+          .replace(/\[|\]/g, '')
+          .replace(/['"]/g, '')
+          .trim();
+
+        if (text[text.length - 1] === ')' || !isNaN(text[text.length - 1])) {
+          regularExpressionResult.push(text);
+          const textSplit = text.split(':');
+
+          if (textSplit.length > 1) {
+            breceletEffectList.push({
+              text: textSplit[0],
+              description: textSplit[1],
+            });
+          } else {
+            const textSplice = text.split(' ');
+            breceletEffectList.push({
+              text: textSplice[0],
+              description: textSplice[1],
+            });
+          }
+        } else {
+          regularExpressionResult.concat(text);
+        }
+      }
+
+      // 정규식을 이용해서 팔찌효과를 추출한 뒤 객체에 저장
+    }
+  }
+
+  // ------------------------- 요까지 장비 정보 조회
+
+  // 장착 각인
+
+  const mountedEngraving = engraving && engraving.Engravings;
+  const mountedEngravingTooltip = [];
+
+  // 문자열로 되어있는 객체를 객체로 변환
+  mountedEngraving &&
+    mountedEngraving.map((item) =>
+      mountedEngravingTooltip.push(JSON.parse(item.Tooltip))
+    );
+
+  // 장착된 각인 활성화를 추출한다.
+  const mountedEngravingItem = mountedEngravingTooltip
+    .map((obj) => obj.Element_001)
+    .filter((obj) => obj.type === 'EngraveSkillTitle')
+    .map((obj) => obj.value.leftText);
+  console.log(mountedEngravingTooltip, mountedEngravingItem);
+
+  const equipmentItem = equipment && (
     <ContentWrap>
-      <div className="image">
-        <img src={profile.CharacterImage} alt="캐릭터 이미지" />
-      </div>
-      <ListWrap>
-        <div className="content">
-          <div className="trueInner">
-            {trueInner.map((item, index) => (
-              <div key={index}>
-                <ImageBox
-                  exist={
-                    avatars[index].Grade === '전설' && avatars[index].IsInner
-                      ? avatars[index].Grade
-                      : ''
-                  }
-                >
-                  {avatars[index].Grade === '전설' && avatars[index].IsInner ? (
-                    <img src={avatars[index].Icon} alt="무기아바타" />
-                  ) : (
-                    ''
-                  )}
-                </ImageBox>
-                <div className="desc">
-                  <p className="type">{avatars[index].Type}</p>
-                  <p className="name">
-                    {avatars[index].Grade === '전설' && avatars[index].IsInner
-                      ? avatars[index].Name
-                      : ''}
-                  </p>
+      <FlexWrap>
+        <TrueInner>
+          {equipmentList.map((item, index) => (
+            <div key={index}>
+              {equipment.map(
+                (items, indexs) =>
+                  items.Type === item.Type && (
+                    <Fragment key={index}>
+                      <ImageBox>
+                        <ImageBoxColor key={index} exist={items.Grade}>
+                          <img src={items.Icon} alt="아바타" />
+                        </ImageBoxColor>
+                      </ImageBox>
+                      <div className="desc">
+                        <p className="type">{items.Name}</p>
+                        <PercentBar
+                          quality={
+                            sortEquipmentTooltip[index]['Element_001'].value
+                              .qualityValue
+                          }
+                        >
+                          <p>
+                            {
+                              sortEquipmentTooltip[index]['Element_001'].value
+                                .qualityValue
+                            }
+                          </p>
+                          <div>
+                            <div></div>
+                          </div>
+                        </PercentBar>
+                      </div>
+                    </Fragment>
+                  )
+              )}
+            </div>
+          ))}
+          <div>
+            {mountedEngraving.map((item, index) => (
+              <MountedEngraving
+                key={index}
+                grade={mountedEngravingItem[index].slice(-10, -7)}
+              >
+                <img src={item.Icon} alt="장착된 각인" />
+                <div>
+                  <p className="name">{item.Name}</p>
+                  <p>{mountedEngravingItem[index].slice(-10, -7)}</p>
                 </div>
-              </div>
+              </MountedEngraving>
             ))}
           </div>
-          <div className="falseInner">
-            {falseInner.map((item, index) => (
-              <div key={index}>
+        </TrueInner>
+        <FalseInner>
+          {accessoriesList.map((item, index) => (
+            <div key={index}>
+              <Fragment key={index}>
                 <ImageBox>
-                  {isInnerFalse.map((items, index) =>
-                    items.Type === item.TypeAs ? (
-                      <ImageBoxColor key={index} exist={items.Grade}>
-                        <img src={items.Icon} alt="아바타" />
-                      </ImageBoxColor>
-                    ) : (
-                      ''
-                    )
-                  )}
+                  <ImageBoxColor
+                    key={index}
+                    exist={
+                      filterAccessories[index] !== undefined &&
+                      filterAccessories[index].Grade
+                    }
+                  >
+                    {filterAccessories && filterAccessories[index] && (
+                      <img
+                        key={index}
+                        src={filterAccessories[index].Icon}
+                        alt="아바타"
+                      />
+                    )}
+                  </ImageBoxColor>
                 </ImageBox>
                 <div className="desc">
-                  <p className="type">{item.type}</p>
-                  {isInnerFalse.map((items, index) =>
-                    items.Type === item.TypeAs ? (
-                      <p key={index} className="name">
-                        {items.Name !== '' ? items.Name : '아바타 없음'}
+                  <p className="type">
+                    {filterAccessories &&
+                      filterAccessories[index] &&
+                      filterAccessories[index].Name}
+                  </p>
+                  {index < 5 && (
+                    <PercentBar
+                      quality={
+                        sortAccessoriesTooltip &&
+                        sortAccessoriesTooltip[index]['Element_001'].value
+                          .qualityValue
+                      }
+                    >
+                      <p>
+                        {
+                          sortAccessoriesTooltip[index]['Element_001'].value
+                            .qualityValue
+                        }
                       </p>
-                    ) : (
-                      ''
-                    )
+                      <div>
+                        <div></div>
+                      </div>
+                    </PercentBar>
                   )}
+                  {index === 5 && (
+                    <div>
+                      <p style={{ margin: '0 8px', color: '#f8f5a4' }}>
+                        {stoneAndBracelet[0] &&
+                          stoneAndBracelet[0][stoneIndex] &&
+                          stoneAndBracelet[0][stoneIndex].value[
+                            'Element_000'
+                          ].contentStr['Element_000'].contentStr.slice(-5, -4)}
+                      </p>
+                      <BsDot />
+                      <p style={{ margin: '0 8px', color: '#f8f5a4' }}>
+                        {stoneAndBracelet[0] &&
+                          stoneAndBracelet[0][stoneIndex] &&
+                          stoneAndBracelet[0][stoneIndex].value[
+                            'Element_000'
+                          ].contentStr['Element_001'].contentStr.slice(-5, -4)}
+                      </p>
+                      <BsDot />
+                      <p style={{ margin: '0 8px', color: '#832c35' }}>
+                        {stoneAndBracelet[0] &&
+                          stoneAndBracelet[0][stoneIndex] &&
+                          stoneAndBracelet[0][stoneIndex].value[
+                            'Element_000'
+                          ].contentStr['Element_002'].contentStr.slice(-5, -4)}
+                      </p>
+                    </div>
+                  )}
+                  <div style={{ display: 'flex' }}>
+                    {index === 6 &&
+                      breceletEffectList.map((item, index) => (
+                        <p key={index} style={{ margin: '0 2px 0 5px' }}>
+                          {item.text}
+                        </p>
+                      ))}
+                  </div>
                 </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </ListWrap>
+              </Fragment>
+            </div>
+          ))}
+        </FalseInner>
+      </FlexWrap>
     </ContentWrap>
   );
-  // ------------------------- 요까지 아바타
+
+  // ------------------------- 요까지 장비
 
   const navMenu = [
     {
       name: '전투',
       first: true,
-      content: '전투탭',
+      content: equipmentItem,
     },
     {
       name: '스킬',
@@ -550,7 +870,7 @@ const Character = () => {
     },
     {
       name: '아바타',
-      content: avatarItem,
+      content: <Avatar profile={profile} avatars={avatars} />,
     },
     {
       name: '보유 캐릭터',
@@ -566,6 +886,8 @@ const Character = () => {
   const selectMenuHandler = (index) => {
     setCurrentTab(index);
   };
+
+  // console.log(equipment);
 
   return (
     <Background>

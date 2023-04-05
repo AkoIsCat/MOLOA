@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import React, { Fragment, useEffect, useState } from 'react';
+import React, { Fragment, useEffect, useState, useCallback } from 'react';
 
 import { HiOutlineSpeakerphone } from 'react-icons/hi';
 import ContentBox from './ContentBox';
@@ -29,6 +29,11 @@ const LeftAside = () => {
   const [loaIsLoading, setLoaIsLoading] = useState(true);
   const [molosIsLoading, setMoloaIsLoading] = useState(true);
 
+  // 렌더링 횟수
+  // 1. noti랑 moloaNoti가 초기값인 빈 배열로 설정돼서 렌더링이 발생
+  // 2. loadLostApi 실행 후 noti의 상태가 업데이트 되어서 렌더링이 발생
+  // 3. loadMoloaNoti 실행 후 moloaNoti의 상태가 업데이트 되어서 렌더링이 발생
+
   useEffect(() => {
     const loadLostApi = async () => {
       try {
@@ -40,11 +45,9 @@ const LeftAside = () => {
         });
         const responseData = await response.json();
 
-        if (noti.length !== 5) {
-          for (let i = 0; i < 5; i++) {
-            setNoti((prev) => prev.concat(responseData[i]));
-          }
-        }
+        const sliceResponseDate = await responseData.slice(0, 5);
+
+        setNoti((prev) => prev.concat(sliceResponseDate));
         setLoaIsLoading(false);
       } catch (err) {
         console.log('LostArk Notification error!!');
@@ -63,10 +66,11 @@ const LeftAside = () => {
         console.log('MoloaNoti error');
       }
     };
-
     loadLostApi();
     loadMoloaNoti();
-  }, [noti]);
+  }, []);
+
+  console.log('left Aside');
 
   return (
     <Fragment>

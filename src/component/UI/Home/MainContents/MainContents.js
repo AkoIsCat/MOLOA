@@ -248,7 +248,7 @@ const MainContents = () => {
     loadEventList();
   }, []);
 
-  console.log(islandList);
+  // console.log(islandList);
   if (weekend) {
     console.log('주말이지롱롱');
   }
@@ -343,6 +343,8 @@ const MainContents = () => {
     fade: false,
     vertical: false,
   };
+
+  console.log('main');
 
   return (
     <Fragment>

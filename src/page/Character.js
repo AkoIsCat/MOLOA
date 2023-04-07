@@ -103,14 +103,14 @@ const InnerSection = styled.div`
 `;
 
 // 컨텐츠 박스
-const ContentWrap = styled.div`
-  width: 95%;
-  height: 95%;
+const EquipmentWrap = styled.div`
+  width: auto;
+  height: auto;
   background: #181c1e;
   border-radius: 10px;
   display: flex;
   flex-direction: column;
-  padding: 30px 0;
+  padding: 30px 0 10px 0;
 
   .image {
     width: 75%;
@@ -130,8 +130,19 @@ const ContentWrap = styled.div`
   }
 `;
 
+const ContentWrap = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  background: #181c1e;
+  border-radius: 10px;
+  padding: 10px 0 35px 0px;
+  margin: 20px 0 0 0;
+`;
+
 const TrueInner = styled.div`
-  width: auto;
+  min-width: 200px;
+  max-width: 300px;
   display: flex;
   flex-direction: column;
   margin: 0 40px;
@@ -161,7 +172,7 @@ const TrueInner = styled.div`
 `;
 
 const FalseInner = styled.div`
-  width: auto;
+  width: 270px;
   display: flex;
   flex-direction: column;
   margin: 0 40px;
@@ -201,6 +212,7 @@ const ImageBox = styled.div`
   background: #292e33;
 
   img {
+    border-radius: 10px;
     object-fit: contain;
   }
 `;
@@ -267,7 +279,9 @@ const PercentBar = styled.div`
       background: ${(props) =>
         props.quality === 0
           ? '#fff'
-          : props.quality < 30
+          : props.quality > 0 && props.quality < 11
+          ? '#ff0000'
+          : props.quality > 10 && props.quality < 30
           ? '#ffd200'
           : props.quality >= 30 && props.quality < 70
           ? '#91fe02'
@@ -309,7 +323,7 @@ const MountedEngraving = styled.div`
     .name {
       color: ${(props) =>
         props.grade === '+12'
-          ? '#e66519'
+          ? '#fe9600'
           : props.grade === ' +9'
           ? '#9e24ca'
           : props.grade === ' +6'
@@ -317,6 +331,69 @@ const MountedEngraving = styled.div`
           : props.grade === ' +3'
           ? '#46812d'
           : ''};
+    }
+  }
+`;
+
+const GemsItemWrap = styled.div`
+  position: relative;
+  width: auto;
+  height: 50px;
+  border-radius: 10px 10px 0 0;
+  margin: 0px 5px;
+  padding: 10px 0 10px 0;
+
+  img {
+    width: 50px;
+    height: 50px;
+    border-radius: 10px 10px 0 0;
+    object-fit: cover;
+  }
+
+  p {
+    text-align: center;
+    line-height: 25px;
+    width: 100%;
+    color: #c1c1c1;
+    height: 25px;
+    font-family: 'Nanum Gothic';
+    margin: 0;
+    background: #292e33;
+    border-radius: 0 0 10px 10px;
+  }
+
+  .tooltip {
+    position: absolute;
+    background-color: rgb(41, 46, 51);
+    border-radius: 10px;
+    top: -70%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 200px;
+    height: auto;
+    padding: 10px;
+
+    .itemName {
+      border-radius: 10px;
+      color: ${(props) =>
+        props.grade === '일반'
+          ? '#fff'
+          : props.grade === '고급'
+          ? '#91fe02'
+          : props.grade === '영웅'
+          ? '#ce43fc'
+          : props.grade === '전설'
+          ? '#ffc600'
+          : '#f07728'};
+    }
+    .skillName {
+      color: #ffba01;
+      font-size: 16px;
+    }
+    .skillShame {
+      margin: 0;
+      font-size: 14px;
+      color: #fff;
     }
   }
 `;
@@ -333,8 +410,8 @@ const Character = () => {
   const [engraving, setEngraving] = useState(); // 각인
   const [cards, setCards] = useState(); // 카드
   const [gems, setGems] = useState(); // 보석
-  const [colosseums, setColosseums] = useState(); // PVP
-  const [collectibles, setCollectibles] = useState(); // 수집품
+  // const [colosseums, setColosseums] = useState(); // PVP
+  // const [collectibles, setCollectibles] = useState(); // 수집품
 
   const [currentTab, setCurrentTab] = useState(0);
 
@@ -479,40 +556,40 @@ const Character = () => {
       }
     };
 
-    const loadColosseums = async () => {
-      try {
-        const response = await fetch(`${commonCharacterUrl}/${id}/colosseums`, {
-          headers: {
-            'Content-Type': 'application/json',
-            authorization: `bearer ${lostArkKey}`,
-          },
-        });
-        const responseData = await response.json();
+    // const loadColosseums = async () => {
+    //   try {
+    //     const response = await fetch(`${commonCharacterUrl}/${id}/colosseums`, {
+    //       headers: {
+    //         'Content-Type': 'application/json',
+    //         authorization: `bearer ${lostArkKey}`,
+    //       },
+    //     });
+    //     const responseData = await response.json();
 
-        setColosseums(responseData);
-      } catch (err) {
-        console.log('LostArk Colosseumn error!!');
-      }
-    };
+    //     setColosseums(responseData);
+    //   } catch (err) {
+    //     console.log('LostArk Colosseumn error!!');
+    //   }
+    // };
 
-    const loadCollectibles = async () => {
-      try {
-        const response = await fetch(
-          `${commonCharacterUrl}/${id}/collectibles`,
-          {
-            headers: {
-              'Content-Type': 'application/json',
-              authorization: `bearer ${lostArkKey}`,
-            },
-          }
-        );
-        const responseData = await response.json();
+    // const loadCollectibles = async () => {
+    //   try {
+    //     const response = await fetch(
+    //       `${commonCharacterUrl}/${id}/collectibles`,
+    //       {
+    //         headers: {
+    //           'Content-Type': 'application/json',
+    //           authorization: `bearer ${lostArkKey}`,
+    //         },
+    //       }
+    //     );
+    //     const responseData = await response.json();
 
-        setCollectibles(responseData);
-      } catch (err) {
-        console.log('LostArk Collectibles error!!');
-      }
-    };
+    //     setCollectibles(responseData);
+    //   } catch (err) {
+    //     console.log('LostArk Collectibles error!!');
+    //   }
+    // };
 
     loadCharacterTrue();
     loadProfile();
@@ -522,11 +599,11 @@ const Character = () => {
     loadEngravings();
     loadCards();
     loadGems();
-    loadColosseums();
-    loadCollectibles();
+    // loadColosseums();
+    // loadCollectibles();
   }, [loadCharacterUrl, commonCharacterUrl, id]);
 
-  // console.log(engraving);
+  // console.log(gems);
 
   // ------------------------- 장비 탭
 
@@ -585,8 +662,9 @@ const Character = () => {
   // 아이템 정렬
   const equipmentTooltip = [];
 
-  equipment &&
-    equipment.map((item) => equipmentTooltip.push(JSON.parse(item.Tooltip)));
+  for (const item in equipment) {
+    equipmentTooltip.push(JSON.parse(equipment[item].Tooltip));
+  }
 
   const sortEquipmentTooltip = [
     equipmentTooltip[1],
@@ -706,150 +784,257 @@ const Character = () => {
     .map((obj) => obj.Element_001)
     .filter((obj) => obj.type === 'EngraveSkillTitle')
     .map((obj) => obj.value.leftText);
-  console.log(mountedEngravingTooltip, mountedEngravingItem);
+
+  // 보석
+  const gemsList = [];
+  const extinction = []; // 멸화
+  const prominence = []; // 홍염
+
+  if (gems) {
+    const gemsRegex = /<FONT[^>]*>(.*?)<\/FONT>/;
+    const effectRegex = /<FONT COLOR='#[^>]+>([^<]+)<\/FONT>\s*([^\n]+)/;
+
+    // 필요한 데이터만 추출
+    for (let i = 0; i < gems.Gems.length; i++) {
+      const tooltip = JSON.parse(gems.Gems[i].Tooltip)['Element_004'].value[
+        'Element_001'
+      ];
+
+      const event_tooltip = JSON.parse(gems.Gems[i].Tooltip)['Element_005']
+        .value['Element_001'];
+      const skillEffect_event = !tooltip && event_tooltip.match(effectRegex);
+      const skillEffect = tooltip && tooltip.match(effectRegex);
+
+      skillEffect_event &&
+        gemsList.push({
+          name: gems.Gems[i].Name.match(gemsRegex)[1],
+          level: gems.Gems[i].Level,
+          icon: gems.Gems[i].Icon,
+          skillName: skillEffect_event[1],
+          skillShame: skillEffect_event[2].trim(),
+          grade: gems.Gems[i].Grade,
+        });
+
+      skillEffect &&
+        gemsList.push({
+          name: gems.Gems[i].Name.match(gemsRegex)[1],
+          level: gems.Gems[i].Level,
+          icon: gems.Gems[i].Icon,
+          skillName: skillEffect[1],
+          skillShame: skillEffect[2].trim(),
+          grade: gems.Gems[i].Grade,
+        });
+    }
+
+    for (let i = 0; i < gemsList.length; i++) {
+      if (gemsList[i].name.includes('멸화')) {
+        extinction.push(gemsList[i]);
+      } else {
+        prominence.push(gemsList[i]);
+      }
+      // 보석 레벨 순으로 정렬
+      extinction.sort((a, b) => b.level - a.level);
+    }
+  }
+  console.log(gems);
+  // 보석 아이템(툴팁 포함)
+  const GemsItem = ({ item }) => {
+    const [showTooltip, setShowTooltip] = useState(false);
+
+    return (
+      <GemsItemWrap grade={item.grade}>
+        {showTooltip && (
+          <div className="tooltip">
+            <p className="itemName">{item.name}</p>
+            <p className="skillName">{item.skillName}</p>
+            <p className="skillShame">{item.skillShame}</p>
+          </div>
+        )}
+        <ImageBoxColor
+          exist={item.grade}
+          style={{ borderRadius: '10px 10px 0 0' }}
+        >
+          <img
+            src={item.icon}
+            alt="멸화"
+            onMouseEnter={() => setShowTooltip(true)}
+            onMouseLeave={() => setShowTooltip(false)}
+          />
+        </ImageBoxColor>
+        <p
+          onMouseEnter={() => setShowTooltip(true)}
+          onMouseLeave={() => setShowTooltip(false)}
+        >
+          {item.level}
+        </p>
+      </GemsItemWrap>
+    );
+  };
 
   const equipmentItem = equipment && (
-    <ContentWrap>
-      <FlexWrap>
-        <TrueInner>
-          {equipmentList.map((item, index) => (
-            <div key={index}>
-              {equipment.map(
-                (items, indexs) =>
-                  items.Type === item.Type && (
-                    <Fragment key={index}>
-                      <ImageBox>
-                        <ImageBoxColor key={index} exist={items.Grade}>
-                          <img src={items.Icon} alt="아바타" />
-                        </ImageBoxColor>
-                      </ImageBox>
-                      <div className="desc">
-                        <p className="type">{items.Name}</p>
+    <div style={{ display: 'flex', flexDirection: 'column' }}>
+      <EquipmentWrap>
+        <FlexWrap>
+          <TrueInner>
+            {equipmentList.map((item, index) => (
+              <div key={index}>
+                {equipment.map(
+                  (items, indexs) =>
+                    items.Type === item.Type && (
+                      <Fragment key={index}>
+                        <ImageBox>
+                          <ImageBoxColor key={index} exist={items.Grade}>
+                            <img src={items.Icon} alt="아바타" />
+                          </ImageBoxColor>
+                        </ImageBox>
+                        <div className="desc">
+                          <p className="type">{items.Name}</p>
+                          <PercentBar
+                            quality={
+                              sortEquipmentTooltip[index] &&
+                              sortEquipmentTooltip[index]['Element_001'].value
+                                .qualityValue
+                            }
+                          >
+                            <p>
+                              {sortEquipmentTooltip[index] &&
+                                sortEquipmentTooltip[index]['Element_001'].value
+                                  .qualityValue}
+                            </p>
+                            <div>
+                              <div></div>
+                            </div>
+                          </PercentBar>
+                        </div>
+                      </Fragment>
+                    )
+                )}
+              </div>
+            ))}
+            <div>
+              {mountedEngraving &&
+                mountedEngraving.map((item, index) => (
+                  <MountedEngraving
+                    key={index}
+                    grade={mountedEngravingItem[index].slice(-10, -7)}
+                  >
+                    <img src={item.Icon} alt="장착된 각인" />
+                    <div>
+                      <p className="name">{item.Name}</p>
+                      <p>{mountedEngravingItem[index].slice(-10, -7)}</p>
+                    </div>
+                  </MountedEngraving>
+                ))}
+            </div>
+          </TrueInner>
+          <FalseInner>
+            {accessoriesList &&
+              accessoriesList.map((item, index) => (
+                <div key={index}>
+                  <Fragment key={index}>
+                    <ImageBox>
+                      <ImageBoxColor
+                        key={index}
+                        exist={
+                          filterAccessories[index] !== undefined &&
+                          filterAccessories[index].Grade
+                        }
+                      >
+                        {filterAccessories && filterAccessories[index] && (
+                          <img
+                            key={index}
+                            src={filterAccessories[index].Icon}
+                            alt="아바타"
+                          />
+                        )}
+                      </ImageBoxColor>
+                    </ImageBox>
+                    <div className="desc">
+                      <p className="type">
+                        {filterAccessories &&
+                          filterAccessories[index] &&
+                          filterAccessories[index].Name}
+                      </p>
+                      {index < 5 && (
                         <PercentBar
                           quality={
-                            sortEquipmentTooltip[index]['Element_001'].value
+                            sortAccessoriesTooltip &&
+                            sortAccessoriesTooltip[index] &&
+                            sortAccessoriesTooltip[index]['Element_001'].value
                               .qualityValue
                           }
                         >
                           <p>
-                            {
-                              sortEquipmentTooltip[index]['Element_001'].value
-                                .qualityValue
-                            }
+                            {sortAccessoriesTooltip &&
+                              sortAccessoriesTooltip[index] &&
+                              sortAccessoriesTooltip[index]['Element_001'].value
+                                .qualityValue}
                           </p>
                           <div>
                             <div></div>
                           </div>
                         </PercentBar>
+                      )}
+                      {index === 5 && (
+                        <div>
+                          <p style={{ margin: '0 8px', color: '#f8f5a4' }}>
+                            {stoneAndBracelet[0] &&
+                              stoneAndBracelet[0][stoneIndex] &&
+                              stoneAndBracelet[0][stoneIndex].value[
+                                'Element_000'
+                              ].contentStr['Element_000'].contentStr.slice(
+                                -5,
+                                -4
+                              )}
+                          </p>
+                          <BsDot />
+                          <p style={{ margin: '0 8px', color: '#f8f5a4' }}>
+                            {stoneAndBracelet[0] &&
+                              stoneAndBracelet[0][stoneIndex] &&
+                              stoneAndBracelet[0][stoneIndex].value[
+                                'Element_000'
+                              ].contentStr['Element_001'].contentStr.slice(
+                                -5,
+                                -4
+                              )}
+                          </p>
+                          <BsDot />
+                          <p style={{ margin: '0 8px', color: '#832c35' }}>
+                            {stoneAndBracelet[0] &&
+                              stoneAndBracelet[0][stoneIndex] &&
+                              stoneAndBracelet[0][stoneIndex].value[
+                                'Element_000'
+                              ].contentStr['Element_002'].contentStr.slice(
+                                -5,
+                                -4
+                              )}
+                          </p>
+                        </div>
+                      )}
+                      <div style={{ display: 'flex' }}>
+                        {index === 6 &&
+                          breceletEffectList.map((item, index) => (
+                            <p key={index} style={{ margin: '0 2px 0 5px' }}>
+                              {item.text}
+                            </p>
+                          ))}
                       </div>
-                    </Fragment>
-                  )
-              )}
-            </div>
-          ))}
-          <div>
-            {mountedEngraving.map((item, index) => (
-              <MountedEngraving
-                key={index}
-                grade={mountedEngravingItem[index].slice(-10, -7)}
-              >
-                <img src={item.Icon} alt="장착된 각인" />
-                <div>
-                  <p className="name">{item.Name}</p>
-                  <p>{mountedEngravingItem[index].slice(-10, -7)}</p>
-                </div>
-              </MountedEngraving>
-            ))}
-          </div>
-        </TrueInner>
-        <FalseInner>
-          {accessoriesList.map((item, index) => (
-            <div key={index}>
-              <Fragment key={index}>
-                <ImageBox>
-                  <ImageBoxColor
-                    key={index}
-                    exist={
-                      filterAccessories[index] !== undefined &&
-                      filterAccessories[index].Grade
-                    }
-                  >
-                    {filterAccessories && filterAccessories[index] && (
-                      <img
-                        key={index}
-                        src={filterAccessories[index].Icon}
-                        alt="아바타"
-                      />
-                    )}
-                  </ImageBoxColor>
-                </ImageBox>
-                <div className="desc">
-                  <p className="type">
-                    {filterAccessories &&
-                      filterAccessories[index] &&
-                      filterAccessories[index].Name}
-                  </p>
-                  {index < 5 && (
-                    <PercentBar
-                      quality={
-                        sortAccessoriesTooltip &&
-                        sortAccessoriesTooltip[index]['Element_001'].value
-                          .qualityValue
-                      }
-                    >
-                      <p>
-                        {
-                          sortAccessoriesTooltip[index]['Element_001'].value
-                            .qualityValue
-                        }
-                      </p>
-                      <div>
-                        <div></div>
-                      </div>
-                    </PercentBar>
-                  )}
-                  {index === 5 && (
-                    <div>
-                      <p style={{ margin: '0 8px', color: '#f8f5a4' }}>
-                        {stoneAndBracelet[0] &&
-                          stoneAndBracelet[0][stoneIndex] &&
-                          stoneAndBracelet[0][stoneIndex].value[
-                            'Element_000'
-                          ].contentStr['Element_000'].contentStr.slice(-5, -4)}
-                      </p>
-                      <BsDot />
-                      <p style={{ margin: '0 8px', color: '#f8f5a4' }}>
-                        {stoneAndBracelet[0] &&
-                          stoneAndBracelet[0][stoneIndex] &&
-                          stoneAndBracelet[0][stoneIndex].value[
-                            'Element_000'
-                          ].contentStr['Element_001'].contentStr.slice(-5, -4)}
-                      </p>
-                      <BsDot />
-                      <p style={{ margin: '0 8px', color: '#832c35' }}>
-                        {stoneAndBracelet[0] &&
-                          stoneAndBracelet[0][stoneIndex] &&
-                          stoneAndBracelet[0][stoneIndex].value[
-                            'Element_000'
-                          ].contentStr['Element_002'].contentStr.slice(-5, -4)}
-                      </p>
                     </div>
-                  )}
-                  <div style={{ display: 'flex' }}>
-                    {index === 6 &&
-                      breceletEffectList.map((item, index) => (
-                        <p key={index} style={{ margin: '0 2px 0 5px' }}>
-                          {item.text}
-                        </p>
-                      ))}
-                  </div>
+                  </Fragment>
                 </div>
-              </Fragment>
-            </div>
-          ))}
-        </FalseInner>
-      </FlexWrap>
-    </ContentWrap>
+              ))}
+          </FalseInner>
+        </FlexWrap>
+      </EquipmentWrap>
+      <ContentWrap>
+        {extinction.map((item, index) => (
+          <GemsItem key={index} item={item} />
+        ))}
+        {prominence.map((item, index) => (
+          <GemsItem key={index} item={item} />
+        ))}
+      </ContentWrap>
+    </div>
   );
 
   // ------------------------- 요까지 장비

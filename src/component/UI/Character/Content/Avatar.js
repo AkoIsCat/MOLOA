@@ -198,6 +198,7 @@ const Avatar = ({ profile, avatars }) => {
                 <ImageBox
                   key={index}
                   exist={
+                    avatars &&
                     avatars[index] !== undefined &&
                     avatars[index] !== null &&
                     avatars[index].Grade === '전설' &&

@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useState } from 'react';
 
 import styled from 'styled-components';
 
@@ -38,6 +38,8 @@ const TrueInner = styled.div`
   flex-direction: column;
   margin: 0 40px;
   justify-content: space-between;
+  position: relative;
+  height: auto;
 
   div {
     display: flex;
@@ -67,6 +69,7 @@ const FalseInner = styled.div`
   display: flex;
   flex-direction: column;
   margin: 0 40px;
+  position: relative;
 
   div {
     display: flex;
@@ -226,44 +229,185 @@ const MountedEngraving = styled.div`
   }
 `;
 
+const EquipmentTooltipWrap = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  position: absolute;
+  background-color: rgb(41, 46, 51, 1);
+  border-radius: 10px;
+  width: 240px;
+  height: 90%;
+  top: 0;
+  left: 21.5%;
+  right: 0;
+  bottom: 0;
+  color: #fff;
+  font-family: 'Nanum Gothic';
+
+  div {
+    margin: 0;
+    padding: 0;
+  }
+
+  .defaultEffectWrap {
+    width: 80%;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 0;
+    align-items: center;
+    border-bottom: 1px solid #c1c1c1;
+    padding: 10px;
+
+    div {
+      width: auto;
+      margin: 0 auto;
+      padding: 5px 0px;
+    }
+  }
+
+  .vitalityWrap {
+    width: 80%;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-bottom: 1px solid #c1c1c1;
+    padding: 10px;
+
+    div {
+      width: auto;
+      margin: 0 auto;
+      padding: 5px 0px;
+    }
+  }
+
+  .elixirWrap {
+    width: 80%;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-bottom: 1px solid #c1c1c1;
+    padding: 10px;
+
+    div {
+      width: auto;
+      display: flex;
+      flex-direction: column;
+      margin: 0 auto;
+      padding: 5px 0px;
+      text-align: center;
+    }
+  }
+
+  .levelWrap {
+    width: 80%;
+    height: 50px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px;
+
+    div {
+      display: flex;
+      margin: 0 auto;
+      padding: 5px 0px;
+    }
+  }
+`;
+
+const AccessoriesTooltipWrap = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  position: absolute;
+  background-color: rgb(41, 46, 51, 1);
+  border-radius: 10px;
+  width: 240px;
+  height: 90%;
+  top: 0;
+  left: 22.5%;
+  right: 0;
+  bottom: 0;
+  color: #fff;
+  font-family: 'Nanum Gothic';
+
+  div {
+    margin: 0;
+    padding: 0;
+  }
+
+  .defaultEffectWrap {
+    width: 80%;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 0;
+    align-items: center;
+    padding: 10px;
+    border-bottom: 1px solid #c1c1c1;
+    div {
+      width: auto;
+      margin: 0 auto;
+      padding: 5px 0px;
+    }
+  }
+
+  .vitalityWrap {
+    width: 80%;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px;
+
+    div {
+      width: auto;
+      margin: 0 auto;
+      padding: 5px 0px;
+    }
+  }
+
+  .elixirWrap {
+    width: 80%;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px;
+
+    div {
+      width: auto;
+      display: flex;
+      flex-direction: column;
+      margin: 0 auto;
+      padding: 5px 0px;
+      text-align: center;
+    }
+  }
+
+  .levelWrap {
+    width: 80%;
+    height: 50px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px;
+
+    div {
+      display: flex;
+      margin: 0 auto;
+      padding: 5px 0px;
+    }
+  }
+`;
+
 const CharacterEquipmentPart = ({ equipment, engraving }) => {
   // 장비 정보 조회
-  const equipmentList = [
-    {
-      Type: '투구',
-      Tooltip: '머리장식',
-    },
-    {
-      Type: '어깨',
-      Tooltip: '견갑',
-    },
-    {
-      Type: '상의',
-      Tooltip: '상의',
-    },
-    {
-      Type: '하의',
-      Tooltip: '하의',
-    },
-    {
-      Type: '장갑',
-      Tooltip: '장갑',
-    },
-    {
-      Type: '무기',
-      Tooltip: '수호의 바다 절망의 대지 투쟁의 산맹 진리의 창공 ',
-    },
-  ];
-
-  const accessoriesList = [
-    { Type: '목걸이' },
-    { Type: '귀걸이' },
-    { Type: '귀걸이' },
-    { Type: '반지' },
-    { Type: '반지' },
-    { Type: '팔찌' },
-    { Type: '어빌리티 스톤' },
-  ];
 
   const filterAccessories =
     equipment &&
@@ -303,6 +447,270 @@ const CharacterEquipmentPart = ({ equipment, engraving }) => {
     equipmentTooltip[10],
     equipmentTooltip[11],
     equipmentTooltip[12],
+  ];
+
+  // 장비 툴팁 추출
+  const equipmentEffectTooltip = [];
+  const accessoriesEffectTooltip = []; // 악세 툴팁
+
+  if (sortEquipmentTooltip) {
+    const filterTooltip = [];
+    for (let i = 0; i <= sortEquipmentTooltip.length - 1; i++) {
+      const filterValue = [];
+
+      // 기본, 추가효과, 세트레벨
+      for (let key in sortEquipmentTooltip[i]) {
+        if (sortEquipmentTooltip[i][key].type === 'ItemPartBox') {
+          filterValue.push({
+            effect: sortEquipmentTooltip[i][key].value['Element_001'],
+          });
+        }
+      }
+
+      // 엘릭서
+      for (let key in sortEquipmentTooltip[i]) {
+        if (
+          sortEquipmentTooltip[i][key].type === 'IndentStringGroup' &&
+          sortEquipmentTooltip[i][key].value['Element_000'].contentStr[
+            'Element_000'
+          ].bPoint
+        ) {
+          filterValue.push({
+            Elixir:
+              sortEquipmentTooltip[i][key].value['Element_000'].contentStr[
+                'Element_000'
+              ]?.contentStr,
+            Elixir2:
+              sortEquipmentTooltip[i][key].value['Element_000']?.contentStr[
+                'Element_001'
+              ]?.contentStr,
+          });
+        }
+      }
+
+      // 아이템 레벨
+      for (let key in sortEquipmentTooltip[i]) {
+        if (sortEquipmentTooltip[i][key].type === 'ItemTitle') {
+          filterValue.push({
+            itemName: sortEquipmentTooltip[i][key].value.leftStr0,
+            quality: sortEquipmentTooltip[i][key].value.qualityValue,
+            itemLevel: sortEquipmentTooltip[i][key].value.leftStr2,
+          });
+        }
+      }
+
+      filterTooltip.push({
+        tooltip: filterValue,
+      });
+    }
+
+    for (let i = 0; i < filterTooltip.length; i++) {
+      const splitBR = filterTooltip[i].tooltip[0].effect.split('<BR>');
+      const removeFont = filterTooltip[i].tooltip[2]?.effect?.replace(
+        /<\/?FONT[^>]*>/gi,
+        ''
+      );
+
+      const elixir1 = filterTooltip[i].tooltip[3]?.Elixir?.replace(
+        /<\/?FONT[^>]*>/g,
+        ''
+      ).split(/<br>|<BR>/);
+
+      const elixir2 = filterTooltip[i].tooltip[3]?.Elixir2?.replace(
+        /<\/?FONT[^>]*>/gi,
+        ''
+      ).split(/<br>|<BR>/);
+
+      const itemName = filterTooltip[i].tooltip[
+        filterTooltip[i].tooltip.length - 1
+      ].itemName.replace(/<\/?FONT[^>]*>/gi, '');
+
+      const itemLevel = filterTooltip[i].tooltip[
+        filterTooltip[i].tooltip.length - 1
+      ].itemLevel.replace(/<\/?FONT[^>]*>/gi, '');
+
+      const itemQuality =
+        filterTooltip[i].tooltip[filterTooltip[i].tooltip.length - 1].quality;
+
+      if (i < 5) {
+        equipmentEffectTooltip.push({
+          physics: splitBR[0],
+          magic: splitBR[1],
+          characteristic: splitBR[2],
+          health: splitBR[3],
+          vitality: filterTooltip[i].tooltip[1].effect,
+          level: removeFont,
+          itemName,
+          itemLevel,
+          itemQuality,
+          elixir1,
+          elixir2,
+        });
+      } else {
+        equipmentEffectTooltip.push({
+          offensePower: filterTooltip[i].tooltip[0].effect,
+          additionalDamage: filterTooltip[i].tooltip[1].effect,
+          level: removeFont,
+          itemName,
+          itemLevel,
+          itemQuality,
+        });
+      }
+    }
+  }
+
+  if (sortAccessoriesTooltip) {
+    const filterTooltip = [];
+    for (let i = 0; i < sortAccessoriesTooltip.length; i++) {
+      const filterValue = [];
+
+      if (i !== sortAccessoriesTooltip.length) {
+        // 특성
+        for (let key in sortAccessoriesTooltip[i]) {
+          if (sortAccessoriesTooltip[i][key].type === 'ItemPartBox') {
+            filterValue.push({
+              effect: sortAccessoriesTooltip[i][key].value['Element_001'],
+            });
+          }
+        }
+
+        // 각인
+        for (let key in sortAccessoriesTooltip[i]) {
+          if (sortAccessoriesTooltip[i][key].type === 'IndentStringGroup') {
+            filterValue.push({
+              engrave1:
+                sortAccessoriesTooltip[i][key]?.value['Element_000']
+                  ?.contentStr['Element_000']?.contentStr,
+              engrave2:
+                sortAccessoriesTooltip[i][key]?.value['Element_000']
+                  ?.contentStr['Element_001']?.contentStr,
+              engrave3:
+                sortAccessoriesTooltip[i][key]?.value['Element_000']
+                  ?.contentStr['Element_002']?.contentStr,
+            });
+          }
+        }
+      }
+
+      // 팔찌;
+      if (i === sortAccessoriesTooltip.length) {
+        for (let key in sortAccessoriesTooltip[i + 1]) {
+          if (sortAccessoriesTooltip[i + 1][key].type === 'ItemPartBox') {
+            console.log(
+              sortAccessoriesTooltip[i + 1][key].value['Element_001']
+            );
+            filterValue.push({
+              effect: sortAccessoriesTooltip[i + 1][key].value['Element_001'],
+            });
+          }
+        }
+      }
+
+      filterTooltip.push({
+        tooltip: filterValue,
+      });
+    }
+
+    for (let i = 0; i < filterTooltip.length; i++) {
+      console.log(filterTooltip[i]);
+
+      const effectBR = filterTooltip[i].tooltip[1]?.effect?.split('<BR>');
+
+      const engrave1 = filterTooltip[i].tooltip[2]?.engrave1
+        ?.replace(/(<([^>]+)>|\[|\]|<BR>)/gi, '')
+        .replace(/(활성도\s*\+\s*\d+)/gi, '$1 ')
+        .replace(/활성도\s+/gi, '');
+
+      const engrave2 = filterTooltip[i].tooltip[2]?.engrave2
+        ?.replace(/(<([^>]+)>|\[|\]|<BR>)/gi, '')
+        .replace(/(활성도\s*\+\s*\d+)/gi, '$1 ')
+        .replace(/활성도\s+/gi, '');
+
+      const engrave3 = filterTooltip[i].tooltip[2]?.engrave3
+        ?.replace(/(<([^>]+)>|\[|\]|<BR>)/gi, '')
+        .replace(/(활성도\s*\+\s*\d+)/gi, '$1 ')
+        .replace(/활성도\s+/gi, '');
+
+      const breceletEffect = filterTooltip[
+        filterTooltip.length - 1
+      ].tooltip[0]?.effect
+        ?.replace(/<\/?img[^>]*>/g, '')
+        .replace(/undefined/g, '');
+
+      let effectsplitBR = breceletEffect?.split('<BR>');
+
+      if (effectsplitBR) {
+        for (let j = 0; j < effectsplitBR.length; j++) {
+          if (effectsplitBR[j].includes('[')) {
+            const name = effectsplitBR[j].split('</FONT>]');
+            effectsplitBR[j] = {
+              name: name[0].replace('[', '').replace("<FONT COLOR=''>", ''),
+              effect: name[1],
+            };
+          }
+
+          if (
+            typeof effectsplitBR[j] === 'string' &&
+            effectsplitBR[j].includes('</FONT>')
+          ) {
+            effectsplitBR[j] = effectsplitBR[j].replace(/<\/?FONT[^>]*>/gi, '');
+          }
+        }
+      }
+
+      if (i !== filterTooltip.length - 1) {
+        accessoriesEffectTooltip.push({
+          characteristic: effectBR,
+          engrave1,
+          engrave2,
+          engrave3,
+        });
+      } else {
+        accessoriesEffectTooltip.push({ breceletEffect: effectsplitBR });
+      }
+    }
+  }
+
+  const equipmentList = [
+    {
+      Type: '투구',
+      Tooltip: '머리장식',
+      TooltipValue: equipmentEffectTooltip[0],
+    },
+    {
+      Type: '어깨',
+      Tooltip: '견갑',
+      TooltipValue: equipmentEffectTooltip[1],
+    },
+    {
+      Type: '상의',
+      Tooltip: '상의',
+      TooltipValue: equipmentEffectTooltip[2],
+    },
+    {
+      Type: '하의',
+      Tooltip: '하의',
+      TooltipValue: equipmentEffectTooltip[3],
+    },
+    {
+      Type: '장갑',
+      Tooltip: '장갑',
+      TooltipValue: equipmentEffectTooltip[4],
+    },
+    {
+      Type: '무기',
+      TooltipValue: equipmentEffectTooltip[5],
+    },
+  ];
+
+  const accessoriesList = [
+    { Type: '목걸이', TooltipValue: accessoriesEffectTooltip[0] },
+    { Type: '귀걸이', TooltipValue: accessoriesEffectTooltip[1] },
+    { Type: '귀걸이', TooltipValue: accessoriesEffectTooltip[2] },
+    { Type: '반지', TooltipValue: accessoriesEffectTooltip[3] },
+    { Type: '반지', TooltipValue: accessoriesEffectTooltip[4] },
+    { Type: '어빌리티 스톤', TooltipValue: accessoriesEffectTooltip[5] },
+    { Type: '팔찌', TooltipValue: accessoriesEffectTooltip[6] },
   ];
 
   const stoneAndBracelet = [];
@@ -403,44 +811,236 @@ const CharacterEquipmentPart = ({ equipment, engraving }) => {
     .filter((obj) => obj.type === 'EngraveSkillTitle')
     .map((obj) => obj.value.leftText);
 
+  const EquipmentTooltipBox = ({ item, index }) => {
+    const [showTooltip, setShowTooltip] = useState(false);
+
+    return (
+      <Fragment>
+        <div key={index}>
+          {showTooltip &&
+            (item.Type !== '무기' ? (
+              <EquipmentTooltipWrap>
+                <div className="defaultEffectWrap">
+                  <div>{item.TooltipValue.physics}</div>
+                  <div>{item.TooltipValue.magic}</div>
+                  <div>{item.TooltipValue.characteristic}</div>
+                  <div>{item.TooltipValue.health}</div>
+                </div>
+                <div className="vitalityWrap">
+                  <div>{item.TooltipValue.vitality}</div>
+                </div>
+                <div className="elixirWrap">
+                  <div>
+                    {item.TooltipValue.elixir1 &&
+                      item.TooltipValue.elixir1.map((item, index) => (
+                        <div key={index} className="exlirItem">
+                          {item}
+                        </div>
+                      ))}
+                  </div>
+                  <div>
+                    {item.TooltipValue.elixir2 &&
+                      item.TooltipValue.elixir2.map((item, index) => (
+                        <div key={index} className="exlirItem">
+                          {item}
+                        </div>
+                      ))}
+                  </div>
+                </div>
+                <div className="levelWrap">
+                  <div>{item.TooltipValue.level}</div>
+                  <div>{item.TooltipValue.itemName}</div>
+                  <div>{item.TooltipValue.itemLevel}</div>
+                </div>
+              </EquipmentTooltipWrap>
+            ) : (
+              <EquipmentTooltipWrap>
+                <div className="defaultEffectWrap">
+                  <div>{item.TooltipValue.offensePower}</div>
+                </div>
+                <div className="vitalityWrap">
+                  <div>{item.TooltipValue.additionalDamage}</div>
+                </div>
+                <div className="levelWrap">
+                  <div>{item.TooltipValue.level}</div>
+                  <div>{item.TooltipValue.itemName}</div>
+                  <div>{item.TooltipValue.itemLevel}</div>
+                </div>
+              </EquipmentTooltipWrap>
+            ))}
+          {equipment.map(
+            (items) =>
+              items.Type === item.Type && (
+                <Fragment key={index}>
+                  <ImageBox
+                    onMouseOver={() => setShowTooltip(true)}
+                    onMouseLeave={() => setShowTooltip(false)}
+                  >
+                    <ImageBoxColor key={index} exist={items.Grade}>
+                      <img src={items.Icon} alt="아바타" />
+                    </ImageBoxColor>
+                  </ImageBox>
+                  <div className="desc">
+                    <p className="type">{items.Name}</p>
+                    <PercentBar
+                      quality={
+                        sortEquipmentTooltip[index] &&
+                        sortEquipmentTooltip[index]['Element_001'].value
+                          .qualityValue
+                      }
+                    >
+                      <p>
+                        {sortEquipmentTooltip[index] &&
+                          sortEquipmentTooltip[index]['Element_001'].value
+                            .qualityValue}
+                      </p>
+                      <div>
+                        <div></div>
+                      </div>
+                    </PercentBar>
+                  </div>
+                </Fragment>
+              )
+          )}
+        </div>
+      </Fragment>
+    );
+  };
+
+  const AccessoriesTooltipBox = ({ item, index }) => {
+    const [showTooltip, setShowTooltip] = useState(false);
+
+    return (
+      <div key={index}>
+        {showTooltip &&
+          (item.Type !== '팔찌' ? (
+            <AccessoriesTooltipWrap>
+              <div className="defaultEffectWrap">
+                <div>
+                  {item.TooltipValue.characteristic[0] &&
+                    item.TooltipValue.characteristic[0]}
+                </div>
+                <div>
+                  {item.TooltipValue.characteristic[1] &&
+                    item.TooltipValue.characteristic[1]}
+                </div>
+              </div>
+              <div className="vitalityWrap">
+                <div>{item.TooltipValue.engrave1}</div>
+                <div>{item.TooltipValue.engrave2}</div>
+                <div>{item.TooltipValue.engrave3}</div>
+              </div>
+            </AccessoriesTooltipWrap>
+          ) : (
+            <AccessoriesTooltipWrap>
+              <div className="vitalityWrap">
+                {item.TooltipValue.breceletEffect.map((items, index) =>
+                  !items.name ? (
+                    <div key={index}>{items}</div>
+                  ) : (
+                    <div className="elixirWrap" key={index}>
+                      <div>{items.name}</div>
+                      <div>{items.effect}</div>
+                    </div>
+                  )
+                )}
+              </div>
+            </AccessoriesTooltipWrap>
+          ))}
+        <Fragment key={index}>
+          <ImageBox>
+            <ImageBoxColor
+              key={index}
+              exist={
+                filterAccessories[index] !== undefined &&
+                filterAccessories[index].Grade
+              }
+            >
+              {filterAccessories && filterAccessories[index] && (
+                <img
+                  key={index}
+                  src={filterAccessories[index].Icon}
+                  alt="아바타"
+                  onMouseOver={() => setShowTooltip(true)}
+                  onMouseLeave={() => setShowTooltip(false)}
+                />
+              )}
+            </ImageBoxColor>
+          </ImageBox>
+          <div className="desc">
+            <p className="type">
+              {filterAccessories &&
+                filterAccessories[index] &&
+                filterAccessories[index].Name}
+            </p>
+            {index < 5 && (
+              <PercentBar
+                quality={
+                  sortAccessoriesTooltip &&
+                  sortAccessoriesTooltip[index] &&
+                  sortAccessoriesTooltip[index]['Element_001'].value
+                    .qualityValue
+                }
+                key={index}
+              >
+                <p>
+                  {sortAccessoriesTooltip &&
+                    sortAccessoriesTooltip[index] &&
+                    sortAccessoriesTooltip[index]['Element_001'].value
+                      .qualityValue}
+                </p>
+                <div>
+                  <div></div>
+                </div>
+              </PercentBar>
+            )}
+            {index === 5 && (
+              <div>
+                <p style={{ margin: '0 8px', color: '#f8f5a4' }}>
+                  {stoneAndBracelet[0] &&
+                    stoneAndBracelet[0][stoneIndex] &&
+                    stoneAndBracelet[0][stoneIndex].value[
+                      'Element_000'
+                    ].contentStr['Element_000'].contentStr.slice(-5, -4)}
+                </p>
+                <BsDot />
+                <p style={{ margin: '0 8px', color: '#f8f5a4' }}>
+                  {stoneAndBracelet[0] &&
+                    stoneAndBracelet[0][stoneIndex] &&
+                    stoneAndBracelet[0][stoneIndex].value[
+                      'Element_000'
+                    ].contentStr['Element_001'].contentStr.slice(-5, -4)}
+                </p>
+                <BsDot />
+                <p style={{ margin: '0 8px', color: '#832c35' }}>
+                  {stoneAndBracelet[0] &&
+                    stoneAndBracelet[0][stoneIndex] &&
+                    stoneAndBracelet[0][stoneIndex].value[
+                      'Element_000'
+                    ].contentStr['Element_002'].contentStr.slice(-5, -4)}
+                </p>
+              </div>
+            )}
+            <div style={{ display: 'flex' }}>
+              {index === 6 &&
+                breceletEffectList.map((item, index) => (
+                  <p key={index} style={{ margin: '0 2px 0 4px' }}>
+                    {item.text}
+                  </p>
+                ))}
+            </div>
+          </div>
+        </Fragment>
+      </div>
+    );
+  };
+
   return (
     <EquipmentWrap>
       <FlexWrap>
         <TrueInner>
           {equipmentList.map((item, index) => (
-            <div key={index}>
-              {equipment.map(
-                (items) =>
-                  items.Type === item.Type && (
-                    <Fragment key={index}>
-                      <ImageBox>
-                        <ImageBoxColor key={index} exist={items.Grade}>
-                          <img src={items.Icon} alt="아바타" />
-                        </ImageBoxColor>
-                      </ImageBox>
-                      <div className="desc">
-                        <p className="type">{items.Name}</p>
-                        <PercentBar
-                          quality={
-                            sortEquipmentTooltip[index] &&
-                            sortEquipmentTooltip[index]['Element_001'].value
-                              .qualityValue
-                          }
-                        >
-                          <p>
-                            {sortEquipmentTooltip[index] &&
-                              sortEquipmentTooltip[index]['Element_001'].value
-                                .qualityValue}
-                          </p>
-                          <div>
-                            <div></div>
-                          </div>
-                        </PercentBar>
-                      </div>
-                    </Fragment>
-                  )
-              )}
-            </div>
+            <EquipmentTooltipBox item={item} index={index} key={index} />
           ))}
           <div>
             {mountedEngraving &&
@@ -461,98 +1061,7 @@ const CharacterEquipmentPart = ({ equipment, engraving }) => {
         <FalseInner>
           {accessoriesList &&
             accessoriesList.map((item, index) => (
-              <div key={index}>
-                <Fragment key={index}>
-                  <ImageBox>
-                    <ImageBoxColor
-                      key={index}
-                      exist={
-                        filterAccessories[index] !== undefined &&
-                        filterAccessories[index].Grade
-                      }
-                    >
-                      {filterAccessories && filterAccessories[index] && (
-                        <img
-                          key={index}
-                          src={filterAccessories[index].Icon}
-                          alt="아바타"
-                        />
-                      )}
-                    </ImageBoxColor>
-                  </ImageBox>
-                  <div className="desc">
-                    <p className="type">
-                      {filterAccessories &&
-                        filterAccessories[index] &&
-                        filterAccessories[index].Name}
-                    </p>
-                    {index < 5 && (
-                      <PercentBar
-                        quality={
-                          sortAccessoriesTooltip &&
-                          sortAccessoriesTooltip[index] &&
-                          sortAccessoriesTooltip[index]['Element_001'].value
-                            .qualityValue
-                        }
-                      >
-                        <p>
-                          {sortAccessoriesTooltip &&
-                            sortAccessoriesTooltip[index] &&
-                            sortAccessoriesTooltip[index]['Element_001'].value
-                              .qualityValue}
-                        </p>
-                        <div>
-                          <div></div>
-                        </div>
-                      </PercentBar>
-                    )}
-                    {index === 5 && (
-                      <div>
-                        <p style={{ margin: '0 8px', color: '#f8f5a4' }}>
-                          {stoneAndBracelet[0] &&
-                            stoneAndBracelet[0][stoneIndex] &&
-                            stoneAndBracelet[0][stoneIndex].value[
-                              'Element_000'
-                            ].contentStr['Element_000'].contentStr.slice(
-                              -5,
-                              -4
-                            )}
-                        </p>
-                        <BsDot />
-                        <p style={{ margin: '0 8px', color: '#f8f5a4' }}>
-                          {stoneAndBracelet[0] &&
-                            stoneAndBracelet[0][stoneIndex] &&
-                            stoneAndBracelet[0][stoneIndex].value[
-                              'Element_000'
-                            ].contentStr['Element_001'].contentStr.slice(
-                              -5,
-                              -4
-                            )}
-                        </p>
-                        <BsDot />
-                        <p style={{ margin: '0 8px', color: '#832c35' }}>
-                          {stoneAndBracelet[0] &&
-                            stoneAndBracelet[0][stoneIndex] &&
-                            stoneAndBracelet[0][stoneIndex].value[
-                              'Element_000'
-                            ].contentStr['Element_002'].contentStr.slice(
-                              -5,
-                              -4
-                            )}
-                        </p>
-                      </div>
-                    )}
-                    <div style={{ display: 'flex' }}>
-                      {index === 6 &&
-                        breceletEffectList.map((item, index) => (
-                          <p key={index} style={{ margin: '0 2px 0 4px' }}>
-                            {item.text}
-                          </p>
-                        ))}
-                    </div>
-                  </div>
-                </Fragment>
-              </div>
+              <AccessoriesTooltipBox item={item} index={index} key={index} />
             ))}
         </FalseInner>
       </FlexWrap>

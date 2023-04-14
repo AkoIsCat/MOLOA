@@ -1,4 +1,7 @@
 import styled from 'styled-components';
+import GradeFrame from '../asset/icon/img_card_grade.png';
+import Awake from '../asset/icon/img_profile_awake.png';
+import { BsDot } from 'react-icons/bs';
 
 import Aside from '../component/UI/Character/Side/Aside'; // 좌측 캐릭터 정보
 import Header from '../component/header/Header'; // 헤더
@@ -8,11 +11,15 @@ import Avatar from '../component/UI/Character/Content/Avatar'; // 아바타탭
 import CharacterEquipmentPart from '../component/UI/Character/Content/CharacterEquipmentPart'; // 전투탭 - 장비&악세&각인
 import CharacterGemsPart from '../component/UI/Character/Content/CharacterGemsPart'; // 전투탭 - 보석
 import Characteristics from '../component/UI/Character/Content/Characteristics'; // 전투탭 - 특성&각인&트포
+import CharacterCards from '../component/UI/Character/Content/CharacterCards'; // 전투탭 - 카드
 
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import { Fragment } from 'react';
 
 const ContainerBox = styled(Container)`
+  min-height: 100vh;
+  padding-bottom: 50px;
   height: auto;
   position: relative;
 `;
@@ -91,11 +98,11 @@ const NavItem = styled.li`
 `;
 
 const InnerSection = styled.div`
-  width: 760px;
+  width: 95%;
   height: auto;
   background: #292e33;
   padding: 30px 0;
-  margin: 0 5px 0 30px;
+  margin: 0 5px 0 22px;
   border-radius: 10px;
   display: flex;
   justify-content: center;
@@ -115,22 +122,158 @@ const ContentWrap = styled.div`
   margin: 20px 0 0 0;
 `;
 
-const ImageBoxColor = styled.div`
-  width: 100%;
-  height: 100%;
-  background: ${(props) =>
-    props.exist === '전설'
-      ? 'linear-gradient(135deg, #362003 0%, #9e5f04 100%)'
-      : props.exist === '영웅'
-      ? 'linear-gradient(135deg, #261331 0%, #480d5d 100%)'
-      : props.exist === '희귀'
-      ? 'linear-gradient(135deg, #111f2c 0%, #113d5d 100%)'
-      : props.exist === '고대'
-      ? 'linear-gradient(135deg, #3d3325 0%, #dcc999 100%)'
-      : props.exist === '유물'
-      ? 'linear-gradient(135deg, #341a09 0%, #a24006 100%)'
-      : '#292e33'};
-  border-radius: 10px;
+const CharacteristicsBox = styled.div`
+  width: 103px;
+  height: 35px;
+  background: #292e33;
+  border-radius: 50px;
+  text-align: center;
+  line-height: 35px;
+  font-family: 'Nanum Gothic';
+  color: #fff;
+`;
+
+const CardEffectNames = styled.div`
+  width: auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px 0px 20px;
+
+  .cardEffect {
+    color: #fff;
+    font-family: 'Nanum Gothic';
+    display: flex;
+    align-items: center;
+    margin-right: 15px;
+  }
+`;
+
+const CardWrap = styled.div`
+  width: auto;
+  height: auto;
+  padding: 10px;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+
+  ul {
+    list-style: none;
+    display: flex;
+    justify-content: space-around;
+    padding: 5px;
+    position: relative;
+  }
+
+  .effectWrapWrap {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+
+    .effectWrap {
+      width: 43%;
+      margin: 15px 40px 15px 5px;
+
+      .effectName {
+        color: #e4b021;
+        font-family: 'Nanum Gothic';
+        margin: 10px 0;
+      }
+      .effectDesc {
+        color: #fff;
+        font-family: 'Nanum Gothic';
+      }
+    }
+  }
+`;
+
+const PhotoFrame = styled.li`
+  margin-right: ${(props) => props.translate + 13}px;
+  &::after {
+    display: flex;
+    width: 114px;
+    height: 170px;
+    position: absolute;
+    transform: translateX(${(props) => props.translate * 120}px);
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: url(${GradeFrame});
+    content: '';
+    background-position: ${(props) =>
+      props.grade === '전설'
+        ? '-495px 0'
+        : props.grade === '영웅'
+        ? '-372px 0'
+        : props.grade === '희귀'
+        ? '-249px 0'
+        : props.grade === '고급'
+        ? '-126px 0'
+        : '0px 0'};
+  }
+
+  img {
+    padding: 5px 0px;
+    width: 105.5px;
+    height: auto;
+    object-fit: cover;
+  }
+
+  .card-awake {
+    position: absolute;
+    background-image: url(${Awake});
+    background-repeat: no-repeat;
+    transform: translateX(${(props) => props.translate * 120}px);
+    width: 120px;
+    height: 30px;
+    left: 2%;
+    right: 0;
+    bottom: 24%;
+
+    .awake {
+      width: ${(props) =>
+        props.count === 1
+          ? '16px'
+          : props.count === 2
+          ? '36px'
+          : props.count === 3
+          ? '55px'
+          : props.count === 4
+          ? '75px'
+          : props.count === 5
+          ? '100px'
+          : '0px'};
+      position: absolute;
+      height: 100%;
+      left: 0%;
+      right: 0;
+      top: 18%;
+      background: url(${Awake}) no-repeat 0 -36px;
+      // transform: translateX(${(props) => props.translate * 120}px);
+    }
+  }
+`;
+
+const CardListWrap = styled.div`
+  .name {
+    font-size: 14px;
+    padding: 0 10px;
+    color: ${(props) =>
+      props.grade === '전설'
+        ? '#fe9600'
+        : props.grade === '영웅'
+        ? '#9e24ca'
+        : props.grade === '희귀'
+        ? '#113d5d'
+        : props.grade === '고급'
+        ? '#46812d'
+        : '#fff'};
+    font-family: 'Nanum Gothic';
+    margin-top: 7px;
+    margin-right: 13px;
+    text-align: center;
+  }
 `;
 
 const lostArkKey =
@@ -338,7 +481,53 @@ const Character = () => {
     // loadCollectibles();
   }, [loadCharacterUrl, commonCharacterUrl, id]);
 
+  // -------------------------- 카드
+
+  const cardList = []; // 장착 카드 목록
+  const effectList = []; // 카드 효과 목록
+  const totalEffect = []; // 총 카드 효과 목록
+
+  // 필요한 카드 정보 추출
+  if (cards) {
+    for (let i = 0; i <= cards.Cards.length - 1; i++) {
+      cardList.push(cards.Cards[i]);
+    }
+
+    for (let key in cards.Effects) {
+      const value = cards.Effects[key];
+
+      const regex = /\d+/g;
+
+      const lastEffectCard =
+        value.Items[value.Items.length - 1] &&
+        value.Items[value.Items.length - 1].Name.split('(');
+
+      const matches =
+        lastEffectCard && lastEffectCard[1] && lastEffectCard[1].match(regex);
+
+      effectList.push({
+        slots: value.CardSlots,
+        index: value.Index,
+        items: value.Items,
+        lastEffect: lastEffectCard && lastEffectCard[0],
+        awake: matches && matches,
+      });
+    }
+
+    for (let j = 0; j <= effectList.length - 1; j++) {
+      for (let i = 0; i <= effectList[j].items.length - 1; i++) {
+        // console.log(effectList[j].items);
+        totalEffect.push({
+          Name: effectList[j].items[i].Name,
+          Description: effectList[j].items[i].Description,
+        });
+      }
+    }
+  }
+
   // --------------------------
+
+  // console.log(effectList, totalEffect);
 
   const equipmentItem = equipment && (
     <div
@@ -351,6 +540,7 @@ const Character = () => {
         profile={profile}
         engraving={engraving}
       />
+      <CharacterCards cards={cards} />
     </div>
   );
 

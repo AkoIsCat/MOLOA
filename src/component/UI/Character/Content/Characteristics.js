@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { useState } from 'react';
+import React, { useState } from 'react';
 
 const ContentWrap = styled.div`
   width: ${(props) => (props.characteristics ? '32%' : '100%')};
@@ -118,6 +118,7 @@ const EffectWrap = styled.div`
     position: absolute;
     width: 330px;
     height: auto;
+    line-height: 1.7em;
     background-color: rgb(41, 46, 51);
     border-radius: 10px;
     top: 50%;
@@ -254,8 +255,6 @@ const Characteristics = ({ combatSkills, profile, engraving }) => {
         }
       }
     }
-
-    console.log(filterSkills);
   }
 
   return (
@@ -308,10 +307,8 @@ const Characteristics = ({ combatSkills, profile, engraving }) => {
           </CharacteristicsBox>
           <SkillWrap>
             {filterSkills.map((item, index) => (
-              <div className="skillWrap">
-                <div key={index} className="skillName">
-                  {item.Name}
-                </div>
+              <div className="skillWrap" key={index}>
+                <div className="skillName">{item.Name}</div>
                 <TripodWrap>
                   {item.Tripods.map(
                     (tripodItem, indexs) =>
@@ -335,4 +332,4 @@ const Characteristics = ({ combatSkills, profile, engraving }) => {
   );
 };
 
-export default Characteristics;
+export default React.memo(Characteristics);

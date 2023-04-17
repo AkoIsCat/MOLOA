@@ -1,8 +1,8 @@
 import React, { Fragment } from 'react';
 import styled from 'styled-components';
 
-import GradeFrame from '../../../../asset/icon/img_card_grade.png';
-import Awake from '../../../../asset/icon/img_profile_awake.png';
+import GradeFrame from '../../../../../asset/icon/img_card_grade.png';
+import Awake from '../../../../../asset/icon/img_profile_awake.png';
 import { BsDot } from 'react-icons/bs';
 
 const ContentWrap = styled.div`
@@ -246,52 +246,56 @@ const CharacterCards = ({ cards }) => {
             )}
           </div>
         </CardEffectNames>
-        <CardWrap>
-          <ul>
-            {defaultCard.map((item, index) => (
-              <CardListWrap
-                key={index}
-                grade="true"
-                style={{ position: 'absolute' }}
-              >
-                <PhotoFrame
+        {cards && (
+          <CardWrap>
+            <ul>
+              {defaultCard.map((item, index) => (
+                <CardListWrap
+                  key={index}
                   grade="true"
-                  count="true"
-                  translate={index}
-                  default={true}
-                />
-              </CardListWrap>
-            ))}
-            {cardList.map((item, index) => (
-              <CardListWrap key={index} grade={item.Grade}>
-                <PhotoFrame
-                  grade={item.Grade}
-                  translate={index}
-                  count={item.AwakeCount}
-                  default={false}
+                  style={{ position: 'absolute' }}
                 >
-                  <img src={item.Icon} alt={item.Name} />
-                  <div style={{ position: 'relative' }}>
-                    <div className="card-awake">
-                      <div className="awake"></div>
-                    </div>
-                  </div>
-                </PhotoFrame>
-                <div className="name">{item.Name}</div>
-              </CardListWrap>
-            ))}
-          </ul>
-          <div>
-            <div className="effectWrapWrap">
-              {totalEffect.map((item, index) => (
-                <div className="effectWrap" key={index}>
-                  <div className="effectName">{item.Name}</div>
-                  <div className="effectDesc">{item.Description}</div>
-                </div>
+                  <PhotoFrame
+                    grade="true"
+                    count="true"
+                    translate={index}
+                    default={true}
+                    cards={cards}
+                  />
+                </CardListWrap>
               ))}
+              {cardList.map((item, index) => (
+                <CardListWrap key={index} grade={item.Grade}>
+                  <PhotoFrame
+                    grade={item.Grade}
+                    translate={index}
+                    count={item.AwakeCount}
+                    default={false}
+                  >
+                    <img src={item.Icon} alt={item.Name} />
+                    <div style={{ position: 'relative' }}>
+                      <div className="card-awake">
+                        <div className="awake"></div>
+                      </div>
+                    </div>
+                  </PhotoFrame>
+                  <div className="name">{item.Name}</div>
+                </CardListWrap>
+              ))}
+            </ul>
+            <div>
+              <div className="effectWrapWrap">
+                {totalEffect.map((item, index) => (
+                  <div className="effectWrap" key={index}>
+                    <div className="effectName">{item.Name}</div>
+                    <div className="effectDesc">{item.Description}</div>
+                  </div>
+                ))}
+              </div>
             </div>
-          </div>
-        </CardWrap>
+          </CardWrap>
+        )}
+        {!cards && <div></div>}
       </ContentWrap>
     </div>
   );

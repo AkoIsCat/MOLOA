@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import React, { Fragment, useEffect, useState, useCallback } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 
 import { HiOutlineSpeakerphone } from 'react-icons/hi';
 import ContentBox from './ContentBox';

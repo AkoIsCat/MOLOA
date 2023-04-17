@@ -406,6 +406,25 @@ const AccessoriesTooltipWrap = styled.div`
   }
 `;
 
+const EffectNameColorBox = styled.div`
+  width: 80%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px;
+  color: ${(props) => props.color === 0 && '#e4b021'};
+
+  div {
+    width: auto;
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto;
+    padding: 5px 0px;
+    text-align: center;
+  }
+`;
+
 const CharacterEquipmentPart = ({ equipment, engraving }) => {
   // 장비 정보 조회
 
@@ -453,7 +472,7 @@ const CharacterEquipmentPart = ({ equipment, engraving }) => {
   const equipmentEffectTooltip = [];
   const accessoriesEffectTooltip = []; // 악세 툴팁
 
-  if (sortEquipmentTooltip) {
+  if (sortEquipmentTooltip[0] !== undefined) {
     const filterTooltip = [];
     for (let i = 0; i <= sortEquipmentTooltip.length - 1; i++) {
       const filterValue = [];
@@ -559,7 +578,7 @@ const CharacterEquipmentPart = ({ equipment, engraving }) => {
     }
   }
 
-  if (sortAccessoriesTooltip) {
+  if (sortAccessoriesTooltip[0] !== undefined) {
     const filterTooltip = [];
     for (let i = 0; i < sortAccessoriesTooltip.length; i++) {
       const filterValue = [];
@@ -592,7 +611,7 @@ const CharacterEquipmentPart = ({ equipment, engraving }) => {
         }
       }
 
-      // 팔찌;
+      // 팔찌
       if (i === sortAccessoriesTooltip.length) {
         for (let key in sortAccessoriesTooltip[i + 1]) {
           if (sortAccessoriesTooltip[i + 1][key].type === 'ItemPartBox') {
@@ -612,8 +631,6 @@ const CharacterEquipmentPart = ({ equipment, engraving }) => {
     }
 
     for (let i = 0; i < filterTooltip.length; i++) {
-      console.log(filterTooltip[i]);
-
       const effectBR = filterTooltip[i].tooltip[1]?.effect?.split('<BR>');
 
       const engrave1 = filterTooltip[i].tooltip[2]?.engrave1
@@ -649,11 +666,21 @@ const CharacterEquipmentPart = ({ equipment, engraving }) => {
             };
           }
 
+          // 팔찌효과 설명이 string이고, font태그가 들어가면 정규표현식을 이용해 추출함.
           if (
             typeof effectsplitBR[j] === 'string' &&
             effectsplitBR[j].includes('</FONT>')
           ) {
             effectsplitBR[j] = effectsplitBR[j].replace(/<\/?FONT[^>]*>/gi, '');
+            // 팔찌 효과 이름이 특수효과면 name/effect로 객체로 나눠놨으므로 효과의 effect가 string이고 font태그가 들어가면 추출.
+          } else if (
+            typeof effectsplitBR[j].effect === 'string' &&
+            effectsplitBR[j].effect.includes('</FONT>')
+          ) {
+            effectsplitBR[j].effect = effectsplitBR[j].effect.replace(
+              /<\/?FONT[^>]*>/gi,
+              ''
+            );
           }
         }
       }
@@ -833,17 +860,17 @@ const CharacterEquipmentPart = ({ equipment, engraving }) => {
                   <div>
                     {item.TooltipValue.elixir1 &&
                       item.TooltipValue.elixir1.map((item, index) => (
-                        <div key={index} className="exlirItem">
+                        <EffectNameColorBox key={index} color={index}>
                           {item}
-                        </div>
+                        </EffectNameColorBox>
                       ))}
                   </div>
                   <div>
                     {item.TooltipValue.elixir2 &&
                       item.TooltipValue.elixir2.map((item, index) => (
-                        <div key={index} className="exlirItem">
+                        <EffectNameColorBox key={index} color={index}>
                           {item}
-                        </div>
+                        </EffectNameColorBox>
                       ))}
                   </div>
                 </div>
@@ -868,40 +895,42 @@ const CharacterEquipmentPart = ({ equipment, engraving }) => {
                 </div>
               </EquipmentTooltipWrap>
             ))}
-          {equipment.map(
-            (items) =>
-              items.Type === item.Type && (
-                <Fragment key={index}>
-                  <ImageBox
-                    onMouseOver={() => setShowTooltip(true)}
-                    onMouseLeave={() => setShowTooltip(false)}
-                  >
-                    <ImageBoxColor key={index} exist={items.Grade}>
-                      <img src={items.Icon} alt="아바타" />
-                    </ImageBoxColor>
-                  </ImageBox>
-                  <div className="desc">
-                    <p className="type">{items.Name}</p>
-                    <PercentBar
-                      quality={
-                        sortEquipmentTooltip[index] &&
-                        sortEquipmentTooltip[index]['Element_001'].value
-                          .qualityValue
-                      }
+          {equipmentList[0].TooltipValue !== undefined &&
+            equipment.map(
+              (items) =>
+                items.Type === item.Type && (
+                  <Fragment key={index}>
+                    <ImageBox
+                      onMouseOver={() => setShowTooltip(true)}
+                      onMouseLeave={() => setShowTooltip(false)}
                     >
-                      <p>
-                        {sortEquipmentTooltip[index] &&
+                      <ImageBoxColor key={index} exist={items.Grade}>
+                        <img src={items.Icon} alt="아바타" />
+                      </ImageBoxColor>
+                    </ImageBox>
+                    <div className="desc">
+                      <p className="type">{items.Name}</p>
+                      <PercentBar
+                        quality={
+                          sortEquipmentTooltip[index] &&
                           sortEquipmentTooltip[index]['Element_001'].value
-                            .qualityValue}
-                      </p>
-                      <div>
-                        <div></div>
-                      </div>
-                    </PercentBar>
-                  </div>
-                </Fragment>
-              )
-          )}
+                            .qualityValue
+                        }
+                      >
+                        <p>
+                          {sortEquipmentTooltip[index] &&
+                            sortEquipmentTooltip[index]['Element_001'].value
+                              .qualityValue}
+                        </p>
+                        <div>
+                          <div></div>
+                        </div>
+                      </PercentBar>
+                    </div>
+                  </Fragment>
+                )
+            )}
+          {equipmentList[0].TooltipValue === undefined && <div></div>}
         </div>
       </Fragment>
     );
@@ -947,90 +976,93 @@ const CharacterEquipmentPart = ({ equipment, engraving }) => {
               </div>
             </AccessoriesTooltipWrap>
           ))}
-        <Fragment key={index}>
-          <ImageBox>
-            <ImageBoxColor
-              key={index}
-              exist={
-                filterAccessories[index] !== undefined &&
-                filterAccessories[index].Grade
-              }
-            >
-              {filterAccessories && filterAccessories[index] && (
-                <img
-                  key={index}
-                  src={filterAccessories[index].Icon}
-                  alt="아바타"
-                  onMouseOver={() => setShowTooltip(true)}
-                  onMouseLeave={() => setShowTooltip(false)}
-                />
-              )}
-            </ImageBoxColor>
-          </ImageBox>
-          <div className="desc">
-            <p className="type">
-              {filterAccessories &&
-                filterAccessories[index] &&
-                filterAccessories[index].Name}
-            </p>
-            {index < 5 && (
-              <PercentBar
-                quality={
-                  sortAccessoriesTooltip &&
-                  sortAccessoriesTooltip[index] &&
-                  sortAccessoriesTooltip[index]['Element_001'].value
-                    .qualityValue
-                }
+        {accessoriesList[0].TooltipValue !== undefined && (
+          <Fragment key={index}>
+            <ImageBox>
+              <ImageBoxColor
                 key={index}
+                exist={
+                  filterAccessories[index] !== undefined &&
+                  filterAccessories[index].Grade
+                }
               >
-                <p>
-                  {sortAccessoriesTooltip &&
+                {filterAccessories && filterAccessories[index] && (
+                  <img
+                    key={index}
+                    src={filterAccessories[index].Icon}
+                    alt="아바타"
+                    onMouseOver={() => setShowTooltip(true)}
+                    onMouseLeave={() => setShowTooltip(false)}
+                  />
+                )}
+              </ImageBoxColor>
+            </ImageBox>
+            <div className="desc">
+              <p className="type">
+                {filterAccessories &&
+                  filterAccessories[index] &&
+                  filterAccessories[index].Name}
+              </p>
+              {index < 5 && (
+                <PercentBar
+                  quality={
+                    sortAccessoriesTooltip &&
                     sortAccessoriesTooltip[index] &&
                     sortAccessoriesTooltip[index]['Element_001'].value
-                      .qualityValue}
-                </p>
-                <div>
-                  <div></div>
-                </div>
-              </PercentBar>
-            )}
-            {index === 5 && (
-              <div>
-                <p style={{ margin: '0 8px', color: '#f8f5a4' }}>
-                  {stoneAndBracelet[0] &&
-                    stoneAndBracelet[0][stoneIndex] &&
-                    stoneAndBracelet[0][stoneIndex].value[
-                      'Element_000'
-                    ].contentStr['Element_000'].contentStr.slice(-5, -4)}
-                </p>
-                <BsDot />
-                <p style={{ margin: '0 8px', color: '#f8f5a4' }}>
-                  {stoneAndBracelet[0] &&
-                    stoneAndBracelet[0][stoneIndex] &&
-                    stoneAndBracelet[0][stoneIndex].value[
-                      'Element_000'
-                    ].contentStr['Element_001'].contentStr.slice(-5, -4)}
-                </p>
-                <BsDot />
-                <p style={{ margin: '0 8px', color: '#832c35' }}>
-                  {stoneAndBracelet[0] &&
-                    stoneAndBracelet[0][stoneIndex] &&
-                    stoneAndBracelet[0][stoneIndex].value[
-                      'Element_000'
-                    ].contentStr['Element_002'].contentStr.slice(-5, -4)}
-                </p>
-              </div>
-            )}
-            <div style={{ display: 'flex' }}>
-              {index === 6 &&
-                breceletEffectList.map((item, index) => (
-                  <p key={index} style={{ margin: '0 2px 0 4px' }}>
-                    {item.text}
+                      .qualityValue
+                  }
+                  key={index}
+                >
+                  <p>
+                    {sortAccessoriesTooltip &&
+                      sortAccessoriesTooltip[index] &&
+                      sortAccessoriesTooltip[index]['Element_001'].value
+                        .qualityValue}
                   </p>
-                ))}
+                  <div>
+                    <div></div>
+                  </div>
+                </PercentBar>
+              )}
+              {index === 5 && (
+                <div>
+                  <p style={{ margin: '0 8px', color: '#f8f5a4' }}>
+                    {stoneAndBracelet[0] &&
+                      stoneAndBracelet[0][stoneIndex] &&
+                      stoneAndBracelet[0][stoneIndex].value[
+                        'Element_000'
+                      ].contentStr['Element_000'].contentStr.slice(-5, -4)}
+                  </p>
+                  <BsDot />
+                  <p style={{ margin: '0 8px', color: '#f8f5a4' }}>
+                    {stoneAndBracelet[0] &&
+                      stoneAndBracelet[0][stoneIndex] &&
+                      stoneAndBracelet[0][stoneIndex].value[
+                        'Element_000'
+                      ].contentStr['Element_001'].contentStr.slice(-5, -4)}
+                  </p>
+                  <BsDot />
+                  <p style={{ margin: '0 8px', color: '#832c35' }}>
+                    {stoneAndBracelet[0] &&
+                      stoneAndBracelet[0][stoneIndex] &&
+                      stoneAndBracelet[0][stoneIndex].value[
+                        'Element_000'
+                      ].contentStr['Element_002'].contentStr.slice(-5, -4)}
+                  </p>
+                </div>
+              )}
+              <div style={{ display: 'flex' }}>
+                {index === 6 &&
+                  breceletEffectList.map((item, index) => (
+                    <p key={index} style={{ margin: '0 2px 0 4px' }}>
+                      {item.text}
+                    </p>
+                  ))}
+              </div>
             </div>
-          </div>
-        </Fragment>
+          </Fragment>
+        )}
+        {accessoriesList[0].TooltipValue === undefined && <div></div>}
       </div>
     );
   };

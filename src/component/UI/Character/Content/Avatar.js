@@ -198,16 +198,18 @@ const Avatar = ({ profile, avatars }) => {
                 <ImageBox
                   key={index}
                   exist={
-                    avatars &&
+                    avatars !== null &&
                     avatars[index] !== undefined &&
                     avatars[index] !== null &&
-                    avatars[index].Grade === '전설' &&
-                    avatars[index].IsInner
-                      ? avatars[index].Grade
+                    avatars[index]?.Grade === '전설' &&
+                    avatars[index]?.IsInner
+                      ? avatars[index]?.Grade
                       : ''
                   }
                 >
-                  {avatars[index] !== undefined &&
+                  {avatars !== null &&
+                  avatars[index] !== undefined &&
+                  avatars[index] !== null &&
                   avatars[index].Grade === '전설' &&
                   avatars[index].IsInner ? (
                     <ImageBoxColor exist={avatars[index].Grade}>
@@ -220,7 +222,8 @@ const Avatar = ({ profile, avatars }) => {
                 <div className="desc">
                   <p className="type">{trueInner[index].type}</p>
                   <p className="name">
-                    {avatars[index] !== undefined &&
+                    {avatars !== null &&
+                    avatars[index] !== undefined &&
                     avatars[index].Grade === '전설' &&
                     avatars[index].IsInner
                       ? avatars[index].Name
@@ -234,27 +237,29 @@ const Avatar = ({ profile, avatars }) => {
             {falseInner.map((item, index) => (
               <div key={index}>
                 <ImageBox key={index}>
-                  {isInnerFalse.map((items, index) =>
-                    items.Type === item.TypeAs ? (
-                      <ImageBoxColor key={index} exist={items.Grade}>
-                        <img src={items.Icon} alt="아바타" />
-                      </ImageBoxColor>
-                    ) : (
-                      ''
-                    )
-                  )}
+                  {isInnerFalse &&
+                    isInnerFalse.map((items, index) =>
+                      avatars !== null && items.Type === item.TypeAs ? (
+                        <ImageBoxColor key={index} exist={items.Grade}>
+                          <img src={items.Icon} alt="아바타" />
+                        </ImageBoxColor>
+                      ) : (
+                        ''
+                      )
+                    )}
                 </ImageBox>
                 <div className="desc">
                   <p className="type">{item.type}</p>
-                  {isInnerFalse.map((items, index) =>
-                    items.Type === item.TypeAs ? (
-                      <p key={index} className="name">
-                        {items.Name !== '' ? items.Name : ''}
-                      </p>
-                    ) : (
-                      ''
-                    )
-                  )}
+                  {isInnerFalse &&
+                    isInnerFalse.map((items, index) =>
+                      avatars !== null && items.Type === item.TypeAs ? (
+                        <p key={index} className="name">
+                          {items.Name !== '' ? items.Name : ''}
+                        </p>
+                      ) : (
+                        ''
+                      )
+                    )}
                 </div>
               </div>
             ))}

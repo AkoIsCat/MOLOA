@@ -27,6 +27,8 @@ const ImageBoxColor = styled.div`
       ? 'linear-gradient(135deg, #3d3325 0%, #dcc999 100%)'
       : props.exist === '유물'
       ? 'linear-gradient(135deg, #341a09 0%, #a24006 100%)'
+      : props.exist === '고급'
+      ? 'linear-gradient(135deg, #1a230e 0%, #374e18 100%)'
       : '#292e33'};
   border-radius: 10px;
 `;

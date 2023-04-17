@@ -5,14 +5,12 @@ import Header from '../component/header/Header'; // 헤더
 import Background from '../component/UI/BackBox'; // 배경 컨테이너
 import { Container } from './Home';
 import Avatar from '../component/UI/Character/Content/Avatar'; // 아바타탭
-import CharacterEquipmentPart from '../component/UI/Character/Content/CharacterEquipmentPart'; // 전투탭 - 장비&악세&각인
-import CharacterGemsPart from '../component/UI/Character/Content/CharacterGemsPart'; // 전투탭 - 보석
-import Characteristics from '../component/UI/Character/Content/Characteristics'; // 전투탭 - 특성&각인&트포
-import CharacterCards from '../component/UI/Character/Content/CharacterCards'; // 전투탭 - 카드
+import Equipment from '../component/UI/Character/Content/Equipment'; // 전투탭
 
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { Fragment } from 'react';
+import Loading from '../component/UI/Loading';
 
 const ContainerBox = styled(Container)`
   min-height: 100vh;
@@ -112,6 +110,7 @@ const lostArkKey =
 const Character = () => {
   const [isExist, setIsExist] = useState();
   const [profile, setProfile] = useState(); // 기본 스탯
+  const [holdingCharacter, setHoldingCharacter] = useState();
   const [equipment, setEquipment] = useState(); // 장비
   const [avatars, setAvatars] = useState(); // 아바타
   const [combatSkills, setCombatSkills] = useState(); // 스킬
@@ -122,6 +121,7 @@ const Character = () => {
   // const [collectibles, setCollectibles] = useState(); // 수집품
 
   const [currentTab, setCurrentTab] = useState(0);
+  const [characterIsLoading, setCharacterIsLoading] = useState(true);
 
   const { id } = useParams();
   const commonCharacterUrl = `https://developer-lostark.game.onstove.com/armories/characters`;
@@ -141,6 +141,7 @@ const Character = () => {
 
         if (responseData) {
           setIsExist(true);
+          setHoldingCharacter(responseData);
         } else {
           setIsExist(false);
         }
@@ -259,6 +260,7 @@ const Character = () => {
         const responseData = await response.json();
 
         setGems(responseData);
+        setCharacterIsLoading(false);
       } catch (err) {
         console.log('LostArk Gems error!!');
       }
@@ -355,32 +357,26 @@ const Character = () => {
     }
   }
 
-  // --------------------------
+  // --------------------- 보유 캐릭터 탭
 
-  // console.log(effectList, totalEffect);
+  // console.log(holdingCharacter);
 
-  const equipmentItem = equipment && (
-    <div
-      style={{ display: 'flex', flexDirection: 'column', padding: '0 20px' }}
-    >
-      <CharacterEquipmentPart equipment={equipment} engraving={engraving} />
-      <CharacterGemsPart gems={gems} />
-      <Characteristics
-        combatSkills={combatSkills}
-        profile={profile}
-        engraving={engraving}
-      />
-      <CharacterCards cards={cards} />
-    </div>
-  );
-
-  // ------------------------- 요까지 장비
+  // ---------------------
 
   const navMenu = [
     {
       name: '전투',
       first: true,
-      content: equipmentItem,
+      content: (
+        <Equipment
+          equipment={equipment}
+          engraving={engraving}
+          gems={gems}
+          combatSkills={combatSkills}
+          profile={profile}
+          cards={cards}
+        />
+      ),
     },
     {
       name: '스킬',
@@ -409,8 +405,6 @@ const Character = () => {
     setCurrentTab(index);
   };
 
-  // console.log(equipment);
-
   return (
     <Background>
       <Header />
@@ -421,7 +415,7 @@ const Character = () => {
             입니다.
           </Message>
         )}
-        {isExist && (
+        {isExist && !characterIsLoading && (
           <ContentBox>
             <Aside />
             <Section>
@@ -462,6 +456,7 @@ const Character = () => {
             </Section>
           </ContentBox>
         )}
+        {isExist && characterIsLoading && <Loading />}
       </ContainerBox>
     </Background>
   );

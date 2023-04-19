@@ -4,16 +4,16 @@ import './index.css';
 import App from './App';
 import { BrowserRouter } from 'react-router-dom';
 import GlobalStyle from './fonts/index';
-import PopularCharacterProvider from './store/PopularCharacterProvider';
+import { CookiesProvider } from 'react-cookie';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <BrowserRouter>
-    <PopularCharacterProvider>
+  <CookiesProvider>
+    <BrowserRouter>
       <GlobalStyle />
       <App />
-    </PopularCharacterProvider>
-  </BrowserRouter>
+    </BrowserRouter>
+  </CookiesProvider>
 );
 
 // If you want to start measuring performance in your app, pass a function

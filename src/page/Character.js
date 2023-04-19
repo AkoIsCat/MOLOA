@@ -1,16 +1,19 @@
 import styled from 'styled-components';
+import { nanoid } from 'nanoid';
 
 import Aside from '../component/UI/Character/Side/Aside'; // 좌측 캐릭터 정보
 import Header from '../component/header/Header'; // 헤더
 import Background from '../component/UI/BackBox'; // 배경 컨테이너
+import ContentWrap from '../component/UI/ContentWrap';
 import { Container } from './Home';
 import Avatar from '../component/UI/Character/Content/Avatar'; // 아바타탭
 import Equipment from '../component/UI/Character/Content/Equipment'; // 전투탭
+import CharacterList from '../component/UI/Character/Content/CharacterList';
 
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { Fragment } from 'react';
 import Loading from '../component/UI/Loading';
+import { Fragment } from 'react';
 
 const ContainerBox = styled(Container)`
   min-height: 100vh;
@@ -359,9 +362,11 @@ const Character = () => {
 
   // --------------------- 보유 캐릭터 탭
 
-  // console.log(holdingCharacter);
-
   // ---------------------
+
+  const selectMenuHandler = (index) => {
+    setCurrentTab(index);
+  };
 
   const navMenu = [
     {
@@ -392,7 +397,12 @@ const Character = () => {
     },
     {
       name: '보유 캐릭터',
-      content: '보유 캐릭터탭',
+      content: (
+        <CharacterList
+          holdingCharacter={holdingCharacter}
+          selectMenuHandler={selectMenuHandler}
+        />
+      ),
     },
     {
       name: '길드',
@@ -400,10 +410,6 @@ const Character = () => {
       content: '길드탭',
     },
   ];
-
-  const selectMenuHandler = (index) => {
-    setCurrentTab(index);
-  };
 
   return (
     <Background>

@@ -33,10 +33,10 @@ const EquipmentWrap = styled.div`
 
 const TrueInner = styled.div`
   min-width: 200px;
-  max-width: 300px;
+  max-width: 312px;
   display: flex;
   flex-direction: column;
-  margin: 0 40px;
+  margin: 0 35px;
   justify-content: space-between;
   position: relative;
   height: auto;
@@ -244,6 +244,7 @@ const EquipmentTooltipWrap = styled.div`
   bottom: 0;
   color: #fff;
   font-family: 'Nanum Gothic';
+  font-size: 15px;
 
   div {
     margin: 0;
@@ -334,6 +335,7 @@ const AccessoriesTooltipWrap = styled.div`
   bottom: 0;
   color: #fff;
   font-family: 'Nanum Gothic';
+  font-size: 15px;
 
   div {
     margin: 0;
@@ -342,6 +344,7 @@ const AccessoriesTooltipWrap = styled.div`
 
   .defaultEffectWrap {
     width: 80%;
+
     margin: 0 auto;
     display: flex;
     flex-direction: column;
@@ -630,23 +633,50 @@ const CharacterEquipmentPart = ({ equipment, engraving }) => {
       });
     }
 
+    console.log('filter', filterTooltip);
+
     for (let i = 0; i < filterTooltip.length; i++) {
       const effectBR = filterTooltip[i].tooltip[1]?.effect?.split('<BR>');
 
-      const engrave1 = filterTooltip[i].tooltip[2]?.engrave1
-        ?.replace(/(<([^>]+)>|\[|\]|<BR>)/gi, '')
-        .replace(/(활성도\s*\+\s*\d+)/gi, '$1 ')
-        .replace(/활성도\s+/gi, '');
+      let engrave1;
+      let engrave2;
+      let engrave3;
 
-      const engrave2 = filterTooltip[i].tooltip[2]?.engrave2
-        ?.replace(/(<([^>]+)>|\[|\]|<BR>)/gi, '')
-        .replace(/(활성도\s*\+\s*\d+)/gi, '$1 ')
-        .replace(/활성도\s+/gi, '');
+      if (filterTooltip[i].tooltip[2] !== undefined) {
+        engrave1 = filterTooltip[i].tooltip[2]?.engrave1
+          ?.replace(/(<([^>]+)>|\[|\]|<BR>)/gi, '')
+          .replace(/(활성도\s*\+\s*\d+)/gi, '$1 ')
+          .replace(/활성도\s+/gi, '');
+      } else {
+        engrave1 = filterTooltip[i].tooltip[1]?.engrave1
+          ?.replace(/(<([^>]+)>|\[|\]|<BR>)/gi, '')
+          .replace(/(활성도\s*\+\s*\d+)/gi, '$1 ')
+          .replace(/활성도\s+/gi, '');
+      }
 
-      const engrave3 = filterTooltip[i].tooltip[2]?.engrave3
-        ?.replace(/(<([^>]+)>|\[|\]|<BR>)/gi, '')
-        .replace(/(활성도\s*\+\s*\d+)/gi, '$1 ')
-        .replace(/활성도\s+/gi, '');
+      if (filterTooltip[i].tooltip[2] !== undefined) {
+        engrave2 = filterTooltip[i].tooltip[2]?.engrave2
+          ?.replace(/(<([^>]+)>|\[|\]|<BR>)/gi, '')
+          .replace(/(활성도\s*\+\s*\d+)/gi, '$1 ')
+          .replace(/활성도\s+/gi, '');
+      } else {
+        engrave2 = filterTooltip[i].tooltip[1]?.engrave2
+          ?.replace(/(<([^>]+)>|\[|\]|<BR>)/gi, '')
+          .replace(/(활성도\s*\+\s*\d+)/gi, '$1 ')
+          .replace(/활성도\s+/gi, '');
+      }
+
+      if (filterTooltip[i].tooltip[2] !== undefined) {
+        engrave3 = filterTooltip[i].tooltip[2]?.engrave3
+          ?.replace(/(<([^>]+)>|\[|\]|<BR>)/gi, '')
+          .replace(/(활성도\s*\+\s*\d+)/gi, '$1 ')
+          .replace(/활성도\s+/gi, '');
+      } else {
+        engrave3 = filterTooltip[i].tooltip[1]?.engrave3
+          ?.replace(/(<([^>]+)>|\[|\]|<BR>)/gi, '')
+          .replace(/(활성도\s*\+\s*\d+)/gi, '$1 ')
+          .replace(/활성도\s+/gi, '');
+      }
 
       const breceletEffect = filterTooltip[
         filterTooltip.length - 1
@@ -729,6 +759,8 @@ const CharacterEquipmentPart = ({ equipment, engraving }) => {
       TooltipValue: equipmentEffectTooltip[5],
     },
   ];
+
+  console.log(accessoriesEffectTooltip);
 
   const accessoriesList = [
     { Type: '목걸이', TooltipValue: accessoriesEffectTooltip[0] },
@@ -939,6 +971,8 @@ const CharacterEquipmentPart = ({ equipment, engraving }) => {
   const AccessoriesTooltipBox = ({ item, index }) => {
     const [showTooltip, setShowTooltip] = useState(false);
 
+    console.log(item);
+
     return (
       <div key={index}>
         {showTooltip &&
@@ -946,11 +980,13 @@ const CharacterEquipmentPart = ({ equipment, engraving }) => {
             <AccessoriesTooltipWrap>
               <div className="defaultEffectWrap">
                 <div>
-                  {item.TooltipValue.characteristic[0] &&
-                    item.TooltipValue.characteristic[0]}
+                  {item.TooltipValue.characteristic &&
+                    item?.TooltipValue?.characteristic[0] &&
+                    item?.TooltipValue?.characteristic[0]}
                 </div>
                 <div>
-                  {item.TooltipValue.characteristic[1] &&
+                  {item.TooltipValue.characteristic &&
+                    item?.TooltipValue.characteristic[1] &&
                     item.TooltipValue.characteristic[1]}
                 </div>
               </div>

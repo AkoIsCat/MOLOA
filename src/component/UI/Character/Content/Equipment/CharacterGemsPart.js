@@ -96,7 +96,7 @@ const GemsItemWrap = styled.div`
   }
 `;
 
-const CharacterGemsPart = ({ gems }) => {
+const CharacterGemsPart = ({ gems, getGemsList }) => {
   // 보석
   const gemsList = [];
   const extinction = []; // 멸화
@@ -183,6 +183,10 @@ const CharacterGemsPart = ({ gems }) => {
       </GemsItemWrap>
     );
   };
+
+  if (gemsList.length > 1) {
+    getGemsList(gemsList);
+  }
 
   return (
     <ContentWrap>

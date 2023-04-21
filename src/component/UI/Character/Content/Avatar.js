@@ -10,7 +10,7 @@ const ContentWrap = styled.div`
   flex-direction: column;
   align-items: center;
   padding: 30px 0;
-
+  margin: 20px 0;
   .image {
     width: 75%;
     height: 75%;

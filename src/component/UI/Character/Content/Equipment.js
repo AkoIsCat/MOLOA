@@ -12,13 +12,23 @@ const Equipment = ({
   combatSkills,
   profile,
   cards,
+  getGems,
 }) => {
+  const getGemsList = (data) => {
+    getGems(data);
+  };
+
   return (
     <div
-      style={{ display: 'flex', flexDirection: 'column', padding: '0 20px' }}
+      style={{
+        display: 'flex',
+        flexDirection: 'column',
+        padding: '0 20px',
+        margin: '20px 0',
+      }}
     >
       <CharacterEquipmentPart equipment={equipment} engraving={engraving} />
-      <CharacterGemsPart gems={gems} />
+      <CharacterGemsPart gems={gems} getGemsList={getGemsList} />
       <Characteristics
         combatSkills={combatSkills}
         profile={profile}

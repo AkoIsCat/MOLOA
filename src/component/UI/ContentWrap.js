@@ -6,8 +6,8 @@ const ContentWrapStyle = styled.div`
   justify-content: center;
   background: #181c1e;
   border-radius: 10px;
-  padding: ${(props) => (props.character ? '0' : '10px 0 35px 0')};
-  margin: ${(props) => (props.character ? '0px 0' : '20px 0 0 0')};
+  padding: ${(props) => (props.character ? '0' : '10px 0 ')};
+  margin: ${(props) => (props.character ? '20px 0' : '20px 0 ')};
 `;
 
 const ContentWrap = (props) => {

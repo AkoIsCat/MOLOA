@@ -243,8 +243,8 @@ const CharacterList = ({ holdingCharacter, selectMenuHandler }) => {
       <ContentWrap character="true">
         <div style={{ width: '100%', padding: '0 20px' }}>
           {serverNameList.map((serverName, index) => (
-            <Fragment>
-              <ServerNameBox key={nanoid()}>{serverName}</ServerNameBox>
+            <Fragment key={nanoid()}>
+              <ServerNameBox>{serverName}</ServerNameBox>
               <CharacterProfileWrap>
                 {holdingCharacterList[index][serverName].map((items) => (
                   <CharacterProfile

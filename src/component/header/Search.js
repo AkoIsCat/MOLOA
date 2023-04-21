@@ -1,4 +1,6 @@
 import styled from 'styled-components';
+import { Cookies } from 'react-cookie';
+
 import { NavLink } from 'react-router-dom';
 import { BsSearch } from 'react-icons/bs';
 
@@ -66,8 +68,16 @@ const Search = () => {
 
   const navigate = useNavigate();
 
+  const cookies = new Cookies();
+
+  // 쿠키 설정
+  const setCookie = () => {
+    cookies.set('cookieName', 'cookieValue', { sameSite: 'lax' });
+  };
+
   const onSubmitHandler = async (e) => {
     e.preventDefault();
+    setCookie();
 
     if (trimInput.length !== 0) {
       navigate(`/character/${trimInput}`);

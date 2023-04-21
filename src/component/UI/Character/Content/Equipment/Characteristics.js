@@ -133,7 +133,7 @@ const EffectWrap = styled.div`
 
 const EffectListWrap = styled.div`
   display: flex;
-  height: 230px;
+  height: 265px;
   flex-direction: column;
   justify-content: space-between;
 `;

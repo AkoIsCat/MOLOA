@@ -284,6 +284,20 @@ const EquipmentTooltipWrap = styled.div`
     }
   }
 
+  .totalElixir {
+    width: 80%;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    border-bottom: 1px solid #c1c1c1;
+    padding: 10px;
+
+    .level {
+      margin-left: 5px;
+      color: #e4ba27;
+    }
+  }
+
   .elixirWrap {
     width: 80%;
     margin: 0 auto;
@@ -366,6 +380,10 @@ const AccessoriesTooltipWrap = styled.div`
     flex-direction: column;
     align-items: center;
     padding: 10px;
+
+    .decrease {
+      color: #d32614;
+    }
 
     div {
       width: auto;
@@ -526,22 +544,45 @@ const CharacterEquipmentPart = ({ equipment, engraving }) => {
       });
     }
 
+    let sum1 = 0,
+      sum2 = 0,
+      totalSum = 0;
+
     for (let i = 0; i < filterTooltip.length; i++) {
       const splitBR = filterTooltip[i].tooltip[0].effect.split('<BR>');
       const removeFont = filterTooltip[i].tooltip[2]?.effect?.replace(
         /<\/?FONT[^>]*>/gi,
         ''
       );
+      let elixir1, elixir2;
 
-      const elixir1 = filterTooltip[i].tooltip[3]?.Elixir?.replace(
-        /<\/?FONT[^>]*>/g,
-        ''
-      ).split(/<br>|<BR>/);
+      if (i < filterTooltip.length - 1) {
+        elixir1 = filterTooltip[i].tooltip[3]?.Elixir?.replace(
+          /<\/?FONT[^>]*>/g,
+          ''
+        ).split(/<br>|<BR>/);
 
-      const elixir2 = filterTooltip[i].tooltip[3]?.Elixir2?.replace(
-        /<\/?FONT[^>]*>/gi,
-        ''
-      ).split(/<br>|<BR>/);
+        elixir2 = filterTooltip[i].tooltip[3]?.Elixir2?.replace(
+          /<\/?FONT[^>]*>/gi,
+          ''
+        ).split(/<br>|<BR>/);
+
+        const levelRegex = /.*Lv\.(\d+).*/;
+
+        const elixir1Level =
+          elixir1 &&
+          elixir1 !== undefined &&
+          parseInt(elixir1[0].replace(levelRegex, '$1'));
+        const elixir2Level =
+          elixir2 &&
+          elixir2 !== undefined &&
+          parseInt(elixir2[0].replace(levelRegex, '$1'));
+
+        sum1 += elixir1Level;
+        sum2 += elixir2Level;
+      }
+
+      totalSum = sum1 + sum2;
 
       const itemName = filterTooltip[i].tooltip[
         filterTooltip[i].tooltip.length - 1
@@ -576,6 +617,7 @@ const CharacterEquipmentPart = ({ equipment, engraving }) => {
           itemName,
           itemLevel,
           itemQuality,
+          elixirTotalLevel: totalSum,
         });
       }
     }
@@ -618,9 +660,6 @@ const CharacterEquipmentPart = ({ equipment, engraving }) => {
       if (i === sortAccessoriesTooltip.length) {
         for (let key in sortAccessoriesTooltip[i + 1]) {
           if (sortAccessoriesTooltip[i + 1][key].type === 'ItemPartBox') {
-            console.log(
-              sortAccessoriesTooltip[i + 1][key].value['Element_001']
-            );
             filterValue.push({
               effect: sortAccessoriesTooltip[i + 1][key].value['Element_001'],
             });
@@ -632,8 +671,6 @@ const CharacterEquipmentPart = ({ equipment, engraving }) => {
         tooltip: filterValue,
       });
     }
-
-    console.log('filter', filterTooltip);
 
     for (let i = 0; i < filterTooltip.length; i++) {
       const effectBR = filterTooltip[i].tooltip[1]?.effect?.split('<BR>');
@@ -760,8 +797,6 @@ const CharacterEquipmentPart = ({ equipment, engraving }) => {
     },
   ];
 
-  console.log(accessoriesEffectTooltip);
-
   const accessoriesList = [
     { Type: '목걸이', TooltipValue: accessoriesEffectTooltip[0] },
     { Type: '귀걸이', TooltipValue: accessoriesEffectTooltip[1] },
@@ -885,27 +920,50 @@ const CharacterEquipmentPart = ({ equipment, engraving }) => {
                   <div>{item.TooltipValue.characteristic}</div>
                   <div>{item.TooltipValue.health}</div>
                 </div>
-                <div className="vitalityWrap">
-                  <div>{item.TooltipValue.vitality}</div>
-                </div>
-                <div className="elixirWrap">
-                  <div>
-                    {item.TooltipValue.elixir1 &&
-                      item.TooltipValue.elixir1.map((item, index) => (
-                        <EffectNameColorBox key={index} color={index}>
-                          {item}
-                        </EffectNameColorBox>
-                      ))}
+                {item.TooltipValue.vitality && (
+                  <div className="vitalityWrap">
+                    {item.TooltipValue.vitality !== undefined &&
+                      item.TooltipValue.vitality.includes('<BR>') !==
+                        undefined && (
+                        <div
+                          style={{ display: 'flex', flexDirection: 'column' }}
+                        >
+                          <div>
+                            {item.TooltipValue.vitality.split('<BR>')[0]}
+                          </div>
+                          <div>
+                            {item.TooltipValue.vitality.split('<BR>')[1]}
+                          </div>
+                          <div>
+                            {item.TooltipValue.vitality.split('<BR>')[2]}
+                          </div>
+                        </div>
+                      )}
+                    {item.TooltipValue.vitality !== undefined &&
+                      item.TooltipValue.vitality.includes('<BR>') ===
+                        undefined && <div>{item.TooltipValue.vitality}</div>}
                   </div>
-                  <div>
-                    {item.TooltipValue.elixir2 &&
-                      item.TooltipValue.elixir2.map((item, index) => (
-                        <EffectNameColorBox key={index} color={index}>
-                          {item}
-                        </EffectNameColorBox>
-                      ))}
+                )}
+                {item.TooltipValue.elixir1 !== undefined && (
+                  <div className="elixirWrap">
+                    <div>
+                      {item.TooltipValue.elixir1 &&
+                        item.TooltipValue.elixir1.map((item, index) => (
+                          <EffectNameColorBox key={index} color={index}>
+                            {item}
+                          </EffectNameColorBox>
+                        ))}
+                    </div>
+                    <div>
+                      {item.TooltipValue.elixir2 &&
+                        item.TooltipValue.elixir2.map((item, index) => (
+                          <EffectNameColorBox key={index} color={index}>
+                            {item}
+                          </EffectNameColorBox>
+                        ))}
+                    </div>
                   </div>
-                </div>
+                )}
                 <div className="levelWrap">
                   <div>{item.TooltipValue.level}</div>
                   <div>{item.TooltipValue.itemName}</div>
@@ -917,9 +975,23 @@ const CharacterEquipmentPart = ({ equipment, engraving }) => {
                 <div className="defaultEffectWrap">
                   <div>{item.TooltipValue.offensePower}</div>
                 </div>
-                <div className="vitalityWrap">
-                  <div>{item.TooltipValue.additionalDamage}</div>
-                </div>
+                {item.TooltipValue.additionalDamage && (
+                  <div className="vitalityWrap">
+                    <div>{item.TooltipValue.additionalDamage}</div>
+                  </div>
+                )}
+                {!isNaN(item.TooltipValue.elixirTotalLevel) && (
+                  <div>
+                    <div className="totalElixir">
+                      <div>연성 레벨 합 :</div>
+                      <div className="level">
+                        {item.TooltipValue.elixirTotalLevel &&
+                          item.TooltipValue.elixirTotalLevel}
+                      </div>
+                    </div>
+                  </div>
+                )}
+
                 <div className="levelWrap">
                   <div>{item.TooltipValue.level}</div>
                   <div>{item.TooltipValue.itemName}</div>
@@ -971,8 +1043,6 @@ const CharacterEquipmentPart = ({ equipment, engraving }) => {
   const AccessoriesTooltipBox = ({ item, index }) => {
     const [showTooltip, setShowTooltip] = useState(false);
 
-    console.log(item);
-
     return (
       <div key={index}>
         {showTooltip &&
@@ -993,7 +1063,7 @@ const CharacterEquipmentPart = ({ equipment, engraving }) => {
               <div className="vitalityWrap">
                 <div>{item.TooltipValue.engrave1}</div>
                 <div>{item.TooltipValue.engrave2}</div>
-                <div>{item.TooltipValue.engrave3}</div>
+                <div className="decrease">{item.TooltipValue.engrave3}</div>
               </div>
             </AccessoriesTooltipWrap>
           ) : (
@@ -1067,7 +1137,10 @@ const CharacterEquipmentPart = ({ equipment, engraving }) => {
                       stoneAndBracelet[0][stoneIndex] &&
                       stoneAndBracelet[0][stoneIndex].value[
                         'Element_000'
-                      ].contentStr['Element_000'].contentStr.slice(-5, -4)}
+                      ].contentStr['Element_000'].contentStr.replace(
+                        /.*\+(\d+).*/,
+                        '$1'
+                      )}
                   </p>
                   <BsDot />
                   <p style={{ margin: '0 8px', color: '#f8f5a4' }}>
@@ -1075,7 +1148,10 @@ const CharacterEquipmentPart = ({ equipment, engraving }) => {
                       stoneAndBracelet[0][stoneIndex] &&
                       stoneAndBracelet[0][stoneIndex].value[
                         'Element_000'
-                      ].contentStr['Element_001'].contentStr.slice(-5, -4)}
+                      ].contentStr['Element_001'].contentStr.replace(
+                        /.*\+(\d+).*/,
+                        '$1'
+                      )}
                   </p>
                   <BsDot />
                   <p style={{ margin: '0 8px', color: '#832c35' }}>
@@ -1083,7 +1159,10 @@ const CharacterEquipmentPart = ({ equipment, engraving }) => {
                       stoneAndBracelet[0][stoneIndex] &&
                       stoneAndBracelet[0][stoneIndex].value[
                         'Element_000'
-                      ].contentStr['Element_002'].contentStr.slice(-5, -4)}
+                      ].contentStr['Element_002'].contentStr.replace(
+                        /.*\+(\d+).*/,
+                        '$1'
+                      )}
                   </p>
                 </div>
               )}

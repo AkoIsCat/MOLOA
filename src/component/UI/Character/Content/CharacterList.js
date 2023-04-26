@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { Cookies } from 'react-cookie';
 
 import React, { Fragment } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -195,6 +196,13 @@ const CharacterProfile = styled.div`
 const CharacterList = ({ holdingCharacter, selectMenuHandler }) => {
   const navigate = useNavigate();
 
+  const cookies = new Cookies();
+
+  // 쿠키 설정
+  const setCookie = () => {
+    cookies.set('cookieName', 'cookieValue', { sameSite: 'lax' });
+  };
+
   const holdingCharacterList = [];
   let serverNameList = [];
 
@@ -283,6 +291,7 @@ const CharacterList = ({ holdingCharacter, selectMenuHandler }) => {
                         onClick={(e) => {
                           navigate(`/character/${items.obj.CharacterName}`);
                           selectMenuHandler(0);
+                          setCookie();
                         }}
                       >
                         {items.obj.CharacterName}

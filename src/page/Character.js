@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import { nanoid } from 'nanoid';
 import { Cookies } from 'react-cookie';
 
 import Aside from '../component/UI/Character/Side/Aside'; // 좌측 캐릭터 정보
@@ -28,7 +27,8 @@ const Message = styled.div`
   width: 60vw;
   height: 10vh;
   background: #373e44;
-  color: white;
+  font-family: 'Nanum Gothic';
+  color: #fff;
   font-size: 20px;
   margin: 0 auto;
   display: flex;
@@ -121,8 +121,6 @@ const Character = () => {
   const [engraving, setEngraving] = useState(); // 각인
   const [cards, setCards] = useState(); // 카드
   const [gems, setGems] = useState(); // 보석
-  const [guildRanking, setGuildRanking] = useState(); // 길드랭킹
-  // const [colosseums, setColosseums] = useState(); // PVP
   const [collectibles, setCollectibles] = useState(); // 수집품
 
   const [currentTab, setCurrentTab] = useState(0); // 네비게이션 탭
@@ -294,26 +292,6 @@ const Character = () => {
     //   }
     // };
 
-    const loadGuildRanking = async () => {
-      try {
-        const response = await fetch(
-          `https://developer-lostark.game.onstove.com/guilds/rankings?serverName=%EC%95%84%EB%A7%8C
-        `,
-          {
-            headers: {
-              'Content-Type': 'application/json',
-              authorization: `bearer ${lostArkKey}`,
-            },
-          }
-        );
-        const responseData = await response.json();
-
-        setGuildRanking(responseData);
-      } catch (err) {
-        console.log('LostArk loadGuildRanking error!!');
-      }
-    };
-
     const loadCollectibles = async () => {
       try {
         const response = await fetch(
@@ -342,8 +320,6 @@ const Character = () => {
     loadEngravings();
     loadCards();
     loadGems();
-    // loadColosseums();
-    loadGuildRanking();
     loadCollectibles();
   }, [loadCharacterUrl, commonCharacterUrl, id]);
 

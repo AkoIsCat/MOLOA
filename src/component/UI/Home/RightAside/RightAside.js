@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import { Fragment, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { Cookies } from 'react-cookie';
 
 import { HiOutlineTicket } from 'react-icons/hi';
 import { TbMessageCircle2Filled } from 'react-icons/tb';
@@ -91,6 +92,12 @@ const RightAside = () => {
   const [discordIsLoading, setDiscordIsLoading] = useState(true);
 
   const navigate = useNavigate();
+  const cookies = new Cookies();
+
+  // 쿠키 설정
+  const setCookie = () => {
+    cookies.set('cookieName', 'cookieValue', { sameSite: 'lax' });
+  };
 
   useEffect(() => {
     // 쿠폰코드
@@ -283,6 +290,7 @@ const RightAside = () => {
             style={{ fontSize: '15px', color: '#fff' }}
             onClick={() => {
               navigate(`/character/${items.name}`);
+              setCookie();
             }}
           >
             {items.name}

@@ -202,7 +202,7 @@ const MountedEngraving = styled.div`
   }
 
   div {
-    width: auto;
+    width: 98px;
     margin: 0 15px 0 0;
     display: flex;
     flex-direction: column;

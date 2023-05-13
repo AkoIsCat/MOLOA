@@ -41,6 +41,10 @@ const CardEffectNames = styled.div`
     align-items: center;
     margin-right: 15px;
   }
+
+  @media ${(props) => props.theme.mobile} {
+    font-size: 13px;
+  }
 `;
 
 const CardWrap = styled.div`
@@ -58,6 +62,12 @@ const CardWrap = styled.div`
     padding: 5px;
     position: relative;
     width: 120px;
+
+    @media ${(props) => props.theme.mobile} {
+      transform: scale(0.45);
+      margin: 0;
+      width: 0;
+    }
   }
 
   .effectWrapWrap {
@@ -65,9 +75,17 @@ const CardWrap = styled.div`
     flex-direction: row;
     flex-wrap: wrap;
 
+    @media ${(props) => props.theme.mobile} {
+      font-size: 13px;
+    }
+
     .effectWrap {
       width: 43%;
       margin: 15px 40px 15px 5px;
+
+      @media ${(props) => props.theme.mobile} {
+        width: 100%;
+      }
 
       .effectName {
         color: #e4b021;

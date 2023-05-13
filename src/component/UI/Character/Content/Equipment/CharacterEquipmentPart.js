@@ -1,4 +1,5 @@
 import React, { Fragment, useState } from 'react';
+import { useMediaQuery } from 'react-responsive';
 
 import styled from 'styled-components';
 
@@ -12,6 +13,10 @@ const EquipmentWrap = styled.div`
   display: flex;
   flex-direction: column;
   padding: 30px 0 10px 0;
+
+  @media ${(props) => props.theme.mobile} {
+    padding: 0 0 10px;
+  }
 
   .image {
     width: 75%;
@@ -41,6 +46,14 @@ const TrueInner = styled.div`
   position: relative;
   height: auto;
 
+  @media ${(props) => props.theme.mobile} {
+    width: 80%;
+    justify-content: center;
+    align-items: center;
+    margin-top: 30px;
+    padding: 0;
+  }
+
   div {
     display: flex;
     margin-bottom: 13px;
@@ -60,6 +73,16 @@ const TrueInner = styled.div`
         color: #fff;
         margin: 5px;
       }
+
+      @media ${(props) => props.theme.mobile} {
+        .type {
+          font-size: 13px;
+        }
+
+        .name {
+          font-size: 13px;
+        }
+      }
     }
   }
 `;
@@ -70,6 +93,13 @@ const FalseInner = styled.div`
   flex-direction: column;
   margin: 0 40px;
   position: relative;
+
+  @media ${(props) => props.theme.mobile} {
+    width: 80%;
+    justify-content: center;
+    align-items: center;
+    margin-top: 30px;
+  }
 
   div {
     display: flex;
@@ -95,6 +125,16 @@ const FalseInner = styled.div`
         color: #fff;
         height: 20px;
       }
+
+      @media ${(props) => props.theme.mobile} {
+        .type {
+          font-size: 13px;
+        }
+
+        .name {
+          font-size: 13px;
+        }
+      }
     }
   }
 `;
@@ -108,6 +148,11 @@ const ImageBox = styled.div`
   img {
     border-radius: 10px;
     object-fit: contain;
+  }
+
+  @media ${(props) => props.theme.mobile} {
+    width: 45px;
+    height: 45px;
   }
 `;
 
@@ -134,6 +179,18 @@ const FlexWrap = styled.div`
   flex-direction: row;
   align-items: flex-start;
   justify-content: center;
+
+  @media ${(props) => props.theme.mobile} {
+    flex-direction: column;
+
+    .mount {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto;
+    }
+  }
 `;
 
 const PercentBar = styled.div`
@@ -193,6 +250,10 @@ const MountedEngraving = styled.div`
   align-items: center;
   width: auto;
 
+  @media ${(props) => props.theme.mobile} {
+    margin: 10px 0;
+  }
+
   img {
     border-radius: 50%;
     width: 50px;
@@ -245,6 +306,13 @@ const EquipmentTooltipWrap = styled.div`
   color: #fff;
   font-family: 'Nanum Gothic';
   font-size: 15px;
+  z-index: 100;
+
+  @media ${(props) => props.theme.mobile} {
+    left: 25%;
+    font-size: 13px;
+    width: 200px;
+  }
 
   div {
     margin: 0;
@@ -350,6 +418,13 @@ const AccessoriesTooltipWrap = styled.div`
   color: #fff;
   font-family: 'Nanum Gothic';
   font-size: 15px;
+  z-index: 100;
+
+  @media ${(props) => props.theme.mobile} {
+    left: 27%;
+    font-size: 13px;
+    width: 180px;
+  }
 
   div {
     margin: 0;
@@ -1182,37 +1257,92 @@ const CharacterEquipmentPart = ({ equipment, engraving }) => {
     );
   };
 
+  const isPc = useMediaQuery({
+    query: '(min-width:1024px)',
+  });
+  const isTablet = useMediaQuery({
+    query: '(min-width:768px) and (max-width:1023px)',
+  });
+  const isMobile = useMediaQuery({
+    query: '(max-width:767px)',
+  });
+
   return (
-    <EquipmentWrap>
-      <FlexWrap>
-        <TrueInner>
-          {equipmentList.map((item, index) => (
-            <EquipmentTooltipBox item={item} index={index} key={index} />
-          ))}
-          <div>
-            {mountedEngraving &&
-              mountedEngraving.map((item, index) => (
-                <MountedEngraving
-                  key={index}
-                  grade={mountedEngravingItem[index].slice(-10, -7)}
-                >
-                  <img src={item.Icon} alt="장착된 각인" />
-                  <div>
-                    <p className="name">{item.Name}</p>
-                    <p>{mountedEngravingItem[index].slice(-10, -7)}</p>
-                  </div>
-                </MountedEngraving>
+    <div>
+      {(isPc || isTablet) && (
+        <EquipmentWrap>
+          <FlexWrap>
+            <TrueInner>
+              {equipmentList.map((item, index) => (
+                <EquipmentTooltipBox item={item} index={index} key={index} />
               ))}
-          </div>
-        </TrueInner>
-        <FalseInner>
-          {accessoriesList &&
-            accessoriesList.map((item, index) => (
-              <AccessoriesTooltipBox item={item} index={index} key={index} />
-            ))}
-        </FalseInner>
-      </FlexWrap>
-    </EquipmentWrap>
+              <div className="mount">
+                {mountedEngraving &&
+                  mountedEngraving.map((item, index) => (
+                    <MountedEngraving
+                      key={index}
+                      grade={mountedEngravingItem[index].slice(-10, -7)}
+                    >
+                      <img src={item.Icon} alt="장착된 각인" />
+                      <div>
+                        <p className="name">{item.Name}</p>
+                        <p>{mountedEngravingItem[index].slice(-10, -7)}</p>
+                      </div>
+                    </MountedEngraving>
+                  ))}
+              </div>
+            </TrueInner>
+            <FalseInner>
+              {accessoriesList &&
+                accessoriesList.map((item, index) => (
+                  <AccessoriesTooltipBox
+                    item={item}
+                    index={index}
+                    key={index}
+                  />
+                ))}
+            </FalseInner>
+          </FlexWrap>
+        </EquipmentWrap>
+      )}
+      {isMobile && (
+        <EquipmentWrap>
+          <FlexWrap>
+            <TrueInner>
+              {equipmentList.map((item, index) => (
+                <EquipmentTooltipBox item={item} index={index} key={index} />
+              ))}
+            </TrueInner>
+            <hr width="100%" color="#292e33" size="2" />
+            <FalseInner>
+              {accessoriesList &&
+                accessoriesList.map((item, index) => (
+                  <AccessoriesTooltipBox
+                    item={item}
+                    index={index}
+                    key={index}
+                  />
+                ))}
+            </FalseInner>
+            <div className="mount">
+              {mountedEngraving &&
+                mountedEngraving.map((item, index) => (
+                  <MountedEngraving
+                    key={index}
+                    grade={mountedEngravingItem[index].slice(-10, -7)}
+                  >
+                    <img src={item.Icon} alt="장착된 각인" />
+                    <div>
+                      <p className="name">{item.Name}</p>
+                      <p>{mountedEngravingItem[index].slice(-10, -7)}</p>
+                    </div>
+                  </MountedEngraving>
+                ))}
+            </div>
+          </FlexWrap>
+        </EquipmentWrap>
+      )}
+    </div>
   );
 };
 

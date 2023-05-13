@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import React, { Fragment, useEffect, useState } from 'react';
+import { useMediaQuery } from 'react-responsive';
 
 import { HiOutlineSpeakerphone } from 'react-icons/hi';
 import ContentBox from './ContentBox';
@@ -11,11 +12,27 @@ const InnerContent = styled.div`
   height: ${(props) => props.height || ''};
   background: #1e2225;
   margin: 10px 10px 60px 10px;
+
+  @media ${(props) => props.theme.mobile} {
+    width: 95%;
+    margin: 0 0 60px;
+    padding: 0;
+  }
 `;
 
 const Speaker = styled(HiOutlineSpeakerphone)`
   margin-left: 5px;
   font-size: 19px;
+`;
+
+const LeftWrap = styled.div`
+  width: auto;
+
+  @media ${(props) => props.theme.mobile} {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+  }
 `;
 
 const lostArkKey =
@@ -28,6 +45,13 @@ const LeftAside = () => {
   const [moloaNoti, setMoloaNoti] = useState([]);
   const [loaIsLoading, setLoaIsLoading] = useState(true);
   const [molosIsLoading, setMoloaIsLoading] = useState(true);
+
+  const isPc = useMediaQuery({
+    query: '(min-width:1024px)',
+  });
+  const isMobile = useMediaQuery({
+    query: '(max-width:767px)',
+  });
 
   // 렌더링 횟수
   // 1. noti랑 moloaNoti가 초기값인 빈 배열로 설정돼서 렌더링이 발생
@@ -73,7 +97,7 @@ const LeftAside = () => {
   console.log('left Aside');
 
   return (
-    <Fragment>
+    <LeftWrap>
       <InnerContent height="341px">
         <ContentBox
           title="로스트아크 공지사항"
@@ -82,7 +106,7 @@ const LeftAside = () => {
           loading={loaIsLoading}
         />
       </InnerContent>
-      <InnerContent height="341px">
+      <InnerContent height="auto">
         <ContentBox
           title="모로아 공지사항"
           item={moloaNoti}
@@ -90,8 +114,9 @@ const LeftAside = () => {
           loading={molosIsLoading}
         />
       </InnerContent>
-      <SmallMenu />
-    </Fragment>
+      {isPc && <SmallMenu />}
+      {isMobile && <SmallMenu right="true" />}
+    </LeftWrap>
   );
 };
 

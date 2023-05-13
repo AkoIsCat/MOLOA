@@ -16,11 +16,19 @@ const BackgroundSearch = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+
+  @media ${(props) => props.theme.mobile} {
+    width: 100%;
+  }
 `;
 
 const SearchForm = styled.form`
   width: auto;
   position: relative;
+
+  @media ${(props) => props.theme.mobile} {
+    width: 80%;
+  }
 `;
 
 const SearchInput = styled.input`
@@ -39,6 +47,10 @@ const SearchInput = styled.input`
   &:focus {
     outline: none;
   }
+
+  @media ${(props) => props.theme.mobile} {
+    width: 100%;
+  }
 `;
 
 const SearchIcon = styled.button`
@@ -50,6 +62,11 @@ const SearchIcon = styled.button`
   cursor: pointer;
   background-color: transparent;
   border: 0;
+
+  @media ${(props) => props.theme.mobile} {
+    top: 18%;
+    right: 0%;
+  }
 `;
 
 const Title = styled.h1`

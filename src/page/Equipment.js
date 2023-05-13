@@ -10,15 +10,22 @@ import { useState } from 'react';
 import Modal from '../component/Modal/Modal';
 
 const ContainerBox = styled(Container)`
-  height: 745px;
+  width: 100%;
+  min-height: 100vh;
+  height: auto;
   position: relative;
 `;
 
 const InnerMargin = styled.div`
-  margin: 50px 100px 0 100px;
+  margin: 100px 100px 0 100px;
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
+
+  @media ${(props) => props.theme.mobile} {
+    justify-content: center;
+    margin: 0;
+  }
 `;
 
 const InnerContent = styled.div`
@@ -27,11 +34,10 @@ const InnerContent = styled.div`
   background: #1e2225;
   margin: 10px 60px 40px 90px;
   cursor: pointer;
-`;
 
-// 3.28 1.28
-const SmallMenuStyle = styled(SmallMenu)`
-  margin-right: 50px;
+  @media ${(props) => props.theme.mobile} {
+    width: 100vw;
+  }
 `;
 
 const ContentBox = styled.div`
@@ -41,10 +47,19 @@ const ContentBox = styled.div`
   color: #c1c1c1;
   border-radius: 0 0 10px 10px;
   text-align: center;
+
+  @media ${(props) => props.theme.mobile} {
+    width: 95%;
+  }
 `;
 
 const Text = styled.div`
   padding: 25px;
+
+  @media ${(props) => props.theme.mobile} {
+    padding: 15px;
+    font-size: 14px;
+  }
 `;
 
 const Equipment = () => {
@@ -112,7 +127,6 @@ const Equipment = () => {
             </ContentBox>
           </InnerContent>
         </InnerMargin>
-        <SmallMenuStyle right="true" />
       </ContainerBox>
     </Background>
   );

@@ -5,19 +5,32 @@ import ContentBoxMain from './ContentBoxMain';
 import Loading from '../../Loading';
 
 const Head = styled.div`
-  width: 216px;
+  width: 100%;
   height: 45px;
   border-radius: 10px 10px 0 0;
   background: #292e33;
   font-family: 'Nanum Gothic';
   color: #fff;
-  padding-left: 10px;
   font-size: 15px;
   text-align: left;
   line-height: 45px;
   cursor: pointer;
   display: flex;
   align-items: center;
+
+  .name {
+    height: 45px;
+    padding-left: 10px;
+  }
+
+  .icon {
+    height: auto;
+    padding-top: 10px;
+  }
+
+  @media ${(props) => props.theme.mobile} {
+    width: 100%;
+  }
 `;
 
 const Type = styled.div`
@@ -113,8 +126,8 @@ const ContentBox = (props) => {
           )
         }
       >
-        {props.title}
-        {props.icon}
+        <div className="name">{props.title}</div>
+        <div className="icon">{props.icon}</div>
       </Head>
       {!props.loading && notiList}
       {props.loading && <Loading />}

@@ -4,6 +4,18 @@ import CharacterGemsPart from './Equipment//CharacterGemsPart';
 import CharacterCards from './Equipment/CharacterCards';
 
 import React from 'react';
+import styled from 'styled-components';
+
+const Wrap = styled.div`
+  display: flex;
+  flex-direction: column;
+  padding: 0 20px;
+  margin: 20px 0;
+
+  @media ${(props) => props.theme.mobile} {
+    width: 95%;
+  }
+`;
 
 const Equipment = ({
   equipment,
@@ -19,14 +31,7 @@ const Equipment = ({
   };
 
   return (
-    <div
-      style={{
-        display: 'flex',
-        flexDirection: 'column',
-        padding: '0 20px',
-        margin: '20px 0',
-      }}
-    >
+    <Wrap>
       <CharacterEquipmentPart equipment={equipment} engraving={engraving} />
       <CharacterGemsPart gems={gems} getGemsList={getGemsList} />
       <Characteristics
@@ -35,7 +40,7 @@ const Equipment = ({
         engraving={engraving}
       />
       <CharacterCards cards={cards} />
-    </div>
+    </Wrap>
   );
 };
 

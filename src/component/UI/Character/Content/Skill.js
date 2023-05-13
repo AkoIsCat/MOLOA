@@ -8,6 +8,10 @@ const SkillPoint = styled.p`
   color: #fff;
   font-family: 'Nanum Gothic';
   font-size: 20px;
+
+  @media ${(props) => props.theme.mobile} {
+    font-size: 17px;
+  }
 `;
 
 const SkillItem = styled.div`
@@ -17,6 +21,8 @@ const SkillItem = styled.div`
   border-bottom: ${(props) => (!props.end ? '' : ' 1px solid #292e33')};
   font-family: 'Nanum Gothic';
   align-items: center;
+  margin: 5px 0;
+  flex-wrap: wrap;
 
   .skillInfoBox {
     width: 160px;
@@ -69,10 +75,20 @@ const SkillItem = styled.div`
     display: flex;
     padding: 0 0 10px 0;
     margin-left: 10px;
+
+    @media ${(props) => props.theme.mobile} {
+      margin: 0;
+      margin-top: 5px;
+    }
   }
 
   .tripodsBox {
     display: flex;
+
+    @media ${(props) => props.theme.mobile} {
+      margin: 0;
+      margin-top: 5px;
+    }
 
     .tooltip {
       position: absolute;
@@ -87,6 +103,12 @@ const SkillItem = styled.div`
       color: #c1c1c1;
       z-index: 100;
       line-height: 25px;
+
+      @media ${(props) => props.theme.mobile} {
+        width: 110px;
+        top: 100%;
+        left: -0%;
+      }
     }
 
     .tripodsWrap {
@@ -242,6 +264,17 @@ const GemsItemWrap = styled.div`
       font-size: 14px;
       color: #fff;
     }
+  }
+`;
+
+const Wrap = styled.div`
+  display: flex;
+  flex-direction: column;
+  padding: 0 20px;
+  margin: 20px 0;
+
+  @media ${(props) => props.theme.mobile} {
+    width: 140vw;
   }
 `;
 

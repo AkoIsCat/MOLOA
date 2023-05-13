@@ -11,6 +11,10 @@ const ContentWrap = styled.div`
   border-radius: 10px;
   padding: 10px 0 35px 0px;
   margin: 20px 0 0 0;
+
+  @media ${(props) => props.theme.mobile} {
+    flex-direction: column;
+  }
 `;
 
 const ImageBoxColor = styled.div`
@@ -31,6 +35,10 @@ const ImageBoxColor = styled.div`
       ? 'linear-gradient(135deg, #1a230e 0%, #374e18 100%)'
       : '#292e33'};
   border-radius: 10px;
+
+  @media ${(props) => props.theme.mobile} {
+    height: 85%;
+  }
 `;
 
 const GemsItemWrap = styled.div`
@@ -38,14 +46,20 @@ const GemsItemWrap = styled.div`
   width: auto;
   height: 50px;
   border-radius: 10px 10px 0 0;
-  margin: 0px 5px;
+  margin: 3px 5px;
   padding: 10px 0 10px 0;
+  flex-wrap: wrap;
 
   img {
     width: 50px;
     height: 50px;
     border-radius: 10px 10px 0 0;
     object-fit: cover;
+
+    @media ${(props) => props.theme.mobile} {
+      width: 40px;
+      height: 40px;
+    }
   }
 
   p {
@@ -58,6 +72,10 @@ const GemsItemWrap = styled.div`
     margin: 0;
     background: #292e33;
     border-radius: 0 0 10px 10px;
+
+    @media ${(props) => props.theme.mobile} {
+      font-size: 13px;
+    }
   }
 
   .tooltip {
@@ -94,6 +112,13 @@ const GemsItemWrap = styled.div`
       color: #fff;
     }
   }
+`;
+
+const GemsFlex = styled.div`
+  display: flex;
+  margin: 10px 0;
+  justify-content: center;
+  flex-wrap: wrap;
 `;
 
 const CharacterGemsPart = ({ gems, getGemsList }) => {
@@ -190,12 +215,16 @@ const CharacterGemsPart = ({ gems, getGemsList }) => {
 
   return (
     <ContentWrap>
-      {extinction.map((item, index) => (
-        <GemsItem key={index} item={item} />
-      ))}
-      {prominence.map((item, index) => (
-        <GemsItem key={index} item={item} />
-      ))}
+      <GemsFlex>
+        {extinction.map((item, index) => (
+          <GemsItem key={index} item={item} />
+        ))}
+      </GemsFlex>
+      <GemsFlex>
+        {prominence.map((item, index) => (
+          <GemsItem key={index} item={item} />
+        ))}
+      </GemsFlex>
     </ContentWrap>
   );
 };

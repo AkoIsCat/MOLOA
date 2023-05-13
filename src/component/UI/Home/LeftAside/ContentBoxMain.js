@@ -2,12 +2,11 @@ import styled from 'styled-components';
 import React, { Fragment } from 'react';
 
 const Content = styled.div`
-  width: 206px;
+  width: 100%;
   height: 63px;
   background: blue;
   background: #292e33;
   color: #c1c1c1;
-  padding: 0px 10px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -16,6 +15,28 @@ const Content = styled.div`
   font-size: ${(props) => (props.font ? props.font : '')}px;
   line-height: ${(props) => (props.height ? props.height : '')}px;
   cursor: pointer;
+
+  .content {
+    width: 206px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+
+  @media ${(props) => props.theme.mobile} {
+    width: 100%;
+
+    .content {
+      width: 500px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      padding-left: 10px;
+      padding-right: 10px;
+    }
+  }
 `;
 
 const TopLine = styled.div`
@@ -23,6 +44,10 @@ const TopLine = styled.div`
   height: 2px;
   background: #292e33;
   margin: 0 auto;
+
+  @media ${(props) => props.theme.mobile} {
+    width: 100%;
+  }
 `;
 
 const TopLineInner = styled.div`
@@ -30,6 +55,10 @@ const TopLineInner = styled.div`
   height: 2px;
   background: #4b535a;
   margin: 0 auto;
+
+  @media ${(props) => props.theme.mobile} {
+    width: 97.2%;
+  }
 `;
 
 const ContentBoxFormat = (props) => {
@@ -46,7 +75,7 @@ const ContentBoxFormat = (props) => {
         border={props.border}
         onClick={() => window.open(`${props.link}`, '_blank')}
       >
-        {props.children}
+        <div className="content">{props.children}</div>
       </Content>
     </Fragment>
   );

@@ -1,8 +1,8 @@
 import styled from 'styled-components';
+import { useMediaQuery } from 'react-responsive';
 
 import { Head } from '../../Home/RightAside/CommonContentBox';
 import { Content } from '../../Home/RightAside/CommonContentBoxMain';
-import SmallMenu from '../../SmallMenu';
 
 import { useEffect, useState, Fragment } from 'react';
 import { useParams } from 'react-router-dom';
@@ -42,6 +42,36 @@ const Side = styled.aside`
   flex-direction: column;
   justify-content: space-between;
   float: left;
+
+  @media ${(props) => props.theme.mobile} {
+    width: 100%;
+  }
+`;
+
+const Wrap = styled.div`
+  height: auto;
+
+  @media ${(props) => props.theme.mobile} {
+    width: 95%;
+    margin: 0 10px;
+  }
+`;
+
+const Wrap2 = styled.div`
+  @media ${(props) => props.theme.mobile} {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
+`;
+
+const FullWrap = styled.div`
+  @media ${(props) => props.theme.mobile} {
+    display: flex;
+    justify-content: center;
+  }
 `;
 
 const CharacterInfo = styled.div`
@@ -51,6 +81,26 @@ const CharacterInfo = styled.div`
   border-radius: 10px;
   margin-bottom: 25px;
   padding: 10px 0;
+
+  @media ${(props) => props.theme.mobile} {
+    width: 95vw;
+    margin-right: 20px;
+    margin-left: 20px;
+  }
+`;
+
+const AvatarImg = styled.img`
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  border-radius: 10px;
+  margin-bottom: 50px;
+
+  @media ${(props) => props.theme.mobile} {
+    width: 100%;
+    margin-left: 0px;
+    padding-top: 20px;
+  }
 `;
 
 const InfoItem = styled.div`
@@ -59,6 +109,10 @@ const InfoItem = styled.div`
   display: flex;
   align-items: center;
   padding: 2px 0;
+
+  @media ${(props) => props.theme.mobile} {
+    height: 50px;
+  }
 
   div {
     background: #40444f;
@@ -83,6 +137,11 @@ const CollectWrap = styled.div`
   flex-wrap: wrap;
   justify-content: center;
   margin: 2px 13px 1px 13px;
+
+  @media ${(props) => props.theme.mobile} {
+    margin: 0 13px 0;
+    padding: 10px 0;
+  }
 
   div {
     display: flex;
@@ -189,6 +248,16 @@ const Aside = () => {
     loadCollectibles();
   }, [loadCharacterUrl, isExist, commonCharacterUrl, id]);
 
+  const isPc = useMediaQuery({
+    query: '(min-width:1024px)',
+  });
+  const isTablet = useMediaQuery({
+    query: '(min-width:768px) and (max-width:1023px)',
+  });
+  const isMobile = useMediaQuery({
+    query: '(max-width:767px)',
+  });
+
   const infoItem = profile && (
     <CharacterInfo>
       <InfoItem>
@@ -243,7 +312,9 @@ const Aside = () => {
 
   const collectItem = collectibles && (
     <Fragment>
-      <Head collect="true">수집품</Head>
+      <Head collect="true" rank="true">
+        수집품
+      </Head>
       <Content collect="true" border="true">
         <CollectWrap>{collectList}</CollectWrap>
       </Content>
@@ -251,33 +322,52 @@ const Aside = () => {
   );
 
   const avatarImage = profile && (
-    <Content collectImg="true">
-      <img
-        style={{
-          width: '100%',
-          height: 'auto',
-          objectFit: 'cover',
-          borderRadius: '10px',
-          marginBottom: '50px',
-        }}
-        src={profile.CharacterImage}
-        alt="아바타"
-      />
+    <Content collectImg="true" collect="true">
+      <AvatarImg src={profile.CharacterImage} alt="아바타" />
     </Content>
   );
 
   return (
-    <Fragment>
-      <Nickname>
-        <p>{id}</p>
-      </Nickname>
-      <Side>
-        {infoItem}
-        {collectItem}
-        {avatarImage}
-        <SmallMenu />
-      </Side>
-    </Fragment>
+    <FullWrap>
+      {isPc && (
+        <Wrap>
+          <Nickname>
+            <p>{id}</p>
+          </Nickname>
+          <Side>
+            {infoItem}
+            {collectItem}
+            {avatarImage}
+          </Side>
+        </Wrap>
+      )}
+      {isTablet && (
+        <Wrap>
+          <Nickname>
+            <p>{id}</p>
+          </Nickname>
+          <Side>
+            {infoItem}
+            {collectItem}
+            {avatarImage}
+          </Side>
+        </Wrap>
+      )}
+      {isMobile && (
+        <Wrap>
+          <Nickname>
+            <p>{id}</p>
+          </Nickname>
+          <Side>
+            <Wrap2>
+              <div>{infoItem}</div>
+              <div>{avatarImage}</div>
+            </Wrap2>
+            <Wrap>{collectItem}</Wrap>
+          </Side>
+        </Wrap>
+      )}
+    </FullWrap>
   );
 };
 

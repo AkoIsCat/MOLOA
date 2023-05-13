@@ -21,6 +21,10 @@ const ContainerBox = styled(Container)`
   padding-bottom: 50px;
   height: auto;
   position: relative;
+
+  @media ${(props) => props.theme.mobile} {
+    width: 100%;
+  }
 `;
 
 const Message = styled.div`
@@ -43,6 +47,10 @@ const ContentBox = styled.div`
   height: auto;
   background: #1e2225;
   margin: 0 auto;
+
+  @media ${(props) => props.theme.mobile} {
+    width: 100%;
+  }
 `;
 
 const Section = styled.section`
@@ -55,6 +63,11 @@ const Section = styled.section`
   flex-direction: column;
   justify-content: center;
   padding-bottom: 30px;
+
+  @media (max-width: 767px) {
+    width: 100%;
+    float: none;
+  }
 `;
 
 // 네비
@@ -74,6 +87,11 @@ const Navigation = styled.nav`
     align-items: center;
     padding: 0;
   }
+
+  @media ${(props) => props.theme.mobile} {
+    width: 95%;
+    margin-left: 5px;
+  }
 `;
 
 const NavItem = styled.li`
@@ -92,6 +110,12 @@ const NavItem = styled.li`
       ? '0 10px 10px 0'
       : ''};
 
+  @media ${(props) => props.theme.mobile} {
+    border-radius: 0px;
+    font-size: 12px;
+    padding: 12px;
+  }
+
   &:hover {
     background: #40444f;
   }
@@ -106,6 +130,12 @@ const InnerSection = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+
+  @media (max-width: 767px) {
+    width: 94%;
+    padding: 0;
+    margin: 0 12px;
+  }
 `;
 
 const lostArkKey =

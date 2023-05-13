@@ -10,6 +10,12 @@ const ContentWrap = styled.div`
   padding: ${(props) =>
     props.characteristics ? '10px 0 10px 0' : '10px 0 35px 0'};
   margin: 20px 0 0 0;
+
+  @media ${(props) => props.theme.mobile} {
+    width: 100%;
+    margin: 10px 0;
+    padding: 0;
+  }
 `;
 
 const CharacteristicsBox = styled.div`
@@ -21,6 +27,12 @@ const CharacteristicsBox = styled.div`
   line-height: 35px;
   font-family: 'Nanum Gothic';
   color: #fff;
+
+  @media ${(props) => props.theme.mobile} {
+    width: 90%;
+    margin: 10px;
+    padding: 0;
+  }
 `;
 
 const TriportAndCharacteristicsWrap = styled.div`
@@ -29,6 +41,12 @@ const TriportAndCharacteristicsWrap = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+
+  @media ${(props) => props.theme.mobile} {
+    width: 100%;
+    margin: 10px;
+    padding: 0;
+  }
 `;
 
 const CombatWrap = styled.div`
@@ -94,6 +112,12 @@ const NameAndLevelWrap = styled.div`
     color: #fff;
     font-family: 'Nanum Gothic';
   }
+
+  @media ${(props) => props.theme.mobile} {
+    width: 50%;
+    margin: 10px;
+    padding: 0;
+  }
 `;
 
 const EffectWrap = styled.div`
@@ -101,6 +125,11 @@ const EffectWrap = styled.div`
   display: flex;
   justify-content: space-between;
   position: relative;
+
+  @media ${(props) => props.theme.mobile} {
+    margin-bottom: 10px;
+    padding: 0;
+  }
 
   .name {
     margin: 7px 0;
@@ -145,11 +174,21 @@ const SkillWrap = styled.div`
   margin: 5px 0;
   width: 100%;
 
+  @media ${(props) => props.theme.mobile} {
+    width: 100%;
+    margin: 10px 0;
+    padding: 0;
+  }
+
   .skillWrap {
     display: flex;
     justify-content: flex-start;
     align-items: center;
     margin: 1px 0;
+
+    @media ${(props) => props.theme.mobile} {
+      margin: 10px 0;
+    }
   }
 
   .skillName {
@@ -173,6 +212,15 @@ const SkillLevel = styled.div`
   padding-right: 10px;
   color: ${(props) =>
     props.tier === 0 ? '#00b5ff' : props.tier === 1 ? '#91fe02' : '#fe9600'};
+`;
+
+const ContentWrapWrap = styled.div`
+  display: flex;
+  justify-content: space-between;
+
+  @media ${(props) => props.theme.mobile} {
+    flex-direction: column;
+  }
 `;
 
 const Characteristics = ({ combatSkills, profile, engraving }) => {
@@ -258,7 +306,9 @@ const Characteristics = ({ combatSkills, profile, engraving }) => {
   }
 
   return (
-    <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+    <ContentWrapWrap
+      style={{ display: 'flex', justifyContent: 'space-between' }}
+    >
       <ContentWrap characteristics="true">
         <TriportAndCharacteristicsWrap>
           <div style={{ margin: '10px 0' }}>
@@ -328,7 +378,7 @@ const Characteristics = ({ combatSkills, profile, engraving }) => {
           </SkillWrap>
         </div>
       </ContentWrap>
-    </div>
+    </ContentWrapWrap>
   );
 };
 

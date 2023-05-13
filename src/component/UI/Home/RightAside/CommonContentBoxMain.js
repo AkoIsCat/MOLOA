@@ -11,7 +11,21 @@ export const Content = memo(styled.div`
       ? '263px'
       : props.collectImg
       ? '283px'
-      : '206px'};
+      : '86%'};
+
+  @media ${(props) => props.theme.mobile} {
+    margin: 0;
+    padding: ${(props) => (props.zero ? ' 10px 0 10px 0' : '0')};
+    width: ${(props) =>
+      props.event
+        ? '100%'
+        : props.main
+        ? '24.8%'
+        : props.collect
+        ? '100%'
+        : '100%'};
+  }
+
   height: ${(props) => (props.carousel ? '140px' : 'auto')};
   background: ${(props) => (props.collectImg ? '#1e2225' : '#292e33')};
   color: ${(props) => (props.main ? '#fff' : '#c1c1c1')};
@@ -61,6 +75,8 @@ const CommonContentBoxMain = (props) => {
       carousel={props.carousel}
       collect={props.collect}
       collectImg={props.collectImg}
+      event={props.event}
+      zero={props.zero}
     >
       {props.children}
     </Content>

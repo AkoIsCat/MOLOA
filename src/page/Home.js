@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { useMediaQuery } from 'react-responsive';
 
 import Header from '../component/header/Header';
 import Background from '../component/UI/BackBox';
@@ -10,6 +11,13 @@ import MainContents from '../component/UI/Home/MainContents/MainContents';
 export const Container = styled.div`
   display: flex;
   height: auto;
+
+  @media ${(props) => props.theme.mobile} {
+    width: 100%;
+    flex-direction: column;
+    padding: 0;
+    // overflow: hidden;
+  }
 `;
 
 const LeftSide = styled.aside`
@@ -20,6 +28,13 @@ const LeftSide = styled.aside`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+
+  @media ${(props) => props.theme.mobile} {
+    width: 97%;
+    padding: 0;
+    margin: 10px 0;
+    padding-left: 20px;
+  }
 `;
 
 const MainContent = styled.main`
@@ -27,24 +42,76 @@ const MainContent = styled.main`
   height: 100%;
   background: #1e2225;
   margin: 20px;
+
+  @media ${(props) => props.theme.mobile} {
+    width: 97%;
+    margin-top: 10px;
+    padding: 0;
+  }
 `;
 
 const Home = () => {
+  const isPc = useMediaQuery({
+    query: '(min-width:1024px)',
+  });
+  const isTablet = useMediaQuery({
+    query: '(min-width:768px) and (max-width:1023px)',
+  });
+  const isMobile = useMediaQuery({
+    query: '(max-width:767px)',
+  });
+
   return (
-    <Background>
-      <Header />
-      <Container>
-        <LeftSide>
-          <LeftAside />
-        </LeftSide>
-        <MainContent>
-          <MainContents />
-        </MainContent>
-        <LeftSide>
-          <RightAside />
-        </LeftSide>
-      </Container>
-    </Background>
+    <div>
+      {isPc && (
+        <Background>
+          <Header />
+          <Container>
+            <LeftSide>
+              <LeftAside />
+            </LeftSide>
+            <MainContent>
+              <MainContents />
+            </MainContent>
+            <LeftSide>
+              <RightAside />
+            </LeftSide>
+          </Container>
+        </Background>
+      )}
+      {isTablet && (
+        <Background>
+          <Header />
+          <Container>
+            <LeftSide>
+              <LeftAside />
+            </LeftSide>
+            <MainContent>
+              <MainContents />
+            </MainContent>
+            <LeftSide>
+              <RightAside />
+            </LeftSide>
+          </Container>
+        </Background>
+      )}
+      {isMobile && (
+        <Background>
+          <Header />
+          <Container>
+            <MainContent>
+              <MainContents />
+            </MainContent>
+            <LeftSide>
+              <LeftAside />
+            </LeftSide>
+            <LeftSide>
+              <RightAside />
+            </LeftSide>
+          </Container>
+        </Background>
+      )}
+    </div>
   );
 };
 

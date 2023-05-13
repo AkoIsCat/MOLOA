@@ -7,7 +7,6 @@ import Background from '../component/UI/BackBox';
 import { Container } from './Home';
 import CommonContentBox from '../component/UI/Home/RightAside/CommonContentBox';
 import Loading from '../component/UI/Loading';
-import SmallMenu from '../component/UI/SmallMenu';
 
 import { useEffect, useState } from 'react';
 
@@ -17,20 +16,40 @@ const ContainerBox = styled(Container)`
   position: relative;
   display: flex;
   justify-content: space-around;
+
+  @media ${(props) => props.theme.mobile} {
+    width: 100vw;
+    flex-direction: column-reverse;
+  }
 `;
 
 const RankingWrap = styled.div`
-  // background: pink;
-  width: 77%;
+  @media ${(props) => props.theme.desktop} {
+    width: 77%;
+  }
+
+  @media ${(props) => props.theme.tablet} {
+    width: 72%;
+  }
+
+  @media ${(props) => props.theme.mobile} {
+    width: 100%;
+  }
 `;
 
 const ServerWrap = styled.div`
-  // background: green;
   padding: 30px 0px;
   height: auto;
   width: 18%;
   display: flex;
   flex-direction: column;
+
+  @media ${(props) => props.theme.mobile} {
+    margin-top: 40px;
+    width: 90%;
+    padding: 0 25px;
+    text-align: center;
+  }
 `;
 
 const ServerList = styled.div`
@@ -46,6 +65,10 @@ const ServerList = styled.div`
     list-style: none;
     margin: 0;
     padding: 0;
+
+    @media ${(props) => props.theme.mobile} {
+      justify-content: center;
+    }
   }
 `;
 
@@ -81,6 +104,10 @@ const SelectServerPhrases = styled.div`
   align-items: center;
   margin-top: 5vh;
   border-radius: 10px;
+
+  @media ${(props) => props.theme.mobile} {
+    font-size: 14px;
+  }
 `;
 
 const RankIndexWrap = styled.div`
@@ -98,6 +125,11 @@ const RankIndexWrap = styled.div`
     color: #c1c1c1;
     border-bottom: 1px solid #c1c1c1;
 
+    @media ${(props) => props.theme.mobile} {
+      justify-content: space-between;
+      font-size: 12px;
+    }
+
     li {
       margin: 0 10px 10px 10px;
     }
@@ -105,6 +137,11 @@ const RankIndexWrap = styled.div`
     .listWrap {
       display: flex;
       width: 100%;
+
+      @media ${(props) => props.theme.mobile} {
+        justify-content: space-between;
+        font-size: 5px;
+      }
 
       li {
         height: 45px;
@@ -156,6 +193,10 @@ const Notice = styled.div`
   color: #c1c1c1;
   font-family: 'Nanum Gothic';
   margin: 30px 20px;
+
+  @media ${(props) => props.theme.mobile} {
+    font-size: 12px;
+  }
 `;
 
 const lostArkKey =
@@ -305,9 +346,10 @@ const Guild = () => {
           <CommonContentBox
             title="서버"
             equipment="true"
+            guild="true"
             itemList={serverListItem}
           />
-          <SmallMenu right="true" />
+          {/* <SmallMenu right="true" /> */}
         </ServerWrap>
       </ContainerBox>
     </Background>

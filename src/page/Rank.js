@@ -42,14 +42,28 @@ import Loading from '../component/UI/Loading';
 
 const ContainerBox = styled(Container)`
   min-height: 100vh;
+  width: auto;
   height: auto;
   position: relative;
   display: flex;
   justify-content: space-around;
+
+  @media ${(props) => props.theme.mobile} {
+    width: 100%;
+    flex-direction: column-reverse;
+  }
 `;
 
 const RankingWrap = styled.div`
-  width: 77%;
+  width: 50vw;
+
+  @media ${(props) => props.theme.tablet} {
+    width: 80vw;
+  }
+
+  @media ${(props) => props.theme.mobile} {
+    width: 100%;
+  }
 `;
 
 const ServerWrap = styled.div`
@@ -59,6 +73,12 @@ const ServerWrap = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
+
+  @media ${(props) => props.theme.mobile} {
+    width: 100%;
+    justify-content: center;
+    padding: 10px;
+  }
 `;
 
 const ServerList = styled.div`
@@ -74,6 +94,10 @@ const ServerList = styled.div`
     list-style: none;
     margin: 0;
     padding: 0;
+
+    @media ${(props) => props.theme.mobile} {
+      justify-content: center;
+    }
   }
 `;
 
@@ -85,6 +109,10 @@ const ServerListli = styled.li`
     props.active ? '#fff' : props.active2 ? '#fff' : '#c1c1c1'};
   cursor: pointer;
 
+  @media ${(props) => props.theme.mobile} {
+    text-align: center;
+  }
+
   border-radius: ${(props) =>
     props.borderFirst
       ? '10px 0 0 10px'
@@ -92,11 +120,34 @@ const ServerListli = styled.li`
       ? '0 10px 10px 0'
       : ''};
 
-  img {
-    width: 40px;
-    height: 40px;
-    object-fit: contain;
-    margin-bottom: 7px;
+  .itemWrap {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+
+    @media ${(props) => props.theme.mobile} {
+      align-items: center;
+    }
+
+    img {
+      width: 40px;
+      height: 40px;
+      object-fit: contain;
+      margin-bottom: 7px;
+
+      @media ${(props) => props.theme.mobile} {
+        width: 30px;
+        height: 30px;
+        object-fit: contain;
+      }
+    }
+
+    div {
+      @media ${(props) => props.theme.mobile} {
+        margin: 0 10px;
+      }
+    }
   }
 
   .engravings {
@@ -129,6 +180,11 @@ const RankIndexWrap = styled.div`
     color: #c1c1c1;
     border-bottom: 1px solid #c1c1c1;
 
+    @media ${(props) => props.theme.mobile} {
+      justify-content: space-between;
+      font-size: 12px;
+    }
+
     li {
       margin: 0 10px 10px 10px;
     }
@@ -136,6 +192,11 @@ const RankIndexWrap = styled.div`
     .listWrap {
       display: flex;
       width: 100%;
+
+      @media ${(props) => props.theme.mobile} {
+        justify-content: space-between;
+        font-size: 4px;
+      }
 
       li {
         height: 45px;
@@ -155,13 +216,17 @@ const RankIndexWrap = styled.div`
     }
 
     .rank {
-      width: 35px;
+      width: 50px;
       text-align: center;
     }
 
     .guildName {
       margin-left: 30px;
       width: 160px;
+
+      @media ${(props) => props.theme.mobile} {
+        margin: 0;
+      }
     }
 
     .serverName,
@@ -201,6 +266,13 @@ const Notice = styled.div`
   color: #c1c1c1;
   font-family: 'Nanum Gothic';
   margin: 30px 20px;
+`;
+
+const ServerWrapWrap = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: auto;
+  margin: 100px 20px 100px 0;
 `;
 
 const PopularCharacterUrl = `https://lostark-bf0ba-default-rtdb.firebaseio.com/CharacterSearch.json`;
@@ -503,14 +575,7 @@ const Rank = () => {
               fontSize: '12px',
             }}
           >
-            <div
-              style={{
-                display: 'flex',
-                flexDirection: 'column',
-                justifyContent: 'center',
-                alignContent: 'center',
-              }}
-            >
+            <div className="itemWrap">
               <img src={item.image} alt={item.name} />
               <div style={{ textAlign: 'center' }}>{item.name}</div>
             </div>
@@ -609,7 +674,7 @@ const Rank = () => {
               <div style={{ margin: '15px 0' }}>
                 <ul style={{ flexDirection: 'column', border: '0' }}>
                   {!characterList && <Loading />}
-                  {characterList && // 서버만 선택되어있는 경우
+                  {/* {characterList && // 서버만 선택되어있는 경우
                     (!serverName || serverName !== '전체') &&
                     !className &&
                     !currentClassEngraving.click &&
@@ -654,7 +719,7 @@ const Rank = () => {
                             <li className="guildName">{item.guild}</li>
                           </div>
                         )
-                    )}
+                    )} */}
                   {characterList && // 서버가 전체이거나 선택되지않고 직업이 선택되지 않은 경우(전체o)
                     (!className || className === '전체') &&
                     (!serverName || serverName === '전체') &&
@@ -1130,18 +1195,12 @@ const Rank = () => {
             </RankIndexWrap>
           </>
         </RankingWrap>
-        <div
-          style={{
-            display: 'flex',
-            flexDirection: 'column',
-            width: 'auto',
-            margin: '100px 20px 100px 0',
-          }}
-        >
+        <ServerWrapWrap>
           <ServerWrap>
             <CommonContentBox
               title="직업"
               equipment="true"
+              rank="true"
               itemList={classListItem}
             />
           </ServerWrap>
@@ -1149,6 +1208,7 @@ const Rank = () => {
             <CommonContentBox
               title="직업 각인"
               equipment="true"
+              rank="true"
               itemList={classEngravingItem}
             />
           </ServerWrap>
@@ -1156,11 +1216,11 @@ const Rank = () => {
             <CommonContentBox
               title="서버"
               equipment="true"
+              rank="true"
               itemList={serverListItem}
             />
-            <SmallMenu right="true" />
           </ServerWrap>
-        </div>
+        </ServerWrapWrap>
       </ContainerBox>
     </Background>
   );

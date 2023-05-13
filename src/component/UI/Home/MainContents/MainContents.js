@@ -15,6 +15,12 @@ const InnerContent = styled.div`
   height: ${(props) => props.height || ''};
   background: #1e2225;
   margin: 10px 10px 40px 10px;
+
+  @media ${(props) => props.theme.mobile} {
+    width: 95%;
+    margin: 20px 0;
+    padding: 0;
+  }
 `;
 
 const HeadStyle = styled(Head)`
@@ -24,10 +30,30 @@ const HeadStyle = styled(Head)`
   text-align: center;
   justify-content: center;
   padding: 0;
+
+  @media ${(props) => props.theme.mobile} {
+    width: 95%;
+    margin: 0;
+  }
+`;
+
+const MainBannerWrap = styled.div`
+  width: 657px;
+  height: ${(props) => props.height || ''};
+  margin: 10px 10px 25px 10px;
+  text-align: center;
+  justify-content: center;
+  padding: 0;
+
+  @media ${(props) => props.theme.mobile} {
+    width: 95%;
+    margin: 10px 0;
+    padding: 0;
+  }
 `;
 
 const MainBanner = styled.img`
-  object-fit: cover;
+  object-fit: fill;
   width: 100%;
   height: 100%;
   border-radius: ${(props) =>
@@ -57,6 +83,12 @@ const LineDivision = styled.div`
   justify-content: center;
   align-items: center;
   margin: 10px;
+
+  @media ${(props) => props.theme.mobile} {
+    width: 100%;
+    margin: 10px 0;
+    padding: 0;
+  }
 `;
 
 const ImageContent = styled.div`
@@ -66,6 +98,10 @@ const ImageContent = styled.div`
   flex-direction: column;
   justify-content: space-around;
   position: relative;
+
+  @media ${(props) => props.theme.mobile} {
+    width: 100%;
+  }
 `;
 
 const CarouselWrap = styled.div`
@@ -73,6 +109,10 @@ const CarouselWrap = styled.div`
   height: 155px;
   margin: 10px;
   outline: none;
+
+  @media ${(props) => props.theme.mobile} {
+    margin: 5px;
+  }
 `;
 
 const CarouselImg = styled.img`
@@ -81,6 +121,13 @@ const CarouselImg = styled.img`
   height: 100px;
   border-radius: 10px;
   cursor: pointer;
+
+  @media ${(props) => props.theme.mobile} {
+    object-fit: fill;
+    width: 95%;
+    margin: 5px 0;
+    padding: 0;
+  }
 `;
 
 const CarouselDate = styled.div`
@@ -89,6 +136,13 @@ const CarouselDate = styled.div`
   padding-left: 10px;
   margin-top: 10px;
   font-size: 13px;
+
+  @media ${(props) => props.theme.mobile} {
+    font-size: 12px;
+    width: 95%;
+    margin: 0;
+    padding: 0;
+  }
 `;
 
 const IslandItem = styled.div`
@@ -344,18 +398,16 @@ const MainContents = () => {
     vertical: false,
   };
 
-  console.log('main');
-
   return (
     <Fragment>
       <HeadStyle border="true">모로아 오픈 베타 서비스 오픈</HeadStyle>
-      <HeadStyle border="true" height="361px">
+      <MainBannerWrap border="true" height="361px">
         <MainBanner
           src="https://cdn-lostark.game.onstove.com/uploadfiles/banner/638964cdc5074a51a5a295f35a267aa0.jpg"
           alt="업데이트 이미지"
           big="true"
         />
-      </HeadStyle>
+      </MainBannerWrap>
       <InnerContent height="360px">
         <CommonContentBox
           title="프로키온의 나침반"
@@ -365,14 +417,19 @@ const MainContents = () => {
           loading={islandIsLoading}
         />
       </InnerContent>
-      <InnerContent height="2z50px">
+      <InnerContent height="auto">
         <CommonContentBox
           title="진행중인 이벤트"
           main="true"
           icon={<Calendar />}
           loading={eventIsLoading}
         />
-        <CommonContentBoxMain equipment="true" border="true" carousel="true">
+        <CommonContentBoxMain
+          event="true"
+          equipment="true"
+          border="true"
+          carousel="true"
+        >
           <Slider {...setting}>{eventListItem}</Slider>
         </CommonContentBoxMain>
       </InnerContent>

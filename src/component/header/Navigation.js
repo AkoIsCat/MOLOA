@@ -7,6 +7,11 @@ const Nav = styled.nav`
   background: linear-gradient(to right, #252b2e 50%, #202427);
   margin: 0;
   padding: 0;
+
+  @media ${(props) => props.theme.mobile} {
+    width: 100%;
+    height: auto;
+  }
 `;
 
 const NavUl = styled.ul`
@@ -15,6 +20,11 @@ const NavUl = styled.ul`
   padding: 0;
   display: flex;
   cursor: pointer;
+
+  @media ${(props) => props.theme.mobile} {
+    flex-direction: column;
+    height: auto;
+  }
 `;
 
 const NavLinkStyle = styled(NavLink)`
@@ -35,6 +45,15 @@ const NavLinkStyle = styled(NavLink)`
   &.active {
     color: #fff;
     background: #1e2225;
+    @media ${(props) => props.theme.mobile} {
+      border-bottom: 1px solid rgb(75, 83, 90);
+      border-top: 1px solid rgb(75, 83, 90);
+    }
+  }
+
+  @media ${(props) => props.theme.mobile} {
+    width: 100%;
+    height: 62.5px;
   }
 `;
 

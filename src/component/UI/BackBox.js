@@ -7,6 +7,11 @@ const BackBox = styled.div`
   width: 1302px;
   height: auto;
   margin: 0 auto;
+
+  @media ${(props) => props.theme.mobile} {
+    width: 100vw;
+    border: 0;
+  }
 `;
 
 const Background = (props) => {

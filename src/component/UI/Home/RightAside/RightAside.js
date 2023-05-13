@@ -17,6 +17,12 @@ const InnerContent = styled.div`
   height: ${(props) => props.height || ''};
   background: #1e2225;
   margin: 10px 10px 40px 10px;
+
+  @media ${(props) => props.theme.mobile} {
+    width: 95%;
+    margin: 0 0 60px;
+    padding: 0;
+  }
 `;
 
 const Coupon = styled(HiOutlineTicket)`
@@ -50,6 +56,10 @@ const HeadStyle = styled(Head)`
   justify-content: space-between;
   margin-bottom: 20px;
   cursor: pointer;
+
+  .content {
+    padding-left: 10px;
+  }
 `;
 
 const LineDivision = styled.div`
@@ -230,6 +240,7 @@ const RightAside = () => {
         align="center"
         border="true"
         link="true"
+        zero="true"
       >
         <LineDivision style={{ fontSize: '14px' }}>
           {items.ServerName}
@@ -249,8 +260,9 @@ const RightAside = () => {
         height="15"
         align="center"
         link="true"
+        zero="true"
       >
-        <LineDivision style={{ fontSize: '14px' }}>
+        <LineDivision style={{ fontSize: '14px', padding: '0 10px' }}>
           {items.ServerName}
         </LineDivision>
         <LineDivision
@@ -265,8 +277,14 @@ const RightAside = () => {
 
   const popularCharacterList = popularCharacter.map((items, index) =>
     popularCharacter.length === index + 1 ? (
-      <CommonContentBoxMain key={index} id={index} font="13" border="true">
-        <LineDivision style={{ margin: '5px 0' }}>
+      <CommonContentBoxMain
+        key={index}
+        id={index}
+        font="13"
+        border="true"
+        zero="true"
+      >
+        <LineDivision>
           <PopularText style={{ fontSize: '17px' }} index={index + 1}>
             {index + 1}
           </PopularText>
@@ -281,8 +299,8 @@ const RightAside = () => {
         </LineDivision>
       </CommonContentBoxMain>
     ) : (
-      <CommonContentBoxMain key={index} id={index} font="13">
-        <LineDivision style={{ margin: '5px 0' }}>
+      <CommonContentBoxMain key={index} id={index} font="13" zero="true">
+        <LineDivision>
           <PopularText style={{ fontSize: '17px' }} index={index + 1}>
             {index + 1}
           </PopularText>
@@ -327,11 +345,11 @@ const RightAside = () => {
       </InnerContent>
       <InnerContent height="94px">
         <HeadStyle border="true">
-          카카오톡 문의하기
+          <div className="content">카카오톡 문의하기</div>
           <KakakoTalk />
         </HeadStyle>
         <HeadStyle border="true">
-          모로아 후원하기
+          <div className="content">모로아 후원하기</div>
           <Star />
         </HeadStyle>
       </InnerContent>

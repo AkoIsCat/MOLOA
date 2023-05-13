@@ -5,17 +5,16 @@ import Loading from '../../Loading';
 export const Head = memo(styled.div`
   width: ${(props) =>
     props.main
-      ? '652px'
+      ? '100%'
       : props.equipment
       ? props.equipment
       : props.collect
       ? '283px'
-      : '216px'};
+      : '95%'};
   height: 45px;
   background: #292e33;
   font-family: 'Nanum Gothic';
   color: #fff;
-  padding-left: ${(props) => (props.collect ? '' : '10px')};
   font-size: 15px;
   line-height: 45px;
   display: flex;
@@ -23,14 +22,48 @@ export const Head = memo(styled.div`
   justify-content: ${(props) => (props.collect ? 'center' : '')};
   border-radius: ${(props) => (props.border ? '10px' : '10px 10px 0 0')};
   border-bottom: ${(props) => (props.collect ? '3px solid #4b535a' : '')};
+
+  .name {
+    height: 45px;
+    padding-left: 10px;
+  }
+
+  .icon {
+    height: auto;
+    padding-top: 18px;
+  }
+
+  @media ${(props) => props.theme.mobile} {
+    width: ${(props) =>
+      props.guild
+        ? '100%'
+        : props.rank
+        ? '100%'
+        : props.equipment
+        ? '95%'
+        : '100%'};
+
+    font-size: ${(props) => props.equipment && '13px'};
+  }
 `);
 
 const BottomLine = styled.div`
   width: ${(props) =>
-    props.main ? '662px' : props.equipment ? '100%' : '226px'};
+    props.main ? '662px' : props.equipment ? '100%' : '95%'};
   height: 2px;
   background: #292e33;
-  margin: 0 auto;
+  // margin: 0 auto;
+
+  @media ${(props) => props.theme.mobile} {
+    width: ${(props) =>
+      props.guild
+        ? '100%'
+        : props.rank
+        ? '100%'
+        : props.equipment
+        ? '95%'
+        : '100%'};
+  }
 `;
 
 const BottomLineInner = styled.div`
@@ -40,6 +73,17 @@ const BottomLineInner = styled.div`
   height: 2px;
   background: #4b535a;
   margin: 0 auto;
+
+  @media ${(props) => props.theme.mobile} {
+    width: ${(props) =>
+      props.guild
+        ? '100%'
+        : props.rank
+        ? '100%'
+        : props.equipment
+        ? '95%'
+        : '97.5%'};
+  }
 `;
 
 const CommonContentBox = (props) => {
@@ -50,12 +94,24 @@ const CommonContentBox = (props) => {
         border={props.border}
         equipment={props.equipment}
         collect={props.collect}
+        guild={props.guild}
+        rank={props.rank}
       >
-        {props.title}
-        {props.icon}
+        <div className="name">{props.title}</div>
+        <div className="icon">{props.icon}</div>
       </Head>
-      <BottomLine main={props.main} equipment={props.equipment}>
-        <BottomLineInner main={props.main} equipment={props.equipment} />
+      <BottomLine
+        main={props.main}
+        equipment={props.equipment}
+        guild={props.guild}
+        rank={props.rank}
+      >
+        <BottomLineInner
+          main={props.main}
+          equipment={props.equipment}
+          guild={props.guild}
+          rank={props.rank}
+        />
       </BottomLine>
       {!props.loading && props.itemList}
       {props.loading && <Loading />}

@@ -320,6 +320,7 @@ const Rank = () => {
         const popularCharacterArray = [];
         for (const [key, value] of Object.entries(responseData)) {
           popularCharacterArray.push({
+            key,
             name: value.name,
             views: value.views,
             class: value.class,

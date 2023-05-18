@@ -7,15 +7,14 @@ module.exports = function (app) {
       target: 'https://developer-lostark.game.onstove.com',
       secure: false,
       changeOrigin: true,
-      cookieDomainRewrite: {
-        '*': '', // 쿠키 도메인 설정
-      },
       onProxyRes: function (proxyRes, req, res) {
-        // 쿠키에 SameSite=None 설정
-        proxyRes.headers['set-cookie'] = proxyRes.headers['set-cookie']
-          .map((cookie) => cookie.replace(/;\s*SameSite=Strict/, ''))
-          .map((cookie) => cookie.replace(/;\s*SameSite=Lax/, ''))
-          .map((cookie) => cookie + '; SameSite=None; Secure');
+        const cookies = proxyRes.headers['set-cookie'];
+        if (cookies) {
+          const newCookie = cookies.map(function (cookie) {
+            return cookie.replace(/SameSite=Lax/gi, '');
+          });
+          proxyRes.headers['set-cookie'] = newCookie;
+        }
       },
     })
   );
@@ -25,15 +24,14 @@ module.exports = function (app) {
       target: 'https://developer-lostark.game.onstove.com',
       secure: false,
       changeOrigin: true,
-      cookieDomainRewrite: {
-        '*': '', // 쿠키 도메인 설정
-      },
       onProxyRes: function (proxyRes, req, res) {
-        // 쿠키에 SameSite=None 설정
-        proxyRes.headers['set-cookie'] = proxyRes.headers['set-cookie']
-          .map((cookie) => cookie.replace(/;\s*SameSite=Strict/, ''))
-          .map((cookie) => cookie.replace(/;\s*SameSite=Lax/, ''))
-          .map((cookie) => cookie + '; SameSite=None; Secure');
+        const cookies = proxyRes.headers['set-cookie'];
+        if (cookies) {
+          const newCookie = cookies.map(function (cookie) {
+            return cookie.replace(/SameSite=Lax/gi, '');
+          });
+          proxyRes.headers['set-cookie'] = newCookie;
+        }
       },
     })
   );
@@ -43,15 +41,14 @@ module.exports = function (app) {
       target: 'https://developer-lostark.game.onstove.com',
       secure: false,
       changeOrigin: true,
-      cookieDomainRewrite: {
-        '*': '', // 쿠키 도메인 설정
-      },
       onProxyRes: function (proxyRes, req, res) {
-        // 쿠키에 SameSite=None 설정
-        proxyRes.headers['set-cookie'] = proxyRes.headers['set-cookie']
-          .map((cookie) => cookie.replace(/;\s*SameSite=Strict/, ''))
-          .map((cookie) => cookie.replace(/;\s*SameSite=Lax/, ''))
-          .map((cookie) => cookie + '; SameSite=None; Secure');
+        const cookies = proxyRes.headers['set-cookie'];
+        if (cookies) {
+          const newCookie = cookies.map(function (cookie) {
+            return cookie.replace(/SameSite=Lax/gi, '');
+          });
+          proxyRes.headers['set-cookie'] = newCookie;
+        }
       },
     })
   );
@@ -61,15 +58,14 @@ module.exports = function (app) {
       target: 'https://developer-lostark.game.onstove.com',
       secure: false,
       changeOrigin: true,
-      cookieDomainRewrite: {
-        '*': '', // 쿠키 도메인 설정
-      },
       onProxyRes: function (proxyRes, req, res) {
-        // 쿠키에 SameSite=None 설정
-        proxyRes.headers['set-cookie'] = proxyRes.headers['set-cookie']
-          .map((cookie) => cookie.replace(/;\s*SameSite=Strict/, ''))
-          .map((cookie) => cookie.replace(/;\s*SameSite=Lax/, ''))
-          .map((cookie) => cookie + '; SameSite=None; Secure');
+        const cookies = proxyRes.headers['set-cookie'];
+        if (cookies) {
+          const newCookie = cookies.map(function (cookie) {
+            return cookie.replace(/SameSite=Lax/gi, '');
+          });
+          proxyRes.headers['set-cookie'] = newCookie;
+        }
       },
     })
   );

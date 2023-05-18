@@ -144,7 +144,11 @@ const RightAside = () => {
         // 객체를 객체 배열로 만들기
         const popularCharacterArray = [];
         for (const [key, value] of Object.entries(responseData)) {
-          popularCharacterArray.push({ name: value.name, views: value.views });
+          popularCharacterArray.push({
+            key,
+            name: value.name,
+            views: value.views,
+          });
         }
 
         // 조회수 별로 내림차순으로 정렬

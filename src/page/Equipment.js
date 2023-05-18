@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import Header from '../component/header/Header';
 import Background from '../component/UI/BackBox';
-import SmallMenu from '../component/UI/SmallMenu';
+
 import { Container } from './Home';
 import CommonContentBox from '../component/UI/Home/RightAside/CommonContentBox';
 import Portal from '../component/Modal/Portal';

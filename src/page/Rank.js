@@ -7,7 +7,6 @@ import Header from '../component/header/Header';
 import Background from '../component/UI/BackBox';
 import { Container } from './Home';
 import CommonContentBox from '../component/UI/Home/RightAside/CommonContentBox';
-import SmallMenu from '../component/UI/SmallMenu';
 
 import { useState, useEffect } from 'react';
 

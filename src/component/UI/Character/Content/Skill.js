@@ -3,6 +3,7 @@ import { nanoid } from 'nanoid';
 import React, { useState } from 'react';
 
 import ContentWrap from '../../ContentWrap';
+import { useEffect } from 'react';
 
 const SkillPoint = styled.p`
   color: #fff;
@@ -267,19 +268,14 @@ const GemsItemWrap = styled.div`
   }
 `;
 
-const Wrap = styled.div`
-  display: flex;
-  flex-direction: column;
-  padding: 0 20px;
-  margin: 20px 0;
-
-  @media ${(props) => props.theme.mobile} {
-    width: 140vw;
-  }
-`;
-
 const Skill = ({ combatSkills, profile, getGems }) => {
   const skillList = [];
+
+  useEffect(() => {
+    document.cookie = 'safeCookie1=foo; SameSite=Lax';
+    document.cookie = 'safeCookie2=foo';
+    document.cookie = 'crossCookie=bar; SameSite=None; Secure';
+  }, []);
 
   if (combatSkills) {
     const notNullRune = combatSkills.filter(

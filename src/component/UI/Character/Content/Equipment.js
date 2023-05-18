@@ -5,6 +5,7 @@ import CharacterCards from './Equipment/CharacterCards';
 
 import React from 'react';
 import styled from 'styled-components';
+import { useEffect } from 'react';
 
 const Wrap = styled.div`
   display: flex;
@@ -29,6 +30,12 @@ const Equipment = ({
   const getGemsList = (data) => {
     getGems(data);
   };
+
+  useEffect(() => {
+    document.cookie = 'safeCookie1=foo; SameSite=Lax';
+    document.cookie = 'safeCookie2=foo';
+    document.cookie = 'crossCookie=bar; SameSite=None; Secure';
+  }, []);
 
   return (
     <Wrap>

@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import React, { Fragment, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useMediaQuery } from 'react-responsive';
 
 import { HiOutlineSpeakerphone } from 'react-icons/hi';

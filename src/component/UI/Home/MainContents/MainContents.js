@@ -9,6 +9,7 @@ import CommonContentBox from '../RightAside/CommonContentBox';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
+import Loading from '../../Loading';
 
 const InnerContent = styled.div`
   width: 662px;
@@ -138,7 +139,7 @@ const CarouselDate = styled.div`
   font-size: 13px;
 
   @media ${(props) => props.theme.mobile} {
-    font-size: 12px;
+    font-size: 11px;
     width: 95%;
     margin: 0;
     padding: 0;
@@ -167,6 +168,8 @@ const lostArkKey =
   'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6IktYMk40TkRDSTJ5NTA5NWpjTWk5TllqY2lyZyIsImtpZCI6IktYMk40TkRDSTJ5NTA5NWpjTWk5TllqY2lyZyJ9.eyJpc3MiOiJodHRwczovL2x1ZHkuZ2FtZS5vbnN0b3ZlLmNvbSIsImF1ZCI6Imh0dHBzOi8vbHVkeS5nYW1lLm9uc3RvdmUuY29tL3Jlc291cmNlcyIsImNsaWVudF9pZCI6IjEwMDAwMDAwMDAwMjc0MTYifQ.MIy7jDe9w81yjIX8Zh4VgGCVH2IR-vz7CGF6Ceh0zdc-5HfnY31XrIwJ86r_nz1ImkS-dPxW7bO_8AaZmuII6sbdJo_dWer-kbkpA5kx1aIrtGqpvhY_fWtXY-_wmWhZrdAFJTtB8t6yVHIua_ceA7CJWM0Bn1sQ6SNWxCbq9fsHb6BGRayKuJ5JV-qAIVC5VjNyVC4iIyAdJetDWgu0c7DTR_pVOeWHbsX-CbAqqKXvRPoNII1aop4Ioa9Sbhb99iD-BuA7pfn-_D-m6axvO0-0luLu4UbwXhrE5jEVPNs7Oxf215AqosVjFb5ObX74iGzf6vyt8YqjL08UkLS8NQ';
 
 const WEEKDAY = ['일', '월', '화', '수', '목', '금', '토'];
+
+const MoloaNotiUrl = `https://lostark-bf0ba-default-rtdb.firebaseio.com/MoloaNoti.json`;
 
 const MainContents = () => {
   const [date, setDate] = useState(new Date());
@@ -222,6 +225,8 @@ const MainContents = () => {
   const [weekend, setWeekend] = useState(false);
   const [islandIsLoading, setIslandIsLoadig] = useState(true);
   const [eventIsLoading, setEventIsLoading] = useState(true);
+  const [moloaNoti, setMoloaNoti] = useState([]);
+  const [molosIsLoading, setMoloaIsLoading] = useState(true);
 
   useEffect(() => {
     const currentDate = new Date();
@@ -298,11 +303,23 @@ const MainContents = () => {
         console.log('LostArk EventList error!!');
       }
     };
+
+    // 모로아 공지
+    const loadMoloaNoti = async () => {
+      try {
+        const response = await fetch(MoloaNotiUrl);
+        const responseData = await response.json();
+        setMoloaNoti(responseData.splice(undefined, 1));
+        setMoloaIsLoading(false);
+      } catch {
+        console.log('MoloaNoti Error!!');
+      }
+    };
     loadCalender();
     loadEventList();
+    loadMoloaNoti();
   }, []);
 
-  // console.log(islandList);
   if (weekend) {
     console.log('주말이지롱롱');
   }
@@ -377,7 +394,11 @@ const MainContents = () => {
 
   const eventListItem = eventList.map((item, index) => (
     <CarouselWrap key={index}>
-      <CarouselImg key={index} src={item.Thumbnail} />
+      <CarouselImg
+        key={index}
+        src={item.Thumbnail}
+        onClick={() => window.open(item.Link, '_blank')}
+      />
       <CarouselDate>
         {item.StartDate.slice(5, 10)} 부터 {item.EndDate.slice(5, 10)} 까지
       </CarouselDate>
@@ -400,7 +421,10 @@ const MainContents = () => {
 
   return (
     <Fragment>
-      <HeadStyle border="true">모로아 오픈 베타 서비스 오픈</HeadStyle>
+      <HeadStyle border="true">
+        {molosIsLoading && <Loading />}
+        {!molosIsLoading && moloaNoti[0]?.Title}
+      </HeadStyle>
       <MainBannerWrap border="true" height="361px">
         <MainBanner
           src="https://cdn-lostark.game.onstove.com/uploadfiles/banner/638964cdc5074a51a5a295f35a267aa0.jpg"

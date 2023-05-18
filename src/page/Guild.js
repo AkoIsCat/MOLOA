@@ -9,6 +9,7 @@ import CommonContentBox from '../component/UI/Home/RightAside/CommonContentBox';
 import Loading from '../component/UI/Loading';
 
 import { useEffect, useState } from 'react';
+import Footer from '../component/UI/Footer';
 
 const ContainerBox = styled(Container)`
   min-height: 100vh;
@@ -127,7 +128,8 @@ const RankIndexWrap = styled.div`
 
     @media ${(props) => props.theme.mobile} {
       justify-content: space-between;
-      font-size: 12px;
+      font-size: 8px;
+      padding: 0;
     }
 
     li {
@@ -140,7 +142,7 @@ const RankIndexWrap = styled.div`
 
       @media ${(props) => props.theme.mobile} {
         justify-content: space-between;
-        font-size: 5px;
+        font-size: 8px;
       }
 
       li {
@@ -161,26 +163,58 @@ const RankIndexWrap = styled.div`
     }
 
     .rank {
-      width: 35px;
+      width: 50px;
       text-align: center;
+
+      @media ${(props) => props.theme.mobile} {
+        width: 118px;
+      }
     }
 
     .guildName {
       margin-left: 30px;
       width: 160px;
+
+      @media ${(props) => props.theme.mobile} {
+        width: 176px;
+        margin: 0;
+      }
     }
 
     .serverName,
     .memberCount {
-      margin-left: 30px;
-      width: 60px;
+      margin-left: 20px;
+      width: 100px;
       text-align: center;
+
+      @media ${(props) => props.theme.mobile} {
+        margin-left: 17px;
+        width: 113px;
+      }
     }
 
     .masterName {
       margin: 0 15px;
       width: 150px;
       text-align: center;
+      display: flex;
+      flex-direction: column;
+
+      @media ${(props) => props.theme.mobile} {
+        width: 227px;
+      }
+
+      div {
+        margin-bottom: 3px;
+      }
+
+      .enName {
+        width: 70px;
+      }
+
+      .enLevel {
+        width: 20px;
+      }
     }
 
     .guildMessage {
@@ -349,9 +383,9 @@ const Guild = () => {
             guild="true"
             itemList={serverListItem}
           />
-          {/* <SmallMenu right="true" /> */}
         </ServerWrap>
       </ContainerBox>
+      <Footer />
     </Background>
   );
 };

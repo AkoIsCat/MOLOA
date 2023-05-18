@@ -6,6 +6,7 @@ import Background from '../component/UI/BackBox';
 import LeftAside from '../component/UI/Home/LeftAside/LeftAside';
 import RightAside from '../component/UI/Home/RightAside/RightAside';
 import MainContents from '../component/UI/Home/MainContents/MainContents';
+import Footer from '../component/UI/Footer';
 
 // style components
 export const Container = styled.div`
@@ -16,7 +17,7 @@ export const Container = styled.div`
     width: 100%;
     flex-direction: column;
     padding: 0;
-    // overflow: hidden;
+    overflow: hidden;
   }
 `;
 
@@ -77,6 +78,7 @@ const Home = () => {
               <RightAside />
             </LeftSide>
           </Container>
+          <Footer />
         </Background>
       )}
       {isTablet && (
@@ -93,6 +95,7 @@ const Home = () => {
               <RightAside />
             </LeftSide>
           </Container>
+          <Footer />
         </Background>
       )}
       {isMobile && (
@@ -108,6 +111,7 @@ const Home = () => {
             <LeftSide>
               <RightAside />
             </LeftSide>
+            <Footer />
           </Container>
         </Background>
       )}

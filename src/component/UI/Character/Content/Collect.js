@@ -15,6 +15,7 @@ import {
   collect8,
   collect9,
 } from '../../../../asset/icon/index';
+import { useEffect } from 'react';
 
 const TendenciesBox = styled.div`
   display: flex;
@@ -23,6 +24,10 @@ const TendenciesBox = styled.div`
   font-family: 'Nanum Gothic';
   font-size: 20px;
   justify-content: center;
+
+  @media ${(props) => props.theme.mobile} {
+    font-size: 10px;
+  }
 
   .Type {
     color: #c1c1c1;
@@ -43,7 +48,18 @@ const CollectUL = styled.ul`
   margin: 0;
   font-family: 'Nanum Gothic';
   justify-content: space-between;
-`;
+  
+
+  @media ${(props) => props.theme.tablet} {
+    flex-wrap: wrap;
+    justify-content: flex-start;
+  }
+
+  @media ${(props) => props.theme.mobile} {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+}`;
 
 const CollectItem = styled.li`
   padding: 7px;
@@ -92,6 +108,10 @@ const CollectInnerSection = styled.div`
   flex-direction: column;
   align-items: center;
 
+  @media ${(props) => props.theme.mobile} {
+    font-size: 13px;
+  }
+
   .collectName {
     color: #fff;
     margin: 10px 0;
@@ -126,6 +146,12 @@ const CollectInnerSection = styled.div`
 
 const Collect = ({ collectibles, profile }) => {
   const [currentCollectTab, setCurrentCollectTab] = useState(0);
+
+  useEffect(() => {
+    document.cookie = 'safeCookie1=foo; SameSite=Lax';
+    document.cookie = 'safeCookie2=foo';
+    document.cookie = 'crossCookie=bar; SameSite=None; Secure';
+  }, []);
 
   const colletImage = [
     collect1,

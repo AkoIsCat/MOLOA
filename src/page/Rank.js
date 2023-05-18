@@ -39,6 +39,8 @@ import {
 } from '../asset/image/classImg/index'; // 직업 아이콘
 import ALL from '../asset/icon/all.png';
 import Loading from '../component/UI/Loading';
+import Footer from '../component/UI/Footer';
+import { Fragment } from 'react';
 
 const ContainerBox = styled(Container)`
   min-height: 100vh;
@@ -182,7 +184,8 @@ const RankIndexWrap = styled.div`
 
     @media ${(props) => props.theme.mobile} {
       justify-content: space-between;
-      font-size: 12px;
+      font-size: 8px;
+      padding: 0;
     }
 
     li {
@@ -195,7 +198,7 @@ const RankIndexWrap = styled.div`
 
       @media ${(props) => props.theme.mobile} {
         justify-content: space-between;
-        font-size: 4px;
+        font-size: 8px;
       }
 
       li {
@@ -218,6 +221,10 @@ const RankIndexWrap = styled.div`
     .rank {
       width: 50px;
       text-align: center;
+
+      @media ${(props) => props.theme.mobile} {
+        width: 118px;
+      }
     }
 
     .guildName {
@@ -225,6 +232,7 @@ const RankIndexWrap = styled.div`
       width: 160px;
 
       @media ${(props) => props.theme.mobile} {
+        width: 176px;
         margin: 0;
       }
     }
@@ -234,6 +242,11 @@ const RankIndexWrap = styled.div`
       margin-left: 20px;
       width: 100px;
       text-align: center;
+
+      @media ${(props) => props.theme.mobile} {
+        margin-left: 17px;
+        width: 113px;
+      }
     }
 
     .masterName {
@@ -242,6 +255,10 @@ const RankIndexWrap = styled.div`
       text-align: center;
       display: flex;
       flex-direction: column;
+
+      @media ${(props) => props.theme.mobile} {
+        width: 227px;
+      }
 
       div {
         margin-bottom: 3px;
@@ -592,7 +609,7 @@ const Rank = () => {
           (item, index) =>
             className &&
             currentClassTab === index && (
-              <>
+              <Fragment key={nanoid()}>
                 <ServerListli
                   borderFirst="true"
                   key={nanoid()}
@@ -635,7 +652,7 @@ const Rank = () => {
                     </div>
                   </div>
                 </ServerListli>
-              </>
+              </Fragment>
             )
         )}
       </ul>
@@ -674,52 +691,7 @@ const Rank = () => {
               <div style={{ margin: '15px 0' }}>
                 <ul style={{ flexDirection: 'column', border: '0' }}>
                   {!characterList && <Loading />}
-                  {/* {characterList && // 서버만 선택되어있는 경우
-                    (!serverName || serverName !== '전체') &&
-                    !className &&
-                    !currentClassEngraving.click &&
-                    !currentClassEngraving2.click &&
-                    characterList.map(
-                      (item) =>
-                        item.server === serverName && (
-                          <div className="listWrap" key={nanoid()}>
-                            <li className="rank">{number++}</li>
-                            <li
-                              className="guildName"
-                              style={{ cursor: 'pointer' }}
-                              onClick={() => {
-                                navigate(`/character/${item.name}`);
-                              }}
-                            >
-                              {item.name}
-                            </li>
-                            <li className="serverName">{item.level}</li>
-                            <li className="memberCount">{item.class}</li>
-                            <li className="masterName">
-                              {item.engravings !== undefined &&
-                                item.engravings.map((items) =>
-                                  items !== undefined ? (
-                                    <div key={nanoid()}>
-                                      <span className="enName">
-                                        {items.name}
-                                      </span>
-                                      <span className="enLevel">
-                                        {items.level}
-                                      </span>
-                                    </div>
-                                  ) : (
-                                    <li
-                                      className="masterName"
-                                      key={nanoid()}
-                                    ></li>
-                                  )
-                                )}
-                            </li>
-                            <li className="memberCount">{item.server}</li>
-                            <li className="guildName">{item.guild}</li>
-                          </div>
-                        )
-                    )} */}
+
                   {characterList && // 서버가 전체이거나 선택되지않고 직업이 선택되지 않은 경우(전체o)
                     (!className || className === '전체') &&
                     (!serverName || serverName === '전체') &&
@@ -1222,6 +1194,7 @@ const Rank = () => {
           </ServerWrap>
         </ServerWrapWrap>
       </ContainerBox>
+      <Footer />
     </Background>
   );
 };

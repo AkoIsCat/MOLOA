@@ -8,6 +8,7 @@ import Portal from '../component/Modal/Portal';
 
 import { useState } from 'react';
 import Modal from '../component/Modal/Modal';
+import Footer from '../component/UI/Footer';
 
 const ContainerBox = styled(Container)`
   width: 100%;
@@ -128,6 +129,7 @@ const Equipment = () => {
           </InnerContent>
         </InnerMargin>
       </ContainerBox>
+      <Footer />
     </Background>
   );
 };

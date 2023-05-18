@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import React from 'react';
+import { useEffect } from 'react';
 
 const ContentWrap = styled.div`
   width: 95%;
@@ -84,6 +85,11 @@ const TrueInner = styled.div`
         color: #fff;
         margin: 5px;
       }
+
+      @media ${(props) => props.theme.mobile} {
+        .type {
+          font-size: 13px;
+        }
     }
   }
 `;
@@ -97,6 +103,7 @@ const FalseInner = styled.div`
     margin-bottom: 10px;
 
     .desc {
+      width: 68%;
       display: flex;
       flex-direction: column;
       font-family: 'Nanum Gothic';
@@ -110,6 +117,11 @@ const FalseInner = styled.div`
         color: #fff;
         margin: 5px;
       }
+
+      @media ${(props) => props.theme.mobile} {
+        .type {
+          font-size: 13px;
+        }
     }
   }
 `;
@@ -122,6 +134,11 @@ const ImageBox = styled.div`
 
   img {
     object-fit: contain;
+  }
+
+  @media ${(props) => props.theme.mobile} {
+    width: 45px;
+    height: 45px;
   }
 `;
 
@@ -144,6 +161,12 @@ const ImageBoxColor = styled.div`
 `;
 
 const Avatar = ({ profile, avatars }) => {
+  useEffect(() => {
+    document.cookie = 'safeCookie1=foo; SameSite=Lax';
+    document.cookie = 'safeCookie2=foo';
+    document.cookie = 'crossCookie=bar; SameSite=None; Secure';
+  }, []);
+
   const trueInner = [
     { type: '무기 아바타' },
     { type: '머리 아바타' },

@@ -42,6 +42,7 @@ import {
   Aga as 도화가,
   WeatherArtist as 기상술사,
 } from '../../../../asset/image/classImg/index'; // 직업 아이콘
+import { useEffect } from 'react';
 
 const ServerNameBox = styled.div`
   width: auto;
@@ -71,6 +72,10 @@ const CharacterProfile = styled.div`
   padding: 10px;
   margin: 8px;
   font-family: 'Nanum Gothic';
+
+  @media ${(props) => props.theme.mobile} {
+    width: 100%;
+  }
 
   .classImg {
     width: 45px;
@@ -196,12 +201,11 @@ const CharacterProfile = styled.div`
 const CharacterList = ({ holdingCharacter, selectMenuHandler }) => {
   const navigate = useNavigate();
 
-  const cookies = new Cookies();
-
-  // 쿠키 설정
-  const setCookie = () => {
-    cookies.set('cookieName', 'cookieValue', { sameSite: 'lax' });
-  };
+  useEffect(() => {
+    document.cookie = 'safeCookie1=foo; SameSite=Lax';
+    document.cookie = 'safeCookie2=foo';
+    document.cookie = 'crossCookie=bar; SameSite=None; Secure';
+  }, []);
 
   const holdingCharacterList = [];
   let serverNameList = [];
@@ -291,7 +295,6 @@ const CharacterList = ({ holdingCharacter, selectMenuHandler }) => {
                         onClick={(e) => {
                           navigate(`/character/${items.obj.CharacterName}`);
                           selectMenuHandler(0);
-                          setCookie();
                         }}
                       >
                         {items.obj.CharacterName}

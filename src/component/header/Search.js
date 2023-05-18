@@ -1,11 +1,11 @@
 import styled from 'styled-components';
-import { Cookies } from 'react-cookie';
 
 import { NavLink } from 'react-router-dom';
 import { BsSearch } from 'react-icons/bs';
 
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useEffect } from 'react';
 
 const BackgroundSearch = styled.div`
   width: 1302px;
@@ -141,16 +141,14 @@ const Search = () => {
 
   const navigate = useNavigate();
 
-  const cookies = new Cookies();
-
-  // 쿠키 설정
-  const setCookie = () => {
-    cookies.set('cookieName', 'cookieValue', { sameSite: 'lax' });
-  };
+  useEffect(() => {
+    document.cookie = 'safeCookie1=foo; SameSite=Lax';
+    document.cookie = 'safeCookie2=foo';
+    document.cookie = 'crossCookie=bar; SameSite=None; Secure';
+  }, []);
 
   const onSubmitHandler = async (e) => {
     e.preventDefault();
-    setCookie();
 
     if (trimInput.length !== 0) {
       navigate(`/character/${trimInput}`);

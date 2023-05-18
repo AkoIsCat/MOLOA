@@ -10,6 +10,7 @@ import Equipment from '../component/UI/Character/Content/Equipment'; // 전투�
 import CharacterList from '../component/UI/Character/Content/CharacterList'; // 보유캐릭터탭
 import Skill from '../component/UI/Character/Content/Skill'; // 스킬탭
 import Collect from '../component/UI/Character/Content/Collect'; // 수집탭
+import Footer from '../component/UI/Footer';
 
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
@@ -65,6 +66,7 @@ const Section = styled.section`
   padding-bottom: 30px;
 
   @media (max-width: 767px) {
+    margin-top: 50px;
     width: 100%;
     float: none;
   }
@@ -89,8 +91,8 @@ const Navigation = styled.nav`
   }
 
   @media ${(props) => props.theme.mobile} {
-    width: 95%;
-    margin-left: 5px;
+    width: 93%;
+    margin-left: 10px;
   }
 `;
 
@@ -161,14 +163,17 @@ const Character = () => {
   const commonCharacterUrl = `https://developer-lostark.game.onstove.com/armories/characters`;
   const loadCharacterUrl = `https://developer-lostark.game.onstove.com/characters`;
 
-  const cookies = new Cookies();
-
-  // 쿠키 설정
-  const setCookie = () => {
-    cookies.set('cookieName', 'cookieValue', { sameSite: 'lax' });
-  };
+  useEffect(() => {
+    document.cookie = 'safeCookie1=foo; SameSite=Lax';
+    document.cookie = 'safeCookie2=foo';
+    document.cookie = 'crossCookie=bar; SameSite=None; Secure';
+  }, []);
 
   useEffect(() => {
+    document.cookie = 'safeCookie1=foo; SameSite=Lax';
+    document.cookie = 'safeCookie2=foo';
+    document.cookie = 'crossCookie=bar; SameSite=None; Secure';
+
     // 캐릭터 존재 여부(원정대 캐릭터)
     const loadCharacterTrue = async () => {
       try {
@@ -480,7 +485,6 @@ const Character = () => {
                         active={currentTab === index && 'true'}
                         onClick={() => {
                           selectMenuHandler(index);
-                          setCookie();
                         }}
                       >
                         {item.name}
@@ -492,7 +496,6 @@ const Character = () => {
                         active={currentTab === index && 'true'}
                         onClick={() => {
                           selectMenuHandler(index);
-                          setCookie();
                         }}
                       >
                         {item.name}
@@ -503,7 +506,6 @@ const Character = () => {
                         active={currentTab === index && 'true'}
                         onClick={() => {
                           selectMenuHandler(index);
-                          setCookie();
                         }}
                       >
                         {item.name}
@@ -518,6 +520,7 @@ const Character = () => {
         )}
         {isExist && characterIsLoading && <Loading />}
       </ContainerBox>
+      <Footer />
     </Background>
   );
 };

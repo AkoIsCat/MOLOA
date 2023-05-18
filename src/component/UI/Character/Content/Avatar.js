@@ -205,7 +205,7 @@ const Avatar = ({ profile, avatars }) => {
     },
   ];
 
-  const inInnerTrue = avatars && avatars.filter((item) => item.IsInner);
+  // const inInnerTrue = avatars && avatars.filter((item) => item.IsInner);
   const isInnerFalse = avatars && avatars.filter((item) => !item.IsInner);
 
   return (

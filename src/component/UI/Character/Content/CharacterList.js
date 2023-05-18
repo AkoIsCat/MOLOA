@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import { Cookies } from 'react-cookie';
 
 import React, { Fragment } from 'react';
 import { useNavigate } from 'react-router-dom';

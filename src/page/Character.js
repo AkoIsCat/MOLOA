@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import { Cookies } from 'react-cookie';
 
 import Aside from '../component/UI/Character/Side/Aside'; // 좌측 캐릭터 정보
 import Header from '../component/header/Header'; // 헤더

@@ -172,8 +172,8 @@ const WEEKDAY = ['일', '월', '화', '수', '목', '금', '토'];
 const MoloaNotiUrl = `https://lostark-bf0ba-default-rtdb.firebaseio.com/MoloaNoti.json`;
 
 const MainContents = () => {
-  const [date, setDate] = useState(new Date());
-  const [calender, setCalender] = useState([
+  const date = new Date();
+  const calender = [
     {
       name: '필드보스',
       emergence:
@@ -217,7 +217,7 @@ const MainContents = () => {
       emergence: true,
       image: 'https://i.ibb.co/yp9315G/heart.png',
     },
-  ]);
+  ];
   const [islandList, setIslandList] = useState([]);
   const [amIslandList, setAmIslandList] = useState([]);
   const [pmIslandList, setPmIslandList] = useState([]);

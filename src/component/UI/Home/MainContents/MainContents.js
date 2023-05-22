@@ -121,7 +121,7 @@ const CarouselImg = styled.img`
   width: 200px;
   height: 100px;
   border-radius: 10px;
-  cursor: pointer;
+  // cursor: pointer;
 
   @media ${(props) => props.theme.mobile} {
     object-fit: fill;
@@ -400,11 +400,7 @@ const MainContents = () => {
 
   const eventListItem = eventList.map((item, index) => (
     <CarouselWrap key={index}>
-      <CarouselImg
-        key={index}
-        src={item.Thumbnail}
-        onClick={() => window.open(item.Link, '_blank')}
-      />
+      <CarouselImg key={index} src={item.Thumbnail} />
       <CarouselDate>
         {item.StartDate.slice(5, 10)} 부터 {item.EndDate.slice(5, 10)} 까지
       </CarouselDate>
@@ -453,6 +449,7 @@ const MainContents = () => {
           main="true"
           icon={<Calendar />}
           loading={eventIsLoading}
+          click={true}
         />
         <CommonContentBoxMain
           event="true"

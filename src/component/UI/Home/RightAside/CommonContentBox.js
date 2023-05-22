@@ -26,6 +26,7 @@ export const Head = memo(styled.div`
   .name {
     height: 45px;
     padding-left: 10px;
+    cursor: ${(props) => props.click && 'pointer'};
   }
 
   .icon {
@@ -96,8 +97,20 @@ const CommonContentBox = (props) => {
         collect={props.collect}
         guild={props.guild}
         rank={props.rank}
+        click={props.click}
       >
-        <div className="name">{props.title}</div>
+        <div
+          className="name"
+          onClick={() => {
+            props.click &&
+              window.open(
+                'https://lostark.game.onstove.com/News/Event/Now',
+                '_blank'
+              );
+          }}
+        >
+          {props.title}
+        </div>
         <div className="icon">{props.icon}</div>
       </Head>
       <BottomLine

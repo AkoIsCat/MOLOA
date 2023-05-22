@@ -260,7 +260,7 @@ const Search = () => {
   return (
     <BackgroundSearch>
       <NavLinkTitle to="/home">
-        <Title>MOLOA.GG</Title>
+        <Title>MOLOA</Title>
       </NavLinkTitle>
       <SearchForm onSubmit={onSubmitHandler}>
         <SearchInput

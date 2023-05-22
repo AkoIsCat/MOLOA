@@ -17,7 +17,6 @@ function App() {
   return (
     <Routes>
       <Route path="/" element={<Home />} />
-      <Route path="/home" element={<Home />} />
       <Route path="/rank" element={<Rank />} />
       <Route path="/guild" element={<Guild />} />
       <Route path="/equipment" element={<Equipment />} />

@@ -61,7 +61,7 @@ const Navigaion = () => {
   return (
     <Nav>
       <NavUl>
-        <NavLinkStyle to="/home">홈</NavLinkStyle>
+        <NavLinkStyle to="/">홈</NavLinkStyle>
         <NavLinkStyle to="/rank">랭킹</NavLinkStyle>
         <NavLinkStyle to="/guild">길드</NavLinkStyle>
         <NavLinkStyle to="/equipment">도구</NavLinkStyle>

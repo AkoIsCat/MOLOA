@@ -234,12 +234,15 @@ const MainContents = () => {
     // 캘린더
     const loadCalender = async () => {
       try {
-        const response = await fetch('/gamecontents/calendar', {
-          headers: {
-            'Content-Type': 'application/json',
-            authorization: `bearer ${lostArkKey}`,
-          },
-        });
+        const response = await fetch(
+          'https://developer-lostark.game.onstove.com/gamecontents/calendar',
+          {
+            headers: {
+              'Content-Type': 'application/json',
+              authorization: `bearer ${lostArkKey}`,
+            },
+          }
+        );
         const responseData = await response.json();
 
         const setList = new Set();
@@ -289,12 +292,15 @@ const MainContents = () => {
     // 이벤트
     const loadEventList = async () => {
       try {
-        const response = await fetch('/news/events', {
-          headers: {
-            'Content-Type': 'application/json',
-            authorization: `bearer ${lostArkKey}`,
-          },
-        });
+        const response = await fetch(
+          'https://developer-lostark.game.onstove.com/news/events',
+          {
+            headers: {
+              'Content-Type': 'application/json',
+              authorization: `bearer ${lostArkKey}`,
+            },
+          }
+        );
         const responseData = await response.json();
 
         setEventList(responseData);
@@ -461,4 +467,4 @@ const MainContents = () => {
   );
 };
 
-export default React.memo(MainContents);
+export default MainContents;

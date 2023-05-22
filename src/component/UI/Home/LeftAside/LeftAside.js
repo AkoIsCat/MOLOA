@@ -61,12 +61,15 @@ const LeftAside = () => {
   useEffect(() => {
     const loadLostApi = async () => {
       try {
-        const response = await fetch('/news/notices?type=%EA%B3%B5%EC%A7%80', {
-          headers: {
-            'Content-Type': 'application/json',
-            authorization: `bearer ${lostArkKey}`,
-          },
-        });
+        const response = await fetch(
+          'https://developer-lostark.game.onstove.com/news/notices?type=%EA%B3%B5%EC%A7%80',
+          {
+            headers: {
+              'Content-Type': 'application/json',
+              authorization: `bearer ${lostArkKey}`,
+            },
+          }
+        );
         const responseData = await response.json();
 
         const sliceResponseDate = await responseData.slice(0, 5);
@@ -93,8 +96,6 @@ const LeftAside = () => {
     loadLostApi();
     loadMoloaNoti();
   }, []);
-
-  console.log('left Aside');
 
   return (
     <LeftWrap>

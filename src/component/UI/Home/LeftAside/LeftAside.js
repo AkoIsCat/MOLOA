@@ -105,6 +105,7 @@ const LeftAside = () => {
           item={noti}
           icon={<Speaker />}
           loading={loaIsLoading}
+          noti={true}
         />
       </InnerContent>
       <InnerContent height="auto">

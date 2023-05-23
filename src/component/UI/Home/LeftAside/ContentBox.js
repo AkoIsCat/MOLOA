@@ -120,6 +120,7 @@ const ContentBox = (props) => {
     <Fragment>
       <Head
         onClick={() =>
+          props.noti &&
           window.open(
             'https://lostark.game.onstove.com/News/Notice/List',
             '_blank'

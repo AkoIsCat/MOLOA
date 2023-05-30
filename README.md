@@ -35,7 +35,7 @@ LostArk API를 이용한 로스트아크라는 온라인 게임의 전투정보 
  
  * 공식 사이트의 공지사항, 이벤트 현황 조회
  * 공지사항, 이벤트 클릭 시 공식사이트 페이지로 이동
- * 인게임 내 스케줄 현황 조회
+ * 인게임 내 일일 컨텐츠 현황 조회
  * Firebase의 Realtime Database를 이용해 실시간 인기 캐릭터 순위, 서버별 디스코드 목록 조회
 
 <img src="https://github-production-user-asset-6210df.s3.amazonaws.com/109052469/241900630-84362659-ce9e-422a-b103-dc8d08291c62.png"  width='500' height='400' />

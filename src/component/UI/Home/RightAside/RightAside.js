@@ -362,7 +362,7 @@ const RightAside = () => {
             className="content"
             onClick={() => {
               window.open(
-                'https://www.notion.so/998e702ff3ee4115b36382fc9a9da192',
+                'https://young-country-366.notion.site/998e702ff3ee4115b36382fc9a9da192',
                 '_blank'
               );
             }}

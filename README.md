@@ -65,6 +65,9 @@ LostArk API를 이용한 로스트아크라는 온라인 게임의 전투정보 
 * 장비와 악세서리에 마우스를 올릴 시 상세정보 조회 기능(툴팁)
 * 보유 캐릭터 탭에서 닉네임 클릭 시 해당 캐릭터 페이지로 이동
 
+<img src='https://github.com/AkoIsCat/lostArk/assets/109052469/c690e586-f14e-48a9-b92b-f9922a5f33a5' width='500' height='400' />
+<img src='https://github.com/AkoIsCat/lostArk/assets/109052469/acda492e-5c24-4733-ac20-8f2072bbdc22' width='500' height='400' />
+
 #### 캐릭터 검색
 * 헤더에 위치한 검색창에 캐릭터 검색 시 Firebase에 정보가 등록/수정 되며 해당 캐릭터 상세 페이지로 이동
 * 캐릭터가 존재하지 않을 시 문구 안내

@@ -34,8 +34,11 @@ LostArk API를 이용한 로스트아크라는 온라인 게임의 전투정보 
  #### 홈
  
  * 공식 사이트의 공지사항, 이벤트 현황 조회
+ * 공지사항, 이벤트 클릭 시 공식사이트 페이지로 이동
  * 인게임 내 스케줄 현황 조회
  * Firebase의 Realtime Database를 이용해 실시간 인기 캐릭터 순위, 서버별 디스코드 목록 조회
+
+<img src="https://github-production-user-asset-6210df.s3.amazonaws.com/109052469/241900630-84362659-ce9e-422a-b103-dc8d08291c62.png"  width='500' height='400' />
 
 #### 랭킹
 * Firebase에 등록되어 있는 캐릭터들 간에 순위 조회 기능
@@ -47,7 +50,8 @@ LostArk API를 이용한 로스트아크라는 온라인 게임의 전투정보 
 
 #### 길드
 * 서버별 길드들의 순위 조회 기능
-* 
+
+<img src='https://github.com/AkoIsCat/lostArk/assets/109052469/90be328a-f6be-480b-9386-216d4afa1e3b' width='500' height='400' />
 
 #### 도구 
 * 게임 플레이에 도움을 줄 수 있는 경매 계산기 기능

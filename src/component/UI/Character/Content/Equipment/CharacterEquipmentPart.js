@@ -298,7 +298,7 @@ const EquipmentTooltipWrap = styled.div`
   background-color: rgb(41, 46, 51, 1);
   border-radius: 10px;
   width: 240px;
-  height: 90%;
+  height: 100%;
   top: 0;
   left: 21.5%;
   right: 0;

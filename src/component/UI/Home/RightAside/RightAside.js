@@ -347,11 +347,28 @@ const RightAside = () => {
       </InnerContent>
       <InnerContent height="94px">
         <HeadStyle border="true">
-          <div className="content">카카오톡 문의하기</div>
+          <div
+            className="content"
+            onClick={() => {
+              window.open('https://open.kakao.com/o/sXnbg8mf', '_blank');
+            }}
+          >
+            카카오톡 문의하기
+          </div>
           <KakakoTalk />
         </HeadStyle>
         <HeadStyle border="true">
-          <div className="content">모로아 후원하기</div>
+          <div
+            className="content"
+            onClick={() => {
+              window.open(
+                'https://www.notion.so/998e702ff3ee4115b36382fc9a9da192',
+                '_blank'
+              );
+            }}
+          >
+            모로아 후원하기
+          </div>
           <Star />
         </HeadStyle>
       </InnerContent>

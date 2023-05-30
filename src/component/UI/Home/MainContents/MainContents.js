@@ -177,11 +177,14 @@ const MainContents = () => {
     {
       name: '필드보스',
       emergence:
-        WEEKDAY[date.getDay()] === '화'
+        WEEKDAY[date.getDay()] === '화' ||
+        (WEEKDAY[date.getDay()] === '수' && date.getHours() <= 6)
           ? true
-          : WEEKDAY[date.getDay()] === '금'
+          : WEEKDAY[date.getDay()] === '금' ||
+            (WEEKDAY[date.getDay()] === '토' && date.getHours() <= 6)
           ? true
-          : WEEKDAY[date.getDay()] === '일'
+          : WEEKDAY[date.getDay()] === '일' ||
+            (WEEKDAY[date.getDay()] === '월' && date.getHours() <= 6)
           ? true
           : false,
       image: 'https://i.postimg.cc/CMv7s0wD/image.png',
@@ -189,11 +192,14 @@ const MainContents = () => {
     {
       name: '유령선',
       emergence:
-        WEEKDAY[date.getDay()] === '화'
+        WEEKDAY[date.getDay()] === '화' ||
+        (WEEKDAY[date.getDay()] === '수' && date.getHours() <= 6)
           ? true
-          : WEEKDAY[date.getDay()] === '목'
+          : WEEKDAY[date.getDay()] === '목' ||
+            (WEEKDAY[date.getDay()] === '금' && date.getHours() <= 6)
           ? true
-          : WEEKDAY[date.getDay()] === '토'
+          : WEEKDAY[date.getDay()] === '토' ||
+            (WEEKDAY[date.getDay()] === '일' && date.getHours() <= 6)
           ? true
           : false,
       image: 'https://ifh.cc/g/YjQa0m.jpg',
@@ -201,13 +207,17 @@ const MainContents = () => {
     {
       name: '카오스게이트',
       emergence:
-        WEEKDAY[date.getDay()] === '월'
+        WEEKDAY[date.getDay()] === '월' ||
+        (WEEKDAY[date.getDay()] === '화' && date.getHours() <= 6)
           ? true
-          : WEEKDAY[date.getDay()] === '목'
+          : WEEKDAY[date.getDay()] === '목' ||
+            (WEEKDAY[date.getDay()] === '금' && date.getHours() <= 6)
           ? true
-          : WEEKDAY[date.getDay()] === '토'
+          : WEEKDAY[date.getDay()] === '토' ||
+            (WEEKDAY[date.getDay()] === '일' && date.getHours() <= 6)
           ? true
-          : WEEKDAY[date.getDay()] === '일'
+          : WEEKDAY[date.getDay()] === '일' ||
+            (WEEKDAY[date.getDay()] === '월' && date.getHours() <= 6)
           ? true
           : false,
       image: 'https://i.postimg.cc/dVJGbSQv/image.jpg',

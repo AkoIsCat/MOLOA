@@ -1,5 +1,6 @@
 # MOLOA
-![moloa netlify app_](https://github.com/AkoIsCat/lostArk/assets/109052469/84362659-ce9e-422a-b103-dc8d08291c62)
+
+<img src="https://github-production-user-asset-6210df.s3.amazonaws.com/109052469/241900630-84362659-ce9e-422a-b103-dc8d08291c62.png" width='800' height='600' />
 
 로스트아크 전투정보 검색 사이트
 
@@ -49,6 +50,7 @@ LostArk API를 이용한 로스트아크라는 온라인 게임의 전투정보 
 * 돌파고, 빙파고, 아이스펭 홈페이지 이동 버튼
 
 <img src="https://github.com/AkoIsCat/lostArk/assets/109052469/a414f7ad-2024-424e-8e32-045e2cf6e6fb" width='500' height='400' />
+<img src="https://github.com/AkoIsCat/lostArk/assets/109052469/a9d4ee9a-4c5f-4c3d-a3a0-99c03e46220f" width='500' height='400' />
 
 #### 캐릭터 상세
 * 장비, 카드, 스킬, 수집품, 아바타, 보유 캐릭터 조회 기능

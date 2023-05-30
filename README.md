@@ -11,7 +11,8 @@ https://moloa.netlify.app/
 ## 프로젝트 소개
 
 LostArk API를 이용한 로스트아크라는 온라인 게임의 전투정보 검색 사이트입니다. <br />
-로아와,일로아와 같은 여러 사이트의 디자인을 참고하였습니다.
+로아와,일로아와 같은 여러 사이트의 디자인을 참고하였습니다.<br />
+반응형도 마친 상태라 디바이스에 맞게 확인하실 수 있습니다. 
 
 
 로아와 - https://loawa.com/
@@ -45,8 +46,9 @@ LostArk API를 이용한 로스트아크라는 온라인 게임의 전투정보 
 * 서버와 직업, 상세 직업 각인을 선택하는 필터링 기능
 * 닉네임 클릭 시 해당 캐릭터 정보 페이지로 이동
 
-<img src='https://github.com/AkoIsCat/lostArk/assets/109052469/29cc3930-a4eb-4ef0-9f58-6958188e221f' width='500' height='400' />
-<img src='https://github.com/AkoIsCat/lostArk/assets/109052469/fd2c2e3a-e4ac-4054-83f7-a1c72e13a46b' width='500' heihgt='400' />
+<img src='https://github.com/AkoIsCat/lostArk/assets/109052469/29cc3930-a4eb-4ef0-9f58-6958188e221f' width='500' height='400' /> <br />
+<img src='https://github.com/AkoIsCat/lostArk/assets/109052469/fd2c2e3a-e4ac-4054-83f7-a1c72e13a46b' width='500' heihgt='400' /> <br />
+###### firebase - realtime base
 
 #### 길드
 * 서버별 길드들의 순위 조회 기능

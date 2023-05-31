@@ -1,8 +1,9 @@
 # MOLOA
 <div align='center'>
  
+ [![](https://img.youtube.com/vi/Ptk_1Dc2iPY/0.jpg)](https://www.youtube.com/watch?v=FdlKJ1U0QK4)
  
-[![Video Label](https://github.com/AkoIsCat/lostArk/assets/109052469/8c7193b0-515a-4c7c-8e14-63889956b583)](https://www.youtube.com/watch?v=FdlKJ1U0QK4)
+ [![](https://github.com/AkoIsCat/lostArk/assets/109052469/c978e27c-d30a-4c7f-97db-3d7c3c4c45e1)](https://www.youtube.com/watch?v=FdlKJ1U0QK4)
 </div>
 
 <div align='center'>

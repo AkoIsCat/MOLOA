@@ -1,8 +1,18 @@
 # MOLOA
+<div align='center'>
+ 
+ 
+[![Video Label](https://github.com/AkoIsCat/lostArk/assets/109052469/8c7193b0-515a-4c7c-8e14-63889956b583)](https://www.youtube.com/watch?v=FdlKJ1U0QK4)
+</div>
 
-<img src="https://github-production-user-asset-6210df.s3.amazonaws.com/109052469/241900630-84362659-ce9e-422a-b103-dc8d08291c62.png" width='800' height='600' />
-
+<div align='center'>
+ 
 로스트아크 전투정보 검색 사이트
+</div>
+<div align='center'>
+ 
+(이미지를 클릭하면 유튜브로 넘어갑니다)
+</div>
 
 ## 배포 주소
 

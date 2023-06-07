@@ -254,29 +254,33 @@ const MainContents = () => {
           }
         );
         const responseData = await response.json();
+        console.log(responseData, responseData.length);
 
         const setList = new Set();
         const setAmList = new Set();
         const setPmList = new Set();
         // 오늘에 해당하는 모험섬 목록 추출
         for (let i = 0; i < responseData.length; i++) {
+          // 스케줄에서 카테고리가 모험섬이고 모험섬이 시작되는 시간이 들어있으면 리스트에 추가
           if (responseData[i].CategoryName === '모험 섬') {
-            for (let j = 0; j < responseData[i].StartTimes.length; j++) {
-              // 아이템 날짜를 문자열에서 Date로 변환
-              const itemDate = new Date(
-                Date.parse(responseData[i].StartTimes[j])
-              );
-              if (itemDate.getDate() === currentDate.getDate()) {
-                setList.add(responseData[i]);
-                // 주말은 모험섬을 2번 입장할 수 있으니 오전, 오후 타임으로 구분
-                if (itemDate.getHours() === 9) {
-                  setAmList.add(responseData[i]);
-                } else if (itemDate.getHours() === 19) {
-                  setPmList.add(responseData[i]);
+            if (responseData[i].StartTimes !== null) {
+              for (let j = 0; j < responseData[i].StartTimes.length; j++) {
+                // 아이템 날짜를 문자열에서 Date로 변환
+                const itemDate = new Date(
+                  Date.parse(responseData[i].StartTimes[j])
+                );
+                if (itemDate.getDate() === currentDate.getDate()) {
+                  setList.add(responseData[i]);
+                  // 주말은 모험섬을 2번 입장할 수 있으니 오전, 오후 타임으로 구분
+                  if (itemDate.getHours() === 9) {
+                    setAmList.add(responseData[i]);
+                  } else if (itemDate.getHours() === 19) {
+                    setPmList.add(responseData[i]);
+                  }
                 }
-              }
 
-              setIslandIsLoadig(false);
+                setIslandIsLoadig(false);
+              }
             }
           }
         }

@@ -1,6 +1,21 @@
 import styled from 'styled-components';
 import { NavLink } from 'react-router-dom';
 
+const Navigaion = () => {
+  return (
+    <Nav>
+      <NavUl>
+        <NavLinkStyle to="/">홈</NavLinkStyle>
+        <NavLinkStyle to="/rank">랭킹</NavLinkStyle>
+        <NavLinkStyle to="/guild">길드</NavLinkStyle>
+        <NavLinkStyle to="/equipment">도구</NavLinkStyle>
+      </NavUl>
+    </Nav>
+  );
+};
+
+export default Navigaion;
+
 const Nav = styled.nav`
   width: 1302px;
   height: 62.5px;
@@ -56,18 +71,3 @@ const NavLinkStyle = styled(NavLink)`
     height: 62.5px;
   }
 `;
-
-const Navigaion = () => {
-  return (
-    <Nav>
-      <NavUl>
-        <NavLinkStyle to="/">홈</NavLinkStyle>
-        <NavLinkStyle to="/rank">랭킹</NavLinkStyle>
-        <NavLinkStyle to="/guild">길드</NavLinkStyle>
-        <NavLinkStyle to="/equipment">도구</NavLinkStyle>
-      </NavUl>
-    </Nav>
-  );
-};
-
-export default Navigaion;

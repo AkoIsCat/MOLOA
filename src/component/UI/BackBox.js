@@ -1,5 +1,11 @@
 import styled from 'styled-components';
 
+const Background = (props) => {
+  return <BackBox>{props.children}</BackBox>;
+};
+
+export default Background;
+
 const BackBox = styled.div`
   background: #1e2225;
   border-left: 1px solid #373e44;
@@ -13,9 +19,3 @@ const BackBox = styled.div`
     border: 0;
   }
 `;
-
-const Background = (props) => {
-  return <BackBox>{props.children}</BackBox>;
-};
-
-export default Background;

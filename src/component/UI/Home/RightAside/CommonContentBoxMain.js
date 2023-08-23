@@ -1,6 +1,33 @@
 import styled from 'styled-components';
 import React, { memo } from 'react';
 
+const CommonContentBoxMain = (props) => {
+  return (
+    <Content
+      key={props.id}
+      id={props.id}
+      font={props.font}
+      height={props.height}
+      border={props.border}
+      align={props.align}
+      main={props.main}
+      leftBtm={props.leftBtm}
+      rightBtm={props.rightBtm}
+      rightBrd={props.rightBrd}
+      equipment={props.equipment}
+      carousel={props.carousel}
+      collect={props.collect}
+      collectImg={props.collectImg}
+      event={props.event}
+      zero={props.zero}
+    >
+      {props.children}
+    </Content>
+  );
+};
+
+export default React.memo(CommonContentBoxMain);
+
 export const Content = memo(styled.div`
   width: ${(props) =>
     props.main
@@ -57,30 +84,3 @@ export const Content = memo(styled.div`
   over-flow: ${(props) => (props.carousel ? 'hidden' : '')};
   margin-bottom: ${(props) => (props.collect ? '25px' : '')};
 `);
-
-const CommonContentBoxMain = (props) => {
-  return (
-    <Content
-      key={props.id}
-      id={props.id}
-      font={props.font}
-      height={props.height}
-      border={props.border}
-      align={props.align}
-      main={props.main}
-      leftBtm={props.leftBtm}
-      rightBtm={props.rightBtm}
-      rightBrd={props.rightBrd}
-      equipment={props.equipment}
-      carousel={props.carousel}
-      collect={props.collect}
-      collectImg={props.collectImg}
-      event={props.event}
-      zero={props.zero}
-    >
-      {props.children}
-    </Content>
-  );
-};
-
-export default React.memo(CommonContentBoxMain);

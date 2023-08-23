@@ -3,6 +3,116 @@ import styled from 'styled-components';
 import { useState } from 'react';
 import React from 'react';
 
+const CharacterGemsPart = ({ gems, getGemsList }) => {
+  // 보석
+  const gemsList = [];
+  const extinction = []; // 멸화
+  const prominence = []; // 홍염
+
+  if (gems) {
+    const gemsRegex = /<FONT[^>]*>(.*?)<\/FONT>/;
+    const effectRegex = /<FONT COLOR='#[^>]+>([^<]+)<\/FONT>\s*([^\n]+)/;
+
+    // 필요한 데이터만 추출
+    for (let i = 0; i < gems.Gems.length; i++) {
+      const tooltip = JSON.parse(gems.Gems[i].Tooltip)['Element_004'].value[
+        'Element_001'
+      ];
+
+      const event_tooltip = JSON.parse(gems.Gems[i].Tooltip)['Element_005']
+        .value['Element_001'];
+      const skillEffect_event = !tooltip && event_tooltip.match(effectRegex);
+      const skillEffect = tooltip && tooltip.match(effectRegex);
+
+      skillEffect_event &&
+        gemsList.push({
+          name: gems.Gems[i].Name.match(gemsRegex)[1],
+          level: gems.Gems[i].Level,
+          icon: gems.Gems[i].Icon,
+          skillName: skillEffect_event[1],
+          skillShame: skillEffect_event[2].trim(),
+          grade: gems.Gems[i].Grade,
+        });
+
+      skillEffect &&
+        gemsList.push({
+          name: gems.Gems[i].Name.match(gemsRegex)[1],
+          level: gems.Gems[i].Level,
+          icon: gems.Gems[i].Icon,
+          skillName: skillEffect[1],
+          skillShame: skillEffect[2].trim(),
+          grade: gems.Gems[i].Grade,
+        });
+    }
+
+    for (let i = 0; i < gemsList.length; i++) {
+      if (gemsList[i].name.includes('멸화')) {
+        extinction.push(gemsList[i]);
+      } else {
+        prominence.push(gemsList[i]);
+      }
+      // 보석 레벨 순으로 정렬
+      extinction.sort((a, b) => b.level - a.level);
+      prominence.sort((a, b) => b.level - a.level);
+    }
+  }
+
+  // 보석 아이템(툴팁 포함)
+  const GemsItem = ({ item }) => {
+    const [showTooltip, setShowTooltip] = useState(false);
+
+    return (
+      <GemsItemWrap grade={item.grade}>
+        {showTooltip && (
+          <div className="tooltip">
+            <p className="itemName">{item.name}</p>
+            <p className="skillName">{item.skillName}</p>
+            <p className="skillShame">{item.skillShame}</p>
+          </div>
+        )}
+        <ImageBoxColor
+          exist={item.grade}
+          style={{ borderRadius: '10px 10px 0 0' }}
+        >
+          <img
+            src={item.icon}
+            alt="멸화"
+            onMouseEnter={() => setShowTooltip(true)}
+            onMouseLeave={() => setShowTooltip(false)}
+          />
+        </ImageBoxColor>
+        <p
+          onMouseEnter={() => setShowTooltip(true)}
+          onMouseLeave={() => setShowTooltip(false)}
+        >
+          {item.level}
+        </p>
+      </GemsItemWrap>
+    );
+  };
+
+  if (gemsList.length > 1) {
+    getGemsList(gemsList);
+  }
+
+  return (
+    <ContentWrap>
+      <GemsFlex>
+        {extinction.map((item, index) => (
+          <GemsItem key={index} item={item} />
+        ))}
+      </GemsFlex>
+      <GemsFlex>
+        {prominence.map((item, index) => (
+          <GemsItem key={index} item={item} />
+        ))}
+      </GemsFlex>
+    </ContentWrap>
+  );
+};
+
+export default React.memo(CharacterGemsPart);
+
 const ContentWrap = styled.div`
   width: 100%;
   display: flex;
@@ -120,113 +230,3 @@ const GemsFlex = styled.div`
   justify-content: center;
   flex-wrap: wrap;
 `;
-
-const CharacterGemsPart = ({ gems, getGemsList }) => {
-  // 보석
-  const gemsList = [];
-  const extinction = []; // 멸화
-  const prominence = []; // 홍염
-
-  if (gems) {
-    const gemsRegex = /<FONT[^>]*>(.*?)<\/FONT>/;
-    const effectRegex = /<FONT COLOR='#[^>]+>([^<]+)<\/FONT>\s*([^\n]+)/;
-
-    // 필요한 데이터만 추출
-    for (let i = 0; i < gems.Gems.length; i++) {
-      const tooltip = JSON.parse(gems.Gems[i].Tooltip)['Element_004'].value[
-        'Element_001'
-      ];
-
-      const event_tooltip = JSON.parse(gems.Gems[i].Tooltip)['Element_005']
-        .value['Element_001'];
-      const skillEffect_event = !tooltip && event_tooltip.match(effectRegex);
-      const skillEffect = tooltip && tooltip.match(effectRegex);
-
-      skillEffect_event &&
-        gemsList.push({
-          name: gems.Gems[i].Name.match(gemsRegex)[1],
-          level: gems.Gems[i].Level,
-          icon: gems.Gems[i].Icon,
-          skillName: skillEffect_event[1],
-          skillShame: skillEffect_event[2].trim(),
-          grade: gems.Gems[i].Grade,
-        });
-
-      skillEffect &&
-        gemsList.push({
-          name: gems.Gems[i].Name.match(gemsRegex)[1],
-          level: gems.Gems[i].Level,
-          icon: gems.Gems[i].Icon,
-          skillName: skillEffect[1],
-          skillShame: skillEffect[2].trim(),
-          grade: gems.Gems[i].Grade,
-        });
-    }
-
-    for (let i = 0; i < gemsList.length; i++) {
-      if (gemsList[i].name.includes('멸화')) {
-        extinction.push(gemsList[i]);
-      } else {
-        prominence.push(gemsList[i]);
-      }
-      // 보석 레벨 순으로 정렬
-      extinction.sort((a, b) => b.level - a.level);
-      prominence.sort((a, b) => b.level - a.level);
-    }
-  }
-
-  // 보석 아이템(툴팁 포함)
-  const GemsItem = ({ item }) => {
-    const [showTooltip, setShowTooltip] = useState(false);
-
-    return (
-      <GemsItemWrap grade={item.grade}>
-        {showTooltip && (
-          <div className="tooltip">
-            <p className="itemName">{item.name}</p>
-            <p className="skillName">{item.skillName}</p>
-            <p className="skillShame">{item.skillShame}</p>
-          </div>
-        )}
-        <ImageBoxColor
-          exist={item.grade}
-          style={{ borderRadius: '10px 10px 0 0' }}
-        >
-          <img
-            src={item.icon}
-            alt="멸화"
-            onMouseEnter={() => setShowTooltip(true)}
-            onMouseLeave={() => setShowTooltip(false)}
-          />
-        </ImageBoxColor>
-        <p
-          onMouseEnter={() => setShowTooltip(true)}
-          onMouseLeave={() => setShowTooltip(false)}
-        >
-          {item.level}
-        </p>
-      </GemsItemWrap>
-    );
-  };
-
-  if (gemsList.length > 1) {
-    getGemsList(gemsList);
-  }
-
-  return (
-    <ContentWrap>
-      <GemsFlex>
-        {extinction.map((item, index) => (
-          <GemsItem key={index} item={item} />
-        ))}
-      </GemsFlex>
-      <GemsFlex>
-        {prominence.map((item, index) => (
-          <GemsItem key={index} item={item} />
-        ))}
-      </GemsFlex>
-    </ContentWrap>
-  );
-};
-
-export default React.memo(CharacterGemsPart);

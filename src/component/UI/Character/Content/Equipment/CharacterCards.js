@@ -5,6 +5,137 @@ import GradeFrame from '../../../../../asset/icon/img_card_grade.png';
 import Awake from '../../../../../asset/icon/img_profile_awake.png';
 import { BsDot } from 'react-icons/bs';
 
+const CharacterCards = ({ cards }) => {
+  // -------------------------- 카드
+
+  const defaultCard = [{}, {}, {}, {}, {}, {}];
+  const cardList = []; // 장착 카드 목록
+  const effectList = []; // 카드 효과 목록
+  const totalEffect = []; // 총 카드 효과 목록
+
+  // 필요한 카드 정보 추출
+  if (cards) {
+    for (let i = 0; i <= cards.Cards.length - 1; i++) {
+      cardList.push(cards.Cards[i]);
+    }
+
+    for (let key in cards.Effects) {
+      const value = cards.Effects[key];
+
+      const regex = /\d+/g;
+
+      const lastEffectCard =
+        value.Items[value.Items.length - 1] &&
+        value.Items[value.Items.length - 1].Name.split('(');
+
+      const matches =
+        lastEffectCard && lastEffectCard[1] && lastEffectCard[1].match(regex);
+
+      effectList.push({
+        slots: value.CardSlots,
+        index: value.Index,
+        items: value.Items,
+        lastEffect: lastEffectCard && lastEffectCard[0],
+        awake: matches && matches,
+      });
+    }
+
+    for (let j = 0; j <= effectList.length - 1; j++) {
+      for (let i = 0; i <= effectList[j].items.length - 1; i++) {
+        // console.log(effectList[j].items);
+        totalEffect.push({
+          Name: effectList[j].items[i].Name,
+          Description: effectList[j].items[i].Description,
+        });
+      }
+    }
+  }
+
+  // --------------------------
+
+  return (
+    <div>
+      <ContentWrap style={{ flexDirection: 'column', padding: '10px 0 0' }}>
+        <CardEffectNames>
+          <CharacteristicsBox>카드</CharacteristicsBox>
+          <div className="cardEffect">
+            {effectList.map((item, index) =>
+              index === effectList.length - 1 ? (
+                <span key={index}>
+                  {item.lastEffect}
+                  {item.awake}
+                  {item.awake && '각'}
+                </span>
+              ) : (
+                <Fragment key={index}>
+                  <span>
+                    {item.lastEffect}
+                    {item.awake}
+                    {item.awake && '각'}
+                  </span>
+                  <BsDot />
+                </Fragment>
+              )
+            )}
+          </div>
+        </CardEffectNames>
+        {cards && (
+          <CardWrap>
+            <ul>
+              {defaultCard.map((item, index) => (
+                <CardListWrap
+                  key={index}
+                  grade="true"
+                  style={{ position: 'absolute' }}
+                >
+                  <PhotoFrame
+                    grade="true"
+                    count="true"
+                    translate={index}
+                    default={true}
+                    cards={cards}
+                  />
+                </CardListWrap>
+              ))}
+              {cardList.map((item, index) => (
+                <CardListWrap key={index} grade={item.Grade}>
+                  <PhotoFrame
+                    grade={item.Grade}
+                    translate={index}
+                    count={item.AwakeCount}
+                    default={false}
+                  >
+                    <img src={item.Icon} alt={item.Name} />
+                    <div style={{ position: 'relative' }}>
+                      <div className="card-awake">
+                        <div className="awake"></div>
+                      </div>
+                    </div>
+                  </PhotoFrame>
+                  <div className="name">{item.Name}</div>
+                </CardListWrap>
+              ))}
+            </ul>
+            <div>
+              <div className="effectWrapWrap">
+                {totalEffect.map((item, index) => (
+                  <div className="effectWrap" key={index}>
+                    <div className="effectName">{item.Name}</div>
+                    <div className="effectDesc">{item.Description}</div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </CardWrap>
+        )}
+        {!cards && <div></div>}
+      </ContentWrap>
+    </div>
+  );
+};
+
+export default React.memo(CharacterCards);
+
 const ContentWrap = styled.div`
   width: ${(props) => (props.characteristics ? '32%' : '100%')};
   display: flex;
@@ -189,134 +320,3 @@ const CardListWrap = styled.div`
     text-align: center;
   }
 `;
-
-const CharacterCards = ({ cards }) => {
-  // -------------------------- 카드
-
-  const defaultCard = [{}, {}, {}, {}, {}, {}];
-  const cardList = []; // 장착 카드 목록
-  const effectList = []; // 카드 효과 목록
-  const totalEffect = []; // 총 카드 효과 목록
-
-  // 필요한 카드 정보 추출
-  if (cards) {
-    for (let i = 0; i <= cards.Cards.length - 1; i++) {
-      cardList.push(cards.Cards[i]);
-    }
-
-    for (let key in cards.Effects) {
-      const value = cards.Effects[key];
-
-      const regex = /\d+/g;
-
-      const lastEffectCard =
-        value.Items[value.Items.length - 1] &&
-        value.Items[value.Items.length - 1].Name.split('(');
-
-      const matches =
-        lastEffectCard && lastEffectCard[1] && lastEffectCard[1].match(regex);
-
-      effectList.push({
-        slots: value.CardSlots,
-        index: value.Index,
-        items: value.Items,
-        lastEffect: lastEffectCard && lastEffectCard[0],
-        awake: matches && matches,
-      });
-    }
-
-    for (let j = 0; j <= effectList.length - 1; j++) {
-      for (let i = 0; i <= effectList[j].items.length - 1; i++) {
-        // console.log(effectList[j].items);
-        totalEffect.push({
-          Name: effectList[j].items[i].Name,
-          Description: effectList[j].items[i].Description,
-        });
-      }
-    }
-  }
-
-  // --------------------------
-
-  return (
-    <div>
-      <ContentWrap style={{ flexDirection: 'column', padding: '10px 0 0' }}>
-        <CardEffectNames>
-          <CharacteristicsBox>카드</CharacteristicsBox>
-          <div className="cardEffect">
-            {effectList.map((item, index) =>
-              index === effectList.length - 1 ? (
-                <span key={index}>
-                  {item.lastEffect}
-                  {item.awake}
-                  {item.awake && '각'}
-                </span>
-              ) : (
-                <Fragment key={index}>
-                  <span>
-                    {item.lastEffect}
-                    {item.awake}
-                    {item.awake && '각'}
-                  </span>
-                  <BsDot />
-                </Fragment>
-              )
-            )}
-          </div>
-        </CardEffectNames>
-        {cards && (
-          <CardWrap>
-            <ul>
-              {defaultCard.map((item, index) => (
-                <CardListWrap
-                  key={index}
-                  grade="true"
-                  style={{ position: 'absolute' }}
-                >
-                  <PhotoFrame
-                    grade="true"
-                    count="true"
-                    translate={index}
-                    default={true}
-                    cards={cards}
-                  />
-                </CardListWrap>
-              ))}
-              {cardList.map((item, index) => (
-                <CardListWrap key={index} grade={item.Grade}>
-                  <PhotoFrame
-                    grade={item.Grade}
-                    translate={index}
-                    count={item.AwakeCount}
-                    default={false}
-                  >
-                    <img src={item.Icon} alt={item.Name} />
-                    <div style={{ position: 'relative' }}>
-                      <div className="card-awake">
-                        <div className="awake"></div>
-                      </div>
-                    </div>
-                  </PhotoFrame>
-                  <div className="name">{item.Name}</div>
-                </CardListWrap>
-              ))}
-            </ul>
-            <div>
-              <div className="effectWrapWrap">
-                {totalEffect.map((item, index) => (
-                  <div className="effectWrap" key={index}>
-                    <div className="effectName">{item.Name}</div>
-                    <div className="effectDesc">{item.Description}</div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </CardWrap>
-        )}
-        {!cards && <div></div>}
-      </ContentWrap>
-    </div>
-  );
-};
-
-export default React.memo(CharacterCards);

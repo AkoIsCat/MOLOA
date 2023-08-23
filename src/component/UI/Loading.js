@@ -1,15 +1,6 @@
 import styled from 'styled-components';
 import PulseLoader from 'react-spinners/PulseLoader';
 
-const Wrap = styled.div`
-  width: 100%;
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding-top: 20px;
-`;
-
 const Loading = () => {
   return (
     <Wrap>
@@ -19,3 +10,12 @@ const Loading = () => {
 };
 
 export default Loading;
+
+const Wrap = styled.div`
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-top: 20px;
+`;

@@ -2,6 +2,53 @@ import styled from 'styled-components';
 import React, { Fragment, memo } from 'react';
 import Loading from '../../Loading';
 
+const CommonContentBox = (props) => {
+  return (
+    <Fragment>
+      <Head
+        main={props.main}
+        border={props.border}
+        equipment={props.equipment}
+        collect={props.collect}
+        guild={props.guild}
+        rank={props.rank}
+        click={props.click}
+      >
+        <div
+          className="name"
+          onClick={() => {
+            props.click &&
+              window.open(
+                'https://lostark.game.onstove.com/News/Event/Now',
+                '_blank'
+              );
+          }}
+        >
+          {props.title}
+        </div>
+        <div className="icon">{props.icon}</div>
+      </Head>
+      <BottomLine
+        main={props.main}
+        equipment={props.equipment}
+        guild={props.guild}
+        rank={props.rank}
+      >
+        <BottomLineInner
+          main={props.main}
+          equipment={props.equipment}
+          guild={props.guild}
+          rank={props.rank}
+        />
+      </BottomLine>
+      {!props.loading && props.itemList}
+      {props.loading && <Loading />}
+    </Fragment>
+  );
+};
+
+export default React.memo(CommonContentBox);
+
 export const Head = memo(styled.div`
   width: ${(props) =>
     props.main
@@ -86,50 +133,3 @@ const BottomLineInner = styled.div`
         : '97.5%'};
   }
 `;
-
-const CommonContentBox = (props) => {
-  return (
-    <Fragment>
-      <Head
-        main={props.main}
-        border={props.border}
-        equipment={props.equipment}
-        collect={props.collect}
-        guild={props.guild}
-        rank={props.rank}
-        click={props.click}
-      >
-        <div
-          className="name"
-          onClick={() => {
-            props.click &&
-              window.open(
-                'https://lostark.game.onstove.com/News/Event/Now',
-                '_blank'
-              );
-          }}
-        >
-          {props.title}
-        </div>
-        <div className="icon">{props.icon}</div>
-      </Head>
-      <BottomLine
-        main={props.main}
-        equipment={props.equipment}
-        guild={props.guild}
-        rank={props.rank}
-      >
-        <BottomLineInner
-          main={props.main}
-          equipment={props.equipment}
-          guild={props.guild}
-          rank={props.rank}
-        />
-      </BottomLine>
-      {!props.loading && props.itemList}
-      {props.loading && <Loading />}
-    </Fragment>
-  );
-};
-
-export default React.memo(CommonContentBox);

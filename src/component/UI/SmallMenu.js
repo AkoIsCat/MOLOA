@@ -1,5 +1,16 @@
 import styled from 'styled-components';
 
+const SmallMenu = (props) => {
+  return (
+    <Ul right={props.right}>
+      <DeviceChange right={props.right}>이용약관</DeviceChange>
+      <DeviceChange right={props.right}>개인정보처리방침</DeviceChange>
+    </Ul>
+  );
+};
+
+export default SmallMenu;
+
 const Ul = styled.ul`
   display: none;
   margin-bottom: 20px;
@@ -28,14 +39,3 @@ const DeviceChange = styled.li`
   margin-top: 10px;
   text-align: ${(props) => (props.right ? 'right' : '')};
 `;
-
-const SmallMenu = (props) => {
-  return (
-    <Ul right={props.right}>
-      <DeviceChange right={props.right}>이용약관</DeviceChange>
-      <DeviceChange right={props.right}>개인정보처리방침</DeviceChange>
-    </Ul>
-  );
-};
-
-export default SmallMenu;

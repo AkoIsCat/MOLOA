@@ -1,6 +1,28 @@
 import styled from 'styled-components';
 import React, { Fragment } from 'react';
 
+const ContentBoxFormat = (props) => {
+  return (
+    <Fragment>
+      <TopLine>
+        <TopLineInner />
+      </TopLine>
+      <Content
+        key={props.id}
+        id={props.id}
+        font={props.font}
+        height={props.height}
+        border={props.border}
+        onClick={() => window.open(`${props.link}`, '_blank')}
+      >
+        <div className="content">{props.children}</div>
+      </Content>
+    </Fragment>
+  );
+};
+
+export default React.memo(ContentBoxFormat);
+
 const Content = styled.div`
   width: 100%;
   height: 63px;
@@ -60,25 +82,3 @@ const TopLineInner = styled.div`
     width: 97.2%;
   }
 `;
-
-const ContentBoxFormat = (props) => {
-  return (
-    <Fragment>
-      <TopLine>
-        <TopLineInner />
-      </TopLine>
-      <Content
-        key={props.id}
-        id={props.id}
-        font={props.font}
-        height={props.height}
-        border={props.border}
-        onClick={() => window.open(`${props.link}`, '_blank')}
-      >
-        <div className="content">{props.children}</div>
-      </Content>
-    </Fragment>
-  );
-};
-
-export default React.memo(ContentBoxFormat);

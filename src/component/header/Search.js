@@ -7,78 +7,6 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
 
-const BackgroundSearch = styled.div`
-  width: 1302px;
-  height: 128px;
-  background: linear-gradient(to right, #252b2e 50%, #202427);
-  border-bottom: 1px solid #373e44;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-
-  @media ${(props) => props.theme.mobile} {
-    width: 100%;
-  }
-`;
-
-const SearchForm = styled.form`
-  width: auto;
-  position: relative;
-
-  @media ${(props) => props.theme.mobile} {
-    width: 80%;
-  }
-`;
-
-const SearchInput = styled.input`
-  width: 944px;
-  height: 44px;
-  background: linear-gradient(to right, #252b2e 30%, #1e2225);
-  border: 1px solid #373e44;
-  border-radius: 8px;
-  margin-bottom: 22px;
-  font-size: 18px;
-  color: #fff;
-  font-weight: bold;
-  line-height: 44px;
-  padding-left: 15px;
-  font-family: 'Nanum Gothic';
-  &:focus {
-    outline: none;
-  }
-
-  @media ${(props) => props.theme.mobile} {
-    width: 100%;
-  }
-`;
-
-const SearchIcon = styled.button`
-  position: absolute;
-  top: 13px;
-  right: 15px;
-  color: #373e44;
-  font-size: 22px;
-  cursor: pointer;
-  background-color: transparent;
-  border: 0;
-
-  @media ${(props) => props.theme.mobile} {
-    top: 18%;
-    right: 0%;
-  }
-`;
-
-const Title = styled.h1`
-  color: white;
-  margin: 5px;
-  cursor: pointer;
-`;
-
-const NavLinkTitle = styled(NavLink)`
-  text-decoration: none;
-`;
-
 const lostArkKey =
   'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6IktYMk40TkRDSTJ5NTA5NWpjTWk5TllqY2lyZyIsImtpZCI6IktYMk40TkRDSTJ5NTA5NWpjTWk5TllqY2lyZyJ9.eyJpc3MiOiJodHRwczovL2x1ZHkuZ2FtZS5vbnN0b3ZlLmNvbSIsImF1ZCI6Imh0dHBzOi8vbHVkeS5nYW1lLm9uc3RvdmUuY29tL3Jlc291cmNlcyIsImNsaWVudF9pZCI6IjEwMDAwMDAwMDAwMjc0MTYifQ.MIy7jDe9w81yjIX8Zh4VgGCVH2IR-vz7CGF6Ceh0zdc-5HfnY31XrIwJ86r_nz1ImkS-dPxW7bO_8AaZmuII6sbdJo_dWer-kbkpA5kx1aIrtGqpvhY_fWtXY-_wmWhZrdAFJTtB8t6yVHIua_ceA7CJWM0Bn1sQ6SNWxCbq9fsHb6BGRayKuJ5JV-qAIVC5VjNyVC4iIyAdJetDWgu0c7DTR_pVOeWHbsX-CbAqqKXvRPoNII1aop4Ioa9Sbhb99iD-BuA7pfn-_D-m6axvO0-0luLu4UbwXhrE5jEVPNs7Oxf215AqosVjFb5ObX74iGzf6vyt8YqjL08UkLS8NQ';
 
@@ -278,3 +206,75 @@ const Search = () => {
 };
 
 export default Search;
+
+const BackgroundSearch = styled.div`
+  width: 1302px;
+  height: 128px;
+  background: linear-gradient(to right, #252b2e 50%, #202427);
+  border-bottom: 1px solid #373e44;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  @media ${(props) => props.theme.mobile} {
+    width: 100%;
+  }
+`;
+
+const SearchForm = styled.form`
+  width: auto;
+  position: relative;
+
+  @media ${(props) => props.theme.mobile} {
+    width: 80%;
+  }
+`;
+
+const SearchInput = styled.input`
+  width: 944px;
+  height: 44px;
+  background: linear-gradient(to right, #252b2e 30%, #1e2225);
+  border: 1px solid #373e44;
+  border-radius: 8px;
+  margin-bottom: 22px;
+  font-size: 18px;
+  color: #fff;
+  font-weight: bold;
+  line-height: 44px;
+  padding-left: 15px;
+  font-family: 'Nanum Gothic';
+  &:focus {
+    outline: none;
+  }
+
+  @media ${(props) => props.theme.mobile} {
+    width: 100%;
+  }
+`;
+
+const SearchIcon = styled.button`
+  position: absolute;
+  top: 13px;
+  right: 15px;
+  color: #373e44;
+  font-size: 22px;
+  cursor: pointer;
+  background-color: transparent;
+  border: 0;
+
+  @media ${(props) => props.theme.mobile} {
+    top: 18%;
+    right: 0%;
+  }
+`;
+
+const Title = styled.h1`
+  color: white;
+  margin: 5px;
+  cursor: pointer;
+`;
+
+const NavLinkTitle = styled(NavLink)`
+  text-decoration: none;
+`;

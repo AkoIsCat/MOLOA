@@ -5,6 +5,219 @@ import React, { useState } from 'react';
 import ContentWrap from '../../ContentWrap';
 import { useEffect } from 'react';
 
+const Skill = ({ combatSkills, profile, getGems }) => {
+  const skillList = [];
+
+  useEffect(() => {
+    document.cookie = 'safeCookie1=foo; SameSite=Lax';
+    document.cookie = 'safeCookie2=foo';
+    document.cookie = 'crossCookie=bar; SameSite=None; Secure';
+  }, []);
+
+  if (combatSkills) {
+    const notNullRune = combatSkills.filter(
+      (item) => item.Rune !== null || item.Level >= 2
+    );
+
+    // 안쓰는 트포 삭제
+    for (let key in notNullRune) {
+      for (let keys in notNullRune[key].Tripods) {
+        if (notNullRune[key].Tripods[keys].IsSelected === false) {
+          delete notNullRune[key].Tripods[keys];
+        }
+      }
+    }
+
+    const sortSkill = notNullRune.sort((a, b) => {
+      return b.Level - a.Level;
+    });
+
+    for (let i = 0; i < sortSkill.length; i++) {
+      const skillName = sortSkill[i].Name;
+      const skillIcon = sortSkill[i].Icon;
+      const skillLevel = sortSkill[i].Level;
+      const skillRune = sortSkill[i].Rune;
+      const skillTripod = sortSkill[i].Tripods;
+      const skillGems = getGems.filter(
+        (item) => item.skillName === sortSkill[i].Name
+      );
+
+      skillList.push({
+        skillName,
+        skillIcon,
+        skillLevel,
+        skillRune,
+        skillTripod,
+        skillGems,
+      });
+    }
+  }
+
+  const GemsItem = ({ item }) => {
+    const [showTooltip, setShowTooltip] = useState(false);
+
+    return (
+      <GemsItemWrap grade={item.grade}>
+        {showTooltip && (
+          <div className="tooltip">
+            <p className="itemName">{item.name}</p>
+            <p className="skillShame">{item.skillShame}</p>
+          </div>
+        )}
+        <ImageBoxColor
+          exist={item.grade}
+          style={{ borderRadius: '10px 10px 0 0' }}
+        >
+          <img
+            src={item.icon}
+            alt="멸화"
+            onMouseEnter={() => setShowTooltip(true)}
+            onMouseLeave={() => setShowTooltip(false)}
+          />
+        </ImageBoxColor>
+        <p
+          onMouseEnter={() => setShowTooltip(true)}
+          onMouseLeave={() => setShowTooltip(false)}
+        >
+          {item.level}
+        </p>
+      </GemsItemWrap>
+    );
+  };
+
+  const TripodItem = ({ items }) => {
+    const [showTooltip, setShowTooltip] = useState(false);
+
+    return (
+      <div style={{ position: 'relative' }}>
+        {showTooltip && (
+          <div className="tooltip">
+            <p className="skillShame">
+              {items.Tooltip.replace(/<\/?FONT.*?>/gi, '')}
+            </p>
+          </div>
+        )}
+        <div className="tripodsWrap" key={nanoid()}>
+          <img
+            src={items.Icon}
+            alt={items.Name}
+            onMouseEnter={() => setShowTooltip(true)}
+            onMouseLeave={() => setShowTooltip(false)}
+          />
+          <div className="tripodNameAndLevel">
+            <div className="tripodName">{items.Name}</div>
+            <div className="tripodLevel">Lv.{items.Level}</div>
+          </div>
+        </div>
+      </div>
+    );
+  };
+
+  return (
+    <div style={{ padding: '0 10px', width: '100%' }}>
+      <ContentWrap>
+        <SkillPoint>
+          스킬포인트 {profile && profile.UsingSkillPoint} /{' '}
+          {profile && profile.TotalSkillPoint}
+        </SkillPoint>
+      </ContentWrap>
+      <ContentWrap>
+        <div
+          style={{
+            width: '100%',
+            display: 'flex',
+            flexDirection: 'column',
+          }}
+        >
+          {skillList.map((item, index) =>
+            index === skillList.length - 1 ? (
+              <SkillItem key={nanoid()}>
+                <div className="skillInfoBox">
+                  <img src={item.skillIcon} alt={item.skillName} />
+                  <div className="skillNameAndSlot">
+                    <div className="skillName">{item.skillName}</div>
+                    <div className="tripodSlot">
+                      {item.skillTripod.map((items) => (
+                        <TripodWrap key={nanoid()} tier={items.Tier}>
+                          {items.Slot}
+                        </TripodWrap>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+                <div className="skillLevel">{item.skillLevel}레벨</div>
+                <div className="RuneBox">
+                  <RuneColorBox
+                    grade={item?.skillRune?.Grade}
+                    isExist={item.skillRune?.Icon}
+                  >
+                    <img
+                      src={item.skillRune?.Icon}
+                      alt={item.skillRune?.Name}
+                    />
+                  </RuneColorBox>
+                  <div className="RuneName">{item?.skillRune?.Name}</div>
+                </div>
+                <div className="gemsBox">
+                  {item.skillGems.map((items) => (
+                    <GemsItem item={items} key={nanoid()} />
+                  ))}
+                </div>
+                <div className="tripodsBox">
+                  {item.skillTripod.map((items) => (
+                    <TripodItem items={items} key={nanoid()} />
+                  ))}
+                </div>
+              </SkillItem>
+            ) : (
+              <SkillItem end="true" key={nanoid()}>
+                <div className="skillInfoBox">
+                  <img src={item.skillIcon} alt={item.skillName} />
+                  <div className="skillNameAndSlot">
+                    <div className="skillName">{item.skillName}</div>
+                    <div className="tripodSlot">
+                      {item.skillTripod.map((items) => (
+                        <TripodWrap key={nanoid()} tier={items.Tier}>
+                          {items.Slot}
+                        </TripodWrap>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+                <div className="skillLevel">{item.skillLevel}레벨</div>
+                <div className="RuneBox">
+                  <RuneColorBox
+                    grade={item?.skillRune?.Grade}
+                    isExist={item.skillRune?.Icon}
+                  >
+                    <img
+                      src={item.skillRune?.Icon}
+                      alt={item.skillRune?.Name}
+                    />
+                  </RuneColorBox>
+                  <div className="RuneName">{item?.skillRune?.Name}</div>
+                </div>
+                <div className="gemsBox">
+                  {item.skillGems.map((items) => (
+                    <GemsItem item={items} key={nanoid()} />
+                  ))}
+                </div>
+                <div className="tripodsBox">
+                  {item.skillTripod.map((items) => (
+                    <TripodItem items={items} key={nanoid()} />
+                  ))}
+                </div>
+              </SkillItem>
+            )
+          )}
+        </div>
+      </ContentWrap>
+    </div>
+  );
+};
+
+export default React.memo(Skill);
+
 const SkillPoint = styled.p`
   color: #fff;
   font-family: 'Nanum Gothic';
@@ -267,216 +480,3 @@ const GemsItemWrap = styled.div`
     }
   }
 `;
-
-const Skill = ({ combatSkills, profile, getGems }) => {
-  const skillList = [];
-
-  useEffect(() => {
-    document.cookie = 'safeCookie1=foo; SameSite=Lax';
-    document.cookie = 'safeCookie2=foo';
-    document.cookie = 'crossCookie=bar; SameSite=None; Secure';
-  }, []);
-
-  if (combatSkills) {
-    const notNullRune = combatSkills.filter(
-      (item) => item.Rune !== null || item.Level >= 2
-    );
-
-    // 안쓰는 트포 삭제
-    for (let key in notNullRune) {
-      for (let keys in notNullRune[key].Tripods) {
-        if (notNullRune[key].Tripods[keys].IsSelected === false) {
-          delete notNullRune[key].Tripods[keys];
-        }
-      }
-    }
-
-    const sortSkill = notNullRune.sort((a, b) => {
-      return b.Level - a.Level;
-    });
-
-    for (let i = 0; i < sortSkill.length; i++) {
-      const skillName = sortSkill[i].Name;
-      const skillIcon = sortSkill[i].Icon;
-      const skillLevel = sortSkill[i].Level;
-      const skillRune = sortSkill[i].Rune;
-      const skillTripod = sortSkill[i].Tripods;
-      const skillGems = getGems.filter(
-        (item) => item.skillName === sortSkill[i].Name
-      );
-
-      skillList.push({
-        skillName,
-        skillIcon,
-        skillLevel,
-        skillRune,
-        skillTripod,
-        skillGems,
-      });
-    }
-  }
-
-  const GemsItem = ({ item }) => {
-    const [showTooltip, setShowTooltip] = useState(false);
-
-    return (
-      <GemsItemWrap grade={item.grade}>
-        {showTooltip && (
-          <div className="tooltip">
-            <p className="itemName">{item.name}</p>
-            <p className="skillShame">{item.skillShame}</p>
-          </div>
-        )}
-        <ImageBoxColor
-          exist={item.grade}
-          style={{ borderRadius: '10px 10px 0 0' }}
-        >
-          <img
-            src={item.icon}
-            alt="멸화"
-            onMouseEnter={() => setShowTooltip(true)}
-            onMouseLeave={() => setShowTooltip(false)}
-          />
-        </ImageBoxColor>
-        <p
-          onMouseEnter={() => setShowTooltip(true)}
-          onMouseLeave={() => setShowTooltip(false)}
-        >
-          {item.level}
-        </p>
-      </GemsItemWrap>
-    );
-  };
-
-  const TripodItem = ({ items }) => {
-    const [showTooltip, setShowTooltip] = useState(false);
-
-    return (
-      <div style={{ position: 'relative' }}>
-        {showTooltip && (
-          <div className="tooltip">
-            <p className="skillShame">
-              {items.Tooltip.replace(/<\/?FONT.*?>/gi, '')}
-            </p>
-          </div>
-        )}
-        <div className="tripodsWrap" key={nanoid()}>
-          <img
-            src={items.Icon}
-            alt={items.Name}
-            onMouseEnter={() => setShowTooltip(true)}
-            onMouseLeave={() => setShowTooltip(false)}
-          />
-          <div className="tripodNameAndLevel">
-            <div className="tripodName">{items.Name}</div>
-            <div className="tripodLevel">Lv.{items.Level}</div>
-          </div>
-        </div>
-      </div>
-    );
-  };
-
-  return (
-    <div style={{ padding: '0 10px', width: '100%' }}>
-      <ContentWrap>
-        <SkillPoint>
-          스킬포인트 {profile && profile.UsingSkillPoint} /{' '}
-          {profile && profile.TotalSkillPoint}
-        </SkillPoint>
-      </ContentWrap>
-      <ContentWrap>
-        <div
-          style={{
-            width: '100%',
-            display: 'flex',
-            flexDirection: 'column',
-          }}
-        >
-          {skillList.map((item, index) =>
-            index === skillList.length - 1 ? (
-              <SkillItem key={nanoid()}>
-                <div className="skillInfoBox">
-                  <img src={item.skillIcon} alt={item.skillName} />
-                  <div className="skillNameAndSlot">
-                    <div className="skillName">{item.skillName}</div>
-                    <div className="tripodSlot">
-                      {item.skillTripod.map((items) => (
-                        <TripodWrap key={nanoid()} tier={items.Tier}>
-                          {items.Slot}
-                        </TripodWrap>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-                <div className="skillLevel">{item.skillLevel}레벨</div>
-                <div className="RuneBox">
-                  <RuneColorBox
-                    grade={item?.skillRune?.Grade}
-                    isExist={item.skillRune?.Icon}
-                  >
-                    <img
-                      src={item.skillRune?.Icon}
-                      alt={item.skillRune?.Name}
-                    />
-                  </RuneColorBox>
-                  <div className="RuneName">{item?.skillRune?.Name}</div>
-                </div>
-                <div className="gemsBox">
-                  {item.skillGems.map((items) => (
-                    <GemsItem item={items} key={nanoid()} />
-                  ))}
-                </div>
-                <div className="tripodsBox">
-                  {item.skillTripod.map((items) => (
-                    <TripodItem items={items} key={nanoid()} />
-                  ))}
-                </div>
-              </SkillItem>
-            ) : (
-              <SkillItem end="true" key={nanoid()}>
-                <div className="skillInfoBox">
-                  <img src={item.skillIcon} alt={item.skillName} />
-                  <div className="skillNameAndSlot">
-                    <div className="skillName">{item.skillName}</div>
-                    <div className="tripodSlot">
-                      {item.skillTripod.map((items) => (
-                        <TripodWrap key={nanoid()} tier={items.Tier}>
-                          {items.Slot}
-                        </TripodWrap>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-                <div className="skillLevel">{item.skillLevel}레벨</div>
-                <div className="RuneBox">
-                  <RuneColorBox
-                    grade={item?.skillRune?.Grade}
-                    isExist={item.skillRune?.Icon}
-                  >
-                    <img
-                      src={item.skillRune?.Icon}
-                      alt={item.skillRune?.Name}
-                    />
-                  </RuneColorBox>
-                  <div className="RuneName">{item?.skillRune?.Name}</div>
-                </div>
-                <div className="gemsBox">
-                  {item.skillGems.map((items) => (
-                    <GemsItem item={items} key={nanoid()} />
-                  ))}
-                </div>
-                <div className="tripodsBox">
-                  {item.skillTripod.map((items) => (
-                    <TripodItem items={items} key={nanoid()} />
-                  ))}
-                </div>
-              </SkillItem>
-            )
-          )}
-        </div>
-      </ContentWrap>
-    </div>
-  );
-};
-
-export default React.memo(Skill);

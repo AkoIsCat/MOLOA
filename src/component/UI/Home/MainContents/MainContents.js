@@ -11,159 +11,6 @@ import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import Loading from '../../Loading';
 
-const InnerContent = styled.div`
-  width: 662px;
-  height: ${(props) => props.height || ''};
-  background: #1e2225;
-  margin: 10px 10px 40px 10px;
-
-  @media ${(props) => props.theme.mobile} {
-    width: 95%;
-    margin: 20px 0;
-    padding: 0;
-  }
-`;
-
-const HeadStyle = styled(Head)`
-  width: 657px;
-  height: ${(props) => props.height || ''};
-  margin: 10px 10px 25px 10px;
-  text-align: center;
-  justify-content: center;
-  padding: 0;
-
-  @media ${(props) => props.theme.mobile} {
-    width: 95%;
-    margin: 0;
-  }
-`;
-
-const MainBannerWrap = styled.div`
-  width: 657px;
-  height: ${(props) => props.height || ''};
-  margin: 10px 10px 25px 10px;
-  text-align: center;
-  justify-content: center;
-  padding: 0;
-
-  @media ${(props) => props.theme.mobile} {
-    width: 95%;
-    margin: 10px 0;
-    padding: 0;
-  }
-`;
-
-const MainBanner = styled.img`
-  object-fit: fill;
-  width: 100%;
-  height: 100%;
-  border-radius: ${(props) =>
-    props.leftBtm
-      ? '0 0 0px 10px'
-      : props.rightBtm
-      ? '0 0 10px 0 '
-      : props.big
-      ? '10px'
-      : ''};
-`;
-
-const Compass = styled(AiOutlineCompass)`
-  margin-left: 5px;
-  margin-bottom: 4px;
-  font-size: 19px;
-`;
-
-const Calendar = styled(MdOutlineCalendarMonth)`
-  margin-left: 5px;
-  margin-bottom: 4px;
-  font-size: 19px;
-`;
-
-const LineDivision = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin: 10px;
-
-  @media ${(props) => props.theme.mobile} {
-    width: 100%;
-    margin: 10px 0;
-    padding: 0;
-  }
-`;
-
-const ImageContent = styled.div`
-  width: 164px;
-  height: 242px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
-  position: relative;
-
-  @media ${(props) => props.theme.mobile} {
-    width: 100%;
-  }
-`;
-
-const CarouselWrap = styled.div`
-  width: 183px;
-  height: 155px;
-  margin: 10px;
-  outline: none;
-
-  @media ${(props) => props.theme.mobile} {
-    margin: 5px;
-  }
-`;
-
-const CarouselImg = styled.img`
-  object-fit: cover;
-  width: 200px;
-  height: 100px;
-  border-radius: 10px;
-  // cursor: pointer;
-
-  @media ${(props) => props.theme.mobile} {
-    object-fit: fill;
-    width: 95%;
-    margin: 5px 0;
-    padding: 0;
-  }
-`;
-
-const CarouselDate = styled.div`
-  width: auto;
-  font-family: 'Nanum Gothic';
-  padding-left: 10px;
-  margin-top: 10px;
-  font-size: 13px;
-
-  @media ${(props) => props.theme.mobile} {
-    font-size: 11px;
-    width: 95%;
-    margin: 0;
-    padding: 0;
-  }
-`;
-
-const IslandItem = styled.div`
-  width: 100%;
-  height: 80px;
-  border-bottom: ${(props) => (props.border ? '2px solid rgb(75, 83, 90)' : 0)};
-  display: flex;
-  text-align: center;
-  align-items: center;
-  justify-content: center;
-`;
-
-const Absolute = styled.div`
-  width: 100%;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-`;
-
 const lostArkKey =
   'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6IktYMk40TkRDSTJ5NTA5NWpjTWk5TllqY2lyZyIsImtpZCI6IktYMk40TkRDSTJ5NTA5NWpjTWk5TllqY2lyZyJ9.eyJpc3MiOiJodHRwczovL2x1ZHkuZ2FtZS5vbnN0b3ZlLmNvbSIsImF1ZCI6Imh0dHBzOi8vbHVkeS5nYW1lLm9uc3RvdmUuY29tL3Jlc291cmNlcyIsImNsaWVudF9pZCI6IjEwMDAwMDAwMDAwMjc0MTYifQ.MIy7jDe9w81yjIX8Zh4VgGCVH2IR-vz7CGF6Ceh0zdc-5HfnY31XrIwJ86r_nz1ImkS-dPxW7bO_8AaZmuII6sbdJo_dWer-kbkpA5kx1aIrtGqpvhY_fWtXY-_wmWhZrdAFJTtB8t6yVHIua_ceA7CJWM0Bn1sQ6SNWxCbq9fsHb6BGRayKuJ5JV-qAIVC5VjNyVC4iIyAdJetDWgu0c7DTR_pVOeWHbsX-CbAqqKXvRPoNII1aop4Ioa9Sbhb99iD-BuA7pfn-_D-m6axvO0-0luLu4UbwXhrE5jEVPNs7Oxf215AqosVjFb5ObX74iGzf6vyt8YqjL08UkLS8NQ';
 
@@ -479,3 +326,156 @@ const MainContents = () => {
 };
 
 export default MainContents;
+
+const InnerContent = styled.div`
+  width: 662px;
+  height: ${(props) => props.height || ''};
+  background: #1e2225;
+  margin: 10px 10px 40px 10px;
+
+  @media ${(props) => props.theme.mobile} {
+    width: 95%;
+    margin: 20px 0;
+    padding: 0;
+  }
+`;
+
+const HeadStyle = styled(Head)`
+  width: 657px;
+  height: ${(props) => props.height || ''};
+  margin: 10px 10px 25px 10px;
+  text-align: center;
+  justify-content: center;
+  padding: 0;
+
+  @media ${(props) => props.theme.mobile} {
+    width: 95%;
+    margin: 0;
+  }
+`;
+
+const MainBannerWrap = styled.div`
+  width: 657px;
+  height: ${(props) => props.height || ''};
+  margin: 10px 10px 25px 10px;
+  text-align: center;
+  justify-content: center;
+  padding: 0;
+
+  @media ${(props) => props.theme.mobile} {
+    width: 95%;
+    margin: 10px 0;
+    padding: 0;
+  }
+`;
+
+const MainBanner = styled.img`
+  object-fit: fill;
+  width: 100%;
+  height: 100%;
+  border-radius: ${(props) =>
+    props.leftBtm
+      ? '0 0 0px 10px'
+      : props.rightBtm
+      ? '0 0 10px 0 '
+      : props.big
+      ? '10px'
+      : ''};
+`;
+
+const Compass = styled(AiOutlineCompass)`
+  margin-left: 5px;
+  margin-bottom: 4px;
+  font-size: 19px;
+`;
+
+const Calendar = styled(MdOutlineCalendarMonth)`
+  margin-left: 5px;
+  margin-bottom: 4px;
+  font-size: 19px;
+`;
+
+const LineDivision = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 10px;
+
+  @media ${(props) => props.theme.mobile} {
+    width: 100%;
+    margin: 10px 0;
+    padding: 0;
+  }
+`;
+
+const ImageContent = styled.div`
+  width: 164px;
+  height: 242px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  position: relative;
+
+  @media ${(props) => props.theme.mobile} {
+    width: 100%;
+  }
+`;
+
+const CarouselWrap = styled.div`
+  width: 183px;
+  height: 155px;
+  margin: 10px;
+  outline: none;
+
+  @media ${(props) => props.theme.mobile} {
+    margin: 5px;
+  }
+`;
+
+const CarouselImg = styled.img`
+  object-fit: cover;
+  width: 200px;
+  height: 100px;
+  border-radius: 10px;
+  // cursor: pointer;
+
+  @media ${(props) => props.theme.mobile} {
+    object-fit: fill;
+    width: 95%;
+    margin: 5px 0;
+    padding: 0;
+  }
+`;
+
+const CarouselDate = styled.div`
+  width: auto;
+  font-family: 'Nanum Gothic';
+  padding-left: 10px;
+  margin-top: 10px;
+  font-size: 13px;
+
+  @media ${(props) => props.theme.mobile} {
+    font-size: 11px;
+    width: 95%;
+    margin: 0;
+    padding: 0;
+  }
+`;
+
+const IslandItem = styled.div`
+  width: 100%;
+  height: 80px;
+  border-bottom: ${(props) => (props.border ? '2px solid rgb(75, 83, 90)' : 0)};
+  display: flex;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+`;
+
+const Absolute = styled.div`
+  width: 100%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+`;

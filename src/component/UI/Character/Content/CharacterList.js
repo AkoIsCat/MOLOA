@@ -43,6 +43,121 @@ import {
 } from '../../../../asset/image/classImg/index'; // 직업 아이콘
 import { useEffect } from 'react';
 
+const CharacterList = ({ holdingCharacter, selectMenuHandler }) => {
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    document.cookie = 'safeCookie1=foo; SameSite=Lax';
+    document.cookie = 'safeCookie2=foo';
+    document.cookie = 'crossCookie=bar; SameSite=None; Secure';
+  }, []);
+
+  const holdingCharacterList = [];
+  let serverNameList = [];
+
+  if (holdingCharacter) {
+    const sortHoldingCharacterList = holdingCharacter.sort((a, b) => {
+      const itemMaxLevelA = parseFloat(a.ItemMaxLevel.replace(/,/g, '')); // 쉼표 제거 후 숫자로 변환
+      const itemMaxLevelB = parseFloat(b.ItemMaxLevel.replace(/,/g, '')); // 쉼표 제거 후 숫자로 변환
+      return itemMaxLevelB - itemMaxLevelA; // 내림차순으로 정렬
+    });
+
+    const classificationByServer = [];
+    // 서버별로 합침
+    sortHoldingCharacterList.forEach((obj) => {
+      const name = obj.ServerName;
+      if (!classificationByServer[name]) {
+        classificationByServer[name] = [];
+      }
+      classificationByServer[name].push({ obj });
+    });
+
+    // 서버별 캐릭터 순으로 정렬(내림차순)
+    const sortedObj = Object.keys(classificationByServer)
+      .sort(
+        (a, b) =>
+          classificationByServer[b].length - classificationByServer[a].length
+      )
+      .reduce((acc, key) => {
+        acc[key] = classificationByServer[key];
+        return acc;
+      }, {});
+
+    const keys = Object.keys(sortedObj);
+    serverNameList = keys.map((key) => `${key}`);
+
+    // 배열 안에 대입
+    for (let key in sortedObj) {
+      holdingCharacterList.push({
+        [key]: sortedObj[key],
+      });
+    }
+    // console.log(classificationByServer);
+  }
+
+  return (
+    <div style={{ padding: '0 10px', width: '100%' }}>
+      <ContentWrap character="true">
+        <div style={{ width: '100%', padding: '0 20px' }}>
+          {serverNameList.map((serverName, index) => (
+            <Fragment key={nanoid()}>
+              <ServerNameBox>{serverName}</ServerNameBox>
+              <CharacterProfileWrap>
+                {holdingCharacterList[index][serverName].map((items) => (
+                  <CharacterProfile
+                    key={nanoid()}
+                    CharacterClass={items.obj.CharacterClassName.replace(
+                      /'/g,
+                      ''
+                    )}
+                  >
+                    <div className="profileWrap">
+                      <div className="infoWrap">
+                        <div className="classImg"></div>
+                        <div className="classInfoCtn">
+                          <div className="classNameWrap">
+                            <div className="serverName">
+                              {items.obj.ServerName}
+                            </div>
+                          </div>
+                          <div className="classNameWrap">
+                            <div className="className">
+                              {items.obj.CharacterClassName}
+                            </div>
+                          </div>
+                          <div className="classLevelWrap">
+                            <div className="characterLevel">
+                              Lv.{items.obj.CharacterLevel}
+                            </div>
+                            <div className="itemLevel">
+                              {items.obj.ItemMaxLevel}
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div
+                        className="characterName"
+                        onClick={(e) => {
+                          navigate(`/character/${items.obj.CharacterName}`);
+                          selectMenuHandler(0);
+                        }}
+                      >
+                        {items.obj.CharacterName}
+                      </div>
+                    </div>
+                  </CharacterProfile>
+                ))}
+              </CharacterProfileWrap>
+            </Fragment>
+          ))}
+        </div>
+      </ContentWrap>
+    </div>
+  );
+};
+
+export default React.memo(CharacterList);
+
 const ServerNameBox = styled.div`
   width: auto;
   height: 45px;
@@ -196,118 +311,3 @@ const CharacterProfile = styled.div`
     cursor: pointer;
   }
 `;
-
-const CharacterList = ({ holdingCharacter, selectMenuHandler }) => {
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    document.cookie = 'safeCookie1=foo; SameSite=Lax';
-    document.cookie = 'safeCookie2=foo';
-    document.cookie = 'crossCookie=bar; SameSite=None; Secure';
-  }, []);
-
-  const holdingCharacterList = [];
-  let serverNameList = [];
-
-  if (holdingCharacter) {
-    const sortHoldingCharacterList = holdingCharacter.sort((a, b) => {
-      const itemMaxLevelA = parseFloat(a.ItemMaxLevel.replace(/,/g, '')); // 쉼표 제거 후 숫자로 변환
-      const itemMaxLevelB = parseFloat(b.ItemMaxLevel.replace(/,/g, '')); // 쉼표 제거 후 숫자로 변환
-      return itemMaxLevelB - itemMaxLevelA; // 내림차순으로 정렬
-    });
-
-    const classificationByServer = [];
-    // 서버별로 합침
-    sortHoldingCharacterList.forEach((obj) => {
-      const name = obj.ServerName;
-      if (!classificationByServer[name]) {
-        classificationByServer[name] = [];
-      }
-      classificationByServer[name].push({ obj });
-    });
-
-    // 서버별 캐릭터 순으로 정렬(내림차순)
-    const sortedObj = Object.keys(classificationByServer)
-      .sort(
-        (a, b) =>
-          classificationByServer[b].length - classificationByServer[a].length
-      )
-      .reduce((acc, key) => {
-        acc[key] = classificationByServer[key];
-        return acc;
-      }, {});
-
-    const keys = Object.keys(sortedObj);
-    serverNameList = keys.map((key) => `${key}`);
-
-    // 배열 안에 대입
-    for (let key in sortedObj) {
-      holdingCharacterList.push({
-        [key]: sortedObj[key],
-      });
-    }
-    // console.log(classificationByServer);
-  }
-
-  return (
-    <div style={{ padding: '0 10px', width: '100%' }}>
-      <ContentWrap character="true">
-        <div style={{ width: '100%', padding: '0 20px' }}>
-          {serverNameList.map((serverName, index) => (
-            <Fragment key={nanoid()}>
-              <ServerNameBox>{serverName}</ServerNameBox>
-              <CharacterProfileWrap>
-                {holdingCharacterList[index][serverName].map((items) => (
-                  <CharacterProfile
-                    key={nanoid()}
-                    CharacterClass={items.obj.CharacterClassName.replace(
-                      /'/g,
-                      ''
-                    )}
-                  >
-                    <div className="profileWrap">
-                      <div className="infoWrap">
-                        <div className="classImg"></div>
-                        <div className="classInfoCtn">
-                          <div className="classNameWrap">
-                            <div className="serverName">
-                              {items.obj.ServerName}
-                            </div>
-                          </div>
-                          <div className="classNameWrap">
-                            <div className="className">
-                              {items.obj.CharacterClassName}
-                            </div>
-                          </div>
-                          <div className="classLevelWrap">
-                            <div className="characterLevel">
-                              Lv.{items.obj.CharacterLevel}
-                            </div>
-                            <div className="itemLevel">
-                              {items.obj.ItemMaxLevel}
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <div
-                        className="characterName"
-                        onClick={(e) => {
-                          navigate(`/character/${items.obj.CharacterName}`);
-                          selectMenuHandler(0);
-                        }}
-                      >
-                        {items.obj.CharacterName}
-                      </div>
-                    </div>
-                  </CharacterProfile>
-                ))}
-              </CharacterProfileWrap>
-            </Fragment>
-          ))}
-        </div>
-      </ContentWrap>
-    </div>
-  );
-};
-
-export default React.memo(CharacterList);

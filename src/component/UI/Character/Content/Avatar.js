@@ -2,6 +2,141 @@ import styled from 'styled-components';
 import React from 'react';
 import { useEffect } from 'react';
 
+const Avatar = ({ profile, avatars }) => {
+  useEffect(() => {
+    document.cookie = 'safeCookie1=foo; SameSite=Lax';
+    document.cookie = 'safeCookie2=foo';
+    document.cookie = 'crossCookie=bar; SameSite=None; Secure';
+  }, []);
+
+  const trueInner = [
+    { type: '무기 아바타' },
+    { type: '머리 아바타' },
+    { type: '상의 아바타' },
+    { type: '하의 아바타' },
+  ];
+
+  const falseInner = [
+    {
+      type: '무기 덧입기 아바타',
+      TypeAs: '무기 아바타',
+    },
+    {
+      type: '머리 덧입기 아바타',
+      TypeAs: '머리 아바타',
+    },
+    {
+      type: '상의 덧입기 아바타',
+      TypeAs: '상의 아바타',
+    },
+    {
+      type: '하의 덧입기 아바타',
+      TypeAs: '하의 아바타',
+    },
+    {
+      type: '얼굴1 아바타',
+      TypeAs: '얼굴1 아바타',
+    },
+    {
+      type: '얼굴2 아바타',
+      TypeAs: '얼굴2 아바타',
+    },
+    {
+      type: '악기 아바타',
+      TypeAs: '악기 아바타',
+    },
+  ];
+
+  // const inInnerTrue = avatars && avatars.filter((item) => item.IsInner);
+  const isInnerFalse = avatars && avatars.filter((item) => !item.IsInner);
+
+  return (
+    <ContentWrap>
+      <div className="image">
+        <img src={profile && profile.CharacterImage} alt="캐릭터 이미지" />
+      </div>
+      <ListWrap>
+        <div className="content">
+          <TrueInner>
+            {trueInner.map((item, index) => (
+              <div key={index}>
+                <ImageBox
+                  key={index}
+                  exist={
+                    avatars !== null &&
+                    avatars[index] !== undefined &&
+                    avatars[index] !== null &&
+                    avatars[index]?.Grade === '전설' &&
+                    avatars[index]?.IsInner
+                      ? avatars[index]?.Grade
+                      : ''
+                  }
+                >
+                  {avatars !== null &&
+                  avatars[index] !== undefined &&
+                  avatars[index] !== null &&
+                  avatars[index].Grade === '전설' &&
+                  avatars[index].IsInner ? (
+                    <ImageBoxColor exist={avatars[index].Grade}>
+                      <img src={avatars[index].Icon} alt="무기아바타" />
+                    </ImageBoxColor>
+                  ) : (
+                    ''
+                  )}
+                </ImageBox>
+                <div className="desc">
+                  <p className="type">{trueInner[index].type}</p>
+                  <p className="name">
+                    {avatars !== null &&
+                    avatars[index] !== undefined &&
+                    avatars[index].Grade === '전설' &&
+                    avatars[index].IsInner
+                      ? avatars[index].Name
+                      : ''}
+                  </p>
+                </div>
+              </div>
+            ))}
+          </TrueInner>
+          <FalseInner>
+            {falseInner.map((item, index) => (
+              <div key={index}>
+                <ImageBox key={index}>
+                  {isInnerFalse &&
+                    isInnerFalse.map((items, index) =>
+                      avatars !== null && items.Type === item.TypeAs ? (
+                        <ImageBoxColor key={index} exist={items.Grade}>
+                          <img src={items.Icon} alt="아바타" />
+                        </ImageBoxColor>
+                      ) : (
+                        ''
+                      )
+                    )}
+                </ImageBox>
+                <div className="desc">
+                  <p className="type">{item.type}</p>
+                  {isInnerFalse &&
+                    isInnerFalse.map((items, index) =>
+                      avatars !== null && items.Type === item.TypeAs ? (
+                        <p key={index} className="name">
+                          {items.Name !== '' ? items.Name : ''}
+                        </p>
+                      ) : (
+                        ''
+                      )
+                    )}
+                </div>
+              </div>
+            ))}
+          </FalseInner>
+        </div>
+      </ListWrap>
+    </ContentWrap>
+  );
+};
+
+export default React.memo(Avatar);
+
 const ContentWrap = styled.div`
   width: 95%;
   height: 95%;
@@ -159,138 +294,3 @@ const ImageBoxColor = styled.div`
       : '#292e33'};
   border-radius: 10px;
 `;
-
-const Avatar = ({ profile, avatars }) => {
-  useEffect(() => {
-    document.cookie = 'safeCookie1=foo; SameSite=Lax';
-    document.cookie = 'safeCookie2=foo';
-    document.cookie = 'crossCookie=bar; SameSite=None; Secure';
-  }, []);
-
-  const trueInner = [
-    { type: '무기 아바타' },
-    { type: '머리 아바타' },
-    { type: '상의 아바타' },
-    { type: '하의 아바타' },
-  ];
-
-  const falseInner = [
-    {
-      type: '무기 덧입기 아바타',
-      TypeAs: '무기 아바타',
-    },
-    {
-      type: '머리 덧입기 아바타',
-      TypeAs: '머리 아바타',
-    },
-    {
-      type: '상의 덧입기 아바타',
-      TypeAs: '상의 아바타',
-    },
-    {
-      type: '하의 덧입기 아바타',
-      TypeAs: '하의 아바타',
-    },
-    {
-      type: '얼굴1 아바타',
-      TypeAs: '얼굴1 아바타',
-    },
-    {
-      type: '얼굴2 아바타',
-      TypeAs: '얼굴2 아바타',
-    },
-    {
-      type: '악기 아바타',
-      TypeAs: '악기 아바타',
-    },
-  ];
-
-  // const inInnerTrue = avatars && avatars.filter((item) => item.IsInner);
-  const isInnerFalse = avatars && avatars.filter((item) => !item.IsInner);
-
-  return (
-    <ContentWrap>
-      <div className="image">
-        <img src={profile && profile.CharacterImage} alt="캐릭터 이미지" />
-      </div>
-      <ListWrap>
-        <div className="content">
-          <TrueInner>
-            {trueInner.map((item, index) => (
-              <div key={index}>
-                <ImageBox
-                  key={index}
-                  exist={
-                    avatars !== null &&
-                    avatars[index] !== undefined &&
-                    avatars[index] !== null &&
-                    avatars[index]?.Grade === '전설' &&
-                    avatars[index]?.IsInner
-                      ? avatars[index]?.Grade
-                      : ''
-                  }
-                >
-                  {avatars !== null &&
-                  avatars[index] !== undefined &&
-                  avatars[index] !== null &&
-                  avatars[index].Grade === '전설' &&
-                  avatars[index].IsInner ? (
-                    <ImageBoxColor exist={avatars[index].Grade}>
-                      <img src={avatars[index].Icon} alt="무기아바타" />
-                    </ImageBoxColor>
-                  ) : (
-                    ''
-                  )}
-                </ImageBox>
-                <div className="desc">
-                  <p className="type">{trueInner[index].type}</p>
-                  <p className="name">
-                    {avatars !== null &&
-                    avatars[index] !== undefined &&
-                    avatars[index].Grade === '전설' &&
-                    avatars[index].IsInner
-                      ? avatars[index].Name
-                      : ''}
-                  </p>
-                </div>
-              </div>
-            ))}
-          </TrueInner>
-          <FalseInner>
-            {falseInner.map((item, index) => (
-              <div key={index}>
-                <ImageBox key={index}>
-                  {isInnerFalse &&
-                    isInnerFalse.map((items, index) =>
-                      avatars !== null && items.Type === item.TypeAs ? (
-                        <ImageBoxColor key={index} exist={items.Grade}>
-                          <img src={items.Icon} alt="아바타" />
-                        </ImageBoxColor>
-                      ) : (
-                        ''
-                      )
-                    )}
-                </ImageBox>
-                <div className="desc">
-                  <p className="type">{item.type}</p>
-                  {isInnerFalse &&
-                    isInnerFalse.map((items, index) =>
-                      avatars !== null && items.Type === item.TypeAs ? (
-                        <p key={index} className="name">
-                          {items.Name !== '' ? items.Name : ''}
-                        </p>
-                      ) : (
-                        ''
-                      )
-                    )}
-                </div>
-              </div>
-            ))}
-          </FalseInner>
-        </div>
-      </ListWrap>
-    </ContentWrap>
-  );
-};
-
-export default React.memo(Avatar);

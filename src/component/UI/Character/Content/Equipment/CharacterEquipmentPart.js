@@ -5,522 +5,6 @@ import styled from 'styled-components';
 
 import { BsDot } from 'react-icons/bs';
 
-const EquipmentWrap = styled.div`
-  width: auto;
-  height: auto;
-  background: #181c1e;
-  border-radius: 10px;
-  display: flex;
-  flex-direction: column;
-  padding: 30px 0 10px 0;
-
-  @media ${(props) => props.theme.mobile} {
-    padding: 0 0 10px;
-  }
-
-  .image {
-    width: 75%;
-    height: 75%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 30px 0;
-    border-radius: 10px;
-
-    img {
-      width: 100%;
-      height: 100%;
-      border-radius: 10px;
-      object-fit: contain;
-    }
-  }
-`;
-
-const TrueInner = styled.div`
-  min-width: 200px;
-  max-width: 312px;
-  display: flex;
-  flex-direction: column;
-  margin: 0 35px;
-  justify-content: space-between;
-  position: relative;
-  height: auto;
-
-  @media ${(props) => props.theme.mobile} {
-    width: 80%;
-    justify-content: center;
-    align-items: center;
-    margin-top: 30px;
-    padding: 0;
-  }
-
-  div {
-    display: flex;
-    margin-bottom: 13px;
-
-    .desc {
-      display: flex;
-      flex-direction: column;
-      font-family: 'Nanum Gothic';
-
-      .type {
-        font-size: 15px;
-        color: #fff;
-        margin: 5px;
-      }
-
-      .name {
-        color: #fff;
-        margin: 5px;
-      }
-
-      @media ${(props) => props.theme.mobile} {
-        .type {
-          font-size: 13px;
-        }
-
-        .name {
-          font-size: 13px;
-        }
-      }
-    }
-  }
-`;
-
-const FalseInner = styled.div`
-  width: 270px;
-  display: flex;
-  flex-direction: column;
-  margin: 0 40px;
-  position: relative;
-
-  @media ${(props) => props.theme.mobile} {
-    width: 80%;
-    justify-content: center;
-    align-items: center;
-    margin-top: 30px;
-  }
-
-  div {
-    display: flex;
-    margin-bottom: 10px;
-
-    .desc {
-      display: flex;
-      flex-direction: column;
-      font-family: 'Nanum Gothic';
-
-      .type {
-        color: #fff;
-        margin: 5px;
-      }
-
-      .name {
-        color: #fff;
-        margin: 5px;
-      }
-
-      div {
-        margin: 0;
-        color: #fff;
-        height: 20px;
-      }
-
-      @media ${(props) => props.theme.mobile} {
-        .type {
-          font-size: 13px;
-        }
-
-        .name {
-          font-size: 13px;
-        }
-      }
-    }
-  }
-`;
-
-const ImageBox = styled.div`
-  width: 55px;
-  height: 55px;
-  border-radius: 10px;
-  background: #292e33;
-
-  img {
-    border-radius: 10px;
-    object-fit: contain;
-  }
-
-  @media ${(props) => props.theme.mobile} {
-    width: 45px;
-    height: 45px;
-  }
-`;
-
-const ImageBoxColor = styled.div`
-  width: 100%;
-  height: 100%;
-  background: ${(props) =>
-    props.exist === '전설'
-      ? 'linear-gradient(135deg, #362003 0%, #9e5f04 100%)'
-      : props.exist === '영웅'
-      ? 'linear-gradient(135deg, #261331 0%, #480d5d 100%)'
-      : props.exist === '희귀'
-      ? 'linear-gradient(135deg, #111f2c 0%, #113d5d 100%)'
-      : props.exist === '고대'
-      ? 'linear-gradient(135deg, #3d3325 0%, #dcc999 100%)'
-      : props.exist === '유물'
-      ? 'linear-gradient(135deg, #341a09 0%, #a24006 100%)'
-      : '#292e33'};
-  border-radius: 10px;
-`;
-
-const FlexWrap = styled.div`
-  display: flex;
-  flex-direction: row;
-  align-items: flex-start;
-  justify-content: center;
-
-  @media ${(props) => props.theme.mobile} {
-    flex-direction: column;
-
-    .mount {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      margin: 0 auto;
-    }
-  }
-`;
-
-const PercentBar = styled.div`
-  width: 190px;
-  height: 20px;
-  margin: 0 5px;
-  display: flex;
-
-  p {
-    width: 40px;
-    color: ${(props) =>
-      props.quality === 0
-        ? '#fff'
-        : props.quality > 0 && props.quality < 11
-        ? '#ff0000'
-        : props.quality < 30
-        ? '#ffd200'
-        : props.quality >= 30 && props.quality < 70
-        ? '#91fe02'
-        : props.quality >= 70 && props.quality < 90
-        ? '#00b5ff'
-        : props.quality >= 90 && props.quality < 100
-        ? '#ce43fc'
-        : '#fe9600'};
-    margin: 2px 5px;
-    text-align: center;
-  }
-
-  div {
-    width: 100%;
-    height: 20px;
-    background: #292e33;
-    border-radius: 10px;
-
-    div {
-      width: ${(props) => props.quality}%;
-      background: ${(props) =>
-        props.quality === 0
-          ? '#fff'
-          : props.quality > 0 && props.quality < 11
-          ? '#ff0000'
-          : props.quality > 10 && props.quality < 30
-          ? '#ffd200'
-          : props.quality >= 30 && props.quality < 70
-          ? '#91fe02'
-          : props.quality >= 70 && props.quality < 90
-          ? '#00b5ff'
-          : props.quality >= 90 && props.quality < 100
-          ? '#ce43fc'
-          : '#fe9600'};
-    }
-  }
-`;
-
-const MountedEngraving = styled.div`
-  display: flex;
-  align-items: center;
-  width: auto;
-
-  @media ${(props) => props.theme.mobile} {
-    margin: 10px 0;
-  }
-
-  img {
-    border-radius: 50%;
-    width: 50px;
-    height: 50px;
-    object-fit: cover;
-    margin-right: 5px;
-  }
-
-  div {
-    width: 98px;
-    margin: 0 15px 0 0;
-    display: flex;
-    flex-direction: column;
-
-    p {
-      font-size: 15px;
-      margin: 0 0px 5px 5px;
-      font-family: 'Nanum Gothic';
-      color: #fff;
-    }
-
-    .name {
-      color: ${(props) =>
-        props.grade === '+12'
-          ? '#fe9600'
-          : props.grade === ' +9'
-          ? '#9e24ca'
-          : props.grade === ' +6'
-          ? '#113d5d'
-          : props.grade === ' +3'
-          ? '#46812d'
-          : ''};
-    }
-  }
-`;
-
-const EquipmentTooltipWrap = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  position: absolute;
-  background-color: rgb(41, 46, 51, 1);
-  border-radius: 10px;
-  width: 240px;
-  height: 100%;
-  top: 0;
-  left: 21.5%;
-  right: 0;
-  bottom: 0;
-  color: #fff;
-  font-family: 'Nanum Gothic';
-  font-size: 15px;
-  z-index: 100;
-
-  @media ${(props) => props.theme.mobile} {
-    left: 25%;
-    font-size: 13px;
-    width: 200px;
-  }
-
-  div {
-    margin: 0;
-    padding: 0;
-  }
-
-  .defaultEffectWrap {
-    width: 80%;
-    margin: 0 auto;
-    display: flex;
-    flex-direction: column;
-    flex-grow: 0;
-    align-items: center;
-    border-bottom: 1px solid #c1c1c1;
-    padding: 10px;
-
-    div {
-      width: auto;
-      margin: 0 auto;
-      padding: 5px 0px;
-    }
-  }
-
-  .vitalityWrap {
-    width: 80%;
-    margin: 0 auto;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    border-bottom: 1px solid #c1c1c1;
-    padding: 10px;
-
-    div {
-      width: auto;
-      margin: 0 auto;
-      padding: 5px 0px;
-    }
-  }
-
-  .totalElixir {
-    width: 80%;
-    margin: 0 auto;
-    display: flex;
-    justify-content: center;
-    border-bottom: 1px solid #c1c1c1;
-    padding: 10px;
-
-    .level {
-      margin-left: 5px;
-      color: #e4ba27;
-    }
-  }
-
-  .elixirWrap {
-    width: 80%;
-    margin: 0 auto;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    border-bottom: 1px solid #c1c1c1;
-    padding: 10px;
-
-    div {
-      width: auto;
-      display: flex;
-      flex-direction: column;
-      margin: 0 auto;
-      padding: 5px 0px;
-      text-align: center;
-    }
-  }
-
-  .levelWrap {
-    width: 80%;
-    height: 50px;
-    margin: 0 auto;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 10px;
-
-    div {
-      display: flex;
-      margin: 0 auto;
-      padding: 5px 0px;
-    }
-  }
-`;
-
-const AccessoriesTooltipWrap = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  position: absolute;
-  background-color: rgb(41, 46, 51, 1);
-  border-radius: 10px;
-  width: 240px;
-  height: 90%;
-  top: 0;
-  left: 22.5%;
-  right: 0;
-  bottom: 0;
-  color: #fff;
-  font-family: 'Nanum Gothic';
-  font-size: 15px;
-  z-index: 100;
-
-  @media ${(props) => props.theme.mobile} {
-    left: 27%;
-    font-size: 13px;
-    width: 180px;
-  }
-
-  div {
-    margin: 0;
-    padding: 0;
-  }
-
-  .defaultEffectWrap {
-    width: 80%;
-
-    margin: 0 auto;
-    display: flex;
-    flex-direction: column;
-    flex-grow: 0;
-    align-items: center;
-    padding: 10px;
-    border-bottom: 1px solid #c1c1c1;
-    div {
-      width: auto;
-      margin: 0 auto;
-      padding: 5px 0px;
-    }
-  }
-
-  .vitalityWrap {
-    width: 80%;
-    margin: 0 auto;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 10px;
-
-    .decrease {
-      color: #d32614;
-    }
-
-    div {
-      width: auto;
-      margin: 0 auto;
-      padding: 5px 0px;
-    }
-  }
-
-  .elixirWrap {
-    width: 80%;
-    margin: 0 auto;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 10px;
-
-    div {
-      width: auto;
-      display: flex;
-      flex-direction: column;
-      margin: 0 auto;
-      padding: 5px 0px;
-      text-align: center;
-    }
-  }
-
-  .levelWrap {
-    width: 80%;
-    height: 50px;
-    margin: 0 auto;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 10px;
-
-    div {
-      display: flex;
-      margin: 0 auto;
-      padding: 5px 0px;
-    }
-  }
-`;
-
-const EffectNameColorBox = styled.div`
-  width: 80%;
-  margin: 0 auto;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 10px;
-  color: ${(props) => props.color === 0 && '#e4b021'};
-
-  div {
-    width: auto;
-    display: flex;
-    flex-direction: column;
-    margin: 0 auto;
-    padding: 5px 0px;
-    text-align: center;
-  }
-`;
-
 const CharacterEquipmentPart = ({ equipment, engraving }) => {
   // 장비 정보 조회
 
@@ -1347,3 +831,519 @@ const CharacterEquipmentPart = ({ equipment, engraving }) => {
 };
 
 export default React.memo(CharacterEquipmentPart);
+
+const EquipmentWrap = styled.div`
+  width: auto;
+  height: auto;
+  background: #181c1e;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  padding: 30px 0 10px 0;
+
+  @media ${(props) => props.theme.mobile} {
+    padding: 0 0 10px;
+  }
+
+  .image {
+    width: 75%;
+    height: 75%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 30px 0;
+    border-radius: 10px;
+
+    img {
+      width: 100%;
+      height: 100%;
+      border-radius: 10px;
+      object-fit: contain;
+    }
+  }
+`;
+
+const TrueInner = styled.div`
+  min-width: 200px;
+  max-width: 312px;
+  display: flex;
+  flex-direction: column;
+  margin: 0 35px;
+  justify-content: space-between;
+  position: relative;
+  height: auto;
+
+  @media ${(props) => props.theme.mobile} {
+    width: 80%;
+    justify-content: center;
+    align-items: center;
+    margin-top: 30px;
+    padding: 0;
+  }
+
+  div {
+    display: flex;
+    margin-bottom: 13px;
+
+    .desc {
+      display: flex;
+      flex-direction: column;
+      font-family: 'Nanum Gothic';
+
+      .type {
+        font-size: 15px;
+        color: #fff;
+        margin: 5px;
+      }
+
+      .name {
+        color: #fff;
+        margin: 5px;
+      }
+
+      @media ${(props) => props.theme.mobile} {
+        .type {
+          font-size: 13px;
+        }
+
+        .name {
+          font-size: 13px;
+        }
+      }
+    }
+  }
+`;
+
+const FalseInner = styled.div`
+  width: 270px;
+  display: flex;
+  flex-direction: column;
+  margin: 0 40px;
+  position: relative;
+
+  @media ${(props) => props.theme.mobile} {
+    width: 80%;
+    justify-content: center;
+    align-items: center;
+    margin-top: 30px;
+  }
+
+  div {
+    display: flex;
+    margin-bottom: 10px;
+
+    .desc {
+      display: flex;
+      flex-direction: column;
+      font-family: 'Nanum Gothic';
+
+      .type {
+        color: #fff;
+        margin: 5px;
+      }
+
+      .name {
+        color: #fff;
+        margin: 5px;
+      }
+
+      div {
+        margin: 0;
+        color: #fff;
+        height: 20px;
+      }
+
+      @media ${(props) => props.theme.mobile} {
+        .type {
+          font-size: 13px;
+        }
+
+        .name {
+          font-size: 13px;
+        }
+      }
+    }
+  }
+`;
+
+const ImageBox = styled.div`
+  width: 55px;
+  height: 55px;
+  border-radius: 10px;
+  background: #292e33;
+
+  img {
+    border-radius: 10px;
+    object-fit: contain;
+  }
+
+  @media ${(props) => props.theme.mobile} {
+    width: 45px;
+    height: 45px;
+  }
+`;
+
+const ImageBoxColor = styled.div`
+  width: 100%;
+  height: 100%;
+  background: ${(props) =>
+    props.exist === '전설'
+      ? 'linear-gradient(135deg, #362003 0%, #9e5f04 100%)'
+      : props.exist === '영웅'
+      ? 'linear-gradient(135deg, #261331 0%, #480d5d 100%)'
+      : props.exist === '희귀'
+      ? 'linear-gradient(135deg, #111f2c 0%, #113d5d 100%)'
+      : props.exist === '고대'
+      ? 'linear-gradient(135deg, #3d3325 0%, #dcc999 100%)'
+      : props.exist === '유물'
+      ? 'linear-gradient(135deg, #341a09 0%, #a24006 100%)'
+      : '#292e33'};
+  border-radius: 10px;
+`;
+
+const FlexWrap = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: center;
+
+  @media ${(props) => props.theme.mobile} {
+    flex-direction: column;
+
+    .mount {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto;
+    }
+  }
+`;
+
+const PercentBar = styled.div`
+  width: 190px;
+  height: 20px;
+  margin: 0 5px;
+  display: flex;
+
+  p {
+    width: 40px;
+    color: ${(props) =>
+      props.quality === 0
+        ? '#fff'
+        : props.quality > 0 && props.quality < 11
+        ? '#ff0000'
+        : props.quality < 30
+        ? '#ffd200'
+        : props.quality >= 30 && props.quality < 70
+        ? '#91fe02'
+        : props.quality >= 70 && props.quality < 90
+        ? '#00b5ff'
+        : props.quality >= 90 && props.quality < 100
+        ? '#ce43fc'
+        : '#fe9600'};
+    margin: 2px 5px;
+    text-align: center;
+  }
+
+  div {
+    width: 100%;
+    height: 20px;
+    background: #292e33;
+    border-radius: 10px;
+
+    div {
+      width: ${(props) => props.quality}%;
+      background: ${(props) =>
+        props.quality === 0
+          ? '#fff'
+          : props.quality > 0 && props.quality < 11
+          ? '#ff0000'
+          : props.quality > 10 && props.quality < 30
+          ? '#ffd200'
+          : props.quality >= 30 && props.quality < 70
+          ? '#91fe02'
+          : props.quality >= 70 && props.quality < 90
+          ? '#00b5ff'
+          : props.quality >= 90 && props.quality < 100
+          ? '#ce43fc'
+          : '#fe9600'};
+    }
+  }
+`;
+
+const MountedEngraving = styled.div`
+  display: flex;
+  align-items: center;
+  width: auto;
+
+  @media ${(props) => props.theme.mobile} {
+    margin: 10px 0;
+  }
+
+  img {
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    margin-right: 5px;
+  }
+
+  div {
+    width: 98px;
+    margin: 0 15px 0 0;
+    display: flex;
+    flex-direction: column;
+
+    p {
+      font-size: 15px;
+      margin: 0 0px 5px 5px;
+      font-family: 'Nanum Gothic';
+      color: #fff;
+    }
+
+    .name {
+      color: ${(props) =>
+        props.grade === '+12'
+          ? '#fe9600'
+          : props.grade === ' +9'
+          ? '#9e24ca'
+          : props.grade === ' +6'
+          ? '#113d5d'
+          : props.grade === ' +3'
+          ? '#46812d'
+          : ''};
+    }
+  }
+`;
+
+const EquipmentTooltipWrap = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  position: absolute;
+  background-color: rgb(41, 46, 51, 1);
+  border-radius: 10px;
+  width: 240px;
+  height: 100%;
+  top: 0;
+  left: 21.5%;
+  right: 0;
+  bottom: 0;
+  color: #fff;
+  font-family: 'Nanum Gothic';
+  font-size: 15px;
+  z-index: 100;
+
+  @media ${(props) => props.theme.mobile} {
+    left: 25%;
+    font-size: 13px;
+    width: 200px;
+  }
+
+  div {
+    margin: 0;
+    padding: 0;
+  }
+
+  .defaultEffectWrap {
+    width: 80%;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 0;
+    align-items: center;
+    border-bottom: 1px solid #c1c1c1;
+    padding: 10px;
+
+    div {
+      width: auto;
+      margin: 0 auto;
+      padding: 5px 0px;
+    }
+  }
+
+  .vitalityWrap {
+    width: 80%;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-bottom: 1px solid #c1c1c1;
+    padding: 10px;
+
+    div {
+      width: auto;
+      margin: 0 auto;
+      padding: 5px 0px;
+    }
+  }
+
+  .totalElixir {
+    width: 80%;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    border-bottom: 1px solid #c1c1c1;
+    padding: 10px;
+
+    .level {
+      margin-left: 5px;
+      color: #e4ba27;
+    }
+  }
+
+  .elixirWrap {
+    width: 80%;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-bottom: 1px solid #c1c1c1;
+    padding: 10px;
+
+    div {
+      width: auto;
+      display: flex;
+      flex-direction: column;
+      margin: 0 auto;
+      padding: 5px 0px;
+      text-align: center;
+    }
+  }
+
+  .levelWrap {
+    width: 80%;
+    height: 50px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px;
+
+    div {
+      display: flex;
+      margin: 0 auto;
+      padding: 5px 0px;
+    }
+  }
+`;
+
+const AccessoriesTooltipWrap = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  position: absolute;
+  background-color: rgb(41, 46, 51, 1);
+  border-radius: 10px;
+  width: 240px;
+  height: 90%;
+  top: 0;
+  left: 22.5%;
+  right: 0;
+  bottom: 0;
+  color: #fff;
+  font-family: 'Nanum Gothic';
+  font-size: 15px;
+  z-index: 100;
+
+  @media ${(props) => props.theme.mobile} {
+    left: 27%;
+    font-size: 13px;
+    width: 180px;
+  }
+
+  div {
+    margin: 0;
+    padding: 0;
+  }
+
+  .defaultEffectWrap {
+    width: 80%;
+
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 0;
+    align-items: center;
+    padding: 10px;
+    border-bottom: 1px solid #c1c1c1;
+    div {
+      width: auto;
+      margin: 0 auto;
+      padding: 5px 0px;
+    }
+  }
+
+  .vitalityWrap {
+    width: 80%;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px;
+
+    .decrease {
+      color: #d32614;
+    }
+
+    div {
+      width: auto;
+      margin: 0 auto;
+      padding: 5px 0px;
+    }
+  }
+
+  .elixirWrap {
+    width: 80%;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px;
+
+    div {
+      width: auto;
+      display: flex;
+      flex-direction: column;
+      margin: 0 auto;
+      padding: 5px 0px;
+      text-align: center;
+    }
+  }
+
+  .levelWrap {
+    width: 80%;
+    height: 50px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px;
+
+    div {
+      display: flex;
+      margin: 0 auto;
+      padding: 5px 0px;
+    }
+  }
+`;
+
+const EffectNameColorBox = styled.div`
+  width: 80%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px;
+  color: ${(props) => props.color === 0 && '#e4b021'};
+
+  div {
+    width: auto;
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto;
+    padding: 5px 0px;
+    text-align: center;
+  }
+`;

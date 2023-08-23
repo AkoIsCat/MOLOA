@@ -1,5 +1,15 @@
 import styled from 'styled-components';
 
+const ContentWrap = (props) => {
+  return (
+    <ContentWrapStyle character={props.character}>
+      {props.children}
+    </ContentWrapStyle>
+  );
+};
+
+export default ContentWrap;
+
 const ContentWrapStyle = styled.div`
   width: 100%;
   display: flex;
@@ -14,13 +24,3 @@ const ContentWrapStyle = styled.div`
     margin-left: 10px;
   }
 `;
-
-const ContentWrap = (props) => {
-  return (
-    <ContentWrapStyle character={props.character}>
-      {props.children}
-    </ContentWrapStyle>
-  );
-};
-
-export default ContentWrap;

@@ -7,17 +7,6 @@ import React from 'react';
 import styled from 'styled-components';
 import { useEffect } from 'react';
 
-const Wrap = styled.div`
-  display: flex;
-  flex-direction: column;
-  padding: 0 20px;
-  margin: 20px 0;
-
-  @media ${(props) => props.theme.mobile} {
-    width: 95%;
-  }
-`;
-
 const Equipment = ({
   equipment,
   engraving,
@@ -52,3 +41,14 @@ const Equipment = ({
 };
 
 export default React.memo(Equipment);
+
+const Wrap = styled.div`
+  display: flex;
+  flex-direction: column;
+  padding: 0 20px;
+  margin: 20px 0;
+
+  @media ${(props) => props.theme.mobile} {
+    width: 95%;
+  }
+`;

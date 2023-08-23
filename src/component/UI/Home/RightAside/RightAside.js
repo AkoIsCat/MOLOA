@@ -11,84 +11,6 @@ import { Head } from './CommonContentBox';
 import CommonContentBoxMain from './CommonContentBoxMain';
 import CommonContentBox from './CommonContentBox';
 
-// 원하는 Content의 height를 입력해야함
-const InnerContent = styled.div`
-  width: 226px;
-  height: ${(props) => props.height || ''};
-  background: #1e2225;
-  margin: 10px 10px 40px 10px;
-
-  @media ${(props) => props.theme.mobile} {
-    width: 95%;
-    margin: 0 0 60px;
-    padding: 0;
-  }
-`;
-
-const Coupon = styled(HiOutlineTicket)`
-  margin-left: 5px;
-  margin-bottom: 4px;
-  font-size: 19px;
-`;
-
-const Discord = styled(FaDiscord)`
-  margin-left: 5px;
-  margin-bottom: 4px;
-  font-size: 19px;
-`;
-
-const KakakoTalk = styled(TbMessageCircle2Filled)`
-  margin-right: 10px;
-  margin-bottom: 4px;
-  font-size: 19px;
-  color: yellow;
-`;
-
-const Star = styled(GiFallingStar)`
-  margin-right: 10px;
-  margin-bottom: 4px;
-  font-size: 19px;
-  color: #ffdd65;
-`;
-
-const HeadStyle = styled(Head)`
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 20px;
-  cursor: pointer;
-
-  .content {
-    padding-left: 10px;
-  }
-`;
-
-const LineDivision = styled.div`
-  display: block;
-`;
-
-const PopularText = styled.span`
-  font-family: 'Nanum Gothic';
-  margin: 20px 10px;
-  padding: 0 5px;
-  color: ${(props) =>
-    props.index === 1
-      ? '#ffd700'
-      : props.index === 2
-      ? '#dbe4eb'
-      : props.index === 3
-      ? '#cd7f32'
-      : '#c1c1c1'};
-  border-bottom: ${(props) =>
-    props.index === 1
-      ? '2px solid #ffd700'
-      : props.index === 2
-      ? '2px solid #dbe4eb'
-      : props.index === 3
-      ? '2px solid #cd7f32'
-      : 'none'};
-  cursor: pointer;
-`;
-
 const CouponCode = `https://lostark-bf0ba-default-rtdb.firebaseio.com/Coupon.json`;
 const DiscordUrl = `https://lostark-bf0ba-default-rtdb.firebaseio.com/Discord.json`;
 const PopularCharacterUrl = `https://lostark-bf0ba-default-rtdb.firebaseio.com/CharacterSearch.json`;
@@ -377,3 +299,81 @@ const RightAside = () => {
 };
 
 export default RightAside;
+
+// 원하는 Content의 height를 입력해야함
+const InnerContent = styled.div`
+  width: 226px;
+  height: ${(props) => props.height || ''};
+  background: #1e2225;
+  margin: 10px 10px 40px 10px;
+
+  @media ${(props) => props.theme.mobile} {
+    width: 95%;
+    margin: 0 0 60px;
+    padding: 0;
+  }
+`;
+
+const Coupon = styled(HiOutlineTicket)`
+  margin-left: 5px;
+  margin-bottom: 4px;
+  font-size: 19px;
+`;
+
+const Discord = styled(FaDiscord)`
+  margin-left: 5px;
+  margin-bottom: 4px;
+  font-size: 19px;
+`;
+
+const KakakoTalk = styled(TbMessageCircle2Filled)`
+  margin-right: 10px;
+  margin-bottom: 4px;
+  font-size: 19px;
+  color: yellow;
+`;
+
+const Star = styled(GiFallingStar)`
+  margin-right: 10px;
+  margin-bottom: 4px;
+  font-size: 19px;
+  color: #ffdd65;
+`;
+
+const HeadStyle = styled(Head)`
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  cursor: pointer;
+
+  .content {
+    padding-left: 10px;
+  }
+`;
+
+const LineDivision = styled.div`
+  display: block;
+`;
+
+const PopularText = styled.span`
+  font-family: 'Nanum Gothic';
+  margin: 20px 10px;
+  padding: 0 5px;
+  color: ${(props) =>
+    props.index === 1
+      ? '#ffd700'
+      : props.index === 2
+      ? '#dbe4eb'
+      : props.index === 3
+      ? '#cd7f32'
+      : '#c1c1c1'};
+  border-bottom: ${(props) =>
+    props.index === 1
+      ? '2px solid #ffd700'
+      : props.index === 2
+      ? '2px solid #dbe4eb'
+      : props.index === 3
+      ? '2px solid #cd7f32'
+      : 'none'};
+  cursor: pointer;
+`;

@@ -17,133 +17,6 @@ import {
 } from '../../../../asset/icon/index';
 import { useEffect } from 'react';
 
-const TendenciesBox = styled.div`
-  display: flex;
-  width: 100%;
-  padding: 10px;
-  font-family: 'Nanum Gothic';
-  font-size: 20px;
-  justify-content: center;
-
-  @media ${(props) => props.theme.mobile} {
-    font-size: 10px;
-  }
-
-  .Type {
-    color: #c1c1c1;
-    margin: 0 5px;
-  }
-
-  .Point {
-    color: #fff;
-    margin: 0 5px;
-  }
-`;
-
-const CollectUL = styled.ul`
-  width: 95%;
-  display: flex;
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  font-family: 'Nanum Gothic';
-  justify-content: space-between;
-  
-
-  @media ${(props) => props.theme.tablet} {
-    flex-wrap: wrap;
-    justify-content: flex-start;
-  }
-
-  @media ${(props) => props.theme.mobile} {
-    flex-wrap: wrap;
-    justify-content: center;
-  }
-}`;
-
-const CollectItem = styled.li`
-  padding: 7px;
-  margin: 0 5px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  width: 65px;
-  border-radius: 10px;
-  cursor: pointer;
-  background: ${(props) => (props.active ? '#292e33' : '')};
-
-  &:hover {
-    background: #292e33;
-  }
-
-  img {
-    width: 20px;
-    height: 20px;
-    object-fit: contain;
-  }
-
-  .maxPoint {
-    margin: 10px 0;
-    font-size: 14px;
-    color: #fff;
-  }
-
-  .Point {
-    color: #f1090f;
-    font-size: 14px;
-  }
-`;
-
-const CollectInnerSection = styled.div`
-  width: 45%;
-  // min-height: 600px;
-  height: auto;
-  background: #292e33;
-  border-radius: 10px;
-  margin: 0 13px;
-  padding: 10px;
-  font-family: 'Nanum Gothic';
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-
-  @media ${(props) => props.theme.mobile} {
-    font-size: 13px;
-  }
-
-  .collectName {
-    color: #fff;
-    margin: 10px 0;
-  }
-
-  .listWrap {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    margin-top: 10px;
-
-    .itemWrap {
-      display: flex;
-      margin: 8px 0;
-      color: #fff;
-      justify-content: space-between;
-
-      .indexAndPointWrap {
-        display: flex;
-        color: ${(props) => (props.collect ? '' : '#e4ba27')};
-
-        .itemIndex {
-          margin: 0 5px;
-        }
-      }
-
-      .conpareItems {
-      }
-    }
-  }
-`;
-
 const Collect = ({ collectibles, profile }) => {
   const [currentCollectTab, setCurrentCollectTab] = useState(0);
 
@@ -323,3 +196,130 @@ const Collect = ({ collectibles, profile }) => {
 };
 
 export default React.memo(Collect);
+
+const TendenciesBox = styled.div`
+  display: flex;
+  width: 100%;
+  padding: 10px;
+  font-family: 'Nanum Gothic';
+  font-size: 20px;
+  justify-content: center;
+
+  @media ${(props) => props.theme.mobile} {
+    font-size: 10px;
+  }
+
+  .Type {
+    color: #c1c1c1;
+    margin: 0 5px;
+  }
+
+  .Point {
+    color: #fff;
+    margin: 0 5px;
+  }
+`;
+
+const CollectUL = styled.ul`
+  width: 95%;
+  display: flex;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  font-family: 'Nanum Gothic';
+  justify-content: space-between;
+  
+
+  @media ${(props) => props.theme.tablet} {
+    flex-wrap: wrap;
+    justify-content: flex-start;
+  }
+
+  @media ${(props) => props.theme.mobile} {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+}`;
+
+const CollectItem = styled.li`
+  padding: 7px;
+  margin: 0 5px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 65px;
+  border-radius: 10px;
+  cursor: pointer;
+  background: ${(props) => (props.active ? '#292e33' : '')};
+
+  &:hover {
+    background: #292e33;
+  }
+
+  img {
+    width: 20px;
+    height: 20px;
+    object-fit: contain;
+  }
+
+  .maxPoint {
+    margin: 10px 0;
+    font-size: 14px;
+    color: #fff;
+  }
+
+  .Point {
+    color: #f1090f;
+    font-size: 14px;
+  }
+`;
+
+const CollectInnerSection = styled.div`
+  width: 45%;
+  // min-height: 600px;
+  height: auto;
+  background: #292e33;
+  border-radius: 10px;
+  margin: 0 13px;
+  padding: 10px;
+  font-family: 'Nanum Gothic';
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  @media ${(props) => props.theme.mobile} {
+    font-size: 13px;
+  }
+
+  .collectName {
+    color: #fff;
+    margin: 10px 0;
+  }
+
+  .listWrap {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    margin-top: 10px;
+
+    .itemWrap {
+      display: flex;
+      margin: 8px 0;
+      color: #fff;
+      justify-content: space-between;
+
+      .indexAndPointWrap {
+        display: flex;
+        color: ${(props) => (props.collect ? '' : '#e4ba27')};
+
+        .itemIndex {
+          margin: 0 5px;
+        }
+      }
+
+      .conpareItems {
+      }
+    }
+  }
+`;

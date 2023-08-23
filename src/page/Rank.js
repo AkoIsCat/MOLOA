@@ -41,256 +41,6 @@ import Loading from '../component/UI/Loading';
 import Footer from '../component/UI/Footer';
 import { Fragment } from 'react';
 
-const ContainerBox = styled(Container)`
-  min-height: 100vh;
-  width: auto;
-  height: auto;
-  position: relative;
-  display: flex;
-  justify-content: space-around;
-
-  @media ${(props) => props.theme.mobile} {
-    width: 100%;
-    flex-direction: column-reverse;
-  }
-`;
-
-const RankingWrap = styled.div`
-  width: 50vw;
-
-  @media ${(props) => props.theme.tablet} {
-    width: 80vw;
-  }
-
-  @media ${(props) => props.theme.mobile} {
-    width: 100%;
-  }
-`;
-
-const ServerWrap = styled.div`
-  // background: green;
-  padding: 20px 0px;
-  height: auto;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-
-  @media ${(props) => props.theme.mobile} {
-    width: 100%;
-    justify-content: center;
-    padding: 10px;
-  }
-`;
-
-const ServerList = styled.div`
-  padding: 5px 0;
-  width: 100%;
-  border-radius: 0px 0px 10px 10px;
-  background: #292e33;
-  font-family: 'Nanum Gothic';
-
-  ul {
-    display: flex;
-    flex-wrap: wrap;
-    list-style: none;
-    margin: 0;
-    padding: 0;
-
-    @media ${(props) => props.theme.mobile} {
-      justify-content: center;
-    }
-  }
-`;
-
-const ServerListli = styled.li`
-  width: 40%;
-  margin: 8px 0;
-  padding-left: 10px;
-  color: ${(props) =>
-    props.active ? '#fff' : props.active2 ? '#fff' : '#c1c1c1'};
-  cursor: pointer;
-
-  @media ${(props) => props.theme.mobile} {
-    text-align: center;
-  }
-
-  border-radius: ${(props) =>
-    props.borderFirst
-      ? '10px 0 0 10px'
-      : props.borderEnd
-      ? '0 10px 10px 0'
-      : ''};
-
-  .itemWrap {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-content: center;
-
-    @media ${(props) => props.theme.mobile} {
-      align-items: center;
-    }
-
-    img {
-      width: 40px;
-      height: 40px;
-      object-fit: contain;
-      margin-bottom: 7px;
-
-      @media ${(props) => props.theme.mobile} {
-        width: 30px;
-        height: 30px;
-        object-fit: contain;
-      }
-    }
-
-    div {
-      @media ${(props) => props.theme.mobile} {
-        margin: 0 10px;
-      }
-    }
-  }
-
-  .engravings {
-    width: 100%;
-    display: flex;
-    flex-wrap: wrap;
-
-    div {
-      width: 100%;
-    }
-  }
-
-  &:hover {
-    color: #fff;
-  }
-`;
-
-const RankIndexWrap = styled.div`
-  // background: darkblue;
-  width: auto;
-  margin: 30px 25px;
-  font-family: 'Nanum Gothic';
-
-  ul {
-    font-size: 15px;
-    margin: 0;
-    padding: 0 20px;
-    list-style: none;
-    display: flex;
-    color: #c1c1c1;
-    border-bottom: 1px solid #c1c1c1;
-
-    @media ${(props) => props.theme.mobile} {
-      justify-content: space-between;
-      font-size: 8px;
-      padding: 0;
-    }
-
-    li {
-      margin: 0 10px 10px 10px;
-    }
-
-    .listWrap {
-      display: flex;
-      width: 100%;
-
-      @media ${(props) => props.theme.mobile} {
-        justify-content: space-between;
-        font-size: 8px;
-      }
-
-      li {
-        height: 45px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-      }
-
-      .guildName {
-        color: #fff;
-        justify-content: flex-start;
-      }
-
-      .guildMessage {
-        justify-content: flex-start;
-      }
-    }
-
-    .rank {
-      width: 50px;
-      text-align: center;
-
-      @media ${(props) => props.theme.mobile} {
-        width: 118px;
-      }
-    }
-
-    .guildName {
-      margin-left: 30px;
-      width: 160px;
-
-      @media ${(props) => props.theme.mobile} {
-        width: 176px;
-        margin: 0;
-      }
-    }
-
-    .serverName,
-    .memberCount {
-      margin-left: 20px;
-      width: 100px;
-      text-align: center;
-
-      @media ${(props) => props.theme.mobile} {
-        margin-left: 17px;
-        width: 113px;
-      }
-    }
-
-    .masterName {
-      margin: 0 15px;
-      width: 150px;
-      text-align: center;
-      display: flex;
-      flex-direction: column;
-
-      @media ${(props) => props.theme.mobile} {
-        width: 227px;
-      }
-
-      div {
-        margin-bottom: 3px;
-      }
-
-      .enName {
-        width: 70px;
-      }
-
-      .enLevel {
-        width: 20px;
-      }
-    }
-
-    .guildMessage {
-      width: 250px;
-    }
-  }
-`;
-
-const Notice = styled.div`
-  color: #c1c1c1;
-  font-family: 'Nanum Gothic';
-  margin: 30px 20px;
-`;
-
-const ServerWrapWrap = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: auto;
-  margin: 100px 20px 100px 0;
-`;
-
 const PopularCharacterUrl = `https://lostark-bf0ba-default-rtdb.firebaseio.com/CharacterSearch.json`;
 
 const Rank = () => {
@@ -1200,3 +950,253 @@ const Rank = () => {
 };
 
 export default Rank;
+
+const ContainerBox = styled(Container)`
+  min-height: 100vh;
+  width: auto;
+  height: auto;
+  position: relative;
+  display: flex;
+  justify-content: space-around;
+
+  @media ${(props) => props.theme.mobile} {
+    width: 100%;
+    flex-direction: column-reverse;
+  }
+`;
+
+const RankingWrap = styled.div`
+  width: 50vw;
+
+  @media ${(props) => props.theme.tablet} {
+    width: 80vw;
+  }
+
+  @media ${(props) => props.theme.mobile} {
+    width: 100%;
+  }
+`;
+
+const ServerWrap = styled.div`
+  // background: green;
+  padding: 20px 0px;
+  height: auto;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+
+  @media ${(props) => props.theme.mobile} {
+    width: 100%;
+    justify-content: center;
+    padding: 10px;
+  }
+`;
+
+const ServerList = styled.div`
+  padding: 5px 0;
+  width: 100%;
+  border-radius: 0px 0px 10px 10px;
+  background: #292e33;
+  font-family: 'Nanum Gothic';
+
+  ul {
+    display: flex;
+    flex-wrap: wrap;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+
+    @media ${(props) => props.theme.mobile} {
+      justify-content: center;
+    }
+  }
+`;
+
+const ServerListli = styled.li`
+  width: 40%;
+  margin: 8px 0;
+  padding-left: 10px;
+  color: ${(props) =>
+    props.active ? '#fff' : props.active2 ? '#fff' : '#c1c1c1'};
+  cursor: pointer;
+
+  @media ${(props) => props.theme.mobile} {
+    text-align: center;
+  }
+
+  border-radius: ${(props) =>
+    props.borderFirst
+      ? '10px 0 0 10px'
+      : props.borderEnd
+      ? '0 10px 10px 0'
+      : ''};
+
+  .itemWrap {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+
+    @media ${(props) => props.theme.mobile} {
+      align-items: center;
+    }
+
+    img {
+      width: 40px;
+      height: 40px;
+      object-fit: contain;
+      margin-bottom: 7px;
+
+      @media ${(props) => props.theme.mobile} {
+        width: 30px;
+        height: 30px;
+        object-fit: contain;
+      }
+    }
+
+    div {
+      @media ${(props) => props.theme.mobile} {
+        margin: 0 10px;
+      }
+    }
+  }
+
+  .engravings {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+
+    div {
+      width: 100%;
+    }
+  }
+
+  &:hover {
+    color: #fff;
+  }
+`;
+
+const RankIndexWrap = styled.div`
+  // background: darkblue;
+  width: auto;
+  margin: 30px 25px;
+  font-family: 'Nanum Gothic';
+
+  ul {
+    font-size: 15px;
+    margin: 0;
+    padding: 0 20px;
+    list-style: none;
+    display: flex;
+    color: #c1c1c1;
+    border-bottom: 1px solid #c1c1c1;
+
+    @media ${(props) => props.theme.mobile} {
+      justify-content: space-between;
+      font-size: 8px;
+      padding: 0;
+    }
+
+    li {
+      margin: 0 10px 10px 10px;
+    }
+
+    .listWrap {
+      display: flex;
+      width: 100%;
+
+      @media ${(props) => props.theme.mobile} {
+        justify-content: space-between;
+        font-size: 8px;
+      }
+
+      li {
+        height: 45px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .guildName {
+        color: #fff;
+        justify-content: flex-start;
+      }
+
+      .guildMessage {
+        justify-content: flex-start;
+      }
+    }
+
+    .rank {
+      width: 50px;
+      text-align: center;
+
+      @media ${(props) => props.theme.mobile} {
+        width: 118px;
+      }
+    }
+
+    .guildName {
+      margin-left: 30px;
+      width: 160px;
+
+      @media ${(props) => props.theme.mobile} {
+        width: 176px;
+        margin: 0;
+      }
+    }
+
+    .serverName,
+    .memberCount {
+      margin-left: 20px;
+      width: 100px;
+      text-align: center;
+
+      @media ${(props) => props.theme.mobile} {
+        margin-left: 17px;
+        width: 113px;
+      }
+    }
+
+    .masterName {
+      margin: 0 15px;
+      width: 150px;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+
+      @media ${(props) => props.theme.mobile} {
+        width: 227px;
+      }
+
+      div {
+        margin-bottom: 3px;
+      }
+
+      .enName {
+        width: 70px;
+      }
+
+      .enLevel {
+        width: 20px;
+      }
+    }
+
+    .guildMessage {
+      width: 250px;
+    }
+  }
+`;
+
+const Notice = styled.div`
+  color: #c1c1c1;
+  font-family: 'Nanum Gothic';
+  margin: 30px 20px;
+`;
+
+const ServerWrapWrap = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: auto;
+  margin: 100px 20px 100px 0;
+`;

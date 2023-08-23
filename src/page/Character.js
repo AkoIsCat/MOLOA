@@ -16,129 +16,6 @@ import { useParams } from 'react-router-dom';
 import Loading from '../component/UI/Loading';
 import { useCallback } from 'react';
 
-const ContainerBox = styled(Container)`
-  min-height: 100vh;
-  padding-bottom: 50px;
-  height: auto;
-  position: relative;
-
-  @media ${(props) => props.theme.mobile} {
-    width: 100%;
-  }
-`;
-
-const Message = styled.div`
-  width: 60vw;
-  height: 10vh;
-  background: #373e44;
-  font-family: 'Nanum Gothic';
-  color: #fff;
-  font-size: 20px;
-  margin: 0 auto;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-top: 5vh;
-  border-radius: 10px;
-`;
-
-const ContentBox = styled.div`
-  width: 1150px;
-  height: auto;
-  background: #1e2225;
-  margin: 0 auto;
-
-  @media ${(props) => props.theme.mobile} {
-    width: 100%;
-  }
-`;
-
-const Section = styled.section`
-  width: 820px;
-  height: auto;
-  background: #181c1e;
-  float: right;
-  border-radius: 10px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  padding-bottom: 30px;
-
-  @media (max-width: 767px) {
-    margin-top: 50px;
-    width: 100%;
-    float: none;
-  }
-`;
-
-// 네비
-const Navigation = styled.nav`
-  width: 354px;
-  height: 41px;
-  background: #292e33;
-  margin: 25px 0 20px 30px;
-  border-radius: 10px;
-  display: flex;
-
-  ul {
-    width: 100%;
-    list-style: none;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 0;
-  }
-
-  @media ${(props) => props.theme.mobile} {
-    width: 93%;
-    margin-left: 10px;
-  }
-`;
-
-const NavItem = styled.li`
-  color: #fff;
-  font-family: 'Nanum Gothic';
-  width: auto;
-  margin: 0;
-  padding: 11px 13.7px;
-  font-size: 16px;
-  cursor: pointer;
-  background: ${(props) => (props.active ? '#40444f' : '')};
-  border-radius: ${(props) =>
-    props.borderFirst
-      ? '10px 0 0 10px'
-      : props.borderEnd
-      ? '0 10px 10px 0'
-      : ''};
-
-  @media ${(props) => props.theme.mobile} {
-    border-radius: 0px;
-    font-size: 12px;
-    padding: 12px;
-  }
-
-  &:hover {
-    background: #40444f;
-  }
-`;
-
-const InnerSection = styled.div`
-  width: 95%;
-  height: auto;
-  background: #292e33;
-  margin: 0 5px 0 22px;
-  border-radius: 10px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  @media (max-width: 767px) {
-    width: 94%;
-    padding: 0;
-    margin: 0 12px;
-  }
-`;
-
 const lostArkKey =
   'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6IktYMk40TkRDSTJ5NTA5NWpjTWk5TllqY2lyZyIsImtpZCI6IktYMk40TkRDSTJ5NTA5NWpjTWk5TllqY2lyZyJ9.eyJpc3MiOiJodHRwczovL2x1ZHkuZ2FtZS5vbnN0b3ZlLmNvbSIsImF1ZCI6Imh0dHBzOi8vbHVkeS5nYW1lLm9uc3RvdmUuY29tL3Jlc291cmNlcyIsImNsaWVudF9pZCI6IjEwMDAwMDAwMDAwMjc0MTYifQ.MIy7jDe9w81yjIX8Zh4VgGCVH2IR-vz7CGF6Ceh0zdc-5HfnY31XrIwJ86r_nz1ImkS-dPxW7bO_8AaZmuII6sbdJo_dWer-kbkpA5kx1aIrtGqpvhY_fWtXY-_wmWhZrdAFJTtB8t6yVHIua_ceA7CJWM0Bn1sQ6SNWxCbq9fsHb6BGRayKuJ5JV-qAIVC5VjNyVC4iIyAdJetDWgu0c7DTR_pVOeWHbsX-CbAqqKXvRPoNII1aop4Ioa9Sbhb99iD-BuA7pfn-_D-m6axvO0-0luLu4UbwXhrE5jEVPNs7Oxf215AqosVjFb5ObX74iGzf6vyt8YqjL08UkLS8NQ';
 
@@ -525,3 +402,125 @@ const Character = () => {
 };
 
 export default Character;
+
+const ContainerBox = styled(Container)`
+  min-height: 100vh;
+  padding-bottom: 50px;
+  height: auto;
+  position: relative;
+
+  @media ${(props) => props.theme.mobile} {
+    width: 100%;
+  }
+`;
+
+const Message = styled.div`
+  width: 60vw;
+  height: 10vh;
+  background: #373e44;
+  font-family: 'Nanum Gothic';
+  color: #fff;
+  font-size: 20px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 5vh;
+  border-radius: 10px;
+`;
+
+const ContentBox = styled.div`
+  width: 1150px;
+  height: auto;
+  background: #1e2225;
+  margin: 0 auto;
+
+  @media ${(props) => props.theme.mobile} {
+    width: 100%;
+  }
+`;
+
+const Section = styled.section`
+  width: 820px;
+  height: auto;
+  background: #181c1e;
+  float: right;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-bottom: 30px;
+
+  @media (max-width: 767px) {
+    margin-top: 50px;
+    width: 100%;
+    float: none;
+  }
+`;
+
+const Navigation = styled.nav`
+  width: 354px;
+  height: 41px;
+  background: #292e33;
+  margin: 25px 0 20px 30px;
+  border-radius: 10px;
+  display: flex;
+
+  ul {
+    width: 100%;
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0;
+  }
+
+  @media ${(props) => props.theme.mobile} {
+    width: 93%;
+    margin-left: 10px;
+  }
+`;
+
+const NavItem = styled.li`
+  color: #fff;
+  font-family: 'Nanum Gothic';
+  width: auto;
+  margin: 0;
+  padding: 11px 13.7px;
+  font-size: 16px;
+  cursor: pointer;
+  background: ${(props) => (props.active ? '#40444f' : '')};
+  border-radius: ${(props) =>
+    props.borderFirst
+      ? '10px 0 0 10px'
+      : props.borderEnd
+      ? '0 10px 10px 0'
+      : ''};
+
+  @media ${(props) => props.theme.mobile} {
+    border-radius: 0px;
+    font-size: 12px;
+    padding: 12px;
+  }
+
+  &:hover {
+    background: #40444f;
+  }
+`;
+
+const InnerSection = styled.div`
+  width: 95%;
+  height: auto;
+  background: #292e33;
+  margin: 0 5px 0 22px;
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  @media (max-width: 767px) {
+    width: 94%;
+    padding: 0;
+    margin: 0 12px;
+  }
+`;

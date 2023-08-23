@@ -10,59 +10,6 @@ import { useState } from 'react';
 import Modal from '../component/Modal/Modal';
 import Footer from '../component/UI/Footer';
 
-const ContainerBox = styled(Container)`
-  width: 100%;
-  min-height: 100vh;
-  height: auto;
-  position: relative;
-`;
-
-const InnerMargin = styled.div`
-  margin: 100px 100px 0 100px;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-
-  @media ${(props) => props.theme.mobile} {
-    justify-content: center;
-    margin: 0;
-  }
-`;
-
-const InnerContent = styled.div`
-  width: 387px;
-  height: ${(props) => props.height || ''};
-  background: #1e2225;
-  margin: 10px 60px 40px 90px;
-  cursor: pointer;
-
-  @media ${(props) => props.theme.mobile} {
-    width: 100vw;
-  }
-`;
-
-const ContentBox = styled.div`
-  width: 387px;
-  background: #292e33;
-  height: ${(props) => (props.height ? props.height : '')};
-  color: #c1c1c1;
-  border-radius: 0 0 10px 10px;
-  text-align: center;
-
-  @media ${(props) => props.theme.mobile} {
-    width: 95%;
-  }
-`;
-
-const Text = styled.div`
-  padding: 25px;
-
-  @media ${(props) => props.theme.mobile} {
-    padding: 15px;
-    font-size: 14px;
-  }
-`;
-
 const Equipment = () => {
   const [modalOn, setModalOn] = useState(false);
 
@@ -135,3 +82,56 @@ const Equipment = () => {
 };
 
 export default Equipment;
+
+const ContainerBox = styled(Container)`
+  width: 100%;
+  min-height: 100vh;
+  height: auto;
+  position: relative;
+`;
+
+const InnerMargin = styled.div`
+  margin: 100px 100px 0 100px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+
+  @media ${(props) => props.theme.mobile} {
+    justify-content: center;
+    margin: 0;
+  }
+`;
+
+const InnerContent = styled.div`
+  width: 387px;
+  height: ${(props) => props.height || ''};
+  background: #1e2225;
+  margin: 10px 60px 40px 90px;
+  cursor: pointer;
+
+  @media ${(props) => props.theme.mobile} {
+    width: 100vw;
+  }
+`;
+
+const ContentBox = styled.div`
+  width: 387px;
+  background: #292e33;
+  height: ${(props) => (props.height ? props.height : '')};
+  color: #c1c1c1;
+  border-radius: 0 0 10px 10px;
+  text-align: center;
+
+  @media ${(props) => props.theme.mobile} {
+    width: 95%;
+  }
+`;
+
+const Text = styled.div`
+  padding: 25px;
+
+  @media ${(props) => props.theme.mobile} {
+    padding: 15px;
+    font-size: 14px;
+  }
+`;

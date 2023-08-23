@@ -8,49 +8,6 @@ import RightAside from '../component/UI/Home/RightAside/RightAside';
 import MainContents from '../component/UI/Home/MainContents/MainContents';
 import Footer from '../component/UI/Footer';
 
-// style components
-export const Container = styled.div`
-  display: flex;
-  height: auto;
-
-  @media ${(props) => props.theme.mobile} {
-    width: 100%;
-    flex-direction: column;
-    padding: 0;
-    overflow: hidden;
-  }
-`;
-
-const LeftSide = styled.aside`
-  width: 21%;
-  height: auto;
-  background: #1e2225;
-  margin: 20px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-
-  @media ${(props) => props.theme.mobile} {
-    width: 97%;
-    padding: 0;
-    margin: 10px 0;
-    padding-left: 20px;
-  }
-`;
-
-const MainContent = styled.main`
-  width: 58%;
-  height: 100%;
-  background: #1e2225;
-  margin: 20px;
-
-  @media ${(props) => props.theme.mobile} {
-    width: 97%;
-    margin-top: 10px;
-    padding: 0;
-  }
-`;
-
 const Home = () => {
   const isPc = useMediaQuery({
     query: '(min-width:1024px)',
@@ -120,3 +77,45 @@ const Home = () => {
 };
 
 export default Home;
+
+export const Container = styled.div`
+  display: flex;
+  height: auto;
+
+  @media ${(props) => props.theme.mobile} {
+    width: 100%;
+    flex-direction: column;
+    padding: 0;
+    overflow: hidden;
+  }
+`;
+
+const LeftSide = styled.aside`
+  width: 21%;
+  height: auto;
+  background: #1e2225;
+  margin: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  @media ${(props) => props.theme.mobile} {
+    width: 97%;
+    padding: 0;
+    margin: 10px 0;
+    padding-left: 20px;
+  }
+`;
+
+const MainContent = styled.main`
+  width: 58%;
+  height: 100%;
+  background: #1e2225;
+  margin: 20px;
+
+  @media ${(props) => props.theme.mobile} {
+    width: 97%;
+    margin-top: 10px;
+    padding: 0;
+  }
+`;

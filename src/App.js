@@ -5,15 +5,8 @@ import Equipment from './page/Equipment.js';
 import Character from './page/Character';
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
-import { useEffect } from 'react';
 
 function App() {
-  useEffect(() => {
-    document.cookie = 'safeCookie1=foo; SameSite=Lax';
-    document.cookie = 'safeCookie2=foo';
-    document.cookie = 'crossCookie=bar; SameSite=None; Secure';
-  }, []);
-
   return (
     <Routes>
       <Route path="/" element={<Home />} />

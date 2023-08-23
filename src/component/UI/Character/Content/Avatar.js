@@ -1,14 +1,7 @@
 import styled from 'styled-components';
 import React from 'react';
-import { useEffect } from 'react';
 
 const Avatar = ({ profile, avatars }) => {
-  useEffect(() => {
-    document.cookie = 'safeCookie1=foo; SameSite=Lax';
-    document.cookie = 'safeCookie2=foo';
-    document.cookie = 'crossCookie=bar; SameSite=None; Secure';
-  }, []);
-
   const trueInner = [
     { type: '무기 아바타' },
     { type: '머리 아바타' },

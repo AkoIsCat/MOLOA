@@ -1,6 +1,5 @@
 import styled from 'styled-components';
 import { nanoid } from 'nanoid';
-import { Cookies } from 'react-cookie';
 
 import Header from '../component/header/Header';
 import Background from '../component/UI/BackBox';
@@ -47,13 +46,6 @@ const Guild = () => {
     }
   }, [serverName]);
 
-  const cookies = new Cookies();
-
-  // 쿠키 설정
-  const setCookie = () => {
-    cookies.set('cookieName', 'cookieValue', { sameSite: 'lax' });
-  };
-
   const server = [
     {
       name: '루페온',
@@ -96,7 +88,6 @@ const Guild = () => {
             onClick={() => {
               selectMenuHandler(index);
               setServerName(item.name);
-              setCookie();
             }}
             active={currentTab === index && 'true'}
           >

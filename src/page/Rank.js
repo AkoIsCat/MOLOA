@@ -1,6 +1,5 @@
 import styled from 'styled-components';
 import { nanoid } from 'nanoid';
-import { Cookies } from 'react-cookie';
 import { useNavigate } from 'react-router-dom';
 
 import Header from '../component/header/Header';
@@ -95,13 +94,6 @@ const Rank = () => {
 
     loadCharacter();
   }, []);
-
-  const cookies = new Cookies();
-
-  // 쿠키 설정
-  const setCookie = () => {
-    cookies.set('cookieName', 'cookieValue', { sameSite: 'lax' });
-  };
 
   const server = [
     {
@@ -310,7 +302,6 @@ const Rank = () => {
             onClick={() => {
               selectMenuHandler(index);
               setServerName(item.name);
-              setCookie();
               initialNumber();
             }}
             active={currentTab === index && 'true'}
@@ -332,7 +323,6 @@ const Rank = () => {
             onClick={() => {
               selectClassMenuHandler(index);
               setClassName(item.fullName);
-              setCookie();
               initialNumber();
               initialEngravings();
             }}
@@ -369,7 +359,6 @@ const Rank = () => {
                       name: item.engraving.engraving1,
                       click: !currentClassEngraving.click,
                     });
-                    setCookie();
                   }}
                   active={currentClassEngraving.click && 'true'}
                   style={{ width: '45%' }}
@@ -390,7 +379,6 @@ const Rank = () => {
                       name: item.engraving.engraving2,
                       click: !currentClassEngraving2.click,
                     });
-                    setCookie();
                   }}
                   active2={currentClassEngraving2.click && 'true'}
                   style={{ width: '45%' }}

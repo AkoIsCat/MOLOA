@@ -39,16 +39,6 @@ const Character = () => {
   const loadCharacterUrl = `https://developer-lostark.game.onstove.com/characters`;
 
   useEffect(() => {
-    document.cookie = 'safeCookie1=foo; SameSite=Lax';
-    document.cookie = 'safeCookie2=foo';
-    document.cookie = 'crossCookie=bar; SameSite=None; Secure';
-  }, []);
-
-  useEffect(() => {
-    document.cookie = 'safeCookie1=foo; SameSite=Lax';
-    document.cookie = 'safeCookie2=foo';
-    document.cookie = 'crossCookie=bar; SameSite=None; Secure';
-
     // 캐릭터 존재 여부(원정대 캐릭터)
     const loadCharacterTrue = async () => {
       try {

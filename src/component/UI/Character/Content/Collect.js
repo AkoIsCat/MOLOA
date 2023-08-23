@@ -15,16 +15,9 @@ import {
   collect8,
   collect9,
 } from '../../../../asset/icon/index';
-import { useEffect } from 'react';
 
 const Collect = ({ collectibles, profile }) => {
   const [currentCollectTab, setCurrentCollectTab] = useState(0);
-
-  useEffect(() => {
-    document.cookie = 'safeCookie1=foo; SameSite=Lax';
-    document.cookie = 'safeCookie2=foo';
-    document.cookie = 'crossCookie=bar; SameSite=None; Secure';
-  }, []);
 
   const colletImage = [
     collect1,

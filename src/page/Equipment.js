@@ -85,7 +85,7 @@ export default Equipment;
 
 const ContainerBox = styled(Container)`
   width: 100%;
-  min-height: 100vh;
+  min-height: 75vh;
   height: auto;
   position: relative;
 `;

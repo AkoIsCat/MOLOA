@@ -186,10 +186,6 @@ const MainContents = () => {
     loadMoloaNoti();
   }, []);
 
-  if (weekend) {
-    console.log('주말이지롱롱');
-  }
-
   const islandItem = islandList.map((item, index) =>
     islandList.length === index + 1 ? (
       <IslandItem key={index}>{item.ContentsName}</IslandItem>

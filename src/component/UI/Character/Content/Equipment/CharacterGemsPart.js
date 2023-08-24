@@ -226,7 +226,7 @@ const GemsItemWrap = styled.div`
 
 const GemsFlex = styled.div`
   display: flex;
-  margin: 10px 0;
+  margin: 10px 15px;
   justify-content: center;
   flex-wrap: wrap;
 `;

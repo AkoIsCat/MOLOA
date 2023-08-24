@@ -15,7 +15,6 @@ import {
   collect8,
   collect9,
 } from '../../../../asset/icon/index';
-import { useEffect } from 'react';
 
 const Collect = ({ collectibles, profile }) => {
   const [currentCollectTab, setCurrentCollectTab] = useState(0);

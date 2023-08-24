@@ -7,13 +7,31 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
 
-const lostArkKey = process.env.REACT_APP_LOSTARK_KEY;
+const lostArkKey =
+  'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6IktYMk40TkRDSTJNTA5NWpjTWk5TllqY2lyZyIsImtpZCI6IktYMk40TkRDSTJ5NTA5NWpjTWk5TllqY2lyZyJ9.eyJpc3MiOiJodHRwczovL2x1ZHkuZ2FtZS5vbnN0b3ZlLmNvbSIsImF1ZCI6Imh0dHBzOi8vbHVkeS5nYW1lLm9uc3RvdmUuY29tL3Jlc291cmNlcyIsImNsaWVudF9pZCI6IjEwMDAwMDAwMDAwMjc0MTYifQ.MIy7jDe9w81yjIX8Zh4VgGCVH2IR-vz7CGF6Ceh0zdc-5HfnY31XrIwJ86r_nz1ImkS-dPxW7bO_8AaZmuII6sbdJo_dWer-kbkpA5kx1aIrtGqpvhY_fWtXY-_wmWhZrdAFJTtB8t6yVHIua_ceA7CJWM0Bn1sQ6SNWxCbq9fsHb6BGRayKuJ5JV-qAIVC5VjNyVC4iIyAdJetDWgu0c7DTR_pVOeWHbsX-CbAqqKXvRPoNII1aop4Ioa9Sbhb99iD-BuA7pfn-_D-m6axvO0-0luLu4UbwXhrE5jEVPNs7Oxf215AqosVjFb5ObX74iGzf6vyt8YqjL08UkLS8NQ';
+
+const jobEngravingUrl = process.env.REACT_APP_FIREBASE_URL;
 
 const commonCharacterUrl = `https://developer-lostark.game.onstove.com/armories/characters`;
 
 const Search = () => {
   const [searchInput, setSearchInput] = useState('');
   const trimInput = searchInput.trim();
+  const [jobEngraving, setJobEngraving] = useState([]);
+
+  useEffect(() => {
+    const loadEngraving = async () => {
+      try {
+        const response = await fetch(`${jobEngravingUrl}/JobEngraving.json`);
+        const responseData = await response.json();
+        setJobEngraving(responseData);
+      } catch (err) {
+        console.log('LostArk JobEngraving error!!');
+      }
+    };
+
+    loadEngraving();
+  }, []);
 
   const engraving = [
     '분노의 망치',

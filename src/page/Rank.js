@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { nanoid } from 'nanoid';
+
 import { useNavigate } from 'react-router-dom';
 
 import Header from '../component/header/Header';
@@ -302,6 +303,7 @@ const Rank = () => {
             onClick={() => {
               selectMenuHandler(index);
               setServerName(item.name);
+
               initialNumber();
             }}
             active={currentTab === index && 'true'}
@@ -323,6 +325,7 @@ const Rank = () => {
             onClick={() => {
               selectClassMenuHandler(index);
               setClassName(item.fullName);
+
               initialNumber();
               initialEngravings();
             }}

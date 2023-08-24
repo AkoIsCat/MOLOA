@@ -41,6 +41,7 @@ import {
   Aga as 도화가,
   WeatherArtist as 기상술사,
 } from '../../../../asset/image/classImg/index'; // 직업 아이콘
+import { useEffect } from 'react';
 
 const CharacterList = ({ holdingCharacter, selectMenuHandler }) => {
   const navigate = useNavigate();

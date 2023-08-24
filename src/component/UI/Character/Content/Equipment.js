@@ -5,6 +5,7 @@ import CharacterCards from './Equipment/CharacterCards';
 
 import React from 'react';
 import styled from 'styled-components';
+import { useEffect } from 'react';
 
 const Equipment = ({
   equipment,

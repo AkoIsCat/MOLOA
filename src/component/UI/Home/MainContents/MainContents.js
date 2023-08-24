@@ -101,7 +101,6 @@ const MainContents = () => {
           }
         );
         const responseData = await response.json();
-        console.log(responseData, responseData.length);
 
         const setList = new Set();
         const setAmList = new Set();

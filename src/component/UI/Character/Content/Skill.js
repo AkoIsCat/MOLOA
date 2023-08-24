@@ -3,6 +3,7 @@ import { nanoid } from 'nanoid';
 import React, { useState } from 'react';
 
 import ContentWrap from '../../ContentWrap';
+import { useEffect } from 'react';
 
 const Skill = ({ combatSkills, profile, getGems }) => {
   const skillList = [];

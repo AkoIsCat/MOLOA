@@ -9,6 +9,7 @@ const Navigaion = () => {
         <NavLinkStyle to="/rank">랭킹</NavLinkStyle>
         <NavLinkStyle to="/guild">길드</NavLinkStyle>
         <NavLinkStyle to="/equipment">도구</NavLinkStyle>
+        <NavLinkStyle to="/community">커뮤니티</NavLinkStyle>
       </NavUl>
     </Nav>
   );
@@ -43,7 +44,7 @@ const NavUl = styled.ul`
 `;
 
 const NavLinkStyle = styled(NavLink)`
-  width: 326px;
+  width: 260px;
   height: 62.5px;
   line-height: 71.5px;
   list-style: none;

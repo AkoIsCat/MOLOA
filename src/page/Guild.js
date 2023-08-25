@@ -150,7 +150,7 @@ const Guild = () => {
 export default Guild;
 
 const ContainerBox = styled(Container)`
-  min-height: 100vh;
+  min-height: 75vh;
   height: auto;
   position: relative;
   display: flex;

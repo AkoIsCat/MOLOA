@@ -60,7 +60,7 @@ export const Content = memo(styled.div`
     props.main
       ? '0'
       : props.carousel
-      ? '10px 0'
+      ? '0px 0 10px 0'
       : props.collectImg
       ? '0'
       : '10px 10px'};

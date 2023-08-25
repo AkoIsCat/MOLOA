@@ -284,7 +284,9 @@ const MainContents = () => {
           loading={eventIsLoading}
           click={true}
         />
-        <Description>← → 화살표를 이용해 이벤트를 볼 수 있습니다.</Description>
+        <Description>
+          <div>* 화살표를 이용해 이벤트를 확인하실 수 있습니다. </div>
+        </Description>
         <CommonContentBoxMain
           event="true"
           equipment="true"
@@ -302,13 +304,18 @@ export default MainContents;
 
 const Description = styled.div`
   width: 100%;
-  height: 10px;
+  height: 15px;
+  display: flex;
+  justify-content: flex-end;
   background: rgb(41, 46, 51);
   font-size: 15px;
-  padding-top: 5px;
-  padding-left: 5px;
+  padding-top: 10px;
   color: gray;
   font-family: 'Nanum Gothic';
+
+  div {
+    padding-right: 5px;
+  }
 `;
 
 const InnerContent = styled.div`

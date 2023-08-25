@@ -1,17 +1,19 @@
 import styled from 'styled-components';
-
-import { NavLink } from 'react-router-dom';
-import { BsSearch } from 'react-icons/bs';
-
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
+import {
+  getFirebaseData,
+  updateCharacterProfile,
+} from '../../api/FirebaseAxios';
+import {
+  getCharacterExist,
+  getProfile,
+  getEngravings,
+} from '../../api/LostarkAxios';
 
-const lostArkKey =
-  'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6IktYMk40TkRDSTJ5NTA5NWpjTWk5TllqY2lyZyIsImtpZCI6IktYMk40TkRDSTJ5NTA5NWpjTWk5TllqY2lyZyJ9.eyJpc3MiOiJodHRwczovL2x1ZHkuZ2FtZS5vbnN0b3ZlLmNvbSIsImF1ZCI6Imh0dHBzOi8vbHVkeS5nYW1lLm9uc3RvdmUuY29tL3Jlc291cmNlcyIsImNsaWVudF9pZCI6IjEwMDAwMDAwMDAwMjc0MTYifQ.MIy7jDe9w81yjIX8Zh4VgGCVH2IR-vz7CGF6Ceh0zdc-5HfnY31XrIwJ86r_nz1ImkS-dPxW7bO_8AaZmuII6sbdJo_dWer-kbkpA5kx1aIrtGqpvhY_fWtXY-_wmWhZrdAFJTtB8t6yVHIua_ceA7CJWM0Bn1sQ6SNWxCbq9fsHb6BGRayKuJ5JV-qAIVC5VjNyVC4iIyAdJetDWgu0c7DTR_pVOeWHbsX-CbAqqKXvRPoNII1aop4Ioa9Sbhb99iD-BuA7pfn-_D-m6axvO0-0luLu4UbwXhrE5jEVPNs7Oxf215AqosVjFb5ObX74iGzf6vyt8YqjL08UkLS8NQ';
-
-const commonCharacterUrl = `https://developer-lostark.game.onstove.com/armories/characters`;
-const firebaseUrl = process.env.REACT_APP_FIREBASE_URL;
+import { NavLink } from 'react-router-dom';
+import { BsSearch } from 'react-icons/bs';
 
 const Search = () => {
   const [searchInput, setSearchInput] = useState('');
@@ -24,8 +26,7 @@ const Search = () => {
 
   useEffect(() => {
     const loadEngravings = async () => {
-      const response = await fetch(`${firebaseUrl}/JobEngraving.json`);
-      const data = await response.json();
+      const data = await getFirebaseData('JobEngraving');
       setJobEngravings(Object.values(data));
     };
     loadEngravings();
@@ -38,50 +39,19 @@ const Search = () => {
       navigate(`/character/${trimInput}`);
       setSearchInput('');
     }
+    // 모로아 db 유무 체크
+    const data = await getFirebaseData(`CharacterSearch/${trimInput}`);
 
-    const response = await fetch(
-      `https://lostark-bf0ba-default-rtdb.firebaseio.com/CharacterSearch/${trimInput}.json`
-    );
-    const data = await response.json();
-
-    // 존재하는 캐릭터만 데이터를 추가할 수 있음.
-    const responseCharacter = await fetch(
-      `https://developer-lostark.game.onstove.com/characters/${trimInput}/siblings`,
-      {
-        headers: {
-          'Content-Type': 'application/json',
-          authorization: `bearer ${lostArkKey}`,
-        },
-      }
-    );
-
-    const characterData = await responseCharacter.json();
+    // 캐릭터 유무 체크
+    const characterExist = await getCharacterExist(trimInput);
 
     // 캐릭터 정보 조회
-    const responseCharacterProfile = await fetch(
-      `${commonCharacterUrl}/${trimInput}/profiles`,
-      {
-        headers: {
-          'Content-Type': 'application/json',
-          authorization: `bearer ${lostArkKey}`,
-        },
-      }
-    );
-    const profileData = await responseCharacterProfile.json();
+    const profileData = await getProfile(trimInput);
 
     // 각인 조회 & 활성화 된 직각 추출 & db등록
     const checkEngravings = async () => {
       // 각인 조회
-      const responseEngravings = await fetch(
-        `${commonCharacterUrl}/${trimInput}/engravings`,
-        {
-          headers: {
-            'Content-Type': 'application/json',
-            authorization: `bearer ${lostArkKey}`,
-          },
-        }
-      );
-      const engravingsData = await responseEngravings.json();
+      const engravingsData = await getEngravings(trimInput);
 
       let engravingItem = []; // 각인을 담을 배열
 
@@ -107,18 +77,11 @@ const Search = () => {
           engravings: engravingItem,
           guild: profileData.GuildName,
         };
-        await fetch(
-          `https://lostark-bf0ba-default-rtdb.firebaseio.com/CharacterSearch/${trimInput}.json`,
-          {
-            method: 'PUT',
-            body: JSON.stringify(updatedData),
-          }
-        );
+        await updateCharacterProfile(trimInput, updatedData);
 
         // db에 존재하지 않고, 로아에 실제로 있는 캐릭터만 추가 가능
-      } else if (!data && characterData) {
+      } else if (!data && characterExist) {
         // 새로운 닉네임인 경우 데이터를 추가
-
         const newData = {
           name: trimInput,
           views: 1,
@@ -128,13 +91,7 @@ const Search = () => {
           engravings: engravingItem,
           guild: profileData.GuildName,
         };
-        await fetch(
-          `https://lostark-bf0ba-default-rtdb.firebaseio.com/CharacterSearch/${trimInput}.json`,
-          {
-            method: 'PUT',
-            body: JSON.stringify(newData),
-          }
-        );
+        await updateCharacterProfile(trimInput, newData);
       }
     };
 

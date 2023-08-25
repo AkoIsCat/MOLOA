@@ -26,9 +26,6 @@ import Skill from '../component/UI/Character/Content/Skill'; // 스킬탭
 import Collect from '../component/UI/Character/Content/Collect'; // 수집탭
 import Footer from '../component/UI/Footer';
 
-const lostArkKey =
-  'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6IktYMk40TkRDSTJ5NTA5NWpjTWk5TllqY2lyZyIsImtpZCI6IktYMk40TkRDSTJ5NTA5NWpjTWk5TllqY2lyZyJ9.eyJpc3MiOiJodHRwczovL2x1ZHkuZ2FtZS5vbnN0b3ZlLmNvbSIsImF1ZCI6Imh0dHBzOi8vbHVkeS5nYW1lLm9uc3RvdmUuY29tL3Jlc291cmNlcyIsImNsaWVudF9pZCI6IjEwMDAwMDAwMDAwMjc0MTYifQ.MIy7jDe9w81yjIX8Zh4VgGCVH2IR-vz7CGF6Ceh0zdc-5HfnY31XrIwJ86r_nz1ImkS-dPxW7bO_8AaZmuII6sbdJo_dWer-kbkpA5kx1aIrtGqpvhY_fWtXY-_wmWhZrdAFJTtB8t6yVHIua_ceA7CJWM0Bn1sQ6SNWxCbq9fsHb6BGRayKuJ5JV-qAIVC5VjNyVC4iIyAdJetDWgu0c7DTR_pVOeWHbsX-CbAqqKXvRPoNII1aop4Ioa9Sbhb99iD-BuA7pfn-_D-m6axvO0-0luLu4UbwXhrE5jEVPNs7Oxf215AqosVjFb5ObX74iGzf6vyt8YqjL08UkLS8NQ';
-
 const Character = () => {
   const [isExist, setIsExist] = useState();
   const [profile, setProfile] = useState(); // 기본 스탯
@@ -46,8 +43,6 @@ const Character = () => {
   const [currentGems, setCurrentGems] = useState([]); // 스킬 - 보석 정보 전달
 
   const { id } = useParams();
-  const commonCharacterUrl = `https://developer-lostark.game.onstove.com/armories/characters`;
-  const loadCharacterUrl = `https://developer-lostark.game.onstove.com/characters`;
 
   useEffect(() => {
     // 캐릭터 존재 여부(원정대 캐릭터)
@@ -201,7 +196,6 @@ const Character = () => {
   }
 
   // --------------------- 수집 탭
-  // ---------------------
 
   const selectMenuHandler = (index) => {
     setCurrentTab(index);
@@ -336,7 +330,7 @@ const ContainerBox = styled(Container)`
   }
 `;
 
-const Message = styled.div`
+export const Message = styled.div`
   width: 60vw;
   height: 10vh;
   background: #373e44;

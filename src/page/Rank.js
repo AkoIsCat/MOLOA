@@ -1,14 +1,13 @@
 import styled from 'styled-components';
 import { nanoid } from 'nanoid';
-
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { getFirebaseData } from '../api/FirebaseAxios';
 
 import Header from '../component/header/Header';
 import Background from '../component/UI/BackBox';
 import { Container } from './Home';
 import CommonContentBox from '../component/UI/Home/RightAside/CommonContentBox';
-
-import { useState, useEffect } from 'react';
 
 import {
   Warlord as 워로드,
@@ -41,8 +40,6 @@ import Loading from '../component/UI/Loading';
 import Footer from '../component/UI/Footer';
 import { Fragment } from 'react';
 
-const PopularCharacterUrl = `https://lostark-bf0ba-default-rtdb.firebaseio.com/CharacterSearch.json`;
-
 const Rank = () => {
   const [characterList, setCharacterList] = useState();
   const [currentTab, setCurrentTab] = useState(); // 서버 네비게이션
@@ -63,12 +60,11 @@ const Rank = () => {
   useEffect(() => {
     const loadCharacter = async () => {
       try {
-        const response = await fetch(PopularCharacterUrl);
-        const responseData = await response.json();
+        const data = await getFirebaseData('CharacterSearch');
 
         // 객체를 객체 배열로 만들기
         const popularCharacterArray = [];
-        for (const [key, value] of Object.entries(responseData)) {
+        for (const [key, value] of Object.entries(data)) {
           popularCharacterArray.push({
             key,
             name: value.name,

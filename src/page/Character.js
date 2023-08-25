@@ -1,4 +1,19 @@
 import styled from 'styled-components';
+import { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
+import Loading from '../component/UI/Loading';
+import { useCallback } from 'react';
+import {
+  getCharacterExist,
+  getProfile,
+  getAvatars,
+  getCards,
+  getCollectibles,
+  getCombatSkills,
+  getEngravings,
+  getGems,
+  getEquipment,
+} from '../api/LostarkAxios';
 
 import Aside from '../component/UI/Character/Side/Aside'; // 좌측 캐릭터 정보
 import Header from '../component/header/Header'; // 헤더
@@ -10,11 +25,6 @@ import CharacterList from '../component/UI/Character/Content/CharacterList'; // 
 import Skill from '../component/UI/Character/Content/Skill'; // 스킬탭
 import Collect from '../component/UI/Character/Content/Collect'; // 수집탭
 import Footer from '../component/UI/Footer';
-
-import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
-import Loading from '../component/UI/Loading';
-import { useCallback } from 'react';
 
 const lostArkKey =
   'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6IktYMk40TkRDSTJ5NTA5NWpjTWk5TllqY2lyZyIsImtpZCI6IktYMk40TkRDSTJ5NTA5NWpjTWk5TllqY2lyZyJ9.eyJpc3MiOiJodHRwczovL2x1ZHkuZ2FtZS5vbnN0b3ZlLmNvbSIsImF1ZCI6Imh0dHBzOi8vbHVkeS5nYW1lLm9uc3RvdmUuY29tL3Jlc291cmNlcyIsImNsaWVudF9pZCI6IjEwMDAwMDAwMDAwMjc0MTYifQ.MIy7jDe9w81yjIX8Zh4VgGCVH2IR-vz7CGF6Ceh0zdc-5HfnY31XrIwJ86r_nz1ImkS-dPxW7bO_8AaZmuII6sbdJo_dWer-kbkpA5kx1aIrtGqpvhY_fWtXY-_wmWhZrdAFJTtB8t6yVHIua_ceA7CJWM0Bn1sQ6SNWxCbq9fsHb6BGRayKuJ5JV-qAIVC5VjNyVC4iIyAdJetDWgu0c7DTR_pVOeWHbsX-CbAqqKXvRPoNII1aop4Ioa9Sbhb99iD-BuA7pfn-_D-m6axvO0-0luLu4UbwXhrE5jEVPNs7Oxf215AqosVjFb5ObX74iGzf6vyt8YqjL08UkLS8NQ';
@@ -43,17 +53,10 @@ const Character = () => {
     // 캐릭터 존재 여부(원정대 캐릭터)
     const loadCharacterTrue = async () => {
       try {
-        const response = await fetch(`${loadCharacterUrl}/${id}/siblings`, {
-          headers: {
-            'Content-Type': 'application/json',
-            authorization: `bearer ${lostArkKey}`,
-          },
-        });
-        const responseData = await response.json();
-
-        if (responseData) {
+        const data = await getCharacterExist(id);
+        if (data) {
           setIsExist(true);
-          setHoldingCharacter(responseData);
+          setHoldingCharacter(data);
         } else {
           setIsExist(false);
         }
@@ -64,15 +67,8 @@ const Character = () => {
 
     const loadProfile = async () => {
       try {
-        const response = await fetch(`${commonCharacterUrl}/${id}/profiles`, {
-          headers: {
-            'Content-Type': 'application/json',
-            authorization: `bearer ${lostArkKey}`,
-          },
-        });
-        const responseData = await response.json();
-
-        setProfile(responseData);
+        const data = await getProfile(id);
+        setProfile(data);
       } catch (err) {
         console.log('LostArk Profile error!!');
       }
@@ -80,15 +76,9 @@ const Character = () => {
 
     const loadEquipment = async () => {
       try {
-        const response = await fetch(`${commonCharacterUrl}/${id}/equipment`, {
-          headers: {
-            'Content-Type': 'application/json',
-            authorization: `bearer ${lostArkKey}`,
-          },
-        });
-        const responseData = await response.json();
+        const data = await getEquipment(id);
 
-        setEquipment(responseData);
+        setEquipment(data);
       } catch (err) {
         console.log('LostArk Equipment error!!');
       }
@@ -96,15 +86,9 @@ const Character = () => {
 
     const loadAvatars = async () => {
       try {
-        const response = await fetch(`${commonCharacterUrl}/${id}/avatars`, {
-          headers: {
-            'Content-Type': 'application/json',
-            authorization: `bearer ${lostArkKey}`,
-          },
-        });
-        const responseData = await response.json();
+        const data = await getAvatars(id);
 
-        setAvatars(responseData);
+        setAvatars(data);
       } catch (err) {
         console.log('LostArk Avatars error!!');
       }
@@ -112,18 +96,9 @@ const Character = () => {
 
     const loadCombatSkills = async () => {
       try {
-        const response = await fetch(
-          `${commonCharacterUrl}/${id}/combat-skills`,
-          {
-            headers: {
-              'Content-Type': 'application/json',
-              authorization: `bearer ${lostArkKey}`,
-            },
-          }
-        );
-        const responseData = await response.json();
+        const data = await getCombatSkills(id);
 
-        setCombatSkills(responseData);
+        setCombatSkills(data);
       } catch (err) {
         console.log('LostArk CombatSkills error!!');
       }
@@ -131,15 +106,9 @@ const Character = () => {
 
     const loadEngravings = async () => {
       try {
-        const response = await fetch(`${commonCharacterUrl}/${id}/engravings`, {
-          headers: {
-            'Content-Type': 'application/json',
-            authorization: `bearer ${lostArkKey}`,
-          },
-        });
-        const responseData = await response.json();
+        const data = await getEngravings(id);
 
-        setEngraving(responseData);
+        setEngraving(data);
       } catch (err) {
         console.log('LostArk Engravings error!!');
       }
@@ -147,15 +116,9 @@ const Character = () => {
 
     const loadCards = async () => {
       try {
-        const response = await fetch(`${commonCharacterUrl}/${id}/cards`, {
-          headers: {
-            'Content-Type': 'application/json',
-            authorization: `bearer ${lostArkKey}`,
-          },
-        });
-        const responseData = await response.json();
+        const data = await getCards(id);
 
-        setCards(responseData);
+        setCards(data);
       } catch (err) {
         console.log('LostArk Cards error!!');
       }
@@ -163,50 +126,19 @@ const Character = () => {
 
     const loadGems = async () => {
       try {
-        const response = await fetch(`${commonCharacterUrl}/${id}/gems`, {
-          headers: {
-            'Content-Type': 'application/json',
-            authorization: `bearer ${lostArkKey}`,
-          },
-        });
-        const responseData = await response.json();
+        const data = await getGems(id);
 
-        setGems(responseData);
+        setGems(data);
       } catch (err) {
         console.log('LostArk Gems error!!');
       }
     };
 
-    // const loadColosseums = async () => {
-    //   try {
-    //     const response = await fetch(`${commonCharacterUrl}/${id}/colosseums`, {
-    //       headers: {
-    //         'Content-Type': 'application/json',
-    //         authorization: `bearer ${lostArkKey}`,
-    //       },
-    //     });
-    //     const responseData = await response.json();
-
-    //     setColosseums(responseData);
-    //   } catch (err) {
-    //     console.log('LostArk Colosseumn error!!');
-    //   }
-    // };
-
     const loadCollectibles = async () => {
       try {
-        const response = await fetch(
-          `${commonCharacterUrl}/${id}/collectibles`,
-          {
-            headers: {
-              'Content-Type': 'application/json',
-              authorization: `bearer ${lostArkKey}`,
-            },
-          }
-        );
-        const responseData = await response.json();
+        const data = await getCollectibles(id);
 
-        setCollectibles(responseData);
+        setCollectibles(data);
         setCharacterIsLoading(false);
       } catch (err) {
         console.log('LostArk Collectibles error!!');
@@ -222,7 +154,7 @@ const Character = () => {
     loadCards();
     loadGems();
     loadCollectibles();
-  }, [loadCharacterUrl, commonCharacterUrl, id]);
+  }, [id]);
 
   // -------------------------- 카드
 
@@ -275,7 +207,7 @@ const Character = () => {
     setCurrentTab(index);
   };
 
-  const getGems = useCallback((data) => {
+  const getTrnasGems = useCallback((data) => {
     setTimeout(() => {
       setCurrentGems(data);
     }, 0);
@@ -293,7 +225,7 @@ const Character = () => {
           combatSkills={combatSkills}
           profile={profile}
           cards={cards}
-          getGems={getGems}
+          getGems={getTrnasGems}
         />
       ),
     },

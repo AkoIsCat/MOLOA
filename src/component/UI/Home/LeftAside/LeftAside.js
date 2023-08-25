@@ -29,20 +29,9 @@ const LeftAside = () => {
   useEffect(() => {
     const loadLostApi = async () => {
       try {
-        // const response = await fetch(
-        //   'https://developer-lostark.game.onstove.com/news/notices?type=%EA%B3%B5%EC%A7%80',
-        //   {
-        //     headers: {
-        //       'Content-Type': 'application/json',
-        //       authorization: `bearer ${lostArkKey}`,
-        //     },
-        //   }
-        // );
-        // const responseData = await response.json();
+        const data = await getNotificationList();
 
-        const responseData = await getNotificationList();
-
-        const sliceResponseDate = await responseData.slice(0, 5);
+        const sliceResponseDate = await data.slice(0, 5);
 
         setNoti((prev) => prev.concat(sliceResponseDate));
         setLoaIsLoading(false);

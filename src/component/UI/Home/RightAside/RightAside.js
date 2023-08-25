@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import { Fragment, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { getFirebaseData } from '../../../../api/FirebaseAxios';
 
 import { HiOutlineTicket } from 'react-icons/hi';
 import { TbMessageCircle2Filled } from 'react-icons/tb';
@@ -9,10 +10,6 @@ import { FaDiscord } from 'react-icons/fa';
 import { Head } from './CommonContentBox';
 import CommonContentBoxMain from './CommonContentBoxMain';
 import CommonContentBox from './CommonContentBox';
-
-const CouponCode = `https://lostark-bf0ba-default-rtdb.firebaseio.com/Coupon.json`;
-const DiscordUrl = `https://lostark-bf0ba-default-rtdb.firebaseio.com/Discord.json`;
-const PopularCharacterUrl = `https://lostark-bf0ba-default-rtdb.firebaseio.com/CharacterSearch.json`;
 
 const RightAside = () => {
   const [couponCode, setCouponCode] = useState([]);
@@ -28,9 +25,8 @@ const RightAside = () => {
     // 쿠폰코드
     const loadCouponCode = async () => {
       try {
-        const response = await fetch(CouponCode);
-        const responseData = await response.json();
-        setCouponCode(responseData);
+        const data = await getFirebaseData('Coupon');
+        setCouponCode(data);
         setCouponIsLoading(false);
       } catch {
         console.log('CouponCode error');
@@ -40,10 +36,8 @@ const RightAside = () => {
     // 디스코드
     const loadDiscord = async () => {
       try {
-        const response = await fetch(DiscordUrl);
-        const responseData = await response.json();
-
-        setDiscord(responseData);
+        const data = await getFirebaseData('Discord');
+        setDiscord(data);
         setDiscordIsLoading(false);
       } catch {
         console.log('Discord error!!');
@@ -53,25 +47,20 @@ const RightAside = () => {
     // 실시간 인기 캐릭터
     const loadPopularCharacter = async () => {
       try {
-        const response = await fetch(PopularCharacterUrl);
-        const responseData = await response.json();
-
+        const data = await getFirebaseData('CharacterSearch');
         // 객체를 객체 배열로 만들기
-        const popularCharacterArray = [];
-        for (const [key, value] of Object.entries(responseData)) {
-          popularCharacterArray.push({
+        const popularCharacterArray = Object.entries(data).map(
+          ([key, value]) => ({
             key,
             name: value.name,
             views: value.views,
-          });
-        }
+          })
+        );
 
         // 조회수 별로 내림차순으로 정렬
         const AscPopularCharacter = popularCharacterArray
-          .sort((a, b) => {
-            return b.views - a.views;
-          })
-          .splice(0, 5);
+          .sort((a, b) => b.views - a.views)
+          .slice(0, 5);
 
         setPopularCharacter(AscPopularCharacter);
         setPopularIsLoading(false);
@@ -86,65 +75,61 @@ const RightAside = () => {
   }, []);
 
   // 컨텐츠 별 ItemList
-  const couponItemList = couponCode ? (
-    couponCode.map((items, index) =>
-      couponCode.length === index + 1 ? (
+  function renderCouponContent(items, index, length) {
+    const isLast = index === length - 1;
+    const couponNameStyle = {
+      color: '#46f1ff',
+      fontSize: '15px',
+    };
+    const termStyle = {
+      fontSize: '10px',
+    };
+    const nameStyle = {
+      color: '#fff',
+      fontSize: '12px',
+    };
+
+    if (items) {
+      return (
         <CommonContentBoxMain
           key={index}
           id={index}
           font="13"
           height="20"
           align="center"
-          border="true"
+          border={isLast ? 'true' : undefined}
         >
-          <LineDivision style={{ color: '#46f1ff', fontSize: '15px' }}>
+          <LineDivision style={couponNameStyle}>
             {items.CouponName}
           </LineDivision>
-          <LineDivision style={{ fontSize: '10px' }}>{items.Term}</LineDivision>
-          <LineDivision style={{ color: '#fff', fontSize: '12px' }}>
-            {items.Name}
-          </LineDivision>
+          <LineDivision style={termStyle}>{items.Term}</LineDivision>
+          <LineDivision style={nameStyle}>{items.Name}</LineDivision>
         </CommonContentBoxMain>
-      ) : couponCode.length === 0 ? (
+      );
+    } else {
+      return (
         <CommonContentBoxMain
           key={index}
           id={index}
           font="13"
           height="20"
           align="center"
-          border="true"
+          border={isLast ? 'true' : undefined}
         >
           -
         </CommonContentBoxMain>
-      ) : (
-        <CommonContentBoxMain
-          key={index}
-          id={index}
-          font="13"
-          height="20"
-          align="center"
-        >
-          <LineDivision style={{ color: '#46f1ff', fontSize: '15px' }}>
-            {items.CouponName}
-          </LineDivision>
-          <LineDivision style={{ fontSize: '10px' }}>{items.Term}</LineDivision>
-          <LineDivision style={{ color: '#fff', fontSize: '12px' }}>
-            {items.Name}
-          </LineDivision>
-        </CommonContentBoxMain>
-      )
-    )
-  ) : (
-    <CommonContentBoxMain
-      key={1}
-      id={1}
-      font="13"
-      height="20"
-      align="center"
-      border="true"
-    >
-      -
-    </CommonContentBoxMain>
+      );
+    }
+  }
+
+  const couponItemList = (
+    <div>
+      {couponCode && couponCode.length > 0
+        ? couponCode.map((items, index) =>
+            renderCouponContent(items, index, couponCode.length)
+          )
+        : renderCouponContent(null, 1, 1)}
+    </div>
   );
 
   const discordItemList = discord.map((items, index) =>

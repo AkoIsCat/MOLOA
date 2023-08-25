@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const BASE_URL = 'https://developer-lostark.game.onstove.com/';
+const BASE_URL = 'https://developer-lostark.game.onstove.com';
 const key = process.env.REACT_APP_LOSTARK_KEY;
 
 export const LostarkAuthInstance = () => {
@@ -12,11 +12,11 @@ export const LostarkAuthInstance = () => {
   });
 
   instance.interceptors.request.use(
-    (config) => {
+    async (config) => {
       config.headers.authorization = `bearer ${key}`;
       return config;
     },
-    (error) => {
+    async (error) => {
       return Promise.reject(error);
     }
   );
@@ -25,7 +25,6 @@ export const LostarkAuthInstance = () => {
 };
 
 export const LostArkCharacterInstance = () => {
-  const key = process.env.REACT_APP_LOSTARK_KEY;
   const url = 'https://developer-lostark.game.onstove.com/armories/characters';
   const instance = axios.create({
     baseURL: url,
@@ -48,7 +47,6 @@ export const LostArkCharacterInstance = () => {
 };
 
 export const LostArkCharacterExistInstance = () => {
-  const key = process.env.REACT_APP_LOSTARK_KEY;
   const url = 'https://developer-lostark.game.onstove.com/characters';
   const instance = axios.create({
     baseURL: url,

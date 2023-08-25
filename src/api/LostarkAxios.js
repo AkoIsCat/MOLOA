@@ -1,7 +1,6 @@
 import {
   LostarkAuthInstance,
   LostArkCharacterInstance,
-  LostArkCharacterExistInstance,
 } from './LostarkInstance';
 
 export const getNotificationList = async () => {
@@ -26,10 +25,34 @@ export const getCalenderIsland = async () => {
   }
 };
 
+export const getEventList = async () => {
+  try {
+    const { data } = await LostarkAuthInstance().get('/news/events');
+    return data;
+  } catch (error) {
+    console.error(error);
+    console.log('Event error');
+  }
+};
+
+export const getGuildRanking = async (serverName) => {
+  try {
+    const { data } = await LostarkAuthInstance().get(`/guilds/rankings`, {
+      params: {
+        serverName: serverName,
+      },
+    });
+    return data;
+  } catch (error) {
+    console.error(error);
+    console.log('Guild error');
+  }
+};
+
 export const getCharacterExist = async (id) => {
   try {
-    const { data } = await LostArkCharacterExistInstance().get(
-      `/${id}/siblings`
+    const { data } = await LostarkAuthInstance().get(
+      `/characters/${id}/siblings`
     );
     return data;
   } catch (error) {

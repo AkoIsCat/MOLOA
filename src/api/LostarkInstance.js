@@ -3,67 +3,37 @@ import axios from 'axios';
 const BASE_URL = 'https://developer-lostark.game.onstove.com';
 const key = process.env.REACT_APP_LOSTARK_KEY;
 
-export const LostarkAuthInstance = () => {
+const createAxiosInstance = (url) => {
   const instance = axios.create({
-    baseURL: BASE_URL,
+    baseURL: url,
     headers: {
       'Content-Type': 'application/json',
     },
   });
 
   instance.interceptors.request.use(
-    async (config) => {
+    (config) => {
       config.headers.authorization = `bearer ${key}`;
       return config;
     },
-    async (error) => {
+    (error) => {
       return Promise.reject(error);
     }
   );
 
   return instance;
+};
+
+export const LostarkAuthInstance = () => {
+  return createAxiosInstance(BASE_URL);
 };
 
 export const LostArkCharacterInstance = () => {
-  const url = 'https://developer-lostark.game.onstove.com/armories/characters';
-  const instance = axios.create({
-    baseURL: url,
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  });
-
-  instance.interceptors.request.use(
-    (config) => {
-      config.headers.authorization = `bearer ${key}`;
-      return config;
-    },
-    (error) => {
-      return Promise.reject(error);
-    }
-  );
-
-  return instance;
+  const url = `${BASE_URL}/armories/characters`;
+  return createAxiosInstance(url);
 };
 
 export const LostArkCharacterExistInstance = () => {
-  const url = 'https://developer-lostark.game.onstove.com/characters';
-  const instance = axios.create({
-    baseURL: url,
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  });
-
-  instance.interceptors.request.use(
-    (config) => {
-      config.headers.authorization = `bearer ${key}`;
-      return config;
-    },
-    (error) => {
-      return Promise.reject(error);
-    }
-  );
-
-  return instance;
+  const url = `${BASE_URL}/characters`;
+  return createAxiosInstance(url);
 };

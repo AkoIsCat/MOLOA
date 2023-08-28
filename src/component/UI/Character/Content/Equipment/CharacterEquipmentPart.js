@@ -830,7 +830,7 @@ const CharacterEquipmentPart = ({ equipment, engraving }) => {
   );
 };
 
-export default React.memo(CharacterEquipmentPart);
+export default CharacterEquipmentPart;
 
 const EquipmentWrap = styled.div`
   width: auto;

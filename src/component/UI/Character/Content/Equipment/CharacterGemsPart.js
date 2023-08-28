@@ -111,7 +111,7 @@ const CharacterGemsPart = ({ gems, getGemsList }) => {
   );
 };
 
-export default React.memo(CharacterGemsPart);
+export default CharacterGemsPart;
 
 const ContentWrap = styled.div`
   width: 100%;

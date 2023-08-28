@@ -321,7 +321,6 @@ const Rank = () => {
             onClick={() => {
               selectClassMenuHandler(index);
               setClassName(item.fullName);
-
               initialNumber();
               initialEngravings();
             }}
@@ -754,6 +753,7 @@ const Rank = () => {
                     !currentClassEngraving2.click &&
                     characterList.map(
                       (item) =>
+                        item &&
                         item.class === className &&
                         item.server === serverName &&
                         (item.engravings[0]?.name ===
@@ -805,6 +805,7 @@ const Rank = () => {
                     currentClassEngraving2.click &&
                     characterList.map(
                       (item) =>
+                        item &&
                         item.class === className &&
                         (item.engravings[0]?.name ===
                           currentClassEngraving2.name ||
@@ -1022,7 +1023,7 @@ const ServerListli = styled.li`
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-content: center;
+    align-items: center;
 
     @media ${(props) => props.theme.mobile} {
       align-items: center;

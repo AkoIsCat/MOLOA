@@ -209,7 +209,7 @@ const Skill = ({ combatSkills, profile, getGems }) => {
   );
 };
 
-export default React.memo(Skill);
+export default Skill;
 
 const SkillPoint = styled.p`
   color: #fff;

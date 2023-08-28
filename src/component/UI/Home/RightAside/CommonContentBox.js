@@ -90,7 +90,6 @@ export const Head = memo(styled.div`
         : props.equipment
         ? '95%'
         : '100%'};
-
     font-size: ${(props) => props.equipment && '13px'};
   }
 `);

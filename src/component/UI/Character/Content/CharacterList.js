@@ -149,7 +149,7 @@ const CharacterList = ({ holdingCharacter, selectMenuHandler }) => {
   );
 };
 
-export default React.memo(CharacterList);
+export default CharacterList;
 
 const ServerNameBox = styled.div`
   width: auto;

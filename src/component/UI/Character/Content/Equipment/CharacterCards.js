@@ -134,7 +134,7 @@ const CharacterCards = ({ cards }) => {
   );
 };
 
-export default React.memo(CharacterCards);
+export default CharacterCards;
 
 const ContentWrap = styled.div`
   width: ${(props) => (props.characteristics ? '32%' : '100%')};

@@ -5,9 +5,9 @@ import ContentBoxMain from './ContentBoxMain';
 import Loading from '../../Loading';
 
 const ContentBox = (props) => {
+  console.log('ContentBox');
   const item = props.item;
   const DateItem = item.map((item) => new Date(Date.parse(item.Date)));
-
   const currentDate = new Date();
 
   const writeDate = DateItem.map((item) =>
@@ -83,7 +83,7 @@ const ContentBox = (props) => {
   );
 };
 
-export default React.memo(ContentBox);
+export default ContentBox;
 
 const Head = styled.div`
   width: 100%;
@@ -122,7 +122,6 @@ const Type = styled.div`
   align-items: center;
 `;
 
-// 0.25 0.14
 const TypeTitle = styled.span`
   width: 29.5px;
   height: 16.5px;

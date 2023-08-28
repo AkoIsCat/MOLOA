@@ -201,7 +201,7 @@ const Character = () => {
     setCurrentTab(index);
   };
 
-  const getTrnasGems = useCallback((data) => {
+  const getTransGems = useCallback((data) => {
     setTimeout(() => {
       setCurrentGems(data);
     }, 0);
@@ -219,7 +219,7 @@ const Character = () => {
           combatSkills={combatSkills}
           profile={profile}
           cards={cards}
-          getGems={getTrnasGems}
+          getGems={getTransGems}
         />
       ),
     },

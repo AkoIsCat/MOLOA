@@ -128,7 +128,7 @@ const Avatar = ({ profile, avatars }) => {
   );
 };
 
-export default React.memo(Avatar);
+export default Avatar;
 
 const ContentWrap = styled.div`
   width: 95%;

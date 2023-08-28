@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import React, { Fragment } from 'react';
 
 const ContentBoxFormat = (props) => {
+  console.log('inner content box');
   return (
     <Fragment>
       <TopLine>
@@ -21,7 +22,7 @@ const ContentBoxFormat = (props) => {
   );
 };
 
-export default React.memo(ContentBoxFormat);
+export default ContentBoxFormat;
 
 const Content = styled.div`
   width: 100%;

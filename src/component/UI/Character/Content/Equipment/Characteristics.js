@@ -160,7 +160,7 @@ const Characteristics = ({ combatSkills, profile, engraving }) => {
   );
 };
 
-export default React.memo(Characteristics);
+export default Characteristics;
 
 const ContentWrap = styled.div`
   width: ${(props) => (props.characteristics ? '32%' : '100%')};

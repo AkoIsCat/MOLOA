@@ -188,7 +188,7 @@ const Collect = ({ collectibles, profile }) => {
   );
 };
 
-export default React.memo(Collect);
+export default Collect;
 
 const TendenciesBox = styled.div`
   display: flex;

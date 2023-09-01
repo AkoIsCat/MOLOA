@@ -33,7 +33,7 @@ const Equipment = ({
   );
 };
 
-export default Equipment;
+export default React.memo(Equipment);
 
 const Wrap = styled.div`
   display: flex;

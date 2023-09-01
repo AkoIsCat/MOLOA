@@ -60,7 +60,7 @@ const CharacterGemsPart = ({ gems, getGemsList }) => {
   // 보석 아이템(툴팁 포함)
   const GemsItem = ({ item }) => {
     const [showTooltip, setShowTooltip] = useState(false);
-
+    // console.log(showTooltip);
     return (
       <GemsItemWrap grade={item.grade}>
         {showTooltip && (

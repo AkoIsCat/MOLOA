@@ -328,42 +328,76 @@ const CharacterEquipmentPart = ({ equipment, engraving }) => {
     {
       Type: '투구',
       Tooltip: '머리장식',
+      ItemName: equipment && equipment[1].Name,
       TooltipValue: equipmentEffectTooltip[0],
     },
     {
       Type: '어깨',
       Tooltip: '견갑',
+      ItemName: equipment && equipment[5].Name,
       TooltipValue: equipmentEffectTooltip[1],
     },
     {
       Type: '상의',
       Tooltip: '상의',
+      ItemName: equipment && equipment[2].Name,
       TooltipValue: equipmentEffectTooltip[2],
     },
     {
       Type: '하의',
       Tooltip: '하의',
+      ItemName: equipment && equipment[3].Name,
       TooltipValue: equipmentEffectTooltip[3],
     },
     {
       Type: '장갑',
       Tooltip: '장갑',
+      ItemName: equipment && equipment[4].Name,
       TooltipValue: equipmentEffectTooltip[4],
     },
     {
       Type: '무기',
+      ItemName: equipment && equipment[0].Name,
       TooltipValue: equipmentEffectTooltip[5],
     },
   ];
 
   const accessoriesList = [
-    { Type: '목걸이', TooltipValue: accessoriesEffectTooltip[0] },
-    { Type: '귀걸이', TooltipValue: accessoriesEffectTooltip[1] },
-    { Type: '귀걸이', TooltipValue: accessoriesEffectTooltip[2] },
-    { Type: '반지', TooltipValue: accessoriesEffectTooltip[3] },
-    { Type: '반지', TooltipValue: accessoriesEffectTooltip[4] },
-    { Type: '어빌리티 스톤', TooltipValue: accessoriesEffectTooltip[5] },
-    { Type: '팔찌', TooltipValue: accessoriesEffectTooltip[6] },
+    {
+      Type: '목걸이',
+      ItemName: equipment && equipment[6].Name,
+      TooltipValue: accessoriesEffectTooltip[0],
+    },
+    {
+      Type: '귀걸이',
+      ItemName: equipment && equipment[7].Name,
+      TooltipValue: accessoriesEffectTooltip[1],
+    },
+    {
+      Type: '귀걸이',
+      ItemName: equipment && equipment[8].Name,
+      TooltipValue: accessoriesEffectTooltip[2],
+    },
+    {
+      Type: '반지',
+      ItemName: equipment && equipment[9].Name,
+      TooltipValue: accessoriesEffectTooltip[3],
+    },
+    {
+      Type: '반지',
+      ItemName: equipment && equipment[10].Name,
+      TooltipValue: accessoriesEffectTooltip[4],
+    },
+    {
+      Type: '어빌리티 스톤',
+      ItemName: equipment && equipment[11].Name,
+      TooltipValue: accessoriesEffectTooltip[5],
+    },
+    {
+      Type: '팔찌',
+      ItemName: equipment && equipment[12].Name,
+      TooltipValue: accessoriesEffectTooltip[6],
+    },
   ];
 
   const stoneAndBracelet = [];
@@ -474,6 +508,15 @@ const CharacterEquipmentPart = ({ equipment, engraving }) => {
             (item.Type !== '무기' ? (
               <EquipmentTooltipWrap>
                 <div className="defaultEffectWrap">
+                  <div
+                    style={{
+                      color: 'rgb(254, 150, 0)',
+                      fontSize: '17px',
+                      textAlign: 'center',
+                    }}
+                  >
+                    {item.ItemName}
+                  </div>
                   <div>{item.TooltipValue.physics}</div>
                   <div>{item.TooltipValue.magic}</div>
                   <div>{item.TooltipValue.characteristic}</div>
@@ -532,6 +575,15 @@ const CharacterEquipmentPart = ({ equipment, engraving }) => {
             ) : (
               <EquipmentTooltipWrap>
                 <div className="defaultEffectWrap">
+                  <div
+                    style={{
+                      color: 'rgb(254, 150, 0)',
+                      fontSize: '17px',
+                      textAlign: 'center',
+                    }}
+                  >
+                    {item.ItemName}
+                  </div>
                   <div>{item.TooltipValue.offensePower}</div>
                 </div>
                 {item.TooltipValue.additionalDamage && (
@@ -608,6 +660,15 @@ const CharacterEquipmentPart = ({ equipment, engraving }) => {
           (item.Type !== '팔찌' ? (
             <AccessoriesTooltipWrap>
               <div className="defaultEffectWrap">
+                <div
+                  style={{
+                    color: 'rgb(254, 150, 0)',
+                    fontSize: '17px',
+                    textAlign: 'center',
+                  }}
+                >
+                  {item.ItemName}
+                </div>
                 <div>
                   {item.TooltipValue.characteristic &&
                     item?.TooltipValue?.characteristic[0] &&
@@ -628,6 +689,15 @@ const CharacterEquipmentPart = ({ equipment, engraving }) => {
           ) : (
             <AccessoriesTooltipWrap>
               <div className="vitalityWrap">
+                <div
+                  style={{
+                    color: 'rgb(254, 150, 0)',
+                    fontSize: '17px',
+                    textAlign: 'center',
+                  }}
+                >
+                  {item.ItemName}
+                </div>
                 {item.TooltipValue.breceletEffect.map((items, index) =>
                   !items.name ? (
                     <div key={index}>{items}</div>
@@ -1125,11 +1195,8 @@ const EquipmentTooltipWrap = styled.div`
   background-color: rgb(41, 46, 51, 1);
   border-radius: 10px;
   width: 240px;
-  height: 100%;
-  top: 0;
-  left: 21.5%;
-  right: 0;
-  bottom: 0;
+  // height: 100%;
+  transform: translate(25%, 0%);
   color: #fff;
   font-family: 'Nanum Gothic';
   font-size: 15px;
@@ -1214,7 +1281,6 @@ const EquipmentTooltipWrap = styled.div`
 
   .levelWrap {
     width: 80%;
-    height: 50px;
     margin: 0 auto;
     display: flex;
     flex-direction: column;
@@ -1237,11 +1303,7 @@ const AccessoriesTooltipWrap = styled.div`
   background-color: rgb(41, 46, 51, 1);
   border-radius: 10px;
   width: 240px;
-  height: 90%;
-  top: 0;
-  left: 22.5%;
-  right: 0;
-  bottom: 0;
+  transform: translate(25%, 0%);
   color: #fff;
   font-family: 'Nanum Gothic';
   font-size: 15px;

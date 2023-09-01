@@ -2,7 +2,6 @@ import styled from 'styled-components';
 import React, { Fragment } from 'react';
 
 const ContentBoxFormat = (props) => {
-  console.log('inner content box');
   return (
     <Fragment>
       <TopLine>

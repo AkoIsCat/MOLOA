@@ -5,7 +5,6 @@ import ContentBoxMain from './ContentBoxMain';
 import Loading from '../../Loading';
 
 const ContentBox = (props) => {
-  console.log('ContentBox');
   const item = props.item;
   const DateItem = item.map((item) => new Date(Date.parse(item.Date)));
   const currentDate = new Date();

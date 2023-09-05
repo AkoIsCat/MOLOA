@@ -5,6 +5,7 @@ import Holyknight from './holyknight.png';
 import Destoyer from './destroyer.png';
 import BerserkerFemale from './berserker_female.png';
 import Warrior from './warrior.png';
+import WarriorFemale from './warrior_female.png';
 // 애니츠 아이콘
 import BattleMaster from './battle_master.png';
 import BattleMasterMale from './battle_master_male.png';
@@ -24,6 +25,7 @@ import Demonic from './demonic.png';
 import Blade from './blade.png';
 import Reaper from './reaper.png';
 import Delain from './delain.png';
+import SoulEater from './soul_eater.png';
 // 헌터 아이콘
 import DevilHunter from './devil_hunter.png';
 import DevilHunterFemale from './devil_hunter_female.png';
@@ -39,6 +41,8 @@ import SpecialList from './specialist.png';
 
 export {
   SpecialList,
+  WarriorFemale,
+  SoulEater,
   HunterMale,
   HunterFemale,
   Delain,

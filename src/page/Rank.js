@@ -242,16 +242,18 @@ const Rank = () => {
         !className || className === '전체' || item.class === className;
       const isServerMatch =
         !serverName || serverName === '전체' || item.server === serverName;
-      const isEngravingMatch =
+      const hasEngravingMatch =
         (!currentClassEngraving.click ||
-          item.engravings.some(
-            (engraving) => engraving.name === currentClassEngraving.name
-          )) &&
+          (item.engravings &&
+            item.engravings.some(
+              (engraving) => engraving.name === currentClassEngraving.name
+            ))) &&
         (!currentClassEngraving2.click ||
-          item.engravings.some(
-            (engraving) => engraving.name === currentClassEngraving2.name
-          ));
-      return isClassMatch && isServerMatch && isEngravingMatch;
+          (item.engravings &&
+            item.engravings.some(
+              (engraving) => engraving.name === currentClassEngraving2.name
+            )));
+      return isClassMatch && isServerMatch && hasEngravingMatch;
     });
 
     return (

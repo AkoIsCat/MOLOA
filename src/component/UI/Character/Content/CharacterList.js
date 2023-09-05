@@ -40,6 +40,8 @@ import {
   Scouter as 스카우터,
   Aga as 도화가,
   WeatherArtist as 기상술사,
+  SoulEater as 소울이터,
+  WarriorFemale as 여전사,
 } from '../../../../asset/image/classImg/index'; // 직업 아이콘
 
 const CharacterList = ({ holdingCharacter, selectMenuHandler }) => {
@@ -253,6 +255,10 @@ const CharacterProfile = styled.div`
         ? 암살자
         : props.CharacterClass === '마법사'
         ? 마법사
+        : props.CharacterClass === '소울이터'
+        ? 소울이터
+        : props.CharacterClass === '전사(여)'
+        ? 여전사
         : ''});
     background-size: contain;
     background-repeat: no-repeat;

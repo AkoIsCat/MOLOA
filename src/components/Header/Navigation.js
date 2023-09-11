@@ -8,7 +8,7 @@ const Navigaion = () => {
         <NavLinkStyle to="/">홈</NavLinkStyle>
         <NavLinkStyle to="/rank">랭킹</NavLinkStyle>
         <NavLinkStyle to="/guild">길드</NavLinkStyle>
-        <NavLinkStyle to="/equipment">도구</NavLinkStyle>
+        <NavLinkStyle to="/utility">도구</NavLinkStyle>
         <NavLinkStyle to="/community">커뮤니티</NavLinkStyle>
       </NavUl>
     </Nav>

@@ -3,7 +3,7 @@ import { nanoid } from 'nanoid';
 
 import Loading from '../UI/Loading';
 import SelectServerPhrases from './SelectServerPhrases';
-import Notice from './Notice';
+import Notice from '../UI/Notice';
 
 const RankingBox = ({ isSelect, serverName, guildRanking, isLoading }) => {
   return (
@@ -15,7 +15,11 @@ const RankingBox = ({ isSelect, serverName, guildRanking, isLoading }) => {
         {isSelect && isLoading && <Loading />}
         {isSelect && !isLoading && (
           <>
-            <Notice />
+            <Notice
+              Instructions={
+                '※ 길드 순위는 서버별로 일정 순위까지만 표시됩니다.'
+              }
+            />
             <RankIndexWrap>
               <div>
                 <ul>

@@ -1,9 +1,7 @@
 import styled from 'styled-components';
 
-const Notice = () => {
-  return (
-    <NoticeBox>※ 길드 순위는 서버별로 일정 순위까지만 표시됩니다.</NoticeBox>
-  );
+const Notice = ({ Instructions }) => {
+  return <NoticeBox>{Instructions}</NoticeBox>;
 };
 
 export default Notice;

@@ -3,7 +3,6 @@ import { nanoid } from 'nanoid';
 
 import { ServerListBox, ServerListli, ServerWrap } from './ServerList';
 import CommonContentBox from '../UI/CommonContentBox';
-import Loading from '../UI/Loading';
 
 const ClassListBox = ({ classList, getSelectedClassData, isLoading }) => {
   const [currentClassTab, setCurrentClassTab] = useState(); // 직업 네비게이션

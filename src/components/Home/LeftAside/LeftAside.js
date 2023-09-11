@@ -1,12 +1,12 @@
 import styled from 'styled-components';
 import React, { useEffect, useState } from 'react';
 import { useMediaQuery } from 'react-responsive';
-import { getNotificationList } from '../../../../api/LostarkAxios';
-import { getFirebaseData } from '../../../../api/FirebaseAxios';
+import { getNotificationList } from '../../../api/LostarkAxios';
+import { getFirebaseData } from '../../../api/FirebaseAxios';
 
 import { HiOutlineSpeakerphone } from 'react-icons/hi';
 import ContentBox from './ContentBox';
-import SmallMenu from '../../SmallMenu';
+import SmallMenu from '../../UI/SmallMenu';
 
 const LeftAside = () => {
   const [noti, setNoti] = useState([]);

@@ -1,15 +1,15 @@
 import styled from 'styled-components';
 import { Fragment, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { getFirebaseData } from '../../../../api/FirebaseAxios';
+import { getFirebaseData } from '../../../api/FirebaseAxios';
 
 import { HiOutlineTicket } from 'react-icons/hi';
 import { TbMessageCircle2Filled } from 'react-icons/tb';
 import { GiFallingStar } from 'react-icons/gi';
 import { FaDiscord } from 'react-icons/fa';
-import { Head } from './CommonContentBox';
-import CommonContentBoxMain from './CommonContentBoxMain';
-import CommonContentBox from './CommonContentBox';
+import { Head } from '../../UI/CommonContentBox';
+import CommonContentBoxMain from '../../UI/CommonContentBoxMain';
+import CommonContentBox from '../../UI/CommonContentBox';
 
 const RightAside = () => {
   const [couponCode, setCouponCode] = useState([]);

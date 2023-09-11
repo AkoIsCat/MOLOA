@@ -1,7 +1,7 @@
 import styled from 'styled-components';
-import Background from '../component/UI/BackBox';
-import Header from '../component/header/Header';
-import Footer from '../component/UI/Footer';
+import Background from '../components/UI/BackBox';
+import Header from '../components/Header/Header';
+import Footer from '../components/UI/Footer';
 import { Container } from './Home';
 import { Message } from './Character';
 

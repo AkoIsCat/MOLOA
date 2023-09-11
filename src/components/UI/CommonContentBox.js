@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import React, { Fragment, memo } from 'react';
-import Loading from '../../Loading';
+import Loading from './Loading';
 
 const CommonContentBox = (props) => {
   return (

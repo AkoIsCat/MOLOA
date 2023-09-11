@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import React, { useState } from 'react';
 import { nanoid } from 'nanoid';
 
-import ContentWrap from '../../ContentWrap';
+import ContentWrap from '../../UI/ContentWrap';
 
 import {
   collect1,
@@ -14,7 +14,7 @@ import {
   collect7,
   collect8,
   collect9,
-} from '../../../../asset/icon/index';
+} from '../../../asset/icon/index';
 
 const Collect = ({ collectibles, profile }) => {
   const [currentCollectTab, setCurrentCollectTab] = useState(0);

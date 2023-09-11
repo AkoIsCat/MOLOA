@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 import React, { Fragment } from 'react';
 import ContentBoxMain from './ContentBoxMain';
-import Loading from '../../Loading';
+import Loading from '../../UI/Loading';
 
 const ContentBox = (props) => {
   const item = props.item;

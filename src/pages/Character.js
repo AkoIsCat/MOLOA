@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import Loading from '../component/UI/Loading';
+import Loading from '../components/UI/Loading';
 import { useCallback } from 'react';
 import {
   getCharacterExist,
@@ -15,16 +15,16 @@ import {
   getEquipment,
 } from '../api/LostarkAxios';
 
-import Aside from '../component/UI/Character/Side/Aside'; // 좌측 캐릭터 정보
-import Header from '../component/header/Header'; // 헤더
-import Background from '../component/UI/BackBox'; // 배경 컨테이너
+import Aside from '../components/Character/Side/Aside'; // 좌측 캐릭터 정보
+import Header from '../components/Header/Header'; // 헤더
+import Background from '../components/UI/BackBox'; // 배경 컨테이너
 import { Container } from './Home';
-import Avatar from '../component/UI/Character/Content/Avatar'; // 아바타탭
-import Equipment from '../component/UI/Character/Content/Equipment'; // 전투탭
-import CharacterList from '../component/UI/Character/Content/CharacterList'; // 보유캐릭터탭
-import Skill from '../component/UI/Character/Content/Skill'; // 스킬탭
-import Collect from '../component/UI/Character/Content/Collect'; // 수집탭
-import Footer from '../component/UI/Footer';
+import Avatar from '../components/Character/Content/Avatar'; // 아바타탭
+import Equipment from '../components/Character/Content/Equipment'; // 전투탭
+import CharacterList from '../components/Character/Content/CharacterList'; // 보유캐릭터탭
+import Skill from '../components/Character/Content/Skill'; // 스킬탭
+import Collect from '../components/Character/Content/Collect'; // 수집탭
+import Footer from '../components/UI/Footer';
 
 const Character = () => {
   const [isExist, setIsExist] = useState();

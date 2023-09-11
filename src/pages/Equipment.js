@@ -1,14 +1,14 @@
 import styled from 'styled-components';
-import Header from '../component/header/Header';
-import Background from '../component/UI/BackBox';
+import Header from '../components/Header/Header';
+import Background from '../components/UI/BackBox';
 
 import { Container } from './Home';
-import CommonContentBox from '../component/UI/Home/RightAside/CommonContentBox';
-import Portal from '../component/Modal/Portal';
+import CommonContentBox from '../components/UI/CommonContentBox';
+import Portal from '../components/Modal/Portal';
 
 import { useState } from 'react';
-import Modal from '../component/Modal/Modal';
-import Footer from '../component/UI/Footer';
+import Modal from '../components/Modal/Modal';
+import Footer from '../components/UI/Footer';
 
 const Equipment = () => {
   const [modalOn, setModalOn] = useState(false);

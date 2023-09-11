@@ -1,8 +1,8 @@
 import React, { Fragment } from 'react';
 import styled from 'styled-components';
 
-import GradeFrame from '../../../../../asset/icon/img_card_grade.png';
-import Awake from '../../../../../asset/icon/img_profile_awake.png';
+import GradeFrame from '../../../../asset/icon/img_card_grade.png';
+import Awake from '../../../../asset/icon/img_profile_awake.png';
 import { BsDot } from 'react-icons/bs';
 
 const CharacterCards = ({ cards }) => {

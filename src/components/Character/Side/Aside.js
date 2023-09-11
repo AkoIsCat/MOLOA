@@ -1,24 +1,21 @@
 import styled from 'styled-components';
 import { useMediaQuery } from 'react-responsive';
-
-import { Head } from '../../Home/RightAside/CommonContentBox';
-import { Content } from '../../Home/RightAside/CommonContentBoxMain';
-
 import { useEffect, useState, Fragment } from 'react';
 import { useParams } from 'react-router-dom';
+import { getProfile, getCollectibles } from '../../../api/LostarkAxios';
 
-import collect1 from '../../../../asset/icon/collect1.png';
-import collect2 from '../../../../asset/icon/collect2.png';
-import collect3 from '../../../../asset/icon/collect3.png';
-import collect4 from '../../../../asset/icon/collect4.png';
-import collect5 from '../../../../asset/icon/collect5.png';
-import collect6 from '../../../../asset/icon/collect6.png';
-import collect7 from '../../../../asset/icon/collect7.png';
-import collect8 from '../../../../asset/icon/collect8.png';
-import collect9 from '../../../../asset/icon/collect9.png';
+import { Head } from '../../UI/CommonContentBox';
+import { Content } from '../../UI/CommonContentBoxMain';
 
-const lostArkKey =
-  'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6IktYMk40TkRDSTJ5NTA5NWpjTWk5TllqY2lyZyIsImtpZCI6IktYMk40TkRDSTJ5NTA5NWpjTWk5TllqY2lyZyJ9.eyJpc3MiOiJodHRwczovL2x1ZHkuZ2FtZS5vbnN0b3ZlLmNvbSIsImF1ZCI6Imh0dHBzOi8vbHVkeS5nYW1lLm9uc3RvdmUuY29tL3Jlc291cmNlcyIsImNsaWVudF9pZCI6IjEwMDAwMDAwMDAwMjc0MTYifQ.MIy7jDe9w81yjIX8Zh4VgGCVH2IR-vz7CGF6Ceh0zdc-5HfnY31XrIwJ86r_nz1ImkS-dPxW7bO_8AaZmuII6sbdJo_dWer-kbkpA5kx1aIrtGqpvhY_fWtXY-_wmWhZrdAFJTtB8t6yVHIua_ceA7CJWM0Bn1sQ6SNWxCbq9fsHb6BGRayKuJ5JV-qAIVC5VjNyVC4iIyAdJetDWgu0c7DTR_pVOeWHbsX-CbAqqKXvRPoNII1aop4Ioa9Sbhb99iD-BuA7pfn-_D-m6axvO0-0luLu4UbwXhrE5jEVPNs7Oxf215AqosVjFb5ObX74iGzf6vyt8YqjL08UkLS8NQ';
+import collect1 from '../../../asset/icon/collect1.png';
+import collect2 from '../../../asset/icon/collect2.png';
+import collect3 from '../../../asset/icon/collect3.png';
+import collect4 from '../../../asset/icon/collect4.png';
+import collect5 from '../../../asset/icon/collect5.png';
+import collect6 from '../../../asset/icon/collect6.png';
+import collect7 from '../../../asset/icon/collect7.png';
+import collect8 from '../../../asset/icon/collect8.png';
+import collect9 from '../../../asset/icon/collect9.png';
 
 const collectImg = [
   collect1,
@@ -33,47 +30,16 @@ const collectImg = [
 ];
 
 const Aside = () => {
-  const [isExist, setIsExist] = useState();
   const [profile, setProfile] = useState(); // 기본 스탯
   const [collectibles, setCollectibles] = useState(); // 수집품
 
   const { id } = useParams();
-  const commonCharacterUrl = `https://developer-lostark.game.onstove.com/armories/characters`;
-  const loadCharacterUrl = `https://developer-lostark.game.onstove.com/characters`;
 
   useEffect(() => {
-    // 캐릭터 존재 여부(원정대 캐릭터)
-    const loadCharacterTrue = async () => {
-      try {
-        const response = await fetch(`${loadCharacterUrl}/${id}/siblings`, {
-          headers: {
-            'Content-Type': 'application/json',
-            authorization: `bearer ${lostArkKey}`,
-          },
-        });
-        const responseData = await response.json();
-
-        if (responseData) {
-          setIsExist(true);
-        } else {
-          setIsExist(false);
-        }
-      } catch (err) {
-        console.log('LostArk Character True of False error!!');
-      }
-    };
-
     const loadProfile = async () => {
       try {
-        const response = await fetch(`${commonCharacterUrl}/${id}/profiles`, {
-          headers: {
-            'Content-Type': 'application/json',
-            authorization: `bearer ${lostArkKey}`,
-          },
-        });
-        const responseData = await response.json();
-
-        setProfile(responseData);
+        const data = await getProfile(id);
+        setProfile(data);
       } catch (err) {
         console.log('LostArk Profile error!!');
       }
@@ -81,27 +47,16 @@ const Aside = () => {
 
     const loadCollectibles = async () => {
       try {
-        const response = await fetch(
-          `${commonCharacterUrl}/${id}/collectibles`,
-          {
-            headers: {
-              'Content-Type': 'application/json',
-              authorization: `bearer ${lostArkKey}`,
-            },
-          }
-        );
-        const responseData = await response.json();
-
-        setCollectibles(responseData);
+        const data = await getCollectibles(id);
+        setCollectibles(data);
       } catch (err) {
         console.log('LostArk Collectibles error!!');
       }
     };
 
-    loadCharacterTrue();
     loadProfile();
     loadCollectibles();
-  }, [loadCharacterUrl, isExist, commonCharacterUrl, id]);
+  }, [id]);
 
   const isPc = useMediaQuery({
     query: '(min-width:1024px)',

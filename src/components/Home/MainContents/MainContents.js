@@ -1,18 +1,18 @@
 import React, { Fragment } from 'react';
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { getCalenderIsland, getEventList } from '../../../../api/LostarkAxios';
-import { getFirebaseData } from '../../../../api/FirebaseAxios';
+import { getCalenderIsland, getEventList } from '../../../api/LostarkAxios';
+import { getFirebaseData } from '../../../api/FirebaseAxios';
 
-import { Head } from '../RightAside/CommonContentBox';
+import { Head } from '../../UI/CommonContentBox';
 import { AiOutlineCompass } from 'react-icons/ai';
 import { MdOutlineCalendarMonth } from 'react-icons/md';
-import CommonContentBoxMain from '../RightAside/CommonContentBoxMain';
-import CommonContentBox from '../RightAside/CommonContentBox';
+import CommonContentBoxMain from '../../UI/CommonContentBoxMain';
+import CommonContentBox from '../../UI/CommonContentBox';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
-import Loading from '../../Loading';
+import Loading from '../../UI/Loading';
 
 const WEEKDAY = ['일', '월', '화', '수', '목', '금', '토'];
 

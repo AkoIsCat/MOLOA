@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 
 import { nanoid } from 'nanoid';
 
-import ContentWrap from '../../ContentWrap';
+import ContentWrap from '../../UI/ContentWrap';
 
 import {
   SpecialList as 스페셜리스트,
@@ -42,7 +42,7 @@ import {
   WeatherArtist as 기상술사,
   SoulEater as 소울이터,
   WarriorFemale as 여전사,
-} from '../../../../asset/image/classImg/index'; // 직업 아이콘
+} from '../../../asset/image/classImg'; // 직업 아이콘
 
 const CharacterList = ({ holdingCharacter, selectMenuHandler }) => {
   const navigate = useNavigate();

@@ -1,9 +1,9 @@
-import Home from './page/Home';
-import Rank from './page/Rank';
-import Guild from './page/Guild';
-import Equipment from './page/Equipment';
-import Character from './page/Character';
-import Community from './page/Community';
+import Home from './pages/Home';
+import Rank from './pages/Rank';
+import Guild from './pages/Guild';
+import Equipment from './pages/Equipment';
+import Character from './pages/Character';
+import Community from './pages/Community';
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 

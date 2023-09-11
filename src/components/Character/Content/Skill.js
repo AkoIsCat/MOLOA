@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { nanoid } from 'nanoid';
 import React, { useState } from 'react';
 
-import ContentWrap from '../../ContentWrap';
+import ContentWrap from '../../UI/ContentWrap';
 
 const Skill = ({ combatSkills, profile, getGems }) => {
   const skillList = [];

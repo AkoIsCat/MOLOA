@@ -1,12 +1,12 @@
 import styled from 'styled-components';
 import { useMediaQuery } from 'react-responsive';
 
-import Header from '../component/header/Header';
-import Background from '../component/UI/BackBox';
-import LeftAside from '../component/UI/Home/LeftAside/LeftAside';
-import RightAside from '../component/UI/Home/RightAside/RightAside';
-import MainContents from '../component/UI/Home/MainContents/MainContents';
-import Footer from '../component/UI/Footer';
+import Header from '../components/Header/Header';
+import Background from '../components/UI/BackBox';
+import LeftAside from '../components/Home/LeftAside/LeftAside';
+import RightAside from '../components/Home/RightAside/RightAside';
+import MainContents from '../components/Home/MainContents/MainContents';
+import Footer from '../components/UI/Footer';
 
 const Home = () => {
   const isPc = useMediaQuery({

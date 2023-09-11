@@ -4,13 +4,13 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { getFirebaseData } from '../api/FirebaseAxios';
 
-import Header from '../component/header/Header';
-import Background from '../component/UI/BackBox';
+import Header from '../components/Header/Header';
+import Background from '../components/UI/BackBox';
 import { Container } from './Home';
-import CommonContentBox from '../component/UI/Home/RightAside/CommonContentBox';
+import CommonContentBox from '../components/UI/CommonContentBox';
 
-import Loading from '../component/UI/Loading';
-import Footer from '../component/UI/Footer';
+import Loading from '../components/UI/Loading';
+import Footer from '../components/UI/Footer';
 import { Fragment } from 'react';
 
 const Rank = () => {

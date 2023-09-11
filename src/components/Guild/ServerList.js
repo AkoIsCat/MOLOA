@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { nanoid } from 'nanoid';
 
 import CommonContentBox from '../UI/CommonContentBox';
+import { useCallback } from 'react';
 
 const server = [
   {
@@ -36,11 +37,15 @@ const ServerList = ({ getSelectedData }) => {
   const [isSelect, setIsSelect] = useState(false); // 초기 서버 선택 여부
   const [serverName, setServerName] = useState(); // 선택된 서버 이름
 
+  const sendData = useCallback(() => {
+    getSelectedData(isSelect, serverName);
+  }, [isSelect, serverName, getSelectedData]);
+
   useEffect(() => {
     if (isSelect && serverName !== '') {
-      getSelectedData(isSelect, serverName);
+      sendData();
     }
-  }, [isSelect, serverName]);
+  }, [isSelect, serverName, sendData]);
 
   const selectMenuHandler = (index) => {
     setCurrentTab(index);

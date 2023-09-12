@@ -1,8 +1,11 @@
 import React, { Fragment } from 'react';
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { getCalenderIsland, getEventList } from '../../../api/LostarkAxios';
-import { getFirebaseData } from '../../../api/FirebaseAxios';
+import {
+  getCalenderIsland,
+  getEventList,
+} from '../../../api/LostArk/LostarkAxios';
+import { getFirebaseData } from '../../../api/Firebase/FirebaseAxios';
 
 import { Head } from '../../UI/CommonContentBox';
 import { AiOutlineCompass } from 'react-icons/ai';

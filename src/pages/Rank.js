@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { useState, useEffect } from 'react';
-import { getFirebaseData } from '../api/FirebaseAxios';
+import { getFirebaseData } from '../api/Firebase/FirebaseAxios';
 
 import Header from '../components/Header/Header';
 import Background from '../components/UI/BackBox';

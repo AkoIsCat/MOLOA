@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { Fragment, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { getFirebaseData } from '../../../api/FirebaseAxios';
+import { getFirebaseData } from '../../../api/Firebase/FirebaseAxios';
 
 import { HiOutlineTicket } from 'react-icons/hi';
 import { TbMessageCircle2Filled } from 'react-icons/tb';

@@ -1,8 +1,8 @@
 import styled from 'styled-components';
 import React, { useEffect, useState } from 'react';
 import { useMediaQuery } from 'react-responsive';
-import { getNotificationList } from '../../../api/LostarkAxios';
-import { getFirebaseData } from '../../../api/FirebaseAxios';
+import { getNotificationList } from '../../../api/LostArk/LostarkAxios';
+import { getFirebaseData } from '../../../api/Firebase/FirebaseAxios';
 
 import { HiOutlineSpeakerphone } from 'react-icons/hi';
 import ContentBox from './ContentBox';

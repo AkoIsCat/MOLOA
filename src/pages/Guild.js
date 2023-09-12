@@ -8,7 +8,7 @@ import RankingBox from '../components/Guild/RankingBox';
 
 import { useEffect, useState } from 'react';
 import Footer from '../components/UI/Footer';
-import { getGuildRanking } from '../api/LostarkAxios';
+import { getGuildRanking } from '../api/LostArk/LostarkAxios';
 
 const Guild = () => {
   const [guildRanking, setGuildRanking] = useState();

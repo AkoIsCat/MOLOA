@@ -13,7 +13,7 @@ import {
   getEngravings,
   getGems,
   getEquipment,
-} from '../api/LostarkAxios';
+} from '../api/LostArk/LostarkAxios';
 
 import Aside from '../components/Character/Side/Aside'; // 좌측 캐릭터 정보
 import Header from '../components/Header/Header'; // 헤더

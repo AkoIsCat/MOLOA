@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { useMediaQuery } from 'react-responsive';
 import { useEffect, useState, Fragment } from 'react';
 import { useParams } from 'react-router-dom';
-import { getProfile, getCollectibles } from '../../../api/LostarkAxios';
+import { getProfile, getCollectibles } from '../../../api/LostArk/LostarkAxios';
 
 import { Head } from '../../UI/CommonContentBox';
 import { Content } from '../../UI/CommonContentBoxMain';

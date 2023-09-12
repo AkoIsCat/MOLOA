@@ -7,7 +7,6 @@ import { BsDot } from 'react-icons/bs';
 
 const CharacterEquipmentPart = ({ equipment, engraving }) => {
   // 장비 정보 조회
-
   const filterAccessories =
     equipment &&
     equipment.filter(
@@ -38,15 +37,7 @@ const CharacterEquipmentPart = ({ equipment, engraving }) => {
     equipmentTooltip[0],
   ];
 
-  const sortAccessoriesTooltip = [
-    equipmentTooltip[6],
-    equipmentTooltip[7],
-    equipmentTooltip[8],
-    equipmentTooltip[9],
-    equipmentTooltip[10],
-    equipmentTooltip[11],
-    equipmentTooltip[12],
-  ];
+  const sortAccessoriesTooltip = equipmentTooltip.slice(6, 13);
 
   // 장비 툴팁 추출
   const equipmentEffectTooltip = [];

@@ -42,7 +42,6 @@ const CharacterCards = ({ cards }) => {
 
     for (let j = 0; j <= effectList.length - 1; j++) {
       for (let i = 0; i <= effectList[j].items.length - 1; i++) {
-        // console.log(effectList[j].items);
         totalEffect.push({
           Name: effectList[j].items[i].Name,
           Description: effectList[j].items[i].Description,
@@ -50,8 +49,6 @@ const CharacterCards = ({ cards }) => {
       }
     }
   }
-
-  // --------------------------
 
   return (
     <div>

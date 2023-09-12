@@ -18,7 +18,6 @@ const Characteristics = ({ combatSkills, profile, engraving }) => {
       }
     }
   }
-  // ---------------------------------
 
   // -------------------------- 각인
 

@@ -87,7 +87,6 @@ const CharacterList = ({ holdingCharacter, selectMenuHandler }) => {
         [key]: sortedObj[key],
       });
     }
-    // console.log(classificationByServer);
   }
 
   return (

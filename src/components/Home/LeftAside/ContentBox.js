@@ -40,10 +40,11 @@ const ContentBox = (props) => {
       <ContentBoxMain
         font="13"
         height="30"
-        id={index}
+        id={props.type === 'moloa' ? items.id : props.id}
         key={index}
         border="true"
-        link={items.Link}
+        link={items.Link ? items.Link : ''}
+        type={props.type}
       >
         {items.Title}
         {writeDate[index]}
@@ -52,9 +53,10 @@ const ContentBox = (props) => {
       <ContentBoxMain
         font="13"
         height="30"
-        id={index}
+        id={props.type === 'moloa' ? items.id : props.id}
         key={index}
         link={items.Link}
+        type={props.type}
       >
         {items.Title}
         {writeDate[index]}

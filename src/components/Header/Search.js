@@ -5,7 +5,6 @@ import { useEffect } from 'react';
 import { getFirebaseData } from '../../api/Firebase/FirebaseAxios';
 import { updateCharacter } from '../../utils/updateCharacter';
 import { NavLink } from 'react-router-dom';
-
 import { BsSearch } from 'react-icons/bs';
 
 const Search = () => {

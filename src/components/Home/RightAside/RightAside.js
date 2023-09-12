@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import { Fragment, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { getFirebaseData } from '../../../api/Firebase/FirebaseAxios';
+import { updateCharacter } from '../../../utils/updateCharacter';
 
 import { HiOutlineTicket } from 'react-icons/hi';
 import { TbMessageCircle2Filled } from 'react-icons/tb';
@@ -18,6 +19,7 @@ const RightAside = () => {
   const [couponIsLoading, setCouponIsLoading] = useState(true);
   const [popularIsLoading, setPopularIsLoading] = useState(true);
   const [discordIsLoading, setDiscordIsLoading] = useState(true);
+  const [JobEngravings, setJobEngravings] = useState([]);
 
   const navigate = useNavigate();
 
@@ -69,13 +71,18 @@ const RightAside = () => {
       }
     };
 
+    const loadEngravings = async () => {
+      const data = await getFirebaseData('JobEngraving');
+      setJobEngravings(Object.values(data));
+    };
+    loadEngravings();
     loadCouponCode();
     loadDiscord();
     loadPopularCharacter();
   }, []);
 
   // 컨텐츠 별 ItemList
-  function renderCouponContent(items, index, length) {
+  const renderCouponContent = (items, index, length) => {
     const isLast = index === length - 1;
     const couponNameStyle = {
       color: '#46f1ff',
@@ -120,7 +127,7 @@ const RightAside = () => {
         </CommonContentBoxMain>
       );
     }
-  }
+  };
 
   const couponItemList = (
     <div>
@@ -194,6 +201,7 @@ const RightAside = () => {
             style={{ fontSize: '15px', color: '#fff' }}
             onClick={() => {
               navigate(`/character/${items.name}`);
+              updateCharacter(items.name, JobEngravings);
             }}
           >
             {items.name}
@@ -210,6 +218,7 @@ const RightAside = () => {
             style={{ fontSize: '15px', color: '#fff' }}
             onClick={() => {
               navigate(`/character/${items.name}`);
+              updateCharacter(items.name, JobEngravings);
             }}
           >
             {items.name}

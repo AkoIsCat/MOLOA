@@ -14,6 +14,7 @@ import Footer from '../components/UI/Footer';
 const Rank = () => {
   const [characterList, setCharacterList] = useState();
   const [firebaseClassList, setClassList] = useState();
+  const [JobEngravings, setJobEngravings] = useState([]);
   const [classIsLoading, setClassIsLoading] = useState(true);
   const [serverName, setServerName] = useState(); // 선택된 서버 이름
   const [currentClassTab, setCurrentClassTab] = useState(); // 직업 네비게이션
@@ -68,6 +69,11 @@ const Rank = () => {
       }
     };
 
+    const loadEngravings = async () => {
+      const data = await getFirebaseData('JobEngraving');
+      setJobEngravings(Object.values(data));
+    };
+    loadEngravings();
     loadCharacter();
     loadClassList();
   }, []);
@@ -100,6 +106,7 @@ const Rank = () => {
           currentClassEngraving={currentClassEngraving}
           currentClassEngraving2={currentClassEngraving2}
           serverName={serverName}
+          engraving={JobEngravings}
         />
         <ServerWrap>
           <ClassListBox

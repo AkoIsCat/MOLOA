@@ -4,6 +4,7 @@ import styled from 'styled-components';
 
 import Notice from '../UI/Notice';
 import Loading from '../UI/Loading';
+import { updateCharacter } from '../../utils/updateCharacter';
 
 const RankingBox = ({
   characterList,
@@ -11,6 +12,7 @@ const RankingBox = ({
   currentClassEngraving,
   currentClassEngraving2,
   serverName,
+  engraving,
 }) => {
   const navigate = useNavigate();
 
@@ -49,6 +51,7 @@ const RankingBox = ({
                 style={{ cursor: 'pointer' }}
                 onClick={() => {
                   navigate(`/character/${item.name}`);
+                  updateCharacter(item.name, engraving);
                 }}
               >
                 {item.name}

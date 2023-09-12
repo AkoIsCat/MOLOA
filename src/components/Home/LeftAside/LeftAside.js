@@ -44,7 +44,7 @@ const LeftAside = () => {
     const loadMoloaNoti = async () => {
       try {
         const data = await getFirebaseData('MoloaNoti');
-        setMoloaNoti(data);
+        setMoloaNoti(data.reverse());
         setMoloaIsLoading(false);
       } catch {
         console.log('MoloaNoti error');
@@ -60,6 +60,7 @@ const LeftAside = () => {
         <ContentBox
           title="로스트아크 공지사항"
           item={noti}
+          type="loa"
           icon={<Speaker />}
           loading={loaIsLoading}
           noti={true}
@@ -69,6 +70,7 @@ const LeftAside = () => {
         <ContentBox
           title="모로아 공지사항"
           item={moloaNoti}
+          type="moloa"
           icon={<Speaker />}
           loading={molosIsLoading}
         />

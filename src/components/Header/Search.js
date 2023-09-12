@@ -2,17 +2,10 @@ import styled from 'styled-components';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
-import {
-  getFirebaseData,
-  updateCharacterProfile,
-} from '../../api/FirebaseAxios';
-import {
-  getCharacterExist,
-  getProfile,
-  getEngravings,
-} from '../../api/LostarkAxios';
-
+import { getFirebaseData } from '../../api/Firebase/FirebaseAxios';
+import { updateCharacter } from '../../utils/updateCharacter';
 import { NavLink } from 'react-router-dom';
+
 import { BsSearch } from 'react-icons/bs';
 
 const Search = () => {
@@ -39,63 +32,7 @@ const Search = () => {
       navigate(`/character/${trimInput}`);
       setSearchInput('');
     }
-    // 모로아 db 유무 체크
-    const data = await getFirebaseData(`CharacterSearch/${trimInput}`);
-
-    // 캐릭터 유무 체크
-    const characterExist = await getCharacterExist(trimInput);
-
-    // 캐릭터 정보 조회
-    const profileData = await getProfile(trimInput);
-
-    // 각인 조회 & 활성화 된 직각 추출 & db등록
-    const checkEngravings = async () => {
-      // 각인 조회
-      const engravingsData = await getEngravings(trimInput);
-
-      let engravingItem = []; // 각인을 담을 배열
-
-      // 활성화 된 직각 추출
-      if (engravingsData) {
-        for (let i = 0; i < engraving.length; i++) {
-          for (let j = 0; j < engravingsData.Effects.length; j++) {
-            const split = engravingsData.Effects[j].Name.split(' Lv. ');
-            if (split[0] === engraving[i]) {
-              engravingItem.push({ name: split[0], level: split[1] });
-            }
-          }
-        }
-      }
-
-      // DB 등록
-      if (data) {
-        // 이미 등록된 닉네임인 경우 조회수를 업데이트
-        const updatedData = {
-          ...data,
-          views: data.views + 1,
-          level: profileData.ItemMaxLevel,
-          engravings: engravingItem,
-          guild: profileData.GuildName,
-        };
-        await updateCharacterProfile(trimInput, updatedData);
-
-        // db에 존재하지 않고, 로아에 실제로 있는 캐릭터만 추가 가능
-      } else if (!data && characterExist) {
-        // 새로운 닉네임인 경우 데이터를 추가
-        const newData = {
-          name: trimInput,
-          views: 1,
-          server: profileData.ServerName,
-          level: profileData.ItemMaxLevel,
-          class: profileData.CharacterClassName,
-          engravings: engravingItem,
-          guild: profileData.GuildName,
-        };
-        await updateCharacterProfile(trimInput, newData);
-      }
-    };
-
-    checkEngravings();
+    updateCharacter(trimInput, engraving);
   };
 
   return (

@@ -1,5 +1,6 @@
 import React, { Fragment } from 'react';
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import {
   getCalenderIsland,
@@ -155,7 +156,7 @@ const MainContents = () => {
     const loadMoloaNoti = async () => {
       try {
         const data = await getFirebaseData('MoloaNoti');
-        setMoloaNoti(data.splice(undefined, 1));
+        setMoloaNoti(data.reverse().splice(undefined, 1));
         setMoloaIsLoading(false);
       } catch {
         console.log('MoloaNoti Error!!');
@@ -165,6 +166,8 @@ const MainContents = () => {
     loadEventList();
     loadMoloaNoti();
   }, []);
+
+  const navigate = useNavigate();
 
   const islandItem = islandList.map((item, index) =>
     islandList.length === index + 1 ? (
@@ -261,7 +264,11 @@ const MainContents = () => {
     <Fragment>
       <HeadStyle border="true">
         {molosIsLoading && <Loading />}
-        {!molosIsLoading && moloaNoti[0]?.Title}
+        {!molosIsLoading && (
+          <p onClick={() => navigate(`/noti/${moloaNoti[0].id}`)}>
+            {moloaNoti[0]?.Title}
+          </p>
+        )}
       </HeadStyle>
       <MainBannerWrap border="true" height="361px">
         <MainBanner
@@ -345,6 +352,10 @@ const HeadStyle = styled(Head)`
   @media ${(props) => props.theme.mobile} {
     width: 95%;
     margin: 0;
+  }
+
+  p {
+    cursor: pointer;
   }
 `;
 

@@ -1,7 +1,10 @@
 import styled from 'styled-components';
 import React, { Fragment } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const ContentBoxFormat = (props) => {
+  const navigate = useNavigate();
+
   return (
     <Fragment>
       <TopLine>
@@ -13,7 +16,11 @@ const ContentBoxFormat = (props) => {
         font={props.font}
         height={props.height}
         border={props.border}
-        onClick={() => window.open(`${props.link}`, '_blank')}
+        onClick={() =>
+          props.type === 'loa'
+            ? window.open(`${props.link}`, '_blank')
+            : navigate(`/noti/${props.id}`)
+        }
       >
         <div className="content">{props.children}</div>
       </Content>

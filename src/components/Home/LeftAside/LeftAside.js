@@ -7,6 +7,7 @@ import { getFirebaseData } from '../../../api/Firebase/FirebaseAxios';
 import { HiOutlineSpeakerphone } from 'react-icons/hi';
 import ContentBox from './ContentBox';
 import SmallMenu from '../../UI/SmallMenu';
+import InnerContent from '../../UI/InnerContent';
 
 const LeftAside = () => {
   const [noti, setNoti] = useState([]);
@@ -56,7 +57,7 @@ const LeftAside = () => {
 
   return (
     <LeftWrap>
-      <InnerContent height="341px">
+      <InnerContent height="auto" side={true}>
         <ContentBox
           title="로스트아크 공지사항"
           item={noti}
@@ -66,7 +67,7 @@ const LeftAside = () => {
           noti={true}
         />
       </InnerContent>
-      <InnerContent height="auto">
+      <InnerContent height="auto" side={true}>
         <ContentBox
           title="모로아 공지사항"
           item={moloaNoti}
@@ -82,20 +83,6 @@ const LeftAside = () => {
 };
 
 export default LeftAside;
-
-// 원하는 Content의 height를 입력해야함
-const InnerContent = styled.div`
-  width: 226px;
-  height: ${(props) => props.height || ''};
-  background: #1e2225;
-  margin: 10px 10px 60px 10px;
-
-  @media ${(props) => props.theme.mobile} {
-    width: 95%;
-    margin: 0 0 60px;
-    padding: 0;
-  }
-`;
 
 const Speaker = styled(HiOutlineSpeakerphone)`
   margin-left: 5px;

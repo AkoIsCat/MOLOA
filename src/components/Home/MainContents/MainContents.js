@@ -13,20 +13,20 @@ import EventList from './EventList';
 
 const date = new Date();
 const WEEKDAY = ['일', '월', '화', '수', '목', '금', '토'];
+const today = WEEKDAY[date.getDay()];
+const hour = date.getHours();
 
 const MainContents = () => {
   const calender = [
     {
       name: '필드보스',
       emergence:
-        WEEKDAY[date.getDay()] === '화' ||
-        (WEEKDAY[date.getDay()] === '수' && date.getHours() <= 6)
-          ? true
-          : WEEKDAY[date.getDay()] === '금' ||
-            (WEEKDAY[date.getDay()] === '토' && date.getHours() <= 6)
-          ? true
-          : WEEKDAY[date.getDay()] === '일' ||
-            (WEEKDAY[date.getDay()] === '월' && date.getHours() <= 6)
+        (today === '화' && checkAfterFiveOClock(hour)) ||
+        (today === '수' && checkBeforeFiveOClock(hour)) ||
+        (today === '금' && checkAfterFiveOClock(hour)) ||
+        (today === '토' && checkBeforeFiveOClock(hour)) ||
+        (today === '일' && checkAfterFiveOClock(hour)) ||
+        (today === '월' && checkBeforeFiveOClock(hour))
           ? true
           : false,
       image: 'https://i.postimg.cc/CMv7s0wD/image.png',
@@ -34,14 +34,12 @@ const MainContents = () => {
     {
       name: '유령선',
       emergence:
-        WEEKDAY[date.getDay()] === '화' ||
-        (WEEKDAY[date.getDay()] === '수' && date.getHours() <= 6)
-          ? true
-          : WEEKDAY[date.getDay()] === '목' ||
-            (WEEKDAY[date.getDay()] === '금' && date.getHours() <= 6)
-          ? true
-          : WEEKDAY[date.getDay()] === '토' ||
-            (WEEKDAY[date.getDay()] === '일' && date.getHours() <= 6)
+        (today === '화' && checkAfterFiveOClock(hour)) ||
+        (today === '수' && checkBeforeFiveOClock(hour)) ||
+        (today === '목' && checkAfterFiveOClock(hour)) ||
+        (today === '금' && checkBeforeFiveOClock(hour)) ||
+        (today === '토' && checkAfterFiveOClock(hour)) ||
+        (today === '일' && checkBeforeFiveOClock(hour))
           ? true
           : false,
       image: 'https://ifh.cc/g/YjQa0m.jpg',
@@ -49,17 +47,12 @@ const MainContents = () => {
     {
       name: '카오스게이트',
       emergence:
-        WEEKDAY[date.getDay()] === '월' ||
-        (WEEKDAY[date.getDay()] === '화' && date.getHours() <= 6)
-          ? true
-          : WEEKDAY[date.getDay()] === '목' ||
-            (WEEKDAY[date.getDay()] === '금' && date.getHours() <= 6)
-          ? true
-          : WEEKDAY[date.getDay()] === '토' ||
-            (WEEKDAY[date.getDay()] === '일' && date.getHours() <= 6)
-          ? true
-          : WEEKDAY[date.getDay()] === '일' ||
-            (WEEKDAY[date.getDay()] === '월' && date.getHours() <= 6)
+        (today === '월' && checkAfterFiveOClock(hour)) ||
+        (today === '화' && checkBeforeFiveOClock(hour)) ||
+        (today === '목' && checkAfterFiveOClock(hour)) ||
+        (today === '금' && checkBeforeFiveOClock(hour)) ||
+        (today === '토' && checkAfterFiveOClock(hour)) ||
+        (today === '일' && checkBeforeFiveOClock(hour))
           ? true
           : false,
       image: 'https://i.postimg.cc/dVJGbSQv/image.jpg',
@@ -81,6 +74,14 @@ const MainContents = () => {
   const [eventIsLoading, setEventIsLoading] = useState(true);
   const [moloaIsLoading, setMoloaIsLoading] = useState(true);
   const [bannerIsLoading, setBannerIsLoading] = useState(true);
+
+  function checkBeforeFiveOClock(hour) {
+    return hour > 5 ? true : false;
+  }
+
+  function checkAfterFiveOClock(hour) {
+    return hour > 5 ? true : false;
+  }
 
   useEffect(() => {
     const todayDate = new Date();
@@ -132,8 +133,8 @@ const MainContents = () => {
     };
 
     if (
-      WEEKDAY[currentDate.getDay()] === '토' ||
-      WEEKDAY[currentDate.getDay()] === '일'
+      (WEEKDAY[currentDate.getDay()] === '토' && checkAfterFiveOClock(hour)) ||
+      (WEEKDAY[currentDate.getDay()] === '일' && checkAfterFiveOClock(hour))
     ) {
       setWeekend(true);
     }

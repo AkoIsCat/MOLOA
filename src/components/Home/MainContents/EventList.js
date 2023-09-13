@@ -42,7 +42,7 @@ const EventList = ({ eventIsLoading, eventList }) => {
         click={true}
       />
       <Description>
-        <div>* 화살표를 이용해 이벤트를 확인하실 수 있습니다. </div>
+        <div>* 화살표와 마우스를 이용해 이벤트를 확인하실 수 있습니다. </div>
       </Description>
       <CommonContentBoxMain
         event="true"

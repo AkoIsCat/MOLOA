@@ -139,23 +139,25 @@ const Skill = ({ combatSkills, profile, getGems }) => {
                   </div>
                 </div>
                 <div className="skillLevel">{item.skillLevel}레벨</div>
-                <div className="RuneBox">
-                  <RuneColorBox
-                    grade={item?.skillRune?.Grade}
-                    isExist={item.skillRune?.Icon}
-                  >
-                    <img
-                      src={item.skillRune?.Icon}
-                      alt={item.skillRune?.Name}
-                    />
-                  </RuneColorBox>
-                  <div className="RuneName">{item?.skillRune?.Name}</div>
-                </div>
-                <div className="gemsBox">
-                  {item.skillGems.map((items) => (
-                    <GemsItem item={items} key={nanoid()} />
-                  ))}
-                </div>
+                <RuneAneGemsBox>
+                  <div className="RuneBox">
+                    <RuneColorBox
+                      grade={item?.skillRune?.Grade}
+                      isExist={item.skillRune?.Icon}
+                    >
+                      <img
+                        src={item.skillRune?.Icon}
+                        alt={item.skillRune?.Name}
+                      />
+                    </RuneColorBox>
+                    <div className="RuneName">{item?.skillRune?.Name}</div>
+                  </div>
+                  <div className="gemsBox">
+                    {item.skillGems.map((items) => (
+                      <GemsItem item={items} key={nanoid()} />
+                    ))}
+                  </div>
+                </RuneAneGemsBox>
                 <div className="tripodsBox">
                   {item.skillTripod.map((items) => (
                     <TripodItem items={items} key={nanoid()} />
@@ -471,5 +473,12 @@ const GemsItemWrap = styled.div`
       font-size: 14px;
       color: #fff;
     }
+  }
+`;
+
+const RuneAneGemsBox = styled.div`
+  display: flex;
+
+  @media ${(props) => props.theme.mobile} {
   }
 `;

@@ -40,10 +40,15 @@ const AccessoriesDetail = ({
   const AccessoriesBox = ({ item, index }) => {
     const [showTooltip, setShowTooltip] = useState(false);
 
+    const quality =
+      sortAccessoriesTooltip &&
+      sortAccessoriesTooltip[index] &&
+      sortAccessoriesTooltip[index]['Element_001'].value.qualityValue;
+
     return (
       <>
         <div key={nanoid()}>
-          {showTooltip && <AccessoriesTooltip item={item} />}
+          {showTooltip && <AccessoriesTooltip item={item} quality={quality} />}
           {accessoriesList[0].TooltipValue !== undefined && (
             <Fragment key={nanoid()}>
               <ImageBox>

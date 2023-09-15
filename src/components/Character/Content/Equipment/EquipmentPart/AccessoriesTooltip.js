@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-const AccessoriesTooltip = ({ item }) => {
+const AccessoriesTooltip = ({ item, quality }) => {
   return item && item.Type !== '팔찌' ? (
     <AccessoriesTooltipWrap>
       <div className="defaultEffectWrap">
@@ -13,6 +13,9 @@ const AccessoriesTooltip = ({ item }) => {
         >
           {item.ItemName}
         </div>
+        {quality !== -1 && (
+          <QualityText quality={quality}>품질 {quality}</QualityText>
+        )}
         <div>
           {item.TooltipValue.characteristic &&
             item?.TooltipValue?.characteristic[0] &&
@@ -153,4 +156,21 @@ const AccessoriesTooltipWrap = styled.div`
       padding: 5px 0px;
     }
   }
+`;
+
+const QualityText = styled.div`
+  color: ${(props) =>
+    props.quality === 0
+      ? '#fff'
+      : props.quality > 0 && props.quality < 11
+      ? '#ff0000'
+      : props.quality < 30
+      ? '#ffd200'
+      : props.quality >= 30 && props.quality < 70
+      ? '#91fe02'
+      : props.quality >= 70 && props.quality < 90
+      ? '#00b5ff'
+      : props.quality >= 90 && props.quality < 100
+      ? '#ce43fc'
+      : '#FFCD12'};
 `;

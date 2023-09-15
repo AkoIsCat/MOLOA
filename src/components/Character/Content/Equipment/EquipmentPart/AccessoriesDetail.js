@@ -6,13 +6,27 @@ import AccessoriesTooltip from './AccessoriesTooltip';
 import { BsDot } from 'react-icons/bs';
 
 const AccessoriesDetail = ({
+  equipment,
   accessoriesList,
-  filterAccessories,
   sortAccessoriesTooltip,
   stoneAndBracelet,
   breceletEffectList,
   stoneIndex,
 }) => {
+  const filterAccessories =
+    equipment &&
+    equipment.filter(
+      (item) =>
+        item.Type !== '투구' &&
+        item.Type !== '무기' &&
+        item.Type !== '상의' &&
+        item.Type !== '하의' &&
+        item.Type !== '어깨' &&
+        item.Type !== '장갑' &&
+        item.Type !== '부적' &&
+        item.Type !== '나침반'
+    );
+
   const removeSpecificString = (elementNumber) => {
     return (
       stoneAndBracelet[0] &&

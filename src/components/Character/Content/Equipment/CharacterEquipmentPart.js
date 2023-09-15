@@ -61,6 +61,7 @@ const CharacterEquipmentPart = ({ equipment, engraving }) => {
       for (let key in sortEquipmentTooltip[i]) {
         if (
           sortEquipmentTooltip[i][key].type === 'IndentStringGroup' &&
+          Object.keys(sortEquipmentTooltip[i][key].value).length === 1 &&
           sortEquipmentTooltip[i][key].value['Element_000'].contentStr[
             'Element_000'
           ].bPoint
@@ -491,9 +492,10 @@ const CharacterEquipmentPart = ({ equipment, engraving }) => {
 
   const EquipmentTooltipBox = ({ item, index }) => {
     const [showTooltip, setShowTooltip] = useState(false);
+    console.log(item);
 
     return (
-      <Fragment>
+      <>
         <div key={index}>
           {showTooltip &&
             (item.Type !== '무기' ? (
@@ -638,7 +640,7 @@ const CharacterEquipmentPart = ({ equipment, engraving }) => {
             )}
           {equipmentList[0].TooltipValue === undefined && <div></div>}
         </div>
-      </Fragment>
+      </>
     );
   };
 

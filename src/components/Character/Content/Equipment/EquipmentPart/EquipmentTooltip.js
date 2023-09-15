@@ -13,6 +13,9 @@ const EquipmentTooltip = ({ item }) => {
         >
           {item.ItemName}
         </div>
+        <QualityText quality={item.TooltipValue.itemQuality}>
+          품질 {item.TooltipValue.itemQuality}
+        </QualityText>
         <div>{item.TooltipValue.physics}</div>
         <div>{item.TooltipValue.magic}</div>
         <div>{item.TooltipValue.characteristic}</div>
@@ -72,6 +75,9 @@ const EquipmentTooltip = ({ item }) => {
         >
           {item.ItemName}
         </div>
+        <QualityText quality={item.TooltipValue.itemQuality}>
+          품질 {item.TooltipValue.itemQuality}
+        </QualityText>
         <div>{item.TooltipValue.offensePower}</div>
       </div>
       {item.TooltipValue.additionalDamage && (
@@ -80,13 +86,16 @@ const EquipmentTooltip = ({ item }) => {
         </div>
       )}
       {!isNaN(item.TooltipValue.elixirTotalLevel) && (
-        <div>
+        <div className="ElixirWrap">
           <div className="totalElixir">
-            <div>연성 레벨 합 :</div>
-            <div className="level">
-              {item.TooltipValue.elixirTotalLevel &&
-                item.TooltipValue.elixirTotalLevel}
+            <div className="ElixirItem">
+              연성 레벨 합 :
+              <div className="level">
+                {item.TooltipValue.elixirTotalLevel &&
+                  item.TooltipValue.elixirTotalLevel}
+              </div>
             </div>
+            <div className="ElixirItem">{item.TooltipValue.activateElixir}</div>
           </div>
         </div>
       )}
@@ -159,18 +168,28 @@ const EquipmentTooltipWrap = styled.div`
     }
   }
 
+  .ElixirWrap {
+    margin: 5px 0;
+  }
+
   .totalElixir {
     width: 80%;
     margin: 0 auto;
     display: flex;
+    flex-direction: column;
     justify-content: center;
+    align-items: center;
     border-bottom: 1px solid #c1c1c1;
-    padding: 10px;
+    padding: 0px;
 
     .level {
       margin-left: 5px;
       color: #e4ba27;
     }
+  }
+
+  .ElixirItem {
+    margin: 5px 0;
   }
 
   .elixirWrap {
@@ -225,4 +244,21 @@ const EffectNameColorBox = styled.div`
     padding: 5px 0px;
     text-align: center;
   }
+`;
+
+const QualityText = styled.div`
+  color: ${(props) =>
+    props.quality === 0
+      ? '#fff'
+      : props.quality > 0 && props.quality < 11
+      ? '#ff0000'
+      : props.quality < 30
+      ? '#ffd200'
+      : props.quality >= 30 && props.quality < 70
+      ? '#91fe02'
+      : props.quality >= 70 && props.quality < 90
+      ? '#00b5ff'
+      : props.quality >= 90 && props.quality < 100
+      ? '#ce43fc'
+      : '#fe9600'};
 `;

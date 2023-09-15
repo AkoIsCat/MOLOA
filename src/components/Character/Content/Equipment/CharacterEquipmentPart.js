@@ -492,7 +492,6 @@ const CharacterEquipmentPart = ({ equipment, engraving }) => {
 
   const EquipmentTooltipBox = ({ item, index }) => {
     const [showTooltip, setShowTooltip] = useState(false);
-    console.log(item);
 
     return (
       <>
@@ -1235,7 +1234,6 @@ const EquipmentTooltipWrap = styled.div`
     div {
       width: auto;
       margin: 0 auto;
-      padding: 5px 0px;
     }
   }
 

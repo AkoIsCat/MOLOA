@@ -28,10 +28,12 @@ const CharacterEquipmentPart = ({ equipment, engraving }) => {
   const equipmentEffectTooltip = [];
   const accessoriesEffectTooltip = []; // 악세 툴팁
 
-  if (sortEquipmentTooltip[0] !== undefined) {
-    const removeFontTagRegex = /<\/?FONT[^>]*>/g;
-    const removeLevelRegex = /.*Lv\.(\d+).*/;
+  // 자주 쓰이는 정규표현식
+  const removeFontTagRegex = /<\/?FONT[^>]*>/g;
+  const removeLevelRegex = /.*Lv\.(\d+).*/;
 
+  // 장비 정보 추출
+  if (sortEquipmentTooltip[0] !== undefined) {
     const filterTooltip = [];
     for (let i = 0; i <= sortEquipmentTooltip.length - 1; i++) {
       const filterValue = [];
@@ -179,6 +181,7 @@ const CharacterEquipmentPart = ({ equipment, engraving }) => {
     ExtractNeedEquipmentDataAndPush(filterTooltip);
   }
 
+  // 악세 정보 추출
   if (sortAccessoriesTooltip[0] !== undefined) {
     const filterTooltip = [];
     for (let i = 0; i < sortAccessoriesTooltip.length; i++) {
@@ -278,14 +281,14 @@ const CharacterEquipmentPart = ({ equipment, engraving }) => {
             typeof effectsplitBR[j] === 'string' &&
             effectsplitBR[j].includes('</FONT>')
           ) {
-            effectsplitBR[j] = effectsplitBR[j].replace(/<\/?FONT[^>]*>/gi, '');
+            effectsplitBR[j] = effectsplitBR[j].replace(removeFontTagRegex, '');
             // 팔찌 효과 이름이 특수효과면 name/effect로 객체로 나눠놨으므로 효과의 effect가 string이고 font태그가 들어가면 추출.
           } else if (
             typeof effectsplitBR[j].effect === 'string' &&
             effectsplitBR[j].effect.includes('</FONT>')
           ) {
             effectsplitBR[j].effect = effectsplitBR[j].effect.replace(
-              /<\/?FONT[^>]*>/gi,
+              removeFontTagRegex,
               ''
             );
           }

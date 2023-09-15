@@ -25,7 +25,6 @@ const AccessoriesDetail = ({
 
   const AccessoriesBox = ({ item, index }) => {
     const [showTooltip, setShowTooltip] = useState(false);
-    console.log(item);
 
     return (
       <>

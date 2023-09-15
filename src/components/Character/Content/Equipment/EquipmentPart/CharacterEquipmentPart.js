@@ -45,6 +45,9 @@ const CharacterEquipmentPart = ({ equipment, engraving }) => {
   const accessoriesEffectTooltip = []; // 악세 툴팁
 
   if (sortEquipmentTooltip[0] !== undefined) {
+    const removeFontTagRegex = /<\/?FONT[^>]*>/g;
+    const removeLevelRegex = /.*Lv\.(\d+).*/;
+
     const filterTooltip = [];
     for (let i = 0; i <= sortEquipmentTooltip.length - 1; i++) {
       const filterValue = [];
@@ -60,22 +63,19 @@ const CharacterEquipmentPart = ({ equipment, engraving }) => {
 
       // 엘릭서
       for (let key in sortEquipmentTooltip[i]) {
+        const tooltip = sortEquipmentTooltip[i][key].value['Element_000'];
         if (
           sortEquipmentTooltip[i][key].type === 'IndentStringGroup' &&
           Object.keys(sortEquipmentTooltip[i][key].value).length === 1 &&
-          sortEquipmentTooltip[i][key].value['Element_000'].contentStr[
-            'Element_000'
-          ].bPoint
+          tooltip.contentStr['Element_000'].bPoint
         ) {
+          const activateElixir =
+            tooltip.topStr.includes('단계') &&
+            tooltip.topStr.replace(removeFontTagRegex, '').split('<br>')[1];
           filterValue.push({
-            Elixir:
-              sortEquipmentTooltip[i][key].value['Element_000'].contentStr[
-                'Element_000'
-              ]?.contentStr,
-            Elixir2:
-              sortEquipmentTooltip[i][key].value['Element_000']?.contentStr[
-                'Element_001'
-              ]?.contentStr,
+            Elixir: tooltip.contentStr['Element_000']?.contentStr,
+            Elixir2: tooltip?.contentStr['Element_001']?.contentStr,
+            activate: activateElixir,
           });
         }
       }
@@ -99,36 +99,49 @@ const CharacterEquipmentPart = ({ equipment, engraving }) => {
     let sum1 = 0,
       sum2 = 0,
       totalSum = 0;
+    let activateElixir = false;
 
     for (let i = 0; i < filterTooltip.length; i++) {
       const splitBR = filterTooltip[i].tooltip[0].effect.split('<BR>');
       const removeFont = filterTooltip[i].tooltip[2]?.effect?.replace(
-        /<\/?FONT[^>]*>/gi,
+        removeFontTagRegex,
         ''
       );
       let elixir1, elixir2;
 
+      if (
+        activateElixir === false &&
+        (filterTooltip[i].tooltip[3].activate !== false ||
+          filterTooltip[i].tooltip[4].activate === false)
+      ) {
+        activateElixir = filterTooltip[i].tooltip[3].activate;
+      } else if (
+        activateElixir === false &&
+        (filterTooltip[i].tooltip[3].activate === false ||
+          filterTooltip[i].tooltip[4].activate !== false)
+      ) {
+        activateElixir = filterTooltip[i].tooltip[4].activate;
+      }
+
       if (i < filterTooltip.length - 1) {
         elixir1 = filterTooltip[i].tooltip[3]?.Elixir?.replace(
-          /<\/?FONT[^>]*>/g,
+          removeFontTagRegex,
           ''
         ).split(/<br>|<BR>/);
 
         elixir2 = filterTooltip[i].tooltip[3]?.Elixir2?.replace(
-          /<\/?FONT[^>]*>/gi,
+          removeFontTagRegex,
           ''
         ).split(/<br>|<BR>/);
-
-        const levelRegex = /.*Lv\.(\d+).*/;
 
         const elixir1Level =
           elixir1 &&
           elixir1 !== undefined &&
-          parseInt(elixir1[0].replace(levelRegex, '$1'));
+          parseInt(elixir1[0].replace(removeLevelRegex, '$1'));
         const elixir2Level =
           elixir2 &&
           elixir2 !== undefined &&
-          parseInt(elixir2[0].replace(levelRegex, '$1'));
+          parseInt(elixir2[0].replace(removeLevelRegex, '$1'));
 
         sum1 += elixir1Level;
         sum2 += elixir2Level;
@@ -138,11 +151,11 @@ const CharacterEquipmentPart = ({ equipment, engraving }) => {
 
       const itemName = filterTooltip[i].tooltip[
         filterTooltip[i].tooltip.length - 1
-      ].itemName.replace(/<\/?FONT[^>]*>/gi, '');
+      ].itemName.replace(removeFontTagRegex, '');
 
       const itemLevel = filterTooltip[i].tooltip[
         filterTooltip[i].tooltip.length - 1
-      ].itemLevel.replace(/<\/?FONT[^>]*>/gi, '');
+      ].itemLevel.replace(removeFontTagRegex, '');
 
       const itemQuality =
         filterTooltip[i].tooltip[filterTooltip[i].tooltip.length - 1].quality;
@@ -170,6 +183,7 @@ const CharacterEquipmentPart = ({ equipment, engraving }) => {
           itemLevel,
           itemQuality,
           elixirTotalLevel: totalSum,
+          activateElixir,
         });
       }
     }
@@ -231,7 +245,7 @@ const CharacterEquipmentPart = ({ equipment, engraving }) => {
         .replace(/활성도\s+/gi, '');
     };
 
-    const getElixirEffect = (tooltip, index, number) => {
+    const getEngravingEffect = (tooltip, index, number) => {
       if (Object.keys(tooltip).length === 2) {
         index -= 1;
       }
@@ -247,9 +261,9 @@ const CharacterEquipmentPart = ({ equipment, engraving }) => {
     for (let i = 0; i < filterTooltip.length; i++) {
       const effectBR = filterTooltip[i].tooltip[1]?.effect?.split('<BR>');
 
-      const engrave1 = getElixirEffect(filterTooltip[i].tooltip, 2, 1);
-      const engrave2 = getElixirEffect(filterTooltip[i].tooltip, 2, 2);
-      const engrave3 = getElixirEffect(filterTooltip[i].tooltip, 2, 3);
+      const engrave1 = getEngravingEffect(filterTooltip[i].tooltip, 2, 1);
+      const engrave2 = getEngravingEffect(filterTooltip[i].tooltip, 2, 2);
+      const engrave3 = getEngravingEffect(filterTooltip[i].tooltip, 2, 3);
 
       const breceletEffect = filterTooltip[
         filterTooltip.length - 1

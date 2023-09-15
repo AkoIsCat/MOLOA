@@ -260,5 +260,5 @@ const QualityText = styled.div`
       ? '#00b5ff'
       : props.quality >= 90 && props.quality < 100
       ? '#ce43fc'
-      : '#fe9600'};
+      : '#FFCD12'};
 `;

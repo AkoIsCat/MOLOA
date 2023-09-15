@@ -59,6 +59,7 @@ const MountedEngravingBox = styled.div`
     }
 
     .name {
+      width: 100px;
       margin: 5px;
       color: ${(props) =>
         props.grade === '+12'

@@ -7,22 +7,6 @@ import MountedEngraving from './MountedEngraving';
 import AccessoriesDetail from './AccessoriesDetail';
 
 const CharacterEquipmentPart = ({ equipment, engraving }) => {
-  // 장비 정보 조회
-  const filterAccessories =
-    equipment &&
-    equipment.filter(
-      (item) =>
-        item.Type !== '투구' &&
-        item.Type !== '무기' &&
-        item.Type !== '상의' &&
-        item.Type !== '하의' &&
-        item.Type !== '어깨' &&
-        item.Type !== '장갑' &&
-        item.Type !== '부적' &&
-        item.Type !== '나침반'
-    );
-
-  // 아이템 정렬
   const equipmentTooltip = [];
 
   for (const item in equipment) {
@@ -80,7 +64,7 @@ const CharacterEquipmentPart = ({ equipment, engraving }) => {
         }
       }
 
-      // 아이템 레벨
+      // 각각의 아이템 정보
       for (let key in sortEquipmentTooltip[i]) {
         if (sortEquipmentTooltip[i][key].type === 'ItemTitle') {
           filterValue.push({
@@ -101,92 +85,98 @@ const CharacterEquipmentPart = ({ equipment, engraving }) => {
       totalSum = 0;
     let activateElixir = false;
 
-    for (let i = 0; i < filterTooltip.length; i++) {
-      const splitBR = filterTooltip[i].tooltip[0].effect.split('<BR>');
-      const removeFont = filterTooltip[i].tooltip[2]?.effect?.replace(
-        removeFontTagRegex,
-        ''
-      );
-      let elixir1, elixir2;
-
-      if (
-        activateElixir === false &&
-        (filterTooltip[i].tooltip[3].activate !== false ||
-          filterTooltip[i].tooltip[4].activate === false)
-      ) {
-        activateElixir = filterTooltip[i].tooltip[3].activate;
-      } else if (
-        activateElixir === false &&
-        (filterTooltip[i].tooltip[3].activate === false ||
-          filterTooltip[i].tooltip[4].activate !== false)
-      ) {
-        activateElixir = filterTooltip[i].tooltip[4].activate;
-      }
-
-      if (i < filterTooltip.length - 1) {
-        elixir1 = filterTooltip[i].tooltip[3]?.Elixir?.replace(
+    // 데이터를 추출한 filterValue를 이용해 더 세부적인 정보를 추출하고 최종 장비 tooltip 배열에 저장하는 함수
+    const ExtractNeedEquipmentDataAndPush = (tooltipData) => {
+      tooltipData.forEach((item, index) => {
+        const splitBR = item.tooltip[0].effect.split('<BR>');
+        const removeFont = item.tooltip[2]?.effect?.replace(
           removeFontTagRegex,
           ''
-        ).split(/<br>|<BR>/);
+        );
+        let elixir1, elixir2;
 
-        elixir2 = filterTooltip[i].tooltip[3]?.Elixir2?.replace(
+        if (
+          activateElixir === false &&
+          (item.tooltip[3].activate !== false ||
+            item.tooltip[4].activate === false)
+        ) {
+          activateElixir = item.tooltip[3].activate;
+        } else if (
+          activateElixir === false &&
+          (item.tooltip[3].activate === false ||
+            item.tooltip[4].activate !== false)
+        ) {
+          activateElixir = item.tooltip[4].activate;
+        }
+
+        if (index < filterTooltip.length - 1) {
+          elixir1 = item.tooltip[3]?.Elixir?.replace(
+            removeFontTagRegex,
+            ''
+          ).split(/<br>|<BR>/);
+
+          elixir2 = item.tooltip[3]?.Elixir2?.replace(
+            removeFontTagRegex,
+            ''
+          ).split(/<br>|<BR>/);
+
+          const elixir1Level =
+            elixir1 &&
+            elixir1 !== undefined &&
+            parseInt(elixir1[0].replace(removeLevelRegex, '$1'));
+          const elixir2Level =
+            elixir2 &&
+            elixir2 !== undefined &&
+            parseInt(elixir2[0].replace(removeLevelRegex, '$1'));
+
+          sum1 += elixir1Level;
+          sum2 += elixir2Level;
+        }
+
+        totalSum = sum1 + sum2;
+
+        const itemName = item.tooltip[item.tooltip.length - 1].itemName.replace(
           removeFontTagRegex,
           ''
-        ).split(/<br>|<BR>/);
+        );
 
-        const elixir1Level =
-          elixir1 &&
-          elixir1 !== undefined &&
-          parseInt(elixir1[0].replace(removeLevelRegex, '$1'));
-        const elixir2Level =
-          elixir2 &&
-          elixir2 !== undefined &&
-          parseInt(elixir2[0].replace(removeLevelRegex, '$1'));
+        const itemLevel = item.tooltip[
+          item.tooltip.length - 1
+        ].itemLevel.replace(removeFontTagRegex, '');
 
-        sum1 += elixir1Level;
-        sum2 += elixir2Level;
-      }
+        const itemQuality = item.tooltip[item.tooltip.length - 1].quality;
 
-      totalSum = sum1 + sum2;
+        if (index < 5) {
+          equipmentEffectTooltip.push({
+            physics: splitBR[0],
+            magic: splitBR[1],
+            characteristic: splitBR[2],
+            health: splitBR[3],
+            vitality: item.tooltip[1].effect,
+            level: removeFont,
+            itemName,
+            itemLevel,
+            itemQuality,
+            elixir1,
+            elixir2,
+          });
+        } else {
+          equipmentEffectTooltip.push({
+            offensePower: item.tooltip[0].effect,
+            additionalDamage: item.tooltip[1].effect,
+            level: removeFont,
+            itemName,
+            itemLevel,
+            itemQuality,
+            elixirTotalLevel: totalSum,
+            activateElixir,
+          });
+        }
+      });
+      return;
+    };
 
-      const itemName = filterTooltip[i].tooltip[
-        filterTooltip[i].tooltip.length - 1
-      ].itemName.replace(removeFontTagRegex, '');
-
-      const itemLevel = filterTooltip[i].tooltip[
-        filterTooltip[i].tooltip.length - 1
-      ].itemLevel.replace(removeFontTagRegex, '');
-
-      const itemQuality =
-        filterTooltip[i].tooltip[filterTooltip[i].tooltip.length - 1].quality;
-
-      if (i < 5) {
-        equipmentEffectTooltip.push({
-          physics: splitBR[0],
-          magic: splitBR[1],
-          characteristic: splitBR[2],
-          health: splitBR[3],
-          vitality: filterTooltip[i].tooltip[1].effect,
-          level: removeFont,
-          itemName,
-          itemLevel,
-          itemQuality,
-          elixir1,
-          elixir2,
-        });
-      } else {
-        equipmentEffectTooltip.push({
-          offensePower: filterTooltip[i].tooltip[0].effect,
-          additionalDamage: filterTooltip[i].tooltip[1].effect,
-          level: removeFont,
-          itemName,
-          itemLevel,
-          itemQuality,
-          elixirTotalLevel: totalSum,
-          activateElixir,
-        });
-      }
-    }
+    ExtractNeedEquipmentDataAndPush(filterTooltip);
   }
 
   if (sortAccessoriesTooltip[0] !== undefined) {
@@ -516,7 +506,7 @@ const CharacterEquipmentPart = ({ equipment, engraving }) => {
             <AccessoriesInner>
               <AccessoriesDetail
                 accessoriesList={accessoriesList}
-                filterAccessories={filterAccessories}
+                equipment={equipment}
                 sortAccessoriesTooltip={sortAccessoriesTooltip}
                 stoneAndBracelet={stoneAndBracelet}
                 breceletEffectList={breceletEffectList}
@@ -543,7 +533,7 @@ const CharacterEquipmentPart = ({ equipment, engraving }) => {
               <AccessoriesInner>
                 <AccessoriesDetail
                   accessoriesList={accessoriesList}
-                  filterAccessories={filterAccessories}
+                  equipment={equipment}
                   sortAccessoriesTooltip={sortAccessoriesTooltip}
                   stoneAndBracelet={stoneAndBracelet}
                   breceletEffectList={breceletEffectList}

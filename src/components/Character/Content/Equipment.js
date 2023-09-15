@@ -1,6 +1,6 @@
 import Characteristics from './Equipment/Characteristics';
-import CharacterEquipmentPart from './Equipment/CharacterEquipmentPart';
-import CharacterGemsPart from './Equipment//CharacterGemsPart';
+import CharacterEquipmentPart from './Equipment/EquipmentPart/CharacterEquipmentPart';
+import CharacterGemsPart from './Equipment/CharacterGemsPart';
 import CharacterCards from './Equipment/CharacterCards';
 
 import React from 'react';

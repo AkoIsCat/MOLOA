@@ -313,6 +313,10 @@ const EffectWrap = styled.div`
     top: 50%;
     left: -95%;
     transform: translate(-50%, -50%);
+
+    @media ${(props) => props.theme.mobile} {
+      left: 53%;
+    }
     margin: 0;
     padding: 10px;
     color: #c1c1c1;

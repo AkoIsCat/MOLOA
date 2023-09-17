@@ -47,12 +47,12 @@ const MainContents = () => {
     {
       name: '카오스게이트',
       emergence:
-        (today === '월' && checkAfterFiveOClock(hour)) ||
+        today === '월' ||
         (today === '화' && checkBeforeFiveOClock(hour)) ||
         (today === '목' && checkAfterFiveOClock(hour)) ||
         (today === '금' && checkBeforeFiveOClock(hour)) ||
         (today === '토' && checkAfterFiveOClock(hour)) ||
-        (today === '일' && checkBeforeFiveOClock(hour))
+        today === '일'
           ? true
           : false,
       image: 'https://i.postimg.cc/dVJGbSQv/image.jpg',
@@ -76,7 +76,7 @@ const MainContents = () => {
   const [bannerIsLoading, setBannerIsLoading] = useState(true);
 
   function checkBeforeFiveOClock(hour) {
-    return hour > 5 ? true : false;
+    return hour < 5 ? true : false;
   }
 
   function checkAfterFiveOClock(hour) {

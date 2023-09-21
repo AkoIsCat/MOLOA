@@ -110,10 +110,11 @@ const Collect = ({ collectibles, profile }) => {
             <CollectItem
               active={currentCollectTab === index && 'true'}
               onClick={() => selectCollectMenuHandler(index)}
-              key={nanoid()}
+              key={collectNav[index].content}
             >
               <img src={colletImage[index]} alt={item.Type} />
               <div className="maxPoint">{item.MaxPoint}</div>
+              <div className="currentPoint">{item.Point}</div>
               <div className="Point">{item.MaxPoint - item.Point}</div>
             </CollectItem>
           ))}
@@ -128,7 +129,7 @@ const Collect = ({ collectibles, profile }) => {
             {collectItemList[currentCollectTab].collected &&
               collectItemList[currentCollectTab].collected.map((item, index) =>
                 currentCollectTab === 0 ? (
-                  <div className="itemWrap" key={nanoid()}>
+                  <div className="itemWrap" key={item.PointName}>
                     <div className="indexAndPointWrap">
                       <div className="itemIndex">{index + 1}.</div>
                       <div className="itemPoint">{item.PointName}</div>
@@ -138,7 +139,7 @@ const Collect = ({ collectibles, profile }) => {
                     </div>
                   </div>
                 ) : (
-                  <div className="itemWrap" key={nanoid()}>
+                  <div className="itemWrap" key={item.PointName}>
                     <div className="indexAndPointWrap">
                       <div className="itemIndex">{index + 1}.</div>
                       <div className="itemPoint">{item.PointName}</div>
@@ -258,6 +259,12 @@ const CollectItem = styled.li`
 
   .maxPoint {
     margin: 10px 0;
+    font-size: 14px;
+    color: rgb(228, 186, 39);
+  }
+
+  .currentPoint {
+    margin: 0 0 10px 0;
     font-size: 14px;
     color: #fff;
   }

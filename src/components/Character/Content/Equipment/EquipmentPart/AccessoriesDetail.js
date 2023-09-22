@@ -12,6 +12,7 @@ const AccessoriesDetail = ({
   stoneAndBracelet,
   breceletEffectList,
   stoneIndex,
+  transcendenceTotalNum,
 }) => {
   const filterAccessories =
     equipment &&
@@ -135,6 +136,18 @@ const AccessoriesDetail = ({
         accessoriesList.map((item, index) => (
           <AccessoriesBox item={item} index={index} key={nanoid()} />
         ))}
+      <EffectTotal>
+        <div>
+          <img
+            src="https://firebasestorage.googleapis.com/v0/b/lostark-bf0ba.appspot.com/o/transcendence.png?alt=media&token=cddea62b-27e1-489a-a571-07e8e43ff3bb"
+            alt="초월 이미지"
+            width="18"
+            height="18"
+          />
+        </div>
+        <div className="transcendence">초월 합 </div>
+        <div className="activeExlixir">{transcendenceTotalNum}</div>
+      </EffectTotal>
     </>
   );
 };
@@ -225,5 +238,31 @@ const PercentBar = styled.div`
           ? '#ce43fc'
           : '#fe9600'};
     }
+  }
+`;
+
+const EffectTotal = styled.div`
+  font-family: 'Nanum Gothic';
+  color: #fff;
+  display: flex;
+  align-items: center;
+
+  img {
+    margin: 5px 0 0 0;
+}
+  }
+
+  .elixir {
+    margin: 0 5px;
+    color: rgb(254, 150, 0);
+  }
+
+  .activeExlixir {
+    margin: 0 5px;
+    color: #ffd200;
+  }
+
+  .transcendence {
+    margin: 0 5px;
   }
 `;

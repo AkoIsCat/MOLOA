@@ -105,6 +105,7 @@ const CharacterEquipmentPart = ({ equipment, engraving }) => {
       sum2 = 0,
       totalSum = 0;
     let activateElixir = false;
+    let transcendenceTotalNum = '';
 
     // 데이터를 추출한 filterValue를 이용해 더 세부적인 정보를 추출하고 최종 장비 tooltip 배열에 저장하는 함수
     const ExtractNeedEquipmentDataAndPush = (tooltipData) => {
@@ -126,6 +127,13 @@ const CharacterEquipmentPart = ({ equipment, engraving }) => {
           "<img src='emoticon_Transcendence_Grade'",
           '<img src="https://firebasestorage.googleapis.com/v0/b/lostark-bf0ba.appspot.com/o/transcendence.png?alt=media&token=cddea62b-27e1-489a-a571-07e8e43ff3bb"'
         );
+        const transcendenceCount = transcendenceTotal
+          ?.split('</img>')[1]
+          .slice(0, 2);
+
+        if (transcendenceCount !== undefined) {
+          transcendenceTotalNum = transcendenceCount;
+        }
 
         if (
           activateElixir === false &&
@@ -204,6 +212,7 @@ const CharacterEquipmentPart = ({ equipment, engraving }) => {
             itemQuality,
             elixirTotalLevel: totalSum,
             activateElixir,
+            transcendenceTotalNum,
           });
         }
       });
@@ -536,6 +545,13 @@ const CharacterEquipmentPart = ({ equipment, engraving }) => {
               <MountedEngraving
                 mountedEngraving={mountedEngraving}
                 mountedEngravingItem={mountedEngravingItem}
+                elixirTotalLevel={
+                  equipmentList[5].TooltipValue.elixirTotalLevel
+                }
+                activateElixir={equipmentList[5].TooltipValue.activateElixir}
+                transcendenceTotalNum={
+                  equipmentList[5].TooltipValue.transcendenceTotalNum
+                }
               />
             </EquipmentInner>
             <AccessoriesInner>
@@ -546,6 +562,9 @@ const CharacterEquipmentPart = ({ equipment, engraving }) => {
                 stoneAndBracelet={stoneAndBracelet}
                 breceletEffectList={breceletEffectList}
                 stoneIndex={stoneIndex}
+                transcendenceTotalNum={
+                  equipmentList[5].TooltipValue.transcendenceTotalNum
+                }
               />
             </AccessoriesInner>
           </FlexWrap>
@@ -573,6 +592,9 @@ const CharacterEquipmentPart = ({ equipment, engraving }) => {
                   stoneAndBracelet={stoneAndBracelet}
                   breceletEffectList={breceletEffectList}
                   stoneIndex={stoneIndex}
+                  transcendenceTotalNum={
+                    equipmentList[5].TooltipValue.transcendenceTotalNum
+                  }
                 />
               </AccessoriesInner>
             </div>
@@ -580,6 +602,13 @@ const CharacterEquipmentPart = ({ equipment, engraving }) => {
               <MountedEngraving
                 mountedEngraving={mountedEngraving}
                 mountedEngravingItem={mountedEngravingItem}
+                elixirTotalLevel={
+                  equipmentList[5].TooltipValue.elixirTotalLevel
+                }
+                activateElixir={equipmentList[5].TooltipValue.activateElixir}
+                transcendenceTotalNum={
+                  equipmentList[5].TooltipValue.transcendenceTotalNum
+                }
               />
             </div>
           </FlexWrap>

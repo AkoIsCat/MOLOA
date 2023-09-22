@@ -1,21 +1,40 @@
 import styled from 'styled-components';
 
-const MountedEngraving = ({ mountedEngraving, mountedEngravingItem }) => {
+const MountedEngraving = ({
+  mountedEngraving,
+  mountedEngravingItem,
+  elixirTotalLevel,
+  transcendenceTotalNum,
+  activateElixir,
+}) => {
   return (
     <MountWrap>
-      {mountedEngraving &&
-        mountedEngraving.map((item, index) => (
-          <MountedEngravingBox
-            key={index}
-            grade={mountedEngravingItem[index].slice(-10, -7)}
-          >
-            <img src={item.Icon} alt="장착된 각인" />
-            <div>
-              <p className="name">{item.Name}</p>
-              <p>{mountedEngravingItem[index].slice(-10, -7)}</p>
-            </div>
-          </MountedEngravingBox>
-        ))}
+      <div>
+        {mountedEngraving &&
+          mountedEngraving.map((item, index) => (
+            <MountedEngravingBox
+              key={item.Name}
+              grade={mountedEngravingItem[index].slice(-10, -7)}
+            >
+              <img src={item.Icon} alt="장착된 각인" />
+              <div>
+                <p className="name">{item.Name}</p>
+                <p>{mountedEngravingItem[index].slice(-10, -7)}</p>
+              </div>
+            </MountedEngravingBox>
+          ))}
+      </div>
+      <EffectTotal>
+        <img
+          src="https://firebasestorage.googleapis.com/v0/b/lostark-bf0ba.appspot.com/o/%EC%97%98%EB%A6%AD%EC%84%9C.png?alt=media&token=eb19bb1a-1aa2-48d5-8383-cf67336ac49f"
+          alt="엘릭서 이미지"
+          width="14"
+          height="17"
+        />
+        <div className="transcendence">엘릭서 연성레벨 합 </div>
+        <div className="elixir">{elixirTotalLevel}</div>
+        <div className="activeExlixir">{activateElixir}</div>
+      </EffectTotal>
     </MountWrap>
   );
 };
@@ -79,6 +98,7 @@ const MountWrap = styled.div`
   min-width: 200px;
   max-width: 312px;
   display: flex;
+  flex-direction: column;
   justify-content: space-between;
   position: relative;
   height: auto;
@@ -90,5 +110,27 @@ const MountWrap = styled.div`
     align-items: center;
     margin-top: 30px;
     padding: 0;
+  }
+`;
+
+const EffectTotal = styled.div`
+  font-family: 'Nanum Gothic';
+  color: #fff;
+  margin: 10px 0 0 0;
+  display: flex;
+  align-items: center;
+
+  .elixir {
+    margin: 0 5px;
+    color: rgb(254, 150, 0);
+  }
+
+  .activeExlixir {
+    margin: 0 5px;
+    color: #ffd200;
+  }
+
+  .transcendence {
+    margin: 0 5px;
   }
 `;

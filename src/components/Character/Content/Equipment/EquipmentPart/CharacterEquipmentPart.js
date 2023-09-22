@@ -66,6 +66,25 @@ const CharacterEquipmentPart = ({ equipment, engraving }) => {
         }
       }
 
+      // 초월
+      for (let key in sortEquipmentTooltip[i]) {
+        const tooltip = sortEquipmentTooltip[i][key].value['Element_000'];
+        if (
+          sortEquipmentTooltip[i][key].type === 'IndentStringGroup' &&
+          Object.keys(sortEquipmentTooltip[i][key].value).length === 1 &&
+          Object.keys(tooltip.contentStr).length >= 4 &&
+          tooltip.topStr
+        ) {
+          const transcendence = tooltip.topStr;
+          const transcendenceCount =
+            tooltip.contentStr['Element_001'].contentStr;
+          filterValue.push({
+            transcendence,
+            transcendenceCount,
+          });
+        }
+      }
+
       // 각각의 아이템 정보
       for (let key in sortEquipmentTooltip[i]) {
         if (sortEquipmentTooltip[i][key].type === 'ItemTitle') {
@@ -96,6 +115,17 @@ const CharacterEquipmentPart = ({ equipment, engraving }) => {
           ''
         );
         let elixir1, elixir2;
+
+        const transcendence = item.tooltip.filter((key) => key.transcendence);
+        const transcendenceStep = transcendence[0]?.transcendence.replace(
+          "<img src='emoticon_Transcendence_Grade'",
+          '<img src="https://firebasestorage.googleapis.com/v0/b/lostark-bf0ba.appspot.com/o/transcendence.png?alt=media&token=cddea62b-27e1-489a-a571-07e8e43ff3bb"'
+        );
+
+        const transcendenceTotal = transcendence[0]?.transcendenceCount.replace(
+          "<img src='emoticon_Transcendence_Grade'",
+          '<img src="https://firebasestorage.googleapis.com/v0/b/lostark-bf0ba.appspot.com/o/transcendence.png?alt=media&token=cddea62b-27e1-489a-a571-07e8e43ff3bb"'
+        );
 
         if (
           activateElixir === false &&
@@ -161,6 +191,8 @@ const CharacterEquipmentPart = ({ equipment, engraving }) => {
             itemQuality,
             elixir1,
             elixir2,
+            transcendenceStep,
+            transcendenceTotal,
           });
         } else {
           equipmentEffectTooltip.push({

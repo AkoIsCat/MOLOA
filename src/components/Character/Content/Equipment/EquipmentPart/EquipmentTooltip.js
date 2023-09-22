@@ -55,6 +55,20 @@ const EquipmentTooltip = ({ item }) => {
                 </EffectNameColorBox>
               ))}
           </div>
+          {item.TooltipValue.transcendenceStep && (
+            <span
+              dangerouslySetInnerHTML={{
+                __html: item.TooltipValue.transcendenceStep,
+              }}
+            ></span>
+          )}
+          {item.TooltipValue.transcendenceTotal && (
+            <div
+              dangerouslySetInnerHTML={{
+                __html: item.TooltipValue.transcendenceTotal,
+              }}
+            ></div>
+          )}
         </div>
       )}
       <div className="levelWrap">

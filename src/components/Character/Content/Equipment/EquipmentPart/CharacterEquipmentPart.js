@@ -169,8 +169,8 @@ const CharacterEquipmentPart = ({ equipment, engraving }) => {
             elixir2 !== undefined &&
             parseInt(elixir2[0].replace(removeLevelRegex, '$1'));
 
-          sum1 += elixir1Level;
-          sum2 += elixir2Level;
+          sum1 += elixir1Level !== undefined && elixir1Level;
+          sum2 += elixir2Level !== undefined && elixir2Level;
         }
 
         totalSum = sum1 + sum2;
@@ -546,12 +546,12 @@ const CharacterEquipmentPart = ({ equipment, engraving }) => {
                 mountedEngraving={mountedEngraving}
                 mountedEngravingItem={mountedEngravingItem}
                 elixirTotalLevel={
-                  equipmentList[5].TooltipValue.elixirTotalLevel
+                  equipment &&
+                  equipmentList[5]?.TooltipValue?.elixirTotalLevel > 0
+                    ? equipmentList[5]?.TooltipValue?.elixirTotalLevel
+                    : 0
                 }
-                activateElixir={equipmentList[5].TooltipValue.activateElixir}
-                transcendenceTotalNum={
-                  equipmentList[5].TooltipValue.transcendenceTotalNum
-                }
+                activateElixir={equipmentList[5]?.TooltipValue?.activateElixir}
               />
             </EquipmentInner>
             <AccessoriesInner>
@@ -563,7 +563,8 @@ const CharacterEquipmentPart = ({ equipment, engraving }) => {
                 breceletEffectList={breceletEffectList}
                 stoneIndex={stoneIndex}
                 transcendenceTotalNum={
-                  equipmentList[5].TooltipValue.transcendenceTotalNum
+                  equipment &&
+                  equipmentList[5]?.TooltipValue.transcendenceTotalNum
                 }
               />
             </AccessoriesInner>
@@ -593,7 +594,11 @@ const CharacterEquipmentPart = ({ equipment, engraving }) => {
                   breceletEffectList={breceletEffectList}
                   stoneIndex={stoneIndex}
                   transcendenceTotalNum={
-                    equipmentList[5].TooltipValue.transcendenceTotalNum
+                    equipment &&
+                    equipmentList[5]?.TooltipValue.transcendenceTotalNum
+                      .length === 0
+                      ? 0
+                      : equipmentList[5]?.TooltipValue.transcendenceTotalNum
                   }
                 />
               </AccessoriesInner>
@@ -603,12 +608,12 @@ const CharacterEquipmentPart = ({ equipment, engraving }) => {
                 mountedEngraving={mountedEngraving}
                 mountedEngravingItem={mountedEngravingItem}
                 elixirTotalLevel={
-                  equipmentList[5].TooltipValue.elixirTotalLevel
+                  equipment &&
+                  equipmentList[5]?.TooltipValue.elixirTotalLevel !== isNaN
+                    ? 0
+                    : equipmentList[5]?.TooltipValue.elixirTotalLevel
                 }
-                activateElixir={equipmentList[5].TooltipValue.activateElixir}
-                transcendenceTotalNum={
-                  equipmentList[5].TooltipValue.transcendenceTotalNum
-                }
+                activateElixir={equipmentList[5]?.TooltipValue.activateElixir}
               />
             </div>
           </FlexWrap>

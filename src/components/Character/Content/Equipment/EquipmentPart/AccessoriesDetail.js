@@ -146,7 +146,9 @@ const AccessoriesDetail = ({
           />
         </div>
         <div className="transcendence">초월 합 </div>
-        <div className="activeExlixir">{transcendenceTotalNum}</div>
+        <div className="activeExlixir">
+          {transcendenceTotalNum?.length === 0 ? '0개' : transcendenceTotalNum}
+        </div>
       </EffectTotal>
     </>
   );
@@ -246,6 +248,7 @@ const EffectTotal = styled.div`
   color: #fff;
   display: flex;
   align-items: center;
+  margin: 10px 0;
 
   img {
     margin: 5px 0 0 0;

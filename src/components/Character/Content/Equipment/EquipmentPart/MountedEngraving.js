@@ -4,7 +4,6 @@ const MountedEngraving = ({
   mountedEngraving,
   mountedEngravingItem,
   elixirTotalLevel,
-  transcendenceTotalNum,
   activateElixir,
 }) => {
   return (
@@ -32,8 +31,8 @@ const MountedEngraving = ({
           height="17"
         />
         <div className="transcendence">엘릭서 연성레벨 합 </div>
-        <div className="elixir">{elixirTotalLevel}</div>
-        <div className="activeExlixir">{activateElixir}</div>
+        <div className="elixir">{elixirTotalLevel && elixirTotalLevel}</div>
+        <div className="activeExlixir">{activateElixir && activateElixir}</div>
       </EffectTotal>
     </MountWrap>
   );

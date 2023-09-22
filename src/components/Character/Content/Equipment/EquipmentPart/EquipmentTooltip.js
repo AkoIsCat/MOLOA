@@ -132,7 +132,7 @@ const EquipmentTooltipWrap = styled.div`
   position: absolute;
   background-color: rgb(41, 46, 51, 1);
   border-radius: 10px;
-  width: 240px;
+  width: 250px;
   transform: translate(25%, 0%);
   color: #fff;
   font-family: 'Nanum Gothic';

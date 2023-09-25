@@ -39,6 +39,9 @@ export const updateCharacter = async (name, engraving) => {
     // 이미 등록된 닉네임인 경우 조회수를 업데이트
     const updatedData = {
       ...data,
+      level: profileData.ItemMaxLevel,
+      guild: profileData.GuildName,
+      engravings: engravingItem,
       views: data.views + 1,
     };
     await updateCharacterProfile(name, updatedData);

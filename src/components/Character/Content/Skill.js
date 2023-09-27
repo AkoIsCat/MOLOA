@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import { nanoid } from 'nanoid';
 import React, { useState } from 'react';
 
 import ContentWrap from '../../UI/ContentWrap';
@@ -90,7 +89,7 @@ const Skill = ({ combatSkills, profile, getGems }) => {
             </p>
           </div>
         )}
-        <div className="tripodsWrap" key={nanoid()}>
+        <div className="tripodsWrap" key={items.Name}>
           <img
             src={items.Icon}
             alt={items.Name}
@@ -124,14 +123,14 @@ const Skill = ({ combatSkills, profile, getGems }) => {
         >
           {skillList.map((item, index) =>
             index === skillList.length - 1 ? (
-              <SkillItem key={nanoid()}>
+              <SkillItem key={item.skillName}>
                 <div className="skillInfoBox">
                   <img src={item.skillIcon} alt={item.skillName} />
                   <div className="skillNameAndSlot">
                     <div className="skillName">{item.skillName}</div>
                     <div className="tripodSlot">
                       {item.skillTripod.map((items) => (
-                        <TripodWrap key={nanoid()} tier={items.Tier}>
+                        <TripodWrap key={items.Name} tier={items.Tier}>
                           {items.Slot}
                         </TripodWrap>
                       ))}
@@ -154,25 +153,31 @@ const Skill = ({ combatSkills, profile, getGems }) => {
                   </div>
                   <div className="gemsBox">
                     {item.skillGems.map((items) => (
-                      <GemsItem item={items} key={nanoid()} />
+                      <GemsItem
+                        item={items}
+                        key={`${items.name} ${items.skillName}`}
+                      />
                     ))}
                   </div>
                 </RuneAneGemsBox>
                 <div className="tripodsBox">
                   {item.skillTripod.map((items) => (
-                    <TripodItem items={items} key={nanoid()} />
+                    <TripodItem
+                      items={items}
+                      key={`${items.Name} ${items.Level}`}
+                    />
                   ))}
                 </div>
               </SkillItem>
             ) : (
-              <SkillItem end="true" key={nanoid()}>
+              <SkillItem end="true" key={item.skillName}>
                 <div className="skillInfoBox">
                   <img src={item.skillIcon} alt={item.skillName} />
                   <div className="skillNameAndSlot">
                     <div className="skillName">{item.skillName}</div>
                     <div className="tripodSlot">
                       {item.skillTripod.map((items) => (
-                        <TripodWrap key={nanoid()} tier={items.Tier}>
+                        <TripodWrap key={items.Name} tier={items.Tier}>
                           {items.Slot}
                         </TripodWrap>
                       ))}
@@ -195,13 +200,19 @@ const Skill = ({ combatSkills, profile, getGems }) => {
                   </div>
                   <div className="gemsBox">
                     {item.skillGems.map((items) => (
-                      <GemsItem item={items} key={nanoid()} />
+                      <GemsItem
+                        item={items}
+                        key={`${items.name} ${items.skillName}`}
+                      />
                     ))}
                   </div>
                 </RuneAneGemsBox>
                 <div className="tripodsBox">
                   {item.skillTripod.map((items) => (
-                    <TripodItem items={items} key={nanoid()} />
+                    <TripodItem
+                      items={items}
+                      key={`${items.Name} ${items.Level}`}
+                    />
                   ))}
                 </div>
               </SkillItem>

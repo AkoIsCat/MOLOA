@@ -1,7 +1,5 @@
 import styled from 'styled-components';
 import { useState, Fragment } from 'react';
-import { nanoid } from 'nanoid';
-
 import EquipmentTooltip from './EquipmentTooltip';
 
 const EquipmentDetail = ({
@@ -14,19 +12,19 @@ const EquipmentDetail = ({
 
     return (
       <>
-        <div key={nanoid()}>
+        <div>
           {showTooltip && <EquipmentTooltip item={item} />}
           {equipmentList[0].TooltipValue !== undefined &&
             equipment.map(
               (items) =>
                 items.Type === item.Type && (
-                  <Fragment key={nanoid()}>
+                  <Fragment key={item.Type}>
                     <ImageBox
                       onMouseOver={() => setShowTooltip(true)}
                       onMouseLeave={() => setShowTooltip(false)}
                     >
-                      <ImageBoxColor key={nanoid()} exist={items.Grade}>
-                        <img src={items.Icon} alt="아바타" />
+                      <ImageBoxColor key={items.Tooltip} exist={items.Grade}>
+                        <img src={items.Icon} alt="장비" />
                       </ImageBoxColor>
                     </ImageBox>
                     <div className="desc">

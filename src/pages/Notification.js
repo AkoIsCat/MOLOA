@@ -2,7 +2,6 @@ import styled from 'styled-components';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { getFirebaseData } from '../api/Firebase/FirebaseAxios';
-import { nanoid } from 'nanoid';
 
 import Background from '../components/UI/BackBox';
 import Header from '../components/Header/Header';
@@ -40,7 +39,7 @@ const Notification = () => {
             <p>{moloaNoti.Date}</p>
             <DivWrap>
               {moloaNoti.Content.split('\\n').map((item) => (
-                <div key={nanoid()}>{item}</div>
+                <div key={moloaNoti.id}>{item}</div>
               ))}
             </DivWrap>
           </ContentWrap>

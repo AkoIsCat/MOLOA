@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import { nanoid } from 'nanoid';
 
 import Loading from '../UI/Loading';
 import SelectServerPhrases from './SelectServerPhrases';
@@ -35,7 +34,7 @@ const RankingBox = ({ isSelect, serverName, guildRanking, isLoading }) => {
                 <ul style={{ flexDirection: 'column', border: '0' }}>
                   {guildRanking &&
                     guildRanking.map((item) => (
-                      <div className="listWrap" key={nanoid()}>
+                      <div className="listWrap" key={item.GuildName}>
                         <li className="rank">{item.Rank}</li>
                         <li className="guildName">{item.GuildName}</li>
                         <li className="serverName">{serverName}</li>

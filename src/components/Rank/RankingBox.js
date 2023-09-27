@@ -1,5 +1,4 @@
 import { useNavigate } from 'react-router-dom';
-import { nanoid } from 'nanoid';
 import styled from 'styled-components';
 
 import Notice from '../UI/Notice';
@@ -44,7 +43,7 @@ const RankingBox = ({
       <div style={{ margin: '15px 0' }}>
         <ul style={{ flexDirection: 'column', border: '0' }}>
           {filteredCharacters.map((item, index) => (
-            <div className="listWrap" key={nanoid()}>
+            <div className="listWrap" key={item.name}>
               <li className="rank">{index + 1}</li>
               <li
                 className="guildName"
@@ -60,14 +59,17 @@ const RankingBox = ({
               <li className="memberCount">{item.class}</li>
               <li className="masterName">
                 {item.engravings !== undefined &&
-                  item.engravings.map((engraving) =>
+                  item.engravings.map((engraving, idx) =>
                     engraving !== undefined ? (
-                      <div key={nanoid()}>
+                      <div key={`${engraving.name} ${idx}`}>
                         <span className="enName">{engraving.name}</span>
                         <span className="enLevel">{engraving.level}</span>
                       </div>
                     ) : (
-                      <li className="masterName" key={nanoid()}></li>
+                      <li
+                        className="masterName"
+                        key={`${engraving.name} ${idx}`}
+                      ></li>
                     )
                   )}
               </li>

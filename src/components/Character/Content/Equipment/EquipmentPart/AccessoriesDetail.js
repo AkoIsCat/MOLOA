@@ -1,6 +1,5 @@
 import styled from 'styled-components';
-import { useState, Fragment } from 'react';
-import { nanoid } from 'nanoid';
+import { useState } from 'react';
 
 import AccessoriesTooltip from './AccessoriesTooltip';
 import { BsDot } from 'react-icons/bs';
@@ -48,13 +47,13 @@ const AccessoriesDetail = ({
 
     return (
       <>
-        <div key={nanoid()}>
+        <div>
           {showTooltip && <AccessoriesTooltip item={item} quality={quality} />}
           {accessoriesList[0].TooltipValue !== undefined && (
-            <Fragment key={nanoid()}>
+            <>
               <ImageBox>
                 <ImageBoxColor
-                  key={nanoid()}
+                  key={filterAccessories && filterAccessories[index].Name}
                   exist={
                     filterAccessories[index] !== undefined &&
                     filterAccessories[index].Grade
@@ -62,9 +61,9 @@ const AccessoriesDetail = ({
                 >
                   {filterAccessories && filterAccessories[index] && (
                     <img
-                      key={nanoid()}
+                      key={filterAccessories[index].Icon}
                       src={filterAccessories[index].Icon}
-                      alt="아바타"
+                      alt="악세"
                       onMouseOver={() => setShowTooltip(true)}
                       onMouseLeave={() => setShowTooltip(false)}
                     />
@@ -79,20 +78,12 @@ const AccessoriesDetail = ({
                 </p>
                 {index < 5 && (
                   <PercentBar
-                    quality={
-                      sortAccessoriesTooltip &&
-                      sortAccessoriesTooltip[index] &&
-                      sortAccessoriesTooltip[index]['Element_001'].value
-                        .qualityValue
-                    }
-                    key={nanoid()}
+                    quality={quality}
+                    key={`${quality} ${
+                      filterAccessories && filterAccessories[index].Name
+                    } `}
                   >
-                    <p>
-                      {sortAccessoriesTooltip &&
-                        sortAccessoriesTooltip[index] &&
-                        sortAccessoriesTooltip[index]['Element_001'].value
-                          .qualityValue}
-                    </p>
+                    <p>{quality}</p>
                     <div>
                       <div></div>
                     </div>
@@ -115,14 +106,17 @@ const AccessoriesDetail = ({
                 )}
                 <div style={{ display: 'flex' }}>
                   {index === 6 &&
-                    breceletEffectList.map((item, index) => (
-                      <p key={nanoid()} style={{ margin: '0 2px 0 4px' }}>
+                    breceletEffectList.map((item) => (
+                      <p
+                        key={`${item.text} ${item.description}`}
+                        style={{ margin: '0 2px 0 4px' }}
+                      >
                         {item.text}
                       </p>
                     ))}
                 </div>
               </div>
-            </Fragment>
+            </>
           )}
           {accessoriesList[0].TooltipValue === undefined && <div></div>}
         </div>
@@ -134,7 +128,11 @@ const AccessoriesDetail = ({
     <>
       {accessoriesList &&
         accessoriesList.map((item, index) => (
-          <AccessoriesBox item={item} index={index} key={nanoid()} />
+          <AccessoriesBox
+            item={item}
+            index={index}
+            key={`${index + 1} ${item.ItemName}`}
+          />
         ))}
       <EffectTotal>
         <div>

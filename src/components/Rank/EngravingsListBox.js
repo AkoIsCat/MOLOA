@@ -1,5 +1,4 @@
 import { Fragment, useState, useEffect, useCallback } from 'react';
-import { nanoid } from 'nanoid';
 
 import { ServerListBox, ServerListli, ServerWrap } from './ServerList';
 import CommonContentBox from '../UI/CommonContentBox';
@@ -53,10 +52,19 @@ const EngravingsListBox = ({
             (item, index) =>
               className &&
               currentClassTab === index && (
-                <Fragment key={nanoid()}>
+                <Fragment
+                  key={`${
+                    classList && classList[currentClassTab].engraving.engraving1
+                  } ${
+                    classList && classList[currentClassTab].engraving.engraving2
+                  }`}
+                >
                   <ServerListli
                     borderFirst="true"
-                    key={nanoid()}
+                    key={
+                      classList &&
+                      classList[currentClassTab].engraving.engraving1
+                    }
                     onClick={() => {
                       selectedEngreving1(index, item);
                     }}
@@ -72,7 +80,10 @@ const EngravingsListBox = ({
                   </ServerListli>
                   <ServerListli
                     borderFirst="true"
-                    key={nanoid()}
+                    key={
+                      classList &&
+                      classList[currentClassTab].engraving.engraving2
+                    }
                     onClick={() => {
                       selectedEngreving2(index, item);
                     }}

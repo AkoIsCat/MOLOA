@@ -392,27 +392,32 @@ const CharacterEquipmentPart = ({ equipment, engraving }) => {
   const accessoriesList = [
     {
       Type: '목걸이',
-      ItemName: equipment && equipment[6].Name,
+      ItemName:
+        equipment && equipment[6] === undefined ? -1 : equipment[6].Name,
       TooltipValue: accessoriesEffectTooltip[0],
     },
     {
       Type: '귀걸이',
-      ItemName: equipment && equipment[7].Name,
+      ItemName:
+        equipment && equipment[7] === undefined ? -1 : equipment[7].Name,
       TooltipValue: accessoriesEffectTooltip[1],
     },
     {
       Type: '귀걸이',
-      ItemName: equipment && equipment[8].Name,
+      ItemName:
+        equipment && equipment[8] === undefined ? -1 : equipment[8].Name,
       TooltipValue: accessoriesEffectTooltip[2],
     },
     {
       Type: '반지',
-      ItemName: equipment && equipment[9].Name,
+      ItemName:
+        equipment && equipment[9] === undefined ? -1 : equipment[9].Name,
       TooltipValue: accessoriesEffectTooltip[3],
     },
     {
       Type: '반지',
-      ItemName: equipment && equipment[10].Name,
+      ItemName:
+        equipment && equipment[10] === undefined ? -1 : equipment[10].Name,
       TooltipValue: accessoriesEffectTooltip[4],
     },
     {

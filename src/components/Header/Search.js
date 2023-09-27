@@ -41,7 +41,8 @@ const Search = () => {
       </NavLinkTitle>
       <SearchForm onSubmit={onSubmitHandler}>
         <SearchInput
-          name="캐릭터 검색"
+          autoComplete="off"
+          id="search-input"
           type="text"
           placeholder="캐릭터 검색"
           onChange={(e) => setSearchInput(e.target.value)}

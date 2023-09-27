@@ -422,7 +422,8 @@ const CharacterEquipmentPart = ({ equipment, engraving }) => {
     },
     {
       Type: '팔찌',
-      ItemName: equipment && equipment[12].Name,
+      ItemName:
+        equipment && equipment[12] !== undefined ? equipment[12].Name : -1,
       TooltipValue: accessoriesEffectTooltip[6],
     },
   ];

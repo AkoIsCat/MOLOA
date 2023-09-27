@@ -3,8 +3,6 @@ import styled from 'styled-components';
 import React, { Fragment } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { nanoid } from 'nanoid';
-
 import ContentWrap from '../../UI/ContentWrap';
 
 import {

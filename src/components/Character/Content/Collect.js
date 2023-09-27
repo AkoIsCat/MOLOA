@@ -1,6 +1,5 @@
 import styled from 'styled-components';
 import React, { useState } from 'react';
-import { nanoid } from 'nanoid';
 
 import ContentWrap from '../../UI/ContentWrap';
 
@@ -97,7 +96,7 @@ const Collect = ({ collectibles, profile }) => {
         >
           {profile &&
             profile.Tendencies.map((item) => (
-              <TendenciesBox key={nanoid()}>
+              <TendenciesBox key={item.Type}>
                 <div className="Type">{item.Type}</div>
                 <div className="Point">{item.Point}</div>
               </TendenciesBox>
@@ -158,7 +157,7 @@ const Collect = ({ collectibles, profile }) => {
               collectItemList[currentCollectTab].failedToCollect.map(
                 (item, index) =>
                   currentCollectTab === 0 ? (
-                    <div className="itemWrap" key={nanoid()}>
+                    <div className="itemWrap" key={item.PointName}>
                       <div className="indexAndPointWrap">
                         <div className="itemIndex">{index + 1}.</div>
                         <div className="itemPoint">{item.PointName}</div>
@@ -168,7 +167,7 @@ const Collect = ({ collectibles, profile }) => {
                       </div>
                     </div>
                   ) : (
-                    <div className="itemWrap" key={nanoid()}>
+                    <div className="itemWrap" key={item.PointName}>
                       <div className="indexAndPointWrap">
                         <div className="itemIndex">{index + 1}.</div>
                         <div className="itemPoint">{item.PointName}</div>

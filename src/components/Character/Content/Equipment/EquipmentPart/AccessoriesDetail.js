@@ -49,7 +49,7 @@ const AccessoriesDetail = ({
       <>
         <div>
           {showTooltip && <AccessoriesTooltip item={item} quality={quality} />}
-          {accessoriesList[0].TooltipValue !== undefined && (
+          {accessoriesList[index].TooltipValue !== undefined && (
             <>
               <ImageBox>
                 <ImageBoxColor
@@ -111,7 +111,7 @@ const AccessoriesDetail = ({
                         key={`${item.text} ${item.description}`}
                         style={{ margin: '0 2px 0 4px' }}
                       >
-                        {item.text}
+                        {item?.text}
                       </p>
                     ))}
                 </div>

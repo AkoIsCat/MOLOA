@@ -136,12 +136,14 @@ const CharacterEquipmentPart = ({ equipment, engraving }) => {
         }
 
         if (
+          item.Tooltip &&
           activateElixir === false &&
           (item.tooltip[3].activate !== false ||
             item.tooltip[4].activate === false)
         ) {
           activateElixir = item.tooltip[3].activate;
         } else if (
+          item.Tooltip &&
           activateElixir === false &&
           (item.tooltip[3].activate === false ||
             item.tooltip[4].activate !== false)
@@ -415,12 +417,14 @@ const CharacterEquipmentPart = ({ equipment, engraving }) => {
     },
     {
       Type: '어빌리티 스톤',
-      ItemName: equipment && equipment[11].Name,
+      ItemName:
+        equipment && equipment[11] === undefined ? -1 : equipment[11].Name,
       TooltipValue: accessoriesEffectTooltip[5],
     },
     {
       Type: '팔찌',
-      ItemName: equipment && equipment[12].Name,
+      ItemName:
+        equipment && equipment[12] === undefined ? -1 : equipment[12].Name,
       TooltipValue: accessoriesEffectTooltip[6],
     },
   ];

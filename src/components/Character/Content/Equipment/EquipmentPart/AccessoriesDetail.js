@@ -29,7 +29,7 @@ const AccessoriesDetail = ({
 
   const removeSpecificString = (elementNumber) => {
     return (
-      stoneAndBracelet[0] &&
+      stoneAndBracelet[0] !== undefined &&
       stoneAndBracelet[0][stoneIndex] &&
       stoneAndBracelet[0][stoneIndex].value['Element_000'].contentStr[
         elementNumber
@@ -53,7 +53,7 @@ const AccessoriesDetail = ({
             <>
               <ImageBox>
                 <ImageBoxColor
-                  key={filterAccessories && filterAccessories[index].Name}
+                  key={filterAccessories && filterAccessories[index]?.Name}
                   exist={
                     filterAccessories[index] !== undefined &&
                     filterAccessories[index].Grade
@@ -74,13 +74,13 @@ const AccessoriesDetail = ({
                 <p className="type">
                   {filterAccessories &&
                     filterAccessories[index] &&
-                    filterAccessories[index].Name}
+                    filterAccessories[index]?.Name}
                 </p>
                 {index < 5 && (
                   <PercentBar
                     quality={quality}
                     key={`${quality} ${
-                      filterAccessories && filterAccessories[index].Name
+                      filterAccessories && filterAccessories[index]?.Name
                     } `}
                   >
                     <p>{quality}</p>

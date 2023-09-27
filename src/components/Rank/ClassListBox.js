@@ -1,5 +1,4 @@
 import { useState, useEffect, useCallback } from 'react';
-import { nanoid } from 'nanoid';
 
 import { ServerListBox, ServerListli, ServerWrap } from './ServerList';
 import CommonContentBox from '../UI/CommonContentBox';
@@ -51,7 +50,7 @@ const ClassListBox = ({ classList, getSelectedClassData, isLoading }) => {
           classList.map((item, index) => (
             <ServerListli
               borderFirst="true"
-              key={nanoid()}
+              key={item.fullName}
               onClick={() => {
                 selectClassMenuHandler(index);
                 setClassName(item.fullName);

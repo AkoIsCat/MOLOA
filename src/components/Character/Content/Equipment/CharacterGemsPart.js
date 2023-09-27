@@ -21,7 +21,8 @@ const CharacterGemsPart = ({ gems, getGemsList }) => {
 
       const event_tooltip = JSON.parse(gems.Gems[i].Tooltip)['Element_005']
         .value['Element_001'];
-      const skillEffect_event = !tooltip && event_tooltip.match(effectRegex);
+      const skillEffect_event =
+        tooltip && event_tooltip && event_tooltip.match(effectRegex);
       const skillEffect = tooltip && tooltip.match(effectRegex);
 
       skillEffect_event &&
@@ -29,8 +30,9 @@ const CharacterGemsPart = ({ gems, getGemsList }) => {
           name: gems.Gems[i].Name.match(gemsRegex)[1],
           level: gems.Gems[i].Level,
           icon: gems.Gems[i].Icon,
-          skillName: skillEffect_event[1],
-          skillShame: skillEffect_event[2].trim(),
+          skillName: skillEffect_event !== undefined && skillEffect_event[1],
+          skillShame:
+            skillEffect_event !== undefined && skillEffect_event[2].trim(),
           grade: gems.Gems[i].Grade,
         });
 
@@ -39,8 +41,8 @@ const CharacterGemsPart = ({ gems, getGemsList }) => {
           name: gems.Gems[i].Name.match(gemsRegex)[1],
           level: gems.Gems[i].Level,
           icon: gems.Gems[i].Icon,
-          skillName: skillEffect[1],
-          skillShame: skillEffect[2].trim(),
+          skillName: skillEffect !== undefined && skillEffect[1],
+          skillShame: skillEffect !== undefined && skillEffect[2].trim(),
           grade: gems.Gems[i].Grade,
         });
     }

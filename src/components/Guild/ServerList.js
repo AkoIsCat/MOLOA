@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import { nanoid } from 'nanoid';
 
 import CommonContentBox from '../UI/CommonContentBox';
 import { useCallback } from 'react';
@@ -58,7 +57,7 @@ const ServerList = ({ getSelectedData }) => {
         {server.map((item, index) => (
           <ServerListli
             borderFirst="true"
-            key={nanoid()}
+            key={item.name}
             onClick={() => {
               selectMenuHandler(index);
               setServerName(item.name);

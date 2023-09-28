@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { getFirebaseData } from '../api/Firebase/FirebaseAxios';
 import { useQuery } from 'react-query';
@@ -28,7 +27,7 @@ const Notification = () => {
             <p>{data.Date}</p>
             <DivWrap>
               {data.Content.split('\\n').map((item) => (
-                <div key={data.id}>{item}</div>
+                <div key={`${data.id} ${data.id++}`}>{item}</div>
               ))}
             </DivWrap>
           </ContentWrap>

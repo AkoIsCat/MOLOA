@@ -7,18 +7,23 @@ import Community from './pages/Community';
 import Notification from './pages/Notification';
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
+import { QueryClient, QueryClientProvider } from 'react-query';
 
 function App() {
+  const queryClient = new QueryClient();
+
   return (
-    <Routes>
-      <Route path="/" element={<Home />} />
-      <Route path="/noti/:id" element={<Notification />} />
-      <Route path="/rank" element={<Rank />} />
-      <Route path="/guild" element={<Guild />} />
-      <Route path="/utility" element={<Utility />} />
-      <Route path="/character/:id" element={<Character />} />
-      <Route path="/community" element={<Community />} />
-    </Routes>
+    <QueryClientProvider client={queryClient}>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/noti/:id" element={<Notification />} />
+        <Route path="/rank" element={<Rank />} />
+        <Route path="/guild" element={<Guild />} />
+        <Route path="/utility" element={<Utility />} />
+        <Route path="/character/:id" element={<Character />} />
+        <Route path="/community" element={<Community />} />
+      </Routes>
+    </QueryClientProvider>
   );
 }
 

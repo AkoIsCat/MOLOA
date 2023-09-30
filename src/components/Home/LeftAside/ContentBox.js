@@ -1,6 +1,7 @@
+import React, { Fragment } from 'react';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
-import React, { Fragment } from 'react';
 import ContentBoxMain from './ContentBoxMain';
 import Loading from '../../UI/Loading';
 
@@ -8,6 +9,8 @@ const ContentBox = (props) => {
   const item = props.item;
   const DateItem = item.map((item) => new Date(Date.parse(item.Date)));
   const currentDate = new Date();
+
+  const navigate = useNavigate();
 
   const writeDate = DateItem.map((item) =>
     (currentDate.getTime() - item.getTime()) / (60 * 60 * 1000) > 24 ? (
@@ -43,7 +46,7 @@ const ContentBox = (props) => {
         id={props.type === 'moloa' ? items.id : props.id}
         key={index}
         border="true"
-        link={items.Link ? items.Link : ''}
+        link={items.type === 'moloa' ? items.Link : ''}
         type={props.type}
       >
         {items.Title}
@@ -68,11 +71,12 @@ const ContentBox = (props) => {
     <Fragment>
       <Head
         onClick={() =>
-          props.noti &&
-          window.open(
-            'https://lostark.game.onstove.com/News/Notice/List',
-            '_blank'
-          )
+          props.noti && props.type === 'loa'
+            ? window.open(
+                'https://lostark.game.onstove.com/News/Notice/List',
+                '_blank'
+              )
+            : navigate('/notilist')
         }
       >
         <div className="name">{props.title}</div>

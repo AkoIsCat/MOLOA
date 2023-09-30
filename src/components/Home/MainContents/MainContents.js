@@ -133,8 +133,9 @@ const MainContents = () => {
     };
 
     if (
-      (WEEKDAY[currentDate.getDay()] === '토' && checkAfterFiveOClock(hour)) ||
-      (WEEKDAY[currentDate.getDay()] === '일' && checkAfterFiveOClock(hour))
+      (today === '토' && checkAfterFiveOClock(hour)) ||
+      today === '일' ||
+      (today === '월' && checkBeforeFiveOClock(hour))
     ) {
       setWeekend(true);
     }

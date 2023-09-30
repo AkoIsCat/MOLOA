@@ -44,7 +44,7 @@ const CalenderList = ({
           <Absolute>
             {!weekend
               ? islandItem
-              : weekend && date.getHours <= 1
+              : weekend && date.getHours() <= 1
               ? amIslandItem
               : pmIslandItem}
           </Absolute>

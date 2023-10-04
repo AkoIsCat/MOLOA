@@ -7,65 +7,70 @@ import Loading from '../../UI/Loading';
 
 const ContentBox = (props) => {
   const item = props.item;
-  const DateItem = item.map((item) => new Date(Date.parse(item.Date)));
+  const DateItem = item && item.map((item) => new Date(Date.parse(item.Date)));
   const currentDate = new Date();
 
   const navigate = useNavigate();
 
-  const writeDate = DateItem.map((item) =>
-    (currentDate.getTime() - item.getTime()) / (60 * 60 * 1000) > 24 ? (
-      <Type key={item}>
-        <TypeTitle>공지</TypeTitle>
-        <TypeDate>{`${item.getFullYear()}.${
-          item.getMonth() + 1
-        }.${item.getDate()}`}</TypeDate>
-      </Type>
-    ) : (
-      <Type key={item}>
-        <TypeTitle>공지</TypeTitle>
-        <TypeDate>
-          {Math.floor((currentDate.getTime() - item.getTime()) / 1000 / 60) < 60
-            ? `${Math.floor(
-                (currentDate.getTime() - item.getTime()) / 1000 / 60
-              )}분 전`
-            : `${Math.floor(
-                Math.floor(
+  const writeDate =
+    DateItem &&
+    DateItem.map((item) =>
+      (currentDate.getTime() - item.getTime()) / (60 * 60 * 1000) > 24 ? (
+        <Type key={item}>
+          <TypeTitle>공지</TypeTitle>
+          <TypeDate>{`${item.getFullYear()}.${
+            item.getMonth() + 1
+          }.${item.getDate()}`}</TypeDate>
+        </Type>
+      ) : (
+        <Type key={item}>
+          <TypeTitle>공지</TypeTitle>
+          <TypeDate>
+            {Math.floor((currentDate.getTime() - item.getTime()) / 1000 / 60) <
+            60
+              ? `${Math.floor(
                   (currentDate.getTime() - item.getTime()) / 1000 / 60
-                ) / 60
-              )}시간 전`}
-        </TypeDate>
-      </Type>
-    )
-  );
+                )}분 전`
+              : `${Math.floor(
+                  Math.floor(
+                    (currentDate.getTime() - item.getTime()) / 1000 / 60
+                  ) / 60
+                )}시간 전`}
+          </TypeDate>
+        </Type>
+      )
+    );
 
-  const notiList = item.map((items, index) =>
-    item.length === index + 1 ? (
-      <ContentBoxMain
-        font="13"
-        height="30"
-        id={props.type === 'moloa' ? items.id : props.id}
-        key={index}
-        border="true"
-        link={items.type === 'moloa' ? items.Link : ''}
-        type={props.type}
-      >
-        {items.Title}
-        {writeDate[index]}
-      </ContentBoxMain>
-    ) : (
-      <ContentBoxMain
-        font="13"
-        height="30"
-        id={props.type === 'moloa' ? items.id : props.id}
-        key={index}
-        link={items.Link}
-        type={props.type}
-      >
-        {items.Title}
-        {writeDate[index]}
-      </ContentBoxMain>
-    )
-  );
+  const notiList =
+    item &&
+    item.map((items, index) =>
+      item.length === index + 1 ? (
+        <ContentBoxMain
+          font="13"
+          height="30"
+          id={props.type === 'moloa' ? items.id : props.id}
+          key={index}
+          border="true"
+          link={items.type === 'moloa' ? items.Link : ''}
+          type={props.type}
+        >
+          {items.Title}
+          {writeDate[index]}
+        </ContentBoxMain>
+      ) : (
+        <ContentBoxMain
+          font="13"
+          height="30"
+          id={props.type === 'moloa' ? items.id : props.id}
+          key={index}
+          link={items.Link}
+          type={props.type}
+        >
+          {items.Title}
+          {writeDate[index]}
+        </ContentBoxMain>
+      )
+    );
 
   return (
     <Fragment>

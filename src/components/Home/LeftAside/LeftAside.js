@@ -34,11 +34,6 @@ const LeftAside = () => {
     query: '(max-width:767px)',
   });
 
-  // 렌더링 횟수
-  // 1. noti랑 moloaNoti가 초기값인 빈 배열로 설정돼서 렌더링이 발생
-  // 2. loadLostApi 실행 후 noti의 상태가 업데이트 되어서 렌더링이 발생
-  // 3. loadMoloaNoti 실행 후 moloaNoti의 상태가 업데이트 되어서 렌더링이 발생
-
   return (
     <LeftWrap>
       <InnerContent height="auto" side={true}>

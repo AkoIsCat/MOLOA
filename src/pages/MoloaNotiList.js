@@ -26,7 +26,7 @@ const MoloaNotiList = () => {
       <ContainerBox>
         {isLoading && <Loading />}
         <PageTitle>공지사항</PageTitle>
-        {data !== undefined && (
+        {
           <List>
             {!isLoading &&
               data.reverse().map((item, index) => (
@@ -39,7 +39,7 @@ const MoloaNotiList = () => {
                 </ListItem>
               ))}
           </List>
-        )}
+        }
       </ContainerBox>
       <Footer />
     </Background>

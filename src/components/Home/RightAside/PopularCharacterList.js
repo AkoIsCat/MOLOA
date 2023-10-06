@@ -13,49 +13,51 @@ const PopularCharacterList = ({
 }) => {
   const navigate = useNavigate();
 
-  const popularCharacterList = popularCharacter.map((items, index) =>
-    popularCharacter.length === index + 1 ? (
-      <CommonContentBoxMain
-        key={index}
-        id={index}
-        font="13"
-        border="true"
-        zero="true"
-      >
-        <div>
-          <PopularText style={{ fontSize: '17px' }} index={index + 1}>
-            {index + 1}
-          </PopularText>
-          <PopularText
-            style={{ fontSize: '15px', color: '#fff' }}
-            onClick={() => {
-              navigate(`/character/${items.name}`);
-              updateCharacter(items.name, jobEngravings);
-            }}
-          >
-            {items.name}
-          </PopularText>
-        </div>
-      </CommonContentBoxMain>
-    ) : (
-      <CommonContentBoxMain key={index} id={index} font="13" zero="true">
-        <div>
-          <PopularText style={{ fontSize: '17px' }} index={index + 1}>
-            {index + 1}
-          </PopularText>
-          <PopularText
-            style={{ fontSize: '15px', color: '#fff' }}
-            onClick={() => {
-              navigate(`/character/${items.name}`);
-              updateCharacter(items.name, jobEngravings);
-            }}
-          >
-            {items.name}
-          </PopularText>
-        </div>
-      </CommonContentBoxMain>
-    )
-  );
+  const popularCharacterList =
+    popularCharacter &&
+    popularCharacter.map((items, index) =>
+      popularCharacter.length === index + 1 ? (
+        <CommonContentBoxMain
+          key={index}
+          id={index}
+          font="13"
+          border="true"
+          zero="true"
+        >
+          <div>
+            <PopularText style={{ fontSize: '17px' }} index={index + 1}>
+              {index + 1}
+            </PopularText>
+            <PopularText
+              style={{ fontSize: '15px', color: '#fff' }}
+              onClick={() => {
+                navigate(`/character/${items.name}`);
+                updateCharacter(items.name, jobEngravings);
+              }}
+            >
+              {items.name}
+            </PopularText>
+          </div>
+        </CommonContentBoxMain>
+      ) : (
+        <CommonContentBoxMain key={index} id={index} font="13" zero="true">
+          <div>
+            <PopularText style={{ fontSize: '17px' }} index={index + 1}>
+              {index + 1}
+            </PopularText>
+            <PopularText
+              style={{ fontSize: '15px', color: '#fff' }}
+              onClick={() => {
+                navigate(`/character/${items.name}`);
+                updateCharacter(items.name, jobEngravings);
+              }}
+            >
+              {items.name}
+            </PopularText>
+          </div>
+        </CommonContentBoxMain>
+      )
+    );
 
   return (
     <InnerContent height="auto" side={true}>

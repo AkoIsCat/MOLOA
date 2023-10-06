@@ -10,7 +10,7 @@ const MoloaNotification = ({ moloaIsLoading, moloaNoti }) => {
   return (
     <HeadStyle border="true">
       {moloaIsLoading && <Loading />}
-      {!moloaIsLoading && (
+      {!moloaIsLoading && moloaNoti !== undefined && (
         <p onClick={() => navigate(`/noti/${moloaNoti[0].id}`)}>
           {moloaNoti[0]?.Title}
         </p>

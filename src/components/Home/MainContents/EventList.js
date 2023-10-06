@@ -23,14 +23,16 @@ const setting = {
 };
 
 const EventList = ({ eventIsLoading, eventList }) => {
-  const eventListItem = eventList.map((item, index) => (
-    <CarouselWrap key={index}>
-      <CarouselImg key={index} src={item.Thumbnail} />
-      <CarouselDate>
-        {item.StartDate.slice(5, 10)} 부터 {item.EndDate.slice(5, 10)} 까지
-      </CarouselDate>
-    </CarouselWrap>
-  ));
+  const eventListItem =
+    eventList &&
+    eventList.map((item, index) => (
+      <CarouselWrap key={index}>
+        <CarouselImg key={index} src={item.Thumbnail} />
+        <CarouselDate>
+          {item.StartDate.slice(5, 10)} 부터 {item.EndDate.slice(5, 10)} 까지
+        </CarouselDate>
+      </CarouselWrap>
+    ));
 
   return (
     <InnerContent height="auto">

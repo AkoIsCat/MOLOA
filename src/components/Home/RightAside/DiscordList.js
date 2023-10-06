@@ -6,48 +6,50 @@ import CommonContentBoxMain from '../../UI/CommonContentBoxMain';
 import { FaDiscord } from 'react-icons/fa';
 
 const DiscordList = ({ discord, discordIsLoading }) => {
-  const discordItemList = discord.map((items, index) =>
-    discord.length === index + 1 ? (
-      <CommonContentBoxMain
-        key={index}
-        id={index}
-        font="13"
-        height="15"
-        align="center"
-        border="true"
-        link="true"
-        zero="true"
-      >
-        <div style={{ fontSize: '14px' }}>{items.ServerName}</div>
-        <div
-          style={{ fontSize: '10px', cursor: 'pointer' }}
-          onClick={() => window.open(`${items.Address}`, '_blank')}
+  const discordItemList =
+    discord &&
+    discord.map((items, index) =>
+      discord.length === index + 1 ? (
+        <CommonContentBoxMain
+          key={items.ServerName}
+          id={items.ServerName}
+          font="13"
+          height="15"
+          align="center"
+          border="true"
+          link="true"
+          zero="true"
         >
-          {items.Address}
-        </div>
-      </CommonContentBoxMain>
-    ) : (
-      <CommonContentBoxMain
-        key={index}
-        id={index}
-        font="13"
-        height="15"
-        align="center"
-        link="true"
-        zero="true"
-      >
-        <div style={{ fontSize: '14px', padding: '0 10px' }}>
-          {items.ServerName}
-        </div>
-        <div
-          style={{ fontSize: '10px', cursor: 'pointer' }}
-          onClick={() => window.open(`${items.Address}`, '_blank')}
+          <div style={{ fontSize: '14px' }}>{items.ServerName}</div>
+          <div
+            style={{ fontSize: '10px', cursor: 'pointer' }}
+            onClick={() => window.open(`${items.Address}`, '_blank')}
+          >
+            {items.Address}
+          </div>
+        </CommonContentBoxMain>
+      ) : (
+        <CommonContentBoxMain
+          key={items.ServerName}
+          id={items.ServerName}
+          font="13"
+          height="15"
+          align="center"
+          link="true"
+          zero="true"
         >
-          {items.Address}
-        </div>
-      </CommonContentBoxMain>
-    )
-  );
+          <div style={{ fontSize: '14px', padding: '0 10px' }}>
+            {items.ServerName}
+          </div>
+          <div
+            style={{ fontSize: '10px', cursor: 'pointer' }}
+            onClick={() => window.open(`${items.Address}`, '_blank')}
+          >
+            {items.Address}
+          </div>
+        </CommonContentBoxMain>
+      )
+    );
 
   return (
     <InnerContent height="auto" side={true}>

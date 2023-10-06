@@ -5,6 +5,7 @@ import {
   getEventList,
 } from '../../../api/LostArk/LostarkAxios';
 import { getFirebaseData } from '../../../api/Firebase/FirebaseAxios';
+import { useQuery } from 'react-query';
 
 import MoloaNotification from './MoloaNotification';
 import Banner from './Banner';
@@ -63,16 +64,12 @@ const MainContents = () => {
       image: 'https://i.ibb.co/yp9315G/heart.png',
     },
   ];
-  const [moloaNoti, setMoloaNoti] = useState([]);
   const [bannerUrl, setBannerUrl] = useState([]);
   const [islandList, setIslandList] = useState([]);
   const [amIslandList, setAmIslandList] = useState([]);
   const [pmIslandList, setPmIslandList] = useState([]);
-  const [eventList, setEventList] = useState([]);
   const [weekend, setWeekend] = useState(false);
   const [islandIsLoading, setIslandIsLoadig] = useState(true);
-  const [eventIsLoading, setEventIsLoading] = useState(true);
-  const [moloaIsLoading, setMoloaIsLoading] = useState(true);
   const [bannerIsLoading, setBannerIsLoading] = useState(true);
 
   function checkBeforeFiveOClock(hour) {
@@ -140,28 +137,6 @@ const MainContents = () => {
       setWeekend(true);
     }
 
-    // 이벤트
-    const loadEventList = async () => {
-      try {
-        const data = await getEventList();
-        setEventList(data);
-        setEventIsLoading(false);
-      } catch (err) {
-        console.log('LostArk EventList error!!');
-      }
-    };
-
-    // 모로아 공지
-    const loadMoloaNoti = async () => {
-      try {
-        const data = await getFirebaseData('MoloaNoti');
-        setMoloaNoti(data.reverse().splice(undefined, 1));
-        setMoloaIsLoading(false);
-      } catch {
-        console.log('MoloaNoti Error!!');
-      }
-    };
-
     // 배너
     const loadBanner = async () => {
       try {
@@ -174,16 +149,25 @@ const MainContents = () => {
     };
 
     loadCalender();
-    loadEventList();
-    loadMoloaNoti();
     loadBanner();
   }, []);
+
+  const { data: eventList, isLoading: eventIsLoading } = useQuery(
+    'eventList',
+    () => getEventList()
+  );
+
+  const { data: recentMoloaNotification, recentMoloaNotificationIsLoading } =
+    useQuery('moloaNotification', () => getFirebaseData('MoloaNoti'), {
+      refetchOnWindowFocus: false,
+      select: (data) => data.slice(0, 1),
+    });
 
   return (
     <>
       <MoloaNotification
-        moloaIsLoading={moloaIsLoading}
-        moloaNoti={moloaNoti}
+        moloaIsLoading={recentMoloaNotificationIsLoading}
+        moloaNoti={recentMoloaNotification}
       />
       <Banner bannerUrl={bannerUrl} isLoading={bannerIsLoading} />
       <CalenderList

@@ -1,6 +1,6 @@
 import styled from 'styled-components';
-import { useEffect, useState } from 'react';
 import { getFirebaseData } from '../../../api/Firebase/FirebaseAxios';
+import { useQuery } from 'react-query';
 
 import { TbMessageCircle2Filled } from 'react-icons/tb';
 import { GiFallingStar } from 'react-icons/gi';
@@ -10,71 +10,52 @@ import DiscordList from './DiscordList';
 import InquiryAndSupportBox from './InquiryAndSupportBox';
 
 const RightAside = () => {
-  const [couponCode, setCouponCode] = useState([]);
-  const [discord, setDiscord] = useState([]);
-  const [popularCharacter, setPopularCharacter] = useState([]);
-  const [jobEngravings, setJobEngravings] = useState([]);
-  const [couponIsLoading, setCouponIsLoading] = useState(true);
-  const [popularIsLoading, setPopularIsLoading] = useState(true);
-  const [discordIsLoading, setDiscordIsLoading] = useState(true);
+  const { data: couponCode, isLoading: couponIsLoading } = useQuery(
+    'couponCode',
+    () => getFirebaseData('Coupon'),
+    {
+      refetchOnWindowFocus: false,
+    }
+  );
 
-  useEffect(() => {
-    // 쿠폰코드
-    const loadCouponCode = async () => {
-      try {
-        const data = await getFirebaseData('Coupon');
-        setCouponCode(data);
-        setCouponIsLoading(false);
-      } catch {
-        console.log('CouponCode error');
-      }
-    };
+  const { data: discord, isLoading: discordIsLoading } = useQuery(
+    'discord',
+    () => getFirebaseData('Discord'),
+    {
+      refetchOnWindowFocus: false,
+      staleTime: Infinity,
+      cacheTime: Infinity,
+    }
+  );
 
-    // 디스코드
-    const loadDiscord = async () => {
-      try {
-        const data = await getFirebaseData('Discord');
-        setDiscord(data);
-        setDiscordIsLoading(false);
-      } catch {
-        console.log('Discord error!!');
-      }
-    };
+  const { data: popularCharacter, isLoading: popularIsLoading } = useQuery(
+    'populerCharacter',
+    () => getFirebaseData('CharacterSearch'),
+    {
+      select: (data) => {
+        const changeArray = changeObjectToObjectArray(data);
+        return changeArray.sort((a, b) => b.views - a.views).slice(0, 5);
+      },
+    }
+  );
 
-    // 실시간 인기 캐릭터
-    const loadPopularCharacter = async () => {
-      try {
-        const data = await getFirebaseData('CharacterSearch');
-        // 객체를 객체 배열로 만들기
-        const popularCharacterArray = Object.entries(data).map(
-          ([key, value]) => ({
-            key,
-            name: value.name,
-            views: value.views,
-          })
-        );
+  const { data: jobEngravings } = useQuery(
+    'engravings',
+    () => getFirebaseData('JobEngraving'),
+    {
+      select: (data) => Object.values(data),
+    }
+  );
 
-        // 조회수 별로 내림차순으로 정렬
-        const AscPopularCharacter = popularCharacterArray
-          .sort((a, b) => b.views - a.views)
-          .slice(0, 5);
+  function changeObjectToObjectArray(data) {
+    const changeObjectArray = Object.entries(data).map(([key, value]) => ({
+      key,
+      name: value.name,
+      views: value.views,
+    }));
 
-        setPopularCharacter(AscPopularCharacter);
-        setPopularIsLoading(false);
-      } catch {
-        console.log('PopularCharacter error!!');
-      }
-    };
-
-    const loadEngravings = async () => {
-      const data = await getFirebaseData('JobEngraving');
-      setJobEngravings(Object.values(data));
-    };
-    loadEngravings();
-    loadCouponCode();
-    loadDiscord();
-    loadPopularCharacter();
-  }, []);
+    return changeObjectArray;
+  }
 
   return (
     <>

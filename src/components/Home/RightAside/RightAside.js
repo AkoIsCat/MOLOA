@@ -44,6 +44,7 @@ const RightAside = () => {
     () => getFirebaseData('JobEngraving'),
     {
       select: (data) => Object.values(data),
+      refetchOnWindowFocus: false,
     }
   );
 

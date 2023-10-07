@@ -130,7 +130,7 @@ const MainContents = () => {
     () => getCalenderIsland(),
     {
       refetchOnWindowFocus: false,
-      staleTime: contentUpdateTime.getTime(),
+      staleTime: contentUpdateTime.getTime() - date.getTime(),
       select: (data) => {
         const extractList = extractAdventureIsland(data);
         return divideAdventureIslandsDayWeek(extractList);
@@ -143,7 +143,7 @@ const MainContents = () => {
     () => getEventList(),
     {
       refetchOnWindowFocus: false,
-      staleTime: contentUpdateTime.getTime(),
+      staleTime: contentUpdateTime.getTime() - date.getTime(),
     }
   );
 

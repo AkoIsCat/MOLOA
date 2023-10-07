@@ -1,5 +1,4 @@
 import React from 'react';
-import { useEffect, useState } from 'react';
 import {
   getCalenderIsland,
   getEventList,
@@ -76,11 +75,6 @@ const MainContents = () => {
     today === '일' ||
     (today === '월' && checkBeforeFiveOClock(hour));
 
-  const [islandList, setIslandList] = useState([]);
-  const [amIslandList, setAmIslandList] = useState([]);
-  const [pmIslandList, setPmIslandList] = useState([]);
-  const [islandIsLoading, setIslandIsLoadig] = useState(true);
-
   function checkBeforeFiveOClock(hour) {
     return hour < 5 ? true : false;
   }
@@ -89,54 +83,60 @@ const MainContents = () => {
     return hour > 5 ? true : false;
   }
 
-  useEffect(() => {
+  function extractAdventureIsland(data) {
+    const isIsland = [];
+    for (let i = 0; i < data.length; i++) {
+      const item = data[i];
+      if (item.CategoryName === '모험 섬' && item.StartTimes !== null) {
+        isIsland.push(data[i]);
+      }
+    }
+    return isIsland;
+  }
+
+  function divideAdventureIslandsDayWeek(adventureIslandList) {
+    const setWeekdayList = new Set();
+    const setWeekendAmList = new Set();
+    const setWeekendPmList = new Set();
     const currentDate =
       date.getHours() > 6 ? date : new Date(date.setDate(date.getDate() - 1));
 
-    // 캘린더
-    const loadCalender = async () => {
-      try {
-        const data = await getCalenderIsland();
-
-        const setList = new Set();
-        const setAmList = new Set();
-        const setPmList = new Set();
-        // 오늘에 해당하는 모험섬 목록 추출
-        for (let i = 0; i < data.length; i++) {
-          if (
-            data[i].CategoryName === '모험 섬' &&
-            data[i].StartTimes !== null
-          ) {
-            for (let j = 0; j < data[i].StartTimes.length; j++) {
-              const itemDate = new Date(Date.parse(data[i].StartTimes[j]));
-              if (itemDate.getDate() === currentDate.getDate()) {
-                setList.add(data[i]);
-                // 주말은 모험섬을 2번 입장할 수 있으니 오전, 오후 타임으로 구분
-                if (itemDate.getHours() === 9) {
-                  setAmList.add(data[i]);
-                }
-                if (itemDate.getHours() === 19) {
-                  setPmList.add(data[i]);
-                }
-              }
-              setIslandIsLoadig(false);
-            }
+    adventureIslandList.forEach((item) => {
+      for (let i = 0; i < item.StartTimes.length; i++) {
+        const itemDate = new Date(Date.parse(item.StartTimes[i]));
+        if (itemDate.getDate() === currentDate.getDate()) {
+          if (!weekend) {
+            setWeekdayList.add(item);
+          }
+          // 주말은 모험섬을 2번 입장할 수 있으니 오전, 오후 타임으로 구분
+          if (weekend && itemDate.getHours() === 9) {
+            setWeekendAmList.add(item);
+          }
+          if (weekend && itemDate.getHours() === 19) {
+            setWeekendPmList.add(item);
           }
         }
-        const list = [...setList];
-        const amList = [...setAmList];
-        const pmList = [...setPmList];
-        setIslandList(list);
-        setAmIslandList(amList);
-        setPmIslandList(pmList);
-      } catch (err) {
-        console.log(err);
-        console.log('LostArk Calender error!!');
       }
-    };
+    });
+    const weekdayList = [...setWeekdayList];
+    const weekendAmList = [...setWeekendAmList];
+    const weekendPmList = [...setWeekendPmList];
 
-    loadCalender();
-  }, []);
+    return { weekdayList, weekendAmList, weekendPmList };
+  }
+
+  const { data, isLoading: adventureIslandIsLoading } = useQuery(
+    'adventureIsland',
+    () => getCalenderIsland(),
+    {
+      refetchOnWindowFocus: false,
+      staleTime: contentUpdateTime.getTime(),
+      select: (data) => {
+        const extractList = extractAdventureIsland(data);
+        return divideAdventureIslandsDayWeek(extractList);
+      },
+    }
+  );
 
   const { data: eventList, isLoading: eventIsLoading } = useQuery(
     'eventList',
@@ -172,10 +172,8 @@ const MainContents = () => {
       <CalenderList
         calender={calender}
         weekend={weekend}
-        islandList={islandList}
-        amIslandList={amIslandList}
-        pmIslandList={pmIslandList}
-        islandIsLoading={islandIsLoading}
+        adventureIslandList={data}
+        adventureIslandIsLoading={adventureIslandIsLoading}
       />
       <EventList eventList={eventList} eventIsLoading={eventIsLoading} />
     </>

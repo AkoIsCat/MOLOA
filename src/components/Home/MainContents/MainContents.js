@@ -161,6 +161,7 @@ const MainContents = () => {
     () => getFirebaseData('Banner'),
     {
       refetchOnWindowFocus: false,
+      staleTime: Infinity,
     }
   );
 

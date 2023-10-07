@@ -71,10 +71,14 @@ const MainContents = () => {
       image: 'https://i.ibb.co/yp9315G/heart.png',
     },
   ];
+  const weekend =
+    (today === '토' && checkAfterFiveOClock(hour)) ||
+    today === '일' ||
+    (today === '월' && checkBeforeFiveOClock(hour));
+
   const [islandList, setIslandList] = useState([]);
   const [amIslandList, setAmIslandList] = useState([]);
   const [pmIslandList, setPmIslandList] = useState([]);
-  const [weekend, setWeekend] = useState(false);
   const [islandIsLoading, setIslandIsLoadig] = useState(true);
 
   function checkBeforeFiveOClock(hour) {
@@ -131,13 +135,6 @@ const MainContents = () => {
       }
     };
 
-    if (
-      (today === '토' && checkAfterFiveOClock(hour)) ||
-      today === '일' ||
-      (today === '월' && checkBeforeFiveOClock(hour))
-    ) {
-      setWeekend(true);
-    }
     loadCalender();
   }, []);
 

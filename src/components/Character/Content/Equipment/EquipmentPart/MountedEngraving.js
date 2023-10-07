@@ -12,7 +12,7 @@ const MountedEngraving = ({
         {mountedEngraving &&
           mountedEngraving.map((item, index) => (
             <MountedEngravingBox
-              key={item.Name}
+              key={`${item.Name} ${item.Slot}`}
               grade={mountedEngravingItem[index].slice(-10, -7)}
             >
               <img src={item.Icon} alt="장착된 각인" />

@@ -16,6 +16,13 @@ const date = new Date();
 const WEEKDAY = ['일', '월', '화', '수', '목', '금', '토'];
 const today = WEEKDAY[date.getDay()];
 const hour = date.getHours();
+const contentUpdateTime = new Date();
+contentUpdateTime.setDate(
+  date.getDate() + (date.getDay() - WEEKDAY.indexOf('수') + 1)
+);
+contentUpdateTime.setHours(10);
+contentUpdateTime.setMinutes(0);
+contentUpdateTime.setSeconds(0);
 
 const MainContents = () => {
   const calender = [
@@ -79,11 +86,8 @@ const MainContents = () => {
   }
 
   useEffect(() => {
-    const todayDate = new Date();
     const currentDate =
-      todayDate.getHours() > 6
-        ? todayDate
-        : new Date(todayDate.setDate(todayDate.getDate() - 1));
+      date.getHours() > 6 ? date : new Date(date.setDate(date.getDate() - 1));
 
     // 캘린더
     const loadCalender = async () => {
@@ -139,7 +143,11 @@ const MainContents = () => {
 
   const { data: eventList, isLoading: eventIsLoading } = useQuery(
     'eventList',
-    () => getEventList()
+    () => getEventList(),
+    {
+      refetchOnWindowFocus: false,
+      staleTime: contentUpdateTime.getTime(),
+    }
   );
 
   const { data: recentMoloaNotification, recentMoloaNotificationIsLoading } =

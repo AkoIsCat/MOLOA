@@ -8,30 +8,37 @@ import InnerContent from '../../UI/InnerContent';
 const CalenderList = ({
   calender,
   weekend,
-  islandList,
-  amIslandList,
-  pmIslandList,
-  islandIsLoading,
+  adventureIslandList,
+  adventureIslandIsLoading,
 }) => {
   const date = new Date();
 
-  const islandItem = islandList.map((item, index) =>
-    islandList.length === index + 1 ? (
+  const islandItem =
+    adventureIslandList &&
+    adventureIslandList.weekday &&
+    adventureIslandList.weekday.map((item, index) =>
+      adventureIslandList.weekdayList.length === index + 1 ? (
+        <IslandItem key={index}>{item.ContentsName}</IslandItem>
+      ) : (
+        <IslandItem key={index} border="true">
+          {item.ContentsName}
+        </IslandItem>
+      )
+    );
+
+  const amIslandItem =
+    adventureIslandList &&
+    adventureIslandList.weekendAmList &&
+    adventureIslandList.weekendAmList.map((item, index) => (
       <IslandItem key={index}>{item.ContentsName}</IslandItem>
-    ) : (
-      <IslandItem key={index} border="true">
-        {item.ContentsName}
-      </IslandItem>
-    )
-  );
+    ));
 
-  const amIslandItem = amIslandList.map((item, index) => (
-    <IslandItem key={index}>{item.ContentsName}</IslandItem>
-  ));
-
-  const pmIslandItem = pmIslandList.map((item, index) => (
-    <IslandItem key={index}>{item.ContentsName}</IslandItem>
-  ));
+  const pmIslandItem =
+    adventureIslandList &&
+    adventureIslandList.weekendPmList &&
+    adventureIslandList.weekendPmList.map((item, index) => (
+      <IslandItem key={index}>{item.ContentsName}</IslandItem>
+    ));
 
   const calenderListItem = calender.map((item, index) =>
     // 마지막 요소
@@ -90,7 +97,7 @@ const CalenderList = ({
         main="true"
         icon={<Compass />}
         itemList={calenderListItem}
-        loading={islandIsLoading}
+        loading={adventureIslandIsLoading}
       />
     </InnerContent>
   );

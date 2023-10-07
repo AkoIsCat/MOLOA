@@ -64,13 +64,11 @@ const MainContents = () => {
       image: 'https://i.ibb.co/yp9315G/heart.png',
     },
   ];
-  const [bannerUrl, setBannerUrl] = useState([]);
   const [islandList, setIslandList] = useState([]);
   const [amIslandList, setAmIslandList] = useState([]);
   const [pmIslandList, setPmIslandList] = useState([]);
   const [weekend, setWeekend] = useState(false);
   const [islandIsLoading, setIslandIsLoadig] = useState(true);
-  const [bannerIsLoading, setBannerIsLoading] = useState(true);
 
   function checkBeforeFiveOClock(hour) {
     return hour < 5 ? true : false;
@@ -136,20 +134,7 @@ const MainContents = () => {
     ) {
       setWeekend(true);
     }
-
-    // 배너
-    const loadBanner = async () => {
-      try {
-        const data = await getFirebaseData('Banner');
-        setBannerUrl(data.reverse().splice(undefined, 1));
-        setBannerIsLoading(false);
-      } catch {
-        console.log('Banner Error!!');
-      }
-    };
-
     loadCalender();
-    loadBanner();
   }, []);
 
   const { data: eventList, isLoading: eventIsLoading } = useQuery(
@@ -162,6 +147,14 @@ const MainContents = () => {
       refetchOnWindowFocus: false,
       select: (data) => data.slice(0, 1),
     });
+
+  const { data: bannerUrl, isLoading: bannerIsLoading } = useQuery(
+    'banner',
+    () => getFirebaseData('Banner'),
+    {
+      refetchOnWindowFocus: false,
+    }
+  );
 
   return (
     <>

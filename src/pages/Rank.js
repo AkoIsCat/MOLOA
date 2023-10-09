@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import { useState, useEffect } from 'react';
 import { getFirebaseData } from '../api/Firebase/FirebaseAxios';
+import { useQuery } from 'react-query';
 
 import Header from '../components/Header/Header';
 import Background from '../components/UI/BackBox';
@@ -12,10 +13,6 @@ import EngravingsListBox from '../components/Rank/EngravingsListBox';
 import Footer from '../components/UI/Footer';
 
 const Rank = () => {
-  const [characterList, setCharacterList] = useState();
-  const [firebaseClassList, setClassList] = useState();
-  const [JobEngravings, setJobEngravings] = useState([]);
-  const [classIsLoading, setClassIsLoading] = useState(true);
   const [serverName, setServerName] = useState(); // 선택된 서버 이름
   const [currentClassTab, setCurrentClassTab] = useState(); // 직업 네비게이션
   const [className, setClassName] = useState(); // 선택된 직업 이름
@@ -26,59 +23,60 @@ const Rank = () => {
     click: false,
   }); // 직각2 네비게이션
 
-  useEffect(() => {
-    const loadCharacter = async () => {
-      try {
-        const data = await getFirebaseData('CharacterSearch');
+  const { data: characterList } = useQuery(
+    'characterList',
+    () => getFirebaseData('CharacterSearch'),
+    {
+      select: (data) => {
+        const changeArray = changeObjectToObjectArray(data);
+        const sortCharacterList = sortArray(changeArray);
+        return sortCharacterList;
+      },
+      refetchOnWindowFocus: false,
+    }
+  );
 
-        // 객체를 객체 배열로 만들기
-        const popularCharacterArray = [];
-        for (const [key, value] of Object.entries(data)) {
-          popularCharacterArray.push({
-            key,
-            name: value.name,
-            views: value.views,
-            class: value.class,
-            engravings: value.engravings,
-            guild: value.guild,
-            level: value.level,
-            server: value.server,
-          });
-        }
-        if (popularCharacterArray) {
-          const sortCharacterList = popularCharacterArray.sort((a, b) => {
-            const itemMaxLevelA = parseFloat(a.level.replace(',', '')); // 쉼표 제거 후 숫자로 변환
-            const itemMaxLevelB = parseFloat(b.level.replace(',', '')); // 쉼표 제거 후 숫자로 변환
-            return itemMaxLevelB - itemMaxLevelA; // 내림차순으로 정렬
-          });
-          setCharacterList(sortCharacterList);
-        }
-      } catch (error) {
-        console.log('PopularCharacter error!!', error);
-      }
-    };
+  const { data: classList, isLoading: classIsLoading } = useQuery(
+    'classList',
+    () => getFirebaseData('ClassList'),
+    {
+      refetchOnWindowFocus: false,
+      staleTime: Infinity,
+      cacheTime: Infinity,
+    }
+  );
 
-    const loadClassList = async () => {
-      try {
-        const data = await getFirebaseData('ClassList');
-        setClassList(data);
-        setClassIsLoading(false);
-      } catch (err) {
-        console.log(err);
-        console.log('ClassList load Error!!');
-      }
-    };
+  const { data: jobEngravings } = useQuery(
+    'jobEngravings',
+    () => getFirebaseData('JobEngraving'),
+    {
+      select: (data) => Object.values(data),
+      refetchOnWindowFocus: false,
+    }
+  );
 
-    const loadEngravings = async () => {
-      const data = await getFirebaseData('JobEngraving');
-      setJobEngravings(Object.values(data));
-    };
-    loadEngravings();
-    loadCharacter();
-    loadClassList();
-  }, []);
+  function changeObjectToObjectArray(data) {
+    const changeObjectArray = Object.entries(data).map(([, value]) => ({
+      name: value.name,
+      views: value.views,
+      class: value.class,
+      engravings: value.engravings,
+      guild: value.guild,
+      level: value.level,
+      server: value.server,
+    }));
 
-  const classList = firebaseClassList;
+    return changeObjectArray;
+  }
+
+  function sortArray(array) {
+    const sortCharacterList = array.sort((a, b) => {
+      const itemMaxLevelA = parseFloat(a.level.replace(',', '')); // 쉼표 제거 후 숫자로 변환
+      const itemMaxLevelB = parseFloat(b.level.replace(',', '')); // 쉼표 제거 후 숫자로 변환
+      return itemMaxLevelB - itemMaxLevelA; // 내림차순으로 정렬
+    });
+    return sortCharacterList;
+  }
 
   const getSelectedData = (serverName) => {
     setServerName(serverName);
@@ -106,7 +104,7 @@ const Rank = () => {
           currentClassEngraving={currentClassEngraving}
           currentClassEngraving2={currentClassEngraving2}
           serverName={serverName}
-          engraving={JobEngravings}
+          engraving={jobEngravings}
         />
         <ServerWrap>
           <ClassListBox

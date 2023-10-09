@@ -46,9 +46,10 @@ const ServerList = ({ getSelectedData }) => {
     }
   }, [isSelect, serverName, sendData]);
 
-  const selectMenuHandler = (index) => {
+  const selectMenuHandler = (index, name) => {
     setCurrentTab(index);
     setIsSelect(true);
+    setServerName(name);
   };
 
   const serverListItem = (
@@ -59,8 +60,7 @@ const ServerList = ({ getSelectedData }) => {
             borderFirst="true"
             key={item.name}
             onClick={() => {
-              selectMenuHandler(index);
-              setServerName(item.name);
+              selectMenuHandler(index, item.name);
             }}
             active={currentTab === index && 'true'}
           >

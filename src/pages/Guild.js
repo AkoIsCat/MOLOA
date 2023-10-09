@@ -22,7 +22,7 @@ const Guild = () => {
   contentUpdateTime.setSeconds(0);
 
   const [selectServer, setSelectServer] = useState(false); // 초기 서버 선택 여부
-  const [serverName, setServerName] = useState(undefined); // 선택된 서버 이름
+  const [serverName, setServerName] = useState(); // 선택된 서버 이름
 
   const { data: guildRanking, isLoading: guildRankingIsLoading } = useQuery(
     'guildRank',

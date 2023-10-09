@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { getFirebaseData } from '../api/Firebase/FirebaseAxios';
 import { useQuery } from 'react-query';
 

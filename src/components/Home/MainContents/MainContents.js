@@ -11,19 +11,19 @@ import Banner from './Banner';
 import CalenderList from './CalenderList';
 import EventList from './EventList';
 
-const date = new Date();
-const WEEKDAY = ['일', '월', '화', '수', '목', '금', '토'];
-const today = WEEKDAY[date.getDay()];
-const hour = date.getHours();
-const contentUpdateTime = new Date();
-contentUpdateTime.setDate(
-  date.getDate() + (date.getDay() - WEEKDAY.indexOf('수') + 1)
-);
-contentUpdateTime.setHours(10);
-contentUpdateTime.setMinutes(0);
-contentUpdateTime.setSeconds(0);
-
 const MainContents = () => {
+  const date = new Date();
+  const WEEKDAY = ['일', '월', '화', '수', '목', '금', '토'];
+  const today = WEEKDAY[date.getDay()];
+  const hour = date.getHours();
+  const contentUpdateTime = new Date();
+  contentUpdateTime.setDate(
+    date.getDate() + (date.getDay() - WEEKDAY.indexOf('수') + 1)
+  );
+  contentUpdateTime.setHours(10);
+  contentUpdateTime.setMinutes(0);
+  contentUpdateTime.setSeconds(0);
+
   const calender = [
     {
       name: '필드보스',

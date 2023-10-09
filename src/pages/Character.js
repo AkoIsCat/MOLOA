@@ -14,6 +14,7 @@ import {
   getGems,
   getEquipment,
 } from '../api/LostArk/LostarkAxios';
+import { useQuery } from 'react-query';
 
 import Aside from '../components/Character/Side/Aside'; // 좌측 캐릭터 정보
 import Header from '../components/Header/Header'; // 헤더
@@ -28,18 +29,9 @@ import Footer from '../components/UI/Footer';
 
 const Character = () => {
   const [isExist, setIsExist] = useState();
-  const [profile, setProfile] = useState(); // 기본 스탯
   const [holdingCharacter, setHoldingCharacter] = useState();
-  const [equipment, setEquipment] = useState(); // 장비
-  const [avatars, setAvatars] = useState(); // 아바타
-  const [combatSkills, setCombatSkills] = useState(); // 스킬
-  const [engraving, setEngraving] = useState(); // 각인
-  const [cards, setCards] = useState(); // 카드
-  const [gems, setGems] = useState(); // 보석
-  const [collectibles, setCollectibles] = useState(); // 수집품
 
   const [currentTab, setCurrentTab] = useState(0); // 네비게이션 탭
-  const [characterIsLoading, setCharacterIsLoading] = useState(true); // 데이터 로딩
   const [currentGems, setCurrentGems] = useState([]); // 스킬 - 보석 정보 전달
 
   const { id } = useParams();
@@ -60,141 +52,72 @@ const Character = () => {
       }
     };
 
-    const loadProfile = async () => {
-      try {
-        const data = await getProfile(id);
-        setProfile(data);
-      } catch (err) {
-        console.log('LostArk Profile error!!');
-      }
-    };
-
-    const loadEquipment = async () => {
-      try {
-        const data = await getEquipment(id);
-
-        setEquipment(data);
-      } catch (err) {
-        console.log('LostArk Equipment error!!');
-      }
-    };
-
-    const loadAvatars = async () => {
-      try {
-        const data = await getAvatars(id);
-
-        setAvatars(data);
-      } catch (err) {
-        console.log('LostArk Avatars error!!');
-      }
-    };
-
-    const loadCombatSkills = async () => {
-      try {
-        const data = await getCombatSkills(id);
-
-        setCombatSkills(data);
-      } catch (err) {
-        console.log('LostArk CombatSkills error!!');
-      }
-    };
-
-    const loadEngravings = async () => {
-      try {
-        const data = await getEngravings(id);
-
-        setEngraving(data);
-      } catch (err) {
-        console.log('LostArk Engravings error!!');
-      }
-    };
-
-    const loadCards = async () => {
-      try {
-        const data = await getCards(id);
-
-        setCards(data);
-      } catch (err) {
-        console.log('LostArk Cards error!!');
-      }
-    };
-
-    const loadGems = async () => {
-      try {
-        const data = await getGems(id);
-
-        setGems(data);
-      } catch (err) {
-        console.log('LostArk Gems error!!');
-      }
-    };
-
-    const loadCollectibles = async () => {
-      try {
-        const data = await getCollectibles(id);
-
-        setCollectibles(data);
-        setCharacterIsLoading(false);
-      } catch (err) {
-        console.log('LostArk Collectibles error!!');
-      }
-    };
-
     loadCharacterTrue();
-    loadProfile();
-    loadEquipment();
-    loadAvatars();
-    loadCombatSkills();
-    loadEngravings();
-    loadCards();
-    loadGems();
-    loadCollectibles();
   }, [id]);
 
-  // -------------------------- 카드
+  const { data: profile } = useQuery(['profile', id], () => getProfile(id), {
+    enabled: !!id,
+    refetchOnWindowFocus: false,
+    staleTime: 1000 * 60 * 5,
+  });
 
-  const cardList = []; // 장착 카드 목록
-  const effectList = []; // 카드 효과 목록
-  const totalEffect = []; // 총 카드 효과 목록
-
-  // 필요한 카드 정보 추출
-  if (cards) {
-    for (let i = 0; i <= cards.Cards.length - 1; i++) {
-      cardList.push(cards.Cards[i]);
+  const { data: equipment } = useQuery(
+    ['equipment', id],
+    () => getEquipment(id),
+    {
+      enabled: !!id,
+      refetchOnWindowFocus: false,
+      staleTime: 1000 * 60 * 5,
     }
+  );
 
-    for (let key in cards.Effects) {
-      const value = cards.Effects[key];
+  const { data: avatars } = useQuery(['avatars', id], () => getAvatars(id), {
+    enabled: !!id,
+    refetchOnWindowFocus: false,
+    staleTime: 1000 * 60 * 5,
+  });
 
-      const regex = /\d+/g;
-
-      const lastEffectCard =
-        value.Items[value.Items.length - 1] &&
-        value.Items[value.Items.length - 1].Name.split('(');
-
-      const matches =
-        lastEffectCard && lastEffectCard[1] && lastEffectCard[1].match(regex);
-
-      effectList.push({
-        slots: value.CardSlots,
-        index: value.Index,
-        items: value.Items,
-        lastEffect: lastEffectCard && lastEffectCard[0],
-        awake: matches && matches,
-      });
+  const { data: engraving } = useQuery(
+    ['engraving', id],
+    () => getEngravings(id),
+    {
+      enabled: !!id,
+      refetchOnWindowFocus: false,
+      staleTime: 1000 * 60 * 5,
     }
+  );
 
-    for (let j = 0; j <= effectList.length - 1; j++) {
-      for (let i = 0; i <= effectList[j].items.length - 1; i++) {
-        totalEffect.push({
-          Name: effectList[j].items[i].Name,
-          Description: effectList[j].items[i].Description,
-        });
-      }
+  const { data: combatSkills } = useQuery(
+    ['combatSkills', id],
+    () => getCombatSkills(id),
+    {
+      enabled: !!id,
+      refetchOnWindowFocus: false,
+      staleTime: 1000 * 60 * 5,
     }
-  }
+  );
 
-  // --------------------- 수집 탭
+  const { data: cards } = useQuery(['cards', id], () => getCards(id), {
+    enabled: !!id,
+    refetchOnWindowFocus: false,
+    staleTime: 1000 * 60 * 5,
+  });
+
+  const { data: gems } = useQuery(['gems', id], () => getGems(id), {
+    enabled: !!id,
+    refetchOnWindowFocus: false,
+    staleTime: 1000 * 60 * 5,
+  });
+
+  const { data: collectibles, isLoading: characterIsLoading } = useQuery(
+    ['collectibles', id],
+    () => getCollectibles(id),
+    {
+      enabled: !!id,
+      refetchOnWindowFocus: false,
+      staleTime: 1000 * 60 * 5,
+    }
+  );
 
   const selectMenuHandler = (index) => {
     setCurrentTab(index);

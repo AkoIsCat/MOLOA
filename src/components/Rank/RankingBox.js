@@ -1,9 +1,7 @@
-import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
 import Notice from '../UI/Notice';
-import Loading from '../UI/Loading';
-import { updateCharacter } from '../../utils/updateCharacter';
+import CharacterRank from './CharacterRank';
 
 const RankingBox = ({
   characterList,
@@ -13,75 +11,6 @@ const RankingBox = ({
   serverName,
   engraving,
 }) => {
-  const navigate = useNavigate();
-
-  const RenderCharacterList = () => {
-    if (!characterList) {
-      return <Loading />;
-    }
-
-    const filteredCharacters = characterList.filter((item) => {
-      const isClassMatch =
-        !className || className === '전체' || item.class === className;
-      const isServerMatch =
-        !serverName || serverName === '전체' || item.server === serverName;
-      const hasEngravingMatch =
-        (!currentClassEngraving.click ||
-          (item.engravings &&
-            item.engravings.some(
-              (engraving) => engraving.name === currentClassEngraving.name
-            ))) &&
-        (!currentClassEngraving2.click ||
-          (item.engravings &&
-            item.engravings.some(
-              (engraving) => engraving.name === currentClassEngraving2.name
-            )));
-      return isClassMatch && isServerMatch && hasEngravingMatch;
-    });
-
-    return (
-      <div style={{ margin: '15px 0' }}>
-        <ul style={{ flexDirection: 'column', border: '0' }}>
-          {filteredCharacters.map((item, index) => (
-            <div className="listWrap" key={item.name}>
-              <li className="rank">{index + 1}</li>
-              <li
-                className="guildName"
-                style={{ cursor: 'pointer' }}
-                onClick={() => {
-                  navigate(`/character/${item.name}`);
-                  updateCharacter(item.name, engraving);
-                }}
-              >
-                {item.name}
-              </li>
-              <li className="serverName">{item.level}</li>
-              <li className="memberCount">{item.class}</li>
-              <li className="masterName">
-                {item.engravings !== undefined &&
-                  item.engravings.map((engraving, idx) =>
-                    engraving !== undefined ? (
-                      <div key={`${engraving.name} ${idx}`}>
-                        <span className="enName">{engraving.name}</span>
-                        <span className="enLevel">{engraving.level}</span>
-                      </div>
-                    ) : (
-                      <li
-                        className="masterName"
-                        key={`${engraving.name} ${idx}`}
-                      ></li>
-                    )
-                  )}
-              </li>
-              <li className="memberCount">{item.server}</li>
-              <li className="guildName">{item.guild}</li>
-            </div>
-          ))}
-        </ul>
-      </div>
-    );
-  };
-
   return (
     <RankingWrap>
       <>
@@ -102,7 +31,14 @@ const RankingBox = ({
               <li className="guildName">길드</li>
             </ul>
           </div>
-          <RenderCharacterList />
+          <CharacterRank
+            characterList={characterList}
+            className={className}
+            serverName={serverName}
+            currentClassEngraving={currentClassEngraving}
+            currentClassEngraving2={currentClassEngraving2}
+            engraving={engraving}
+          />
         </RankIndexWrap>
       </>
     </RankingWrap>

@@ -61,10 +61,10 @@ const EngravingsListBox = ({
                 >
                   <ServerListli
                     borderFirst="true"
-                    key={
+                    key={`${
                       classList &&
                       classList[currentClassTab].engraving.engraving1
-                    }
+                    } 1`}
                     onClick={() => {
                       selectedEngreving1(index, item);
                     }}
@@ -80,10 +80,10 @@ const EngravingsListBox = ({
                   </ServerListli>
                   <ServerListli
                     borderFirst="true"
-                    key={
+                    key={`${
                       classList &&
                       classList[currentClassTab].engraving.engraving2
-                    }
+                    } 2`}
                     onClick={() => {
                       selectedEngreving2(index, item);
                     }}

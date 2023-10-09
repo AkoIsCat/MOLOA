@@ -1,28 +1,28 @@
 import styled from 'styled-components';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useEffect } from 'react';
 import { getFirebaseData } from '../../api/Firebase/FirebaseAxios';
 import { updateCharacter } from '../../utils/updateCharacter';
 import { NavLink } from 'react-router-dom';
+import { useQuery } from 'react-query';
+
 import { BsSearch } from 'react-icons/bs';
 
 const Search = () => {
   const [searchInput, setSearchInput] = useState('');
   const trimInput = searchInput.trim();
-  const [JobEngravings, setJobEngravings] = useState([]);
-
-  const engraving = JobEngravings;
 
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const loadEngravings = async () => {
-      const data = await getFirebaseData('JobEngraving');
-      setJobEngravings(Object.values(data));
-    };
-    loadEngravings();
-  }, []);
+  const { data: jobEngravings } = useQuery(
+    'jobEngravings',
+    () => getFirebaseData('JobEngraving'),
+    {
+      select: (data) => Object.values(data),
+      refetchOnWindowFocus: false,
+      staleTime: Infinity,
+    }
+  );
 
   const onSubmitHandler = async (e) => {
     e.preventDefault();
@@ -31,7 +31,7 @@ const Search = () => {
       navigate(`/character/${trimInput}`);
       setSearchInput('');
     }
-    updateCharacter(trimInput, engraving);
+    updateCharacter(trimInput, jobEngravings);
   };
 
   return (

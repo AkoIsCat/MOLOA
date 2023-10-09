@@ -1,36 +1,38 @@
 import styled from 'styled-components';
+import { useState } from 'react';
+import { getGuildRanking } from '../api/LostArk/LostarkAxios';
+import { useQuery } from 'react-query';
 
 import Header from '../components/Header/Header';
 import Background from '../components/UI/BackBox';
+import Footer from '../components/UI/Footer';
 import { Container } from './Home';
 import ServerList from '../components/Guild/ServerList';
 import RankingBox from '../components/Guild/RankingBox';
 
-import { useEffect, useState } from 'react';
-import Footer from '../components/UI/Footer';
-import { getGuildRanking } from '../api/LostArk/LostarkAxios';
-
 const Guild = () => {
-  const [guildRanking, setGuildRanking] = useState();
-  const [isLoading, setIsLoading] = useState(true);
+  const WEEKDAY = ['일', '월', '화', '수', '목', '금', '토'];
+  const date = new Date();
+  const contentUpdateTime = new Date();
+  contentUpdateTime.setDate(
+    date.getDate() + (date.getDay() - WEEKDAY.indexOf('수') + 1)
+  );
+  contentUpdateTime.setHours(10);
+  contentUpdateTime.setMinutes(0);
+  contentUpdateTime.setSeconds(0);
+
   const [selectServer, setSelectServer] = useState(false); // 초기 서버 선택 여부
-  const [serverName, setServerName] = useState(); // 선택된 서버 이름
+  const [serverName, setServerName] = useState(undefined); // 선택된 서버 이름
 
-  useEffect(() => {
-    if (serverName !== undefined) {
-      const loadGuildRanking = async () => {
-        try {
-          const data = await getGuildRanking(serverName);
-          setGuildRanking(data);
-          setIsLoading(false);
-        } catch (err) {
-          console.log('LostArk loadGuildRanking error!!');
-        }
-      };
-
-      loadGuildRanking();
+  const { data: guildRanking, isLoading: guildRankingIsLoading } = useQuery(
+    'guildRank',
+    () => getGuildRanking(serverName),
+    {
+      refetchOnWindowFocus: false,
+      staleTime: contentUpdateTime.getTime() - date.getTime(),
+      enabled: !!selectServer,
     }
-  }, [serverName]);
+  );
 
   const getSelectedData = (isSelected, serverName) => {
     setSelectServer(isSelected);
@@ -45,7 +47,7 @@ const Guild = () => {
           isSelect={selectServer}
           serverName={serverName}
           guildRanking={guildRanking}
-          isLoading={isLoading}
+          isLoading={guildRankingIsLoading}
         />
         <ServerList getSelectedData={getSelectedData} />
       </ContainerBox>

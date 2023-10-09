@@ -40,7 +40,7 @@ const RightAside = () => {
   );
 
   const { data: jobEngravings } = useQuery(
-    'engravings',
+    'jobEngravings',
     () => getFirebaseData('JobEngraving'),
     {
       select: (data) => Object.values(data),

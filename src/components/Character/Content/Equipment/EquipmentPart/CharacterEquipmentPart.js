@@ -59,7 +59,7 @@ const CharacterEquipmentPart = ({ equipment, engraving }) => {
             tooltip.topStr.includes('단계') &&
             tooltip.topStr.replace(removeFontTagRegex, '').split('<br>')[1];
           filterValue.push({
-            Elixir: tooltip.contentStr['Element_000']?.contentStr,
+            Elixir: tooltip?.contentStr['Element_000']?.contentStr,
             Elixir2: tooltip?.contentStr['Element_001']?.contentStr,
             activate: activateElixir,
           });
@@ -567,7 +567,7 @@ const CharacterEquipmentPart = ({ equipment, engraving }) => {
                 stoneIndex={stoneIndex}
                 transcendenceTotalNum={
                   equipment &&
-                  equipmentList[5]?.TooltipValue.transcendenceTotalNum
+                  equipmentList[5]?.TooltipValue?.transcendenceTotalNum
                 }
               />
             </AccessoriesInner>

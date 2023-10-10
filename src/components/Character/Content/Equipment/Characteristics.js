@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import React, { useState } from 'react';
 
 const Characteristics = ({ combatSkills, profile, engraving }) => {
-  // ------------------------- 특성 탭
+  // ------------------------- 특성
   const combatCharacteristics = [];
   const basicCharacteristics = [];
 
@@ -37,6 +37,26 @@ const Characteristics = ({ combatSkills, profile, engraving }) => {
     }
   }
 
+  // ------------------------ 트라이포드
+
+  const filterSkills = []; // 사용중인 스킬
+
+  if (combatSkills) {
+    for (let key in combatSkills) {
+      if (combatSkills[key].Level >= 4) {
+        filterSkills.push(combatSkills[key]);
+      }
+    }
+
+    for (let key in filterSkills) {
+      for (let keys in filterSkills[key].Tripods) {
+        if (filterSkills[key].Tripods[keys].IsSelected === false) {
+          delete filterSkills[key].Tripods[keys];
+        }
+      }
+    }
+  }
+
   // 툴팁 표시를 위한 컴포넌트
   const EngravingEffectTooltip = ({ item }) => {
     const [showTooltip, setShowTooltip] = useState(false);
@@ -62,26 +82,6 @@ const Characteristics = ({ combatSkills, profile, engraving }) => {
     );
   };
 
-  // --------------------------
-
-  const filterSkills = []; // 사용중인 스킬
-
-  if (combatSkills) {
-    for (let key in combatSkills) {
-      if (combatSkills[key].Level >= 4) {
-        filterSkills.push(combatSkills[key]);
-      }
-    }
-
-    for (let key in filterSkills) {
-      for (let keys in filterSkills[key].Tripods) {
-        if (filterSkills[key].Tripods[keys].IsSelected === false) {
-          delete filterSkills[key].Tripods[keys];
-        }
-      }
-    }
-  }
-
   return (
     <ContentWrapWrap
       style={{ display: 'flex', justifyContent: 'space-between' }}
@@ -91,8 +91,8 @@ const Characteristics = ({ combatSkills, profile, engraving }) => {
           <div style={{ margin: '10px 0' }}>
             <CharacteristicsBox>전투 특성</CharacteristicsBox>
             <CombatWrap>
-              {combatCharacteristics.map((item, index) => (
-                <div key={index} className="combatItemWrap">
+              {combatCharacteristics.map((item) => (
+                <div key={item.Type} className="combatItemWrap">
                   <div className="type">{item.Type}</div>
                   <div className="value">{item.Value}</div>
                 </div>
@@ -102,8 +102,8 @@ const Characteristics = ({ combatSkills, profile, engraving }) => {
           <div style={{ margin: '10px 0' }}>
             <CharacteristicsBox>기본 특성</CharacteristicsBox>
             <BasicWrap>
-              {basicCharacteristics.map((item, index) => (
-                <div key={index} className="basicItemWrap">
+              {basicCharacteristics.map((item) => (
+                <div key={item.Type} className="basicItemWrap">
                   <div className="type">{item.Type}</div>
                   <div className="value">{item.Value}</div>
                 </div>
@@ -116,14 +116,14 @@ const Characteristics = ({ combatSkills, profile, engraving }) => {
         <NameAndLevelWrap>
           <CharacteristicsBox>각인</CharacteristicsBox>
           <div className="nameAndLevelWrap">
-            {engravingEffect.map((item, index) => (
-              <div key={index}>{item.level}</div>
+            {engravingEffect.map((item) => (
+              <div key={item.name}>{item.level}</div>
             ))}
           </div>
         </NameAndLevelWrap>
         <EffectListWrap>
-          {engravingEffect.map((item, index) => (
-            <EngravingEffectTooltip item={item} key={index} />
+          {engravingEffect.map((item) => (
+            <EngravingEffectTooltip item={item} key={item.name} />
           ))}
         </EffectListWrap>
       </ContentWrap>
@@ -133,15 +133,15 @@ const Characteristics = ({ combatSkills, profile, engraving }) => {
             트라이포드
           </CharacteristicsBox>
           <SkillWrap>
-            {filterSkills.map((item, index) => (
-              <div className="skillWrap" key={index}>
+            {filterSkills.map((item) => (
+              <div className="skillWrap" key={item.Name}>
                 <div className="skillName">{item.Name}</div>
                 <TripodWrap>
                   {item.Tripods.map(
-                    (tripodItem, indexs) =>
+                    (tripodItem) =>
                       tripodItem && (
                         <SkillLevel
-                          key={indexs}
+                          key={`${item.Name} ${tripodItem.Tier} ${tripodItem.Level}`}
                           className={`${tripodItem.Tier} skillLevel`}
                           tier={tripodItem.Tier}
                         >

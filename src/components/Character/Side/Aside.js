@@ -1,8 +1,9 @@
 import styled from 'styled-components';
 import { useMediaQuery } from 'react-responsive';
-import { useEffect, useState, Fragment } from 'react';
+import { Fragment } from 'react';
 import { useParams } from 'react-router-dom';
 import { getProfile, getCollectibles } from '../../../api/LostArk/LostarkAxios';
+import { useQuery } from 'react-query';
 
 import { Head } from '../../UI/CommonContentBox';
 import { Content } from '../../UI/CommonContentBoxMain';
@@ -30,33 +31,23 @@ const collectImg = [
 ];
 
 const Aside = () => {
-  const [profile, setProfile] = useState(); // 기본 스탯
-  const [collectibles, setCollectibles] = useState(); // 수집품
-
   const { id } = useParams();
 
-  useEffect(() => {
-    const loadProfile = async () => {
-      try {
-        const data = await getProfile(id);
-        setProfile(data);
-      } catch (err) {
-        console.log('LostArk Profile error!!');
-      }
-    };
+  const { data: profile } = useQuery(['profile', id], () => getProfile(id), {
+    enabled: !!id,
+    refetchOnWindowFocus: false,
+    staleTime: 1000 * 60 * 5,
+  });
 
-    const loadCollectibles = async () => {
-      try {
-        const data = await getCollectibles(id);
-        setCollectibles(data);
-      } catch (err) {
-        console.log('LostArk Collectibles error!!');
-      }
-    };
-
-    loadProfile();
-    loadCollectibles();
-  }, [id]);
+  const { data: collectibles } = useQuery(
+    ['collectibles', id],
+    () => getCollectibles(id),
+    {
+      enabled: !!id,
+      refetchOnWindowFocus: false,
+      staleTime: 1000 * 60 * 5,
+    }
+  );
 
   const isPc = useMediaQuery({
     query: '(min-width:1024px)',
@@ -112,7 +103,7 @@ const Aside = () => {
   const collectList =
     collectibles &&
     collectibles.map((item, index) => (
-      <CollectWrap key={index}>
+      <CollectWrap key={item.Type}>
         <div>
           <img src={collectImg[index]} alt="이그네아" />
           <p>{item.Point}</p>

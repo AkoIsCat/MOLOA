@@ -64,25 +64,13 @@ const CharacterList = ({ holdingCharacter, selectMenuHandler }) => {
       }
       classificationByServer[name].push({ obj });
     });
-
-    // 서버별 캐릭터 순으로 정렬(내림차순)
-    const sortedObj = Object.keys(classificationByServer)
-      .sort(
-        (a, b) =>
-          classificationByServer[b].length - classificationByServer[a].length
-      )
-      .reduce((acc, key) => {
-        acc[key] = classificationByServer[key];
-        return acc;
-      }, {});
-
-    const keys = Object.keys(sortedObj);
+    const keys = Object.keys(classificationByServer);
     serverNameList = keys.map((key) => `${key}`);
 
     // 배열 안에 대입
-    for (let key in sortedObj) {
+    for (let key in classificationByServer) {
       holdingCharacterList.push({
-        [key]: sortedObj[key],
+        [key]: classificationByServer[key],
       });
     }
   }
@@ -91,57 +79,58 @@ const CharacterList = ({ holdingCharacter, selectMenuHandler }) => {
     <div style={{ padding: '0 10px', width: '100%' }}>
       <ContentWrap character="true">
         <div style={{ width: '100%', padding: '0 20px' }}>
-          {serverNameList.map((serverName, index) => (
-            <Fragment key={serverName}>
-              <ServerNameBox>{serverName}</ServerNameBox>
-              <CharacterProfileWrap>
-                {holdingCharacterList[index][serverName].map((items) => (
-                  <CharacterProfile
-                    key={items.obj.CharacterName}
-                    CharacterClass={items.obj.CharacterClassName.replace(
-                      /'/g,
-                      ''
-                    )}
-                  >
-                    <div className="profileWrap">
-                      <div className="infoWrap">
-                        <div className="classImg"></div>
-                        <div className="classInfoCtn">
-                          <div className="classNameWrap">
-                            <div className="serverName">
-                              {items.obj.ServerName}
+          {serverNameList &&
+            serverNameList.map((serverName, index) => (
+              <Fragment key={serverName}>
+                <ServerNameBox>{serverName}</ServerNameBox>
+                <CharacterProfileWrap>
+                  {holdingCharacterList[index][serverName].map((items) => (
+                    <CharacterProfile
+                      key={items.obj.CharacterName}
+                      CharacterClass={items.obj.CharacterClassName.replace(
+                        /'/g,
+                        ''
+                      )}
+                    >
+                      <div className="profileWrap">
+                        <div className="infoWrap">
+                          <div className="classImg"></div>
+                          <div className="classInfoCtn">
+                            <div className="classNameWrap">
+                              <div className="serverName">
+                                {items.obj.ServerName}
+                              </div>
                             </div>
-                          </div>
-                          <div className="classNameWrap">
-                            <div className="className">
-                              {items.obj.CharacterClassName}
+                            <div className="classNameWrap">
+                              <div className="className">
+                                {items.obj.CharacterClassName}
+                              </div>
                             </div>
-                          </div>
-                          <div className="classLevelWrap">
-                            <div className="characterLevel">
-                              Lv.{items.obj.CharacterLevel}
-                            </div>
-                            <div className="itemLevel">
-                              {items.obj.ItemMaxLevel}
+                            <div className="classLevelWrap">
+                              <div className="characterLevel">
+                                Lv.{items.obj.CharacterLevel}
+                              </div>
+                              <div className="itemLevel">
+                                {items.obj.ItemMaxLevel}
+                              </div>
                             </div>
                           </div>
                         </div>
+                        <div
+                          className="characterName"
+                          onClick={() => {
+                            navigate(`/character/${items.obj.CharacterName}`);
+                            selectMenuHandler(0);
+                          }}
+                        >
+                          {items.obj.CharacterName}
+                        </div>
                       </div>
-                      <div
-                        className="characterName"
-                        onClick={(e) => {
-                          navigate(`/character/${items.obj.CharacterName}`);
-                          selectMenuHandler(0);
-                        }}
-                      >
-                        {items.obj.CharacterName}
-                      </div>
-                    </div>
-                  </CharacterProfile>
-                ))}
-              </CharacterProfileWrap>
-            </Fragment>
-          ))}
+                    </CharacterProfile>
+                  ))}
+                </CharacterProfileWrap>
+              </Fragment>
+            ))}
         </div>
       </ContentWrap>
     </div>

@@ -55,13 +55,17 @@ const Character = () => {
     loadCharacterTrue();
   }, [id]);
 
-  const { data: profile } = useQuery(['profile', id], () => getProfile(id), {
-    enabled: !!id,
-    refetchOnWindowFocus: false,
-    staleTime: 1000 * 60 * 5,
-  });
+  const { data: profile, isLoading: profileIsLoading } = useQuery(
+    ['profile', id],
+    () => getProfile(id),
+    {
+      enabled: !!id,
+      refetchOnWindowFocus: false,
+      staleTime: 1000 * 60 * 5,
+    }
+  );
 
-  const { data: equipment } = useQuery(
+  const { data: equipment, isLoading: equipmentIsLoading } = useQuery(
     ['equipment', id],
     () => getEquipment(id),
     {
@@ -71,13 +75,17 @@ const Character = () => {
     }
   );
 
-  const { data: avatars } = useQuery(['avatars', id], () => getAvatars(id), {
-    enabled: !!id,
-    refetchOnWindowFocus: false,
-    staleTime: 1000 * 60 * 5,
-  });
+  const { data: avatars, isLoading: avatarsIsLoading } = useQuery(
+    ['avatars', id],
+    () => getAvatars(id),
+    {
+      enabled: !!id,
+      refetchOnWindowFocus: false,
+      staleTime: 1000 * 60 * 5,
+    }
+  );
 
-  const { data: engraving } = useQuery(
+  const { data: engraving, isLoading: engravingIsLoading } = useQuery(
     ['engraving', id],
     () => getEngravings(id),
     {
@@ -87,7 +95,7 @@ const Character = () => {
     }
   );
 
-  const { data: combatSkills } = useQuery(
+  const { data: combatSkills, isLoading: combatSkillsIsLoading } = useQuery(
     ['combatSkills', id],
     () => getCombatSkills(id),
     {
@@ -97,17 +105,25 @@ const Character = () => {
     }
   );
 
-  const { data: cards } = useQuery(['cards', id], () => getCards(id), {
-    enabled: !!id,
-    refetchOnWindowFocus: false,
-    staleTime: 1000 * 60 * 5,
-  });
+  const { data: cards, isLoading: cardsIsLoading } = useQuery(
+    ['cards', id],
+    () => getCards(id),
+    {
+      enabled: !!id,
+      refetchOnWindowFocus: false,
+      staleTime: 1000 * 60 * 5,
+    }
+  );
 
-  const { data: gems } = useQuery(['gems', id], () => getGems(id), {
-    enabled: !!id,
-    refetchOnWindowFocus: false,
-    staleTime: 1000 * 60 * 5,
-  });
+  const { data: gems, isLoading: gemsIsLoading } = useQuery(
+    ['gems', id],
+    () => getGems(id),
+    {
+      enabled: !!id,
+      refetchOnWindowFocus: false,
+      staleTime: 1000 * 60 * 5,
+    }
+  );
 
   const { data: collectibles, isLoading: characterIsLoading } = useQuery(
     ['collectibles', id],
@@ -136,11 +152,17 @@ const Character = () => {
       content: (
         <Equipment
           equipment={equipment}
+          equipmentIsLoading={equipmentIsLoading}
           engraving={engraving}
+          engravingIsLoading={engravingIsLoading}
           gems={gems}
+          gemsIsLoading={gemsIsLoading}
           combatSkills={combatSkills}
+          combatSkillsIsLoading={combatSkillsIsLoading}
           profile={profile}
+          profileIsLoading={profileIsLoading}
           cards={cards}
+          cardsIsLoading={cardsIsLoading}
           getGems={getTransGems}
         />
       ),
@@ -150,18 +172,34 @@ const Character = () => {
       content: (
         <Skill
           combatSkills={combatSkills}
+          combatSkillsIsLoading={combatSkillsIsLoading}
           profile={profile}
+          profileIsLoading={profileIsLoading}
           getGems={currentGems}
         />
       ),
     },
     {
       name: '수집',
-      content: <Collect collectibles={collectibles} profile={profile} />,
+      content: (
+        <Collect
+          collectibles={collectibles}
+          characterIsLoading={characterIsLoading}
+          profile={profile}
+          profileIsLoading={profileIsLoading}
+        />
+      ),
     },
     {
       name: '아바타',
-      content: <Avatar profile={profile} avatars={avatars} />,
+      content: (
+        <Avatar
+          profile={profile}
+          profileIsLoading={profileIsLoading}
+          avatars={avatars}
+          avatarsIsLoading={avatarsIsLoading}
+        />
+      ),
     },
     {
       name: '보유 캐릭터',

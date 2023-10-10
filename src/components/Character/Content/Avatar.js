@@ -2,14 +2,14 @@ import styled from 'styled-components';
 import React from 'react';
 
 const Avatar = ({ profile, avatars }) => {
-  const trueInner = [
+  const legendAvatarTrueInner = [
     { type: '무기 아바타' },
     { type: '머리 아바타' },
     { type: '상의 아바타' },
     { type: '하의 아바타' },
   ];
 
-  const falseInner = [
+  const legendAvatarfalseInner = [
     {
       type: '무기 덧입기 아바타',
       TypeAs: '무기 아바타',
@@ -40,7 +40,6 @@ const Avatar = ({ profile, avatars }) => {
     },
   ];
 
-  // const inInnerTrue = avatars && avatars.filter((item) => item.IsInner);
   const isInnerFalse = avatars && avatars.filter((item) => !item.IsInner);
 
   return (
@@ -51,7 +50,7 @@ const Avatar = ({ profile, avatars }) => {
       <ListWrap>
         <div className="content">
           <TrueInner>
-            {trueInner.map((item, index) => (
+            {legendAvatarTrueInner.map((item, index) => (
               <div key={index}>
                 <ImageBox
                   key={index}
@@ -78,7 +77,7 @@ const Avatar = ({ profile, avatars }) => {
                   )}
                 </ImageBox>
                 <div className="desc">
-                  <p className="type">{trueInner[index].type}</p>
+                  <p className="type">{legendAvatarTrueInner[index].type}</p>
                   <p className="name">
                     {avatars !== null &&
                     avatars[index] !== undefined &&
@@ -92,7 +91,7 @@ const Avatar = ({ profile, avatars }) => {
             ))}
           </TrueInner>
           <FalseInner>
-            {falseInner.map((item, index) => (
+            {legendAvatarfalseInner.map((item, index) => (
               <div key={index}>
                 <ImageBox key={index}>
                   {isInnerFalse &&

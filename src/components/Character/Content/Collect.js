@@ -32,22 +32,20 @@ const Collect = ({ collectibles, profile }) => {
 
   const collectItemList = [];
 
-  if (collectibles) {
-    for (let i = 0; i < collectibles.length; i++) {
-      const collected = [];
-      const failedToCollect = [];
-      for (let j = 0; j < collectibles[i].CollectiblePoints.length; j++) {
-        if (
-          collectibles[i].CollectiblePoints[j].Point ===
-          collectibles[i].CollectiblePoints[j].MaxPoint
-        ) {
-          collected.push(collectibles[i].CollectiblePoints[j]);
-        } else {
-          failedToCollect.push(collectibles[i].CollectiblePoints[j]);
-        }
+  for (let i = 0; i < collectibles.length; i++) {
+    const collected = [];
+    const failedToCollect = [];
+    for (let j = 0; j < collectibles[i].CollectiblePoints.length; j++) {
+      if (
+        collectibles[i].CollectiblePoints[j].Point ===
+        collectibles[i].CollectiblePoints[j].MaxPoint
+      ) {
+        collected.push(collectibles[i].CollectiblePoints[j]);
+      } else {
+        failedToCollect.push(collectibles[i].CollectiblePoints[j]);
       }
-      collectItemList.push({ collected, failedToCollect });
     }
+    collectItemList.push({ collected, failedToCollect });
   }
 
   const collectNav = [

@@ -49,7 +49,7 @@ const CharacterGemsPart = ({ gems, getGemsList }) => {
     return [extinction, prominence];
   }
 
-  const extractedGems = extractingGemsEffect(gems);
+  const extractedGems = gems !== null && extractingGemsEffect(gems);
   const [extinction, prominence] = devideAndSortGems(extractedGems);
 
   // 보석 아이템(툴팁 포함)

@@ -2,60 +2,69 @@ import styled from 'styled-components';
 import React, { useState } from 'react';
 
 const Characteristics = ({ combatSkills, profile, engraving }) => {
-  // ------------------------- 특성
-  const combatCharacteristics = [];
-  const basicCharacteristics = [];
+  // 특성
+  function extractingCharacteristics(stats) {
+    const combat = [];
+    const basic = [];
 
-  if (profile) {
-    for (let key in profile.Stats) {
-      if (
-        profile.Stats[key].Type !== '최대 생명력' &&
-        profile.Stats[key].Type !== '공격력'
-      ) {
-        combatCharacteristics.push(profile.Stats[key]);
+    for (let key in stats) {
+      if (stats[key].Type !== '최대 생명력' && stats[key].Type !== '공격력') {
+        combat.push(stats[key]);
       } else {
-        basicCharacteristics.push(profile.Stats[key]);
+        basic.push(stats[key]);
       }
     }
+    return [combat, basic];
   }
 
-  // -------------------------- 각인
+  // 각인
+  function extractingEngravingList(engravingEffect) {
+    const engravingsList = [];
 
-  const engravingEffect = [];
-
-  // 각인 이름, 레벨, 툴팁 추출
-  if (engraving) {
-    for (let key in engraving.Effects) {
-      const name = engraving.Effects[key].Name.split('Lv.')[0].trim();
-      const level = engraving.Effects[key].Name.split('Lv.')[1].trim();
-      const description = engraving.Effects[key].Description;
-      engravingEffect.push({
+    for (let key in engravingEffect) {
+      const name = engravingEffect[key].Name.split('Lv.')[0].trim();
+      const level = engravingEffect[key].Name.split('Lv.')[1].trim();
+      const description = engravingEffect[key].Description;
+      engravingsList.push({
         name,
         level,
         description,
       });
     }
+    return engravingsList;
   }
 
-  // ------------------------ 트라이포드
+  // 트라이포드
+  function extractingSkillsOfLevel4OrHigher(skills) {
+    const skillsOfLevel4OrHigher = [];
 
-  const filterSkills = []; // 사용중인 스킬
-
-  if (combatSkills) {
-    for (let key in combatSkills) {
-      if (combatSkills[key].Level >= 4) {
-        filterSkills.push(combatSkills[key]);
+    for (let key in skills) {
+      if (skills[key].Level >= 4) {
+        skillsOfLevel4OrHigher.push(skills[key]);
       }
     }
+    return skillsOfLevel4OrHigher;
+  }
 
-    for (let key in filterSkills) {
-      for (let keys in filterSkills[key].Tripods) {
-        if (filterSkills[key].Tripods[keys].IsSelected === false) {
-          delete filterSkills[key].Tripods[keys];
+  function deleteNotUsedTripods(usingSkills) {
+    const deleteNotUsedTripodList = usingSkills;
+    for (let key in usingSkills) {
+      for (let keys in usingSkills[key].Tripods) {
+        if (usingSkills[key].Tripods[keys].IsSelected === false) {
+          delete deleteNotUsedTripodList[key].Tripods[keys];
         }
       }
     }
+    return deleteNotUsedTripodList;
   }
+
+  const [combatCharacteristics, basicCharacteristics] =
+    extractingCharacteristics(profile.Stats);
+
+  const engravingEffectList = extractingEngravingList(engraving.Effects);
+
+  const usingSkills = extractingSkillsOfLevel4OrHigher(combatSkills);
+  const deleteNotUsedTripodList = deleteNotUsedTripods(usingSkills);
 
   // 툴팁 표시를 위한 컴포넌트
   const EngravingEffectTooltip = ({ item }) => {
@@ -116,13 +125,13 @@ const Characteristics = ({ combatSkills, profile, engraving }) => {
         <NameAndLevelWrap>
           <CharacteristicsBox>각인</CharacteristicsBox>
           <div className="nameAndLevelWrap">
-            {engravingEffect.map((item) => (
+            {engravingEffectList.map((item) => (
               <div key={item.name}>{item.level}</div>
             ))}
           </div>
         </NameAndLevelWrap>
         <EffectListWrap>
-          {engravingEffect.map((item) => (
+          {engravingEffectList.map((item) => (
             <EngravingEffectTooltip item={item} key={item.name} />
           ))}
         </EffectListWrap>
@@ -133,7 +142,7 @@ const Characteristics = ({ combatSkills, profile, engraving }) => {
             트라이포드
           </CharacteristicsBox>
           <SkillWrap>
-            {filterSkills.map((item) => (
+            {deleteNotUsedTripodList.map((item) => (
               <div className="skillWrap" key={item.Name}>
                 <div className="skillName">{item.Name}</div>
                 <TripodWrap>

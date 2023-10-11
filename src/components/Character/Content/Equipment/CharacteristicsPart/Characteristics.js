@@ -63,7 +63,8 @@ const Characteristics = ({ combatSkills, profile, engraving }) => {
   const [combatCharacteristics, basicCharacteristics] =
     extractingCharacteristics(profile.Stats);
 
-  const engravingEffectList = extractingEngravingList(engraving.Effects);
+  const engravingEffectList =
+    engraving !== null && extractingEngravingList(engraving.Effects);
 
   const usingSkills = extractingSkillsOfLevel4OrHigher(combatSkills);
   const deleteNotUsedTripodList = deleteNotUsedTripods(usingSkills);

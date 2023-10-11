@@ -1,4 +1,4 @@
-import Characteristics from './Equipment/Characteristics';
+import Characteristics from './Equipment/CharacteristicsPart/Characteristics';
 import CharacterEquipmentPart from './Equipment/EquipmentPart/CharacterEquipmentPart';
 import CharacterGemsPart from './Equipment/CharacterGemsPart';
 import CharacterCards from './Equipment/CharacterCards';

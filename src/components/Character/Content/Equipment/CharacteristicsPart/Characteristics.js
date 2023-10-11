@@ -103,15 +103,17 @@ const Characteristics = ({ combatSkills, profile, engraving }) => {
         <NameAndLevelWrap>
           <CharacteristicsBox>각인</CharacteristicsBox>
           <div className="nameAndLevelWrap">
-            {engravingEffectList.map((item) => (
-              <div key={item.name}>{item.level}</div>
-            ))}
+            {engravingEffectList &&
+              engravingEffectList.map((item) => (
+                <div key={item.name}>{item.level}</div>
+              ))}
           </div>
         </NameAndLevelWrap>
         <EffectListWrap>
-          {engravingEffectList.map((item) => (
-            <EngravingEffectTooltip item={item} key={item.name} />
-          ))}
+          {engravingEffectList &&
+            engravingEffectList.map((item) => (
+              <EngravingEffectTooltip item={item} key={item.name} />
+            ))}
         </EffectListWrap>
       </ContentWrap>
       <ContentWrap characteristics="true">

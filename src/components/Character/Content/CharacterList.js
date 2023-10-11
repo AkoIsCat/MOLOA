@@ -48,31 +48,33 @@ const CharacterList = ({ holdingCharacter, selectMenuHandler }) => {
   const holdingCharacterList = [];
   let serverNameList = [];
 
-  if (holdingCharacter) {
-    const sortHoldingCharacterList = holdingCharacter.sort((a, b) => {
-      const itemMaxLevelA = parseFloat(a.ItemMaxLevel.replace(/,/g, '')); // 쉼표 제거 후 숫자로 변환
-      const itemMaxLevelB = parseFloat(b.ItemMaxLevel.replace(/,/g, '')); // 쉼표 제거 후 숫자로 변환
-      return itemMaxLevelB - itemMaxLevelA; // 내림차순으로 정렬
-    });
+  if (holdingCharacter === null) {
+    return <ContentWrap></ContentWrap>;
+  }
 
-    const classificationByServer = [];
-    // 서버별로 합침
-    sortHoldingCharacterList.forEach((obj) => {
-      const name = obj.ServerName;
-      if (!classificationByServer[name]) {
-        classificationByServer[name] = [];
-      }
-      classificationByServer[name].push({ obj });
-    });
-    const keys = Object.keys(classificationByServer);
-    serverNameList = keys.map((key) => `${key}`);
+  const sortHoldingCharacterList = holdingCharacter.sort((a, b) => {
+    const itemMaxLevelA = parseFloat(a.ItemMaxLevel.replace(/,/g, '')); // 쉼표 제거 후 숫자로 변환
+    const itemMaxLevelB = parseFloat(b.ItemMaxLevel.replace(/,/g, '')); // 쉼표 제거 후 숫자로 변환
+    return itemMaxLevelB - itemMaxLevelA; // 내림차순으로 정렬
+  });
 
-    // 배열 안에 대입
-    for (let key in classificationByServer) {
-      holdingCharacterList.push({
-        [key]: classificationByServer[key],
-      });
+  const classificationByServer = [];
+  // 서버별로 합침
+  sortHoldingCharacterList.forEach((obj) => {
+    const name = obj.ServerName;
+    if (!classificationByServer[name]) {
+      classificationByServer[name] = [];
     }
+    classificationByServer[name].push({ obj });
+  });
+  const keys = Object.keys(classificationByServer);
+  serverNameList = keys.map((key) => `${key}`);
+
+  // 배열 안에 대입
+  for (let key in classificationByServer) {
+    holdingCharacterList.push({
+      [key]: classificationByServer[key],
+    });
   }
 
   return (

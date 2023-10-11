@@ -6,43 +6,49 @@ import ContentWrap from '../../UI/ContentWrap';
 const Skill = ({ combatSkills, profile, getGems }) => {
   const skillList = [];
 
-  if (combatSkills) {
-    const notNullRune = combatSkills.filter(
-      (item) => item.Rune !== null || item.Level >= 2
+  if (combatSkills === null) {
+    return (
+      <div>
+        <ContentWrap></ContentWrap>
+      </div>
     );
+  }
 
-    // 안쓰는 트포 삭제
-    for (let key in notNullRune) {
-      for (let keys in notNullRune[key].Tripods) {
-        if (notNullRune[key].Tripods[keys].IsSelected === false) {
-          delete notNullRune[key].Tripods[keys];
-        }
+  const notNullRune = combatSkills.filter(
+    (item) => item.Rune !== null || item.Level >= 2
+  );
+
+  // 안쓰는 트포 삭제
+  for (let key in notNullRune) {
+    for (let keys in notNullRune[key].Tripods) {
+      if (notNullRune[key].Tripods[keys].IsSelected === false) {
+        delete notNullRune[key].Tripods[keys];
       }
     }
+  }
 
-    const sortSkill = notNullRune.sort((a, b) => {
-      return b.Level - a.Level;
+  const sortSkill = notNullRune.sort((a, b) => {
+    return b.Level - a.Level;
+  });
+
+  for (let i = 0; i < sortSkill.length; i++) {
+    const skillName = sortSkill[i].Name;
+    const skillIcon = sortSkill[i].Icon;
+    const skillLevel = sortSkill[i].Level;
+    const skillRune = sortSkill[i].Rune;
+    const skillTripod = sortSkill[i].Tripods;
+    const skillGems = getGems.filter(
+      (item) => item.skillName === sortSkill[i].Name
+    );
+
+    skillList.push({
+      skillName,
+      skillIcon,
+      skillLevel,
+      skillRune,
+      skillTripod,
+      skillGems,
     });
-
-    for (let i = 0; i < sortSkill.length; i++) {
-      const skillName = sortSkill[i].Name;
-      const skillIcon = sortSkill[i].Icon;
-      const skillLevel = sortSkill[i].Level;
-      const skillRune = sortSkill[i].Rune;
-      const skillTripod = sortSkill[i].Tripods;
-      const skillGems = getGems.filter(
-        (item) => item.skillName === sortSkill[i].Name
-      );
-
-      skillList.push({
-        skillName,
-        skillIcon,
-        skillLevel,
-        skillRune,
-        skillTripod,
-        skillGems,
-      });
-    }
   }
 
   const GemsItem = ({ item }) => {

@@ -28,7 +28,7 @@ const Equipment = ({
 
   return (
     <Wrap>
-      {equipmentIsLoading && engravingIsLoading ? (
+      {equipmentIsLoading || engravingIsLoading ? (
         <Loading />
       ) : (
         <CharacterEquipmentPart equipment={equipment} engraving={engraving} />
@@ -38,7 +38,7 @@ const Equipment = ({
       ) : (
         <CharacterGemsPart gems={gems} getGemsList={getGemsList} />
       )}
-      {combatSkillsIsLoading && profileIsLoading && engravingIsLoading ? (
+      {combatSkillsIsLoading || profileIsLoading || engravingIsLoading ? (
         <Loading />
       ) : (
         <Characteristics

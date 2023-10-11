@@ -6,47 +6,39 @@ import Awake from '../../../../asset/icon/img_profile_awake.png';
 import { BsDot } from 'react-icons/bs';
 
 const CharacterCards = ({ cards }) => {
-  // -------------------------- 카드
-
   const defaultCard = [{}, {}, {}, {}, {}, {}];
-  const cardList = []; // 장착 카드 목록
+  const mountingBeingCards = cards && cards.Cards.map((item) => item);
   const effectList = []; // 카드 효과 목록
   const totalEffect = []; // 총 카드 효과 목록
 
-  // 필요한 카드 정보 추출
-  if (cards) {
-    for (let i = 0; i <= cards.Cards.length - 1; i++) {
-      cardList.push(cards.Cards[i]);
-    }
+  if (cards === null) {
+    return <ContentWrap></ContentWrap>;
+  }
 
-    for (let key in cards.Effects) {
-      const value = cards.Effects[key];
+  for (let key in cards.Effects) {
+    const value = cards.Effects[key];
 
-      const regex = /\d+/g;
+    const regex = /\d+/g;
 
-      const lastEffectCard =
-        value.Items[value.Items.length - 1] &&
-        value.Items[value.Items.length - 1].Name.split('(');
+    const setName =
+      value.Items[value.Items.length - 1] &&
+      value.Items[value.Items.length - 1].Name.split('(');
 
-      const matches =
-        lastEffectCard && lastEffectCard[1] && lastEffectCard[1].match(regex);
+    const awake = setName && setName[1] && setName[1].match(regex);
 
-      effectList.push({
-        slots: value.CardSlots,
-        index: value.Index,
-        items: value.Items,
-        lastEffect: lastEffectCard && lastEffectCard[0],
-        awake: matches && matches,
+    effectList.push({
+      items: value.Items,
+      setName: setName && setName[0],
+      awake: awake,
+    });
+  }
+
+  for (let j = 0; j <= effectList.length - 1; j++) {
+    for (let i = 0; i <= effectList[j].items.length - 1; i++) {
+      totalEffect.push({
+        Name: effectList[j].items[i].Name,
+        Description: effectList[j].items[i].Description,
       });
-    }
-
-    for (let j = 0; j <= effectList.length - 1; j++) {
-      for (let i = 0; i <= effectList[j].items.length - 1; i++) {
-        totalEffect.push({
-          Name: effectList[j].items[i].Name,
-          Description: effectList[j].items[i].Description,
-        });
-      }
     }
   }
 
@@ -59,7 +51,7 @@ const CharacterCards = ({ cards }) => {
             {effectList.map((item, index) =>
               index === effectList.length - 1 ? (
                 <span key={index}>
-                  {item.lastEffect}
+                  {item.setName}
                   {item.awake}
                   {item.awake && '각'}
                 </span>
@@ -94,7 +86,7 @@ const CharacterCards = ({ cards }) => {
                   />
                 </CardListWrap>
               ))}
-              {cardList.map((item, index) => (
+              {mountingBeingCards.map((item, index) => (
                 <CardListWrap key={index} grade={item.Grade}>
                   <PhotoFrame
                     grade={item.Grade}

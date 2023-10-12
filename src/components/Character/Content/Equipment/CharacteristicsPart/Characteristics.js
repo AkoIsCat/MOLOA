@@ -4,6 +4,9 @@ import React from 'react';
 import EngravingEffectTooltip from './EngravingEffectTooltip';
 
 const Characteristics = ({ combatSkills, profile, engraving }) => {
+  if (profile === null || profile === undefined) {
+    return <ContentWrap />;
+  }
   // 특성
   function extractingCharacteristics(stats) {
     const combat = [];

@@ -11,7 +11,7 @@ const CharacterCards = ({ cards }) => {
   const effectList = []; // 카드 효과 목록
   const totalEffect = []; // 총 카드 효과 목록
 
-  if (cards === null) {
+  if (cards === null || cards === undefined) {
     return <ContentWrap></ContentWrap>;
   }
 

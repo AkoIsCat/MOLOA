@@ -7,6 +7,19 @@ import MountedEngraving from './MountedEngraving';
 import AccessoriesDetail from './AccessoriesDetail';
 
 const CharacterEquipmentPart = ({ equipment, engraving }) => {
+  const isPc = useMediaQuery({
+    query: '(min-width:1024px)',
+  });
+  const isTablet = useMediaQuery({
+    query: '(min-width:768px) and (max-width:1023px)',
+  });
+  const isMobile = useMediaQuery({
+    query: '(max-width:767px)',
+  });
+  if (engraving === null) {
+    return;
+  }
+
   const equipmentTooltip = [];
 
   for (const item in equipment) {
@@ -417,7 +430,7 @@ const CharacterEquipmentPart = ({ equipment, engraving }) => {
     },
     {
       Type: '어빌리티 스톤',
-      ItemName: equipment && equipment[11].Name,
+      ItemName: equipment && equipment[11]?.Name,
       TooltipValue: accessoriesEffectTooltip[5],
     },
     {
@@ -523,16 +536,6 @@ const CharacterEquipmentPart = ({ equipment, engraving }) => {
     .map((obj) => obj.Element_001)
     .filter((obj) => obj.type === 'EngraveSkillTitle')
     .map((obj) => obj.value.leftText);
-
-  const isPc = useMediaQuery({
-    query: '(min-width:1024px)',
-  });
-  const isTablet = useMediaQuery({
-    query: '(min-width:768px) and (max-width:1023px)',
-  });
-  const isMobile = useMediaQuery({
-    query: '(max-width:767px)',
-  });
 
   return (
     <div>

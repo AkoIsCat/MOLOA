@@ -4,6 +4,9 @@ import React from 'react';
 import GemsItemTooltip from './GemsItemTooltip';
 
 const CharacterGemsPart = ({ gems, getGemsList }) => {
+  if (gems === null || gems === undefined) {
+    return <ContentWrap />;
+  }
   function extractingGemsEffect(gems) {
     const gemsEffect = [];
     const effectRegex = /<FONT COLOR='#[^>]+>([^<]+)<\/FONT>\s*([^\n]+)/;

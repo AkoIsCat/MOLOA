@@ -33,14 +33,4 @@ module.exports = function (app) {
       changeOrigin: true,
     })
   );
-
-  app.use(
-    createProxyMiddleware('/Discord', {
-      target: 'https://lostark-bf0ba-default-rtdb.firebaseio.com',
-      changeOrigin: true,
-      pathRewrite: {
-        '^/PopularCharacter': '',
-      },
-    })
-  );
 };

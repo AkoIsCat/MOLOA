@@ -45,6 +45,8 @@ const RightAside = () => {
     {
       select: (data) => Object.values(data),
       refetchOnWindowFocus: false,
+      staleTime: Infinity,
+      cacheTime: Infinity,
     }
   );
 

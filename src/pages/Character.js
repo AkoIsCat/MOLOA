@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import Loading from '../components/UI/Loading';
 import { useCallback } from 'react';
@@ -28,32 +28,19 @@ import Collect from '../components/Character/Content/Collect'; // 수집탭
 import Footer from '../components/UI/Footer';
 
 const Character = () => {
-  const [isExist, setIsExist] = useState();
-  const [holdingCharacter, setHoldingCharacter] = useState();
-
   const [currentTab, setCurrentTab] = useState(0); // 네비게이션 탭
   const [currentGems, setCurrentGems] = useState([]); // 스킬 - 보석 정보 전달
 
   const { id } = useParams();
 
-  useEffect(() => {
-    // 캐릭터 존재 여부(원정대 캐릭터)
-    const loadCharacterTrue = async () => {
-      try {
-        const data = await getCharacterExist(id);
-        if (data) {
-          setIsExist(true);
-          setHoldingCharacter(data);
-        } else {
-          setIsExist(false);
-        }
-      } catch (err) {
-        console.log('LostArk Character True of False error!!');
-      }
-    };
+  const { data: holdingCharacter, isLoading: holdingCharacterIsLoading } =
+    useQuery(['characterList', id], () => getCharacterExist(id), {
+      enabled: !!id,
+      refetchOnWindowFocus: false,
+      staleTime: 1000 * 60 * 5,
+    });
 
-    loadCharacterTrue();
-  }, [id]);
+  const isExist = holdingCharacter && true;
 
   const { data: profile, isLoading: profileIsLoading } = useQuery(
     ['profile', id],
@@ -206,6 +193,7 @@ const Character = () => {
       end: true,
       content: (
         <CharacterList
+          holdingCharacterIsLoading={holdingCharacterIsLoading}
           holdingCharacter={holdingCharacter}
           selectMenuHandler={selectMenuHandler}
         />

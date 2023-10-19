@@ -17,6 +17,7 @@ import collect6 from '../../../asset/icon/collect6.png';
 import collect7 from '../../../asset/icon/collect7.png';
 import collect8 from '../../../asset/icon/collect8.png';
 import collect9 from '../../../asset/icon/collect9.png';
+import Loading from '../../UI/Loading';
 
 const collectImg = [
   collect1,
@@ -33,13 +34,17 @@ const collectImg = [
 const Aside = () => {
   const { id } = useParams();
 
-  const { data: profile } = useQuery(['profile', id], () => getProfile(id), {
-    enabled: !!id,
-    refetchOnWindowFocus: false,
-    staleTime: 1000 * 60 * 5,
-  });
+  const { data: profile, isLoading: profileIsLoading } = useQuery(
+    ['profile', id],
+    () => getProfile(id),
+    {
+      enabled: !!id,
+      refetchOnWindowFocus: false,
+      staleTime: 1000 * 60 * 5,
+    }
+  );
 
-  const { data: collectibles } = useQuery(
+  const { data: collectibles, isLoading: collectiblesIsLoading } = useQuery(
     ['collectibles', id],
     () => getCollectibles(id),
     {
@@ -61,42 +66,47 @@ const Aside = () => {
 
   const infoItem = profile && (
     <CharacterInfo>
-      <InfoItem>
-        <div>서버</div>
-        <p>{profile.ServerName}</p>
-      </InfoItem>
-      <InfoItem>
-        <div>길드</div>
-        <p>{profile.GuildName === null ? '-' : profile.GuildName}</p>
-      </InfoItem>
-      <InfoItem>
-        <div>클래스</div>
-        <p>{profile.CharacterClassName}</p>
-      </InfoItem>
-      <InfoItem>
-        <div>칭호</div>
-        <p>{profile.Title === null ? '-' : profile.Title}</p>
-      </InfoItem>
-      <InfoItem>
-        <div>전투</div>
-        <p>{profile.CharacterLevel}</p>
-      </InfoItem>
-      <InfoItem>
-        <div>아이템</div>
-        <p>{profile.ItemMaxLevel}</p>
-      </InfoItem>
-      <InfoItem>
-        <div>원정대</div>
-        <p>{profile.ExpeditionLevel}</p>
-      </InfoItem>
-      <InfoItem>
-        <div>PVP</div>
-        <p>{profile.PvpGradeName}</p>
-      </InfoItem>
-      <InfoItem>
-        <div>영지</div>
-        <p>{profile.TownName === null ? '-' : profile.TownName}</p>
-      </InfoItem>
+      {profileIsLoading && <Loading />}
+      {!profileIsLoading && (
+        <>
+          <InfoItem>
+            <div>서버</div>
+            <p>{profile.ServerName}</p>
+          </InfoItem>
+          <InfoItem>
+            <div>길드</div>
+            <p>{profile.GuildName === null ? '-' : profile.GuildName}</p>
+          </InfoItem>
+          <InfoItem>
+            <div>클래스</div>
+            <p>{profile.CharacterClassName}</p>
+          </InfoItem>
+          <InfoItem>
+            <div>칭호</div>
+            <p>{profile.Title === null ? '-' : profile.Title}</p>
+          </InfoItem>
+          <InfoItem>
+            <div>전투</div>
+            <p>{profile.CharacterLevel}</p>
+          </InfoItem>
+          <InfoItem>
+            <div>아이템</div>
+            <p>{profile.ItemMaxLevel}</p>
+          </InfoItem>
+          <InfoItem>
+            <div>원정대</div>
+            <p>{profile.ExpeditionLevel}</p>
+          </InfoItem>
+          <InfoItem>
+            <div>PVP</div>
+            <p>{profile.PvpGradeName}</p>
+          </InfoItem>
+          <InfoItem>
+            <div>영지</div>
+            <p>{profile.TownName === null ? '-' : profile.TownName}</p>
+          </InfoItem>{' '}
+        </>
+      )}
     </CharacterInfo>
   );
 
@@ -117,14 +127,18 @@ const Aside = () => {
         수집품
       </Head>
       <Content collect="true" border="true">
-        <CollectWrap>{collectList}</CollectWrap>
+        {!collectiblesIsLoading && <CollectWrap>{collectList}</CollectWrap>}
+        {collectiblesIsLoading && <Loading />}
       </Content>
     </Fragment>
   );
 
   const avatarImage = profile && (
     <Content collectImg="true" collect="true">
-      <AvatarImg src={profile.CharacterImage} alt="아바타" />
+      {!profileIsLoading && (
+        <AvatarImg src={profile.CharacterImage} alt="아바타" />
+      )}
+      {profileIsLoading && <Loading />}
     </Content>
   );
 

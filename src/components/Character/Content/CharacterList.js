@@ -1,9 +1,9 @@
 import styled from 'styled-components';
-
 import React, { Fragment } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import ContentWrap from '../../UI/ContentWrap';
+import Loading from '../../UI/Loading';
 
 import {
   SpecialList as 스페셜리스트,
@@ -42,15 +42,23 @@ import {
   WarriorFemale as 여전사,
 } from '../../../asset/image/classImg'; // 직업 아이콘
 
-const CharacterList = ({ holdingCharacter, selectMenuHandler }) => {
+const CharacterList = ({
+  holdingCharacter,
+  selectMenuHandler,
+  holdingCharacterIsLoading,
+}) => {
   const navigate = useNavigate();
-
-  const holdingCharacterList = [];
-  let serverNameList = [];
 
   if (holdingCharacter === null) {
     return <ContentWrap></ContentWrap>;
   }
+
+  if (holdingCharacterIsLoading) {
+    return <Loading />;
+  }
+
+  const holdingCharacterList = [];
+  let serverNameList = [];
 
   const sortHoldingCharacterList = holdingCharacter.sort((a, b) => {
     const itemMaxLevelA = parseFloat(a.ItemMaxLevel.replace(/,/g, '')); // 쉼표 제거 후 숫자로 변환

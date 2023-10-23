@@ -4,6 +4,7 @@ import styled from 'styled-components';
 
 import ContentBoxMain from './ContentBoxMain';
 import Loading from '../../UI/Loading';
+import { IoIosArrowForward } from 'react-icons/io';
 
 const ContentBox = (props) => {
   const item = props.item;
@@ -74,18 +75,24 @@ const ContentBox = (props) => {
 
   return (
     <Fragment>
-      <Head
-        onClick={() =>
-          props.noti && props.type === 'loa'
-            ? window.open(
-                'https://lostark.game.onstove.com/News/Notice/List',
-                '_blank'
-              )
-            : navigate('/notilist')
-        }
-      >
-        <div className="name">{props.title}</div>
-        <div className="icon">{props.icon}</div>
+      <Head>
+        <div className="noti-wrap">
+          <div className="name">{props.title}</div>
+          <div className="icon">{props.icon}</div>
+        </div>
+        <div
+          className="arrow"
+          onClick={() =>
+            props.noti && props.type === 'loa'
+              ? window.open(
+                  'https://lostark.game.onstove.com/News/Notice/List',
+                  '_blank'
+                )
+              : navigate('/notilist')
+          }
+        >
+          <IoIosArrowForward />
+        </div>
       </Head>
       {!props.loading && notiList}
       {props.loading && <Loading />}
@@ -105,9 +112,14 @@ const Head = styled.div`
   font-size: 15px;
   text-align: left;
   line-height: 45px;
-  cursor: pointer;
   display: flex;
   align-items: center;
+  justify-content: space-between;
+
+  .noti-wrap {
+    display: flex;
+    align-items: center;
+  }
 
   .name {
     height: 45px;
@@ -117,6 +129,12 @@ const Head = styled.div`
   .icon {
     height: auto;
     padding-top: 10px;
+  }
+
+  .arrow {
+    cursor: pointer;
+    margin-right: 10px;
+    margin-top: 5px;
   }
 
   @media ${(props) => props.theme.mobile} {

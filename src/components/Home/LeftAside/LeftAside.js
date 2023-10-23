@@ -1,13 +1,11 @@
 import styled from 'styled-components';
 import React from 'react';
-import { useMediaQuery } from 'react-responsive';
 import { getNotificationList } from '../../../api/LostArk/LostarkAxios';
 import { getFirebaseData } from '../../../api/Firebase/FirebaseAxios';
 import { useQuery } from 'react-query';
 
 import { HiOutlineSpeakerphone } from 'react-icons/hi';
 import ContentBox from './ContentBox';
-import SmallMenu from '../../UI/SmallMenu';
 import InnerContent from '../../UI/InnerContent';
 
 const LeftAside = () => {
@@ -26,13 +24,6 @@ const LeftAside = () => {
       refetchOnWindowFocus: false,
     }
   );
-
-  const isPc = useMediaQuery({
-    query: '(min-width:1024px)',
-  });
-  const isMobile = useMediaQuery({
-    query: '(max-width:767px)',
-  });
 
   return (
     <LeftWrap>
@@ -55,8 +46,6 @@ const LeftAside = () => {
           loading={moloaNotiIsLoading}
         />
       </InnerContent>
-      {isPc && <SmallMenu />}
-      {isMobile && <SmallMenu right="true" />}
     </LeftWrap>
   );
 };

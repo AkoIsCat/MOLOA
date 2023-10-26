@@ -139,6 +139,11 @@ const Character = () => {
     }, 0);
   }, []);
 
+  const onClickUpdateBtn = () => {
+    clearInterval(timer);
+    setTimer(0);
+  };
+
   const navMenu = [
     {
       name: '전투',
@@ -264,7 +269,10 @@ const Character = () => {
                 </Navigation>
                 <UpdateBox>
                   <TimerMessage>{timer}분 전</TimerMessage>
-                  <UpdateButton disabled={timer >= 1 ? false : true}>
+                  <UpdateButton
+                    disabled={timer >= 1 ? false : true}
+                    onClick={onClickUpdateBtn}
+                  >
                     갱신하기
                   </UpdateButton>
                 </UpdateBox>

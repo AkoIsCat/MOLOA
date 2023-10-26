@@ -29,7 +29,6 @@ import Footer from '../components/UI/Footer';
 const Character = () => {
   const [currentTab, setCurrentTab] = useState(0); // 네비게이션 탭
   const [currentGems, setCurrentGems] = useState([]); // 스킬 - 보석 정보 전달
-  const [timer, setTimer] = useState(0); // 5분 타이머
 
   const { id } = useParams();
 
@@ -37,12 +36,18 @@ const Character = () => {
     data: holdingCharacter,
     isLoading: holdingCharacterIsLoading,
     refetch: refetchHoldingCharacter,
+    dataUpdatedAt,
   } = useQuery(['characterList', id], () => getCharacterExist(id), {
     enabled: !!id,
     refetchOnWindowFocus: false,
     staleTime: Infinity,
   });
 
+  const [timer, setTimer] = useState(
+    dataUpdatedAt !== 0
+      ? ~~((new Date().getTime() - dataUpdatedAt) / (60 * 1000))
+      : 0
+  ); // 데이터가 업데이트 됐었던 시점을 기준으로 함
   const isExist = holdingCharacter && true;
 
   const {
@@ -131,7 +136,6 @@ const Character = () => {
     }, 1000 * 60);
     return () => clearInterval(id);
   }, []);
-
   const selectMenuHandler = (index) => {
     setCurrentTab(index);
   };
@@ -224,7 +228,6 @@ const Character = () => {
       ),
     },
   ];
-  console.log('refetch');
 
   return (
     <Background>
@@ -286,9 +289,11 @@ const Character = () => {
                   </ul>
                 </Navigation>
                 <UpdateBox>
-                  <TimerMessage>{timer}분 전</TimerMessage>
+                  <TimerMessage>
+                    {timer < 60 ? `${timer}분 전` : `${~~timer / 60}시간 전`}
+                  </TimerMessage>
                   <UpdateButton
-                    disabled={timer >= 1 ? false : true}
+                    disabled={timer >= 5 ? false : true}
                     onClick={onClickUpdateBtn}
                   >
                     갱신하기

@@ -1,8 +1,7 @@
 import styled from 'styled-components';
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 import { useParams } from 'react-router-dom';
 import Loading from '../components/UI/Loading';
-import { useCallback } from 'react';
 import {
   getCharacterExist,
   getProfile,
@@ -30,6 +29,7 @@ import Footer from '../components/UI/Footer';
 const Character = () => {
   const [currentTab, setCurrentTab] = useState(0); // 네비게이션 탭
   const [currentGems, setCurrentGems] = useState([]); // 스킬 - 보석 정보 전달
+  const [timer, setTimer] = useState(0); // 5분 타이머
 
   const { id } = useParams();
 
@@ -215,45 +215,53 @@ const Character = () => {
           <ContentBox>
             <Aside />
             <Section>
-              <Navigation>
-                <ul>
-                  {navMenu.map((item, index) =>
-                    item.first ? (
-                      <NavItem
-                        borderFirst="true"
-                        key={index}
-                        active={currentTab === index && 'true'}
-                        onClick={() => {
-                          selectMenuHandler(index);
-                        }}
-                      >
-                        {item.name}
-                      </NavItem>
-                    ) : item.end ? (
-                      <NavItem
-                        borderEnd="true"
-                        key={index}
-                        active={currentTab === index && 'true'}
-                        onClick={() => {
-                          selectMenuHandler(index);
-                        }}
-                      >
-                        {item.name}
-                      </NavItem>
-                    ) : (
-                      <NavItem
-                        key={index}
-                        active={currentTab === index && 'true'}
-                        onClick={() => {
-                          selectMenuHandler(index);
-                        }}
-                      >
-                        {item.name}
-                      </NavItem>
-                    )
-                  )}
-                </ul>
-              </Navigation>
+              <NaviWrap>
+                <Navigation>
+                  <ul>
+                    {navMenu.map((item, index) =>
+                      item.first ? (
+                        <NavItem
+                          borderFirst="true"
+                          key={index}
+                          active={currentTab === index && 'true'}
+                          onClick={() => {
+                            selectMenuHandler(index);
+                          }}
+                        >
+                          {item.name}
+                        </NavItem>
+                      ) : item.end ? (
+                        <NavItem
+                          borderEnd="true"
+                          key={index}
+                          active={currentTab === index && 'true'}
+                          onClick={() => {
+                            selectMenuHandler(index);
+                          }}
+                        >
+                          {item.name}
+                        </NavItem>
+                      ) : (
+                        <NavItem
+                          key={index}
+                          active={currentTab === index && 'true'}
+                          onClick={() => {
+                            selectMenuHandler(index);
+                          }}
+                        >
+                          {item.name}
+                        </NavItem>
+                      )
+                    )}
+                  </ul>
+                </Navigation>
+                <UpdateBox>
+                  <TimerMessage>{timer}분 전</TimerMessage>
+                  <UpdateButton disabled={timer >= 1 ? false : true}>
+                    갱신하기
+                  </UpdateButton>
+                </UpdateBox>
+              </NaviWrap>
               <InnerSection>{navMenu[currentTab].content}</InnerSection>
             </Section>
           </ContentBox>
@@ -387,4 +395,39 @@ const InnerSection = styled.div`
     padding: 0;
     margin: 0 12px;
   }
+`;
+
+const UpdateBox = styled.div`
+  display: flex;
+  align-items: center;
+`;
+
+const TimerMessage = styled.p`
+  font-family: 'Nanum Gothic';
+  margin: 0 10px;
+  color: #f1ffff;
+  font-size: 13px;
+`;
+
+const UpdateButton = styled.button`
+  width: 85px;
+  height: 30px;
+  margin-right: 30px;
+  border: 0;
+  border-radius: 10px;
+  font-family: 'Nanum Gothic';
+  background: #40444f;
+  color: #fff;
+  cursor: pointer;
+
+  &:disabled {
+    background: #292e33;
+    color: black;
+  }
+`;
+
+const NaviWrap = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 `;

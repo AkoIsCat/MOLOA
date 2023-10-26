@@ -33,94 +33,97 @@ const Character = () => {
 
   const { id } = useParams();
 
-  const { data: holdingCharacter, isLoading: holdingCharacterIsLoading } =
-    useQuery(['characterList', id], () => getCharacterExist(id), {
-      enabled: !!id,
-      refetchOnWindowFocus: false,
-      staleTime: 1000 * 60 * 5,
-    });
+  const {
+    data: holdingCharacter,
+    isLoading: holdingCharacterIsLoading,
+    refetch: refetchHoldingCharacter,
+  } = useQuery(['characterList', id], () => getCharacterExist(id), {
+    enabled: !!id,
+    refetchOnWindowFocus: false,
+    staleTime: 1000 * 60 * 5,
+  });
 
   const isExist = holdingCharacter && true;
 
-  const { data: profile, isLoading: profileIsLoading } = useQuery(
-    ['profile', id],
-    () => getProfile(id),
-    {
-      enabled: !!id,
-      refetchOnWindowFocus: false,
-      staleTime: 1000 * 60 * 5,
-    }
-  );
+  const {
+    data: profile,
+    isLoading: profileIsLoading,
+    refetch: refetchProfile,
+  } = useQuery(['profile', id], () => getProfile(id), {
+    enabled: !!id,
+    refetchOnWindowFocus: false,
+    staleTime: 1000 * 60 * 5,
+  });
 
-  const { data: equipment, isLoading: equipmentIsLoading } = useQuery(
-    ['equipment', id],
-    () => getEquipment(id),
-    {
-      enabled: !!id,
-      refetchOnWindowFocus: false,
-      staleTime: 1000 * 60 * 5,
-    }
-  );
+  const {
+    data: equipment,
+    isLoading: equipmentIsLoading,
+    refetch: refetchEquipment,
+  } = useQuery(['equipment', id], () => getEquipment(id), {
+    enabled: !!id,
+    refetchOnWindowFocus: false,
+    staleTime: 1000 * 60 * 5,
+  });
 
-  const { data: avatars, isLoading: avatarsIsLoading } = useQuery(
-    ['avatars', id],
-    () => getAvatars(id),
-    {
-      enabled: !!id,
-      refetchOnWindowFocus: false,
-      staleTime: 1000 * 60 * 5,
-    }
-  );
+  const {
+    data: avatars,
+    isLoading: avatarsIsLoading,
+    refetch: refetchAvartars,
+  } = useQuery(['avatars', id], () => getAvatars(id), {
+    enabled: !!id,
+    refetchOnWindowFocus: false,
+    staleTime: 1000 * 60 * 5,
+  });
 
-  const { data: engraving, isLoading: engravingIsLoading } = useQuery(
-    ['engraving', id],
-    () => getEngravings(id),
-    {
-      enabled: !!id,
-      refetchOnWindowFocus: false,
-      staleTime: 1000 * 60 * 5,
-    }
-  );
+  const {
+    data: engraving,
+    isLoading: engravingIsLoading,
+    refetch: refetchEngraving,
+  } = useQuery(['engraving', id], () => getEngravings(id), {
+    enabled: !!id,
+    refetchOnWindowFocus: false,
+    staleTime: 1000 * 60 * 5,
+  });
 
-  const { data: combatSkills, isLoading: combatSkillsIsLoading } = useQuery(
-    ['combatSkills', id],
-    () => getCombatSkills(id),
-    {
-      enabled: !!id,
-      refetchOnWindowFocus: false,
-      staleTime: 1000 * 60 * 5,
-    }
-  );
+  const {
+    data: combatSkills,
+    isLoading: combatSkillsIsLoading,
+    refetch: refetchSkills,
+  } = useQuery(['combatSkills', id], () => getCombatSkills(id), {
+    enabled: !!id,
+    refetchOnWindowFocus: false,
+    staleTime: 1000 * 60 * 5,
+  });
 
-  const { data: cards, isLoading: cardsIsLoading } = useQuery(
-    ['cards', id],
-    () => getCards(id),
-    {
-      enabled: !!id,
-      refetchOnWindowFocus: false,
-      staleTime: 1000 * 60 * 5,
-    }
-  );
+  const {
+    data: cards,
+    isLoading: cardsIsLoading,
+    refetch: refetchCards,
+  } = useQuery(['cards', id], () => getCards(id), {
+    enabled: !!id,
+    refetchOnWindowFocus: false,
+    staleTime: 1000 * 60 * 5,
+  });
 
-  const { data: gems, isLoading: gemsIsLoading } = useQuery(
-    ['gems', id],
-    () => getGems(id),
-    {
-      enabled: !!id,
-      refetchOnWindowFocus: false,
-      staleTime: 1000 * 60 * 5,
-    }
-  );
+  const {
+    data: gems,
+    isLoading: gemsIsLoading,
+    refetch: refetchGems,
+  } = useQuery(['gems', id], () => getGems(id), {
+    enabled: !!id,
+    refetchOnWindowFocus: false,
+    staleTime: 1000 * 60 * 5,
+  });
 
-  const { data: collectibles, isLoading: characterIsLoading } = useQuery(
-    ['collectibles', id],
-    () => getCollectibles(id),
-    {
-      enabled: !!id,
-      refetchOnWindowFocus: false,
-      staleTime: 1000 * 60 * 5,
-    }
-  );
+  const {
+    data: collectibles,
+    isLoading: characterIsLoading,
+    refetch: refetchCollectibles,
+  } = useQuery(['collectibles', id], () => getCollectibles(id), {
+    enabled: !!id,
+    refetchOnWindowFocus: false,
+    staleTime: 1000 * 60 * 5,
+  });
 
   useEffect(() => {
     const id = setInterval(() => {
@@ -142,6 +145,15 @@ const Character = () => {
   const onClickUpdateBtn = () => {
     clearInterval(timer);
     setTimer(0);
+    refetchHoldingCharacter();
+    refetchAvartars();
+    refetchCards();
+    refetchCollectibles();
+    refetchEngraving();
+    refetchEquipment();
+    refetchGems();
+    refetchProfile();
+    refetchSkills();
   };
 
   const navMenu = [
@@ -212,6 +224,7 @@ const Character = () => {
       ),
     },
   ];
+  console.log('refetch');
 
   return (
     <Background>

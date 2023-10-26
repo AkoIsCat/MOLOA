@@ -36,20 +36,8 @@ const MainContents = () => {
         (today === '월' && checkBeforeFiveOClock(hour))
           ? true
           : false,
-      image: 'https://i.postimg.cc/CMv7s0wD/image.png',
-    },
-    {
-      name: '유령선',
-      emergence:
-        (today === '화' && checkAfterFiveOClock(hour)) ||
-        (today === '수' && checkBeforeFiveOClock(hour)) ||
-        (today === '목' && checkAfterFiveOClock(hour)) ||
-        (today === '금' && checkBeforeFiveOClock(hour)) ||
-        (today === '토' && checkAfterFiveOClock(hour)) ||
-        (today === '일' && checkBeforeFiveOClock(hour))
-          ? true
-          : false,
-      image: 'https://ifh.cc/g/YjQa0m.jpg',
+      image:
+        'https://cdn-lostark.game.onstove.com/uploadfiles/notice/4e0f58d616094915827ee388a255475a.jpg',
     },
     {
       name: '카오스게이트',

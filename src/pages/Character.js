@@ -40,7 +40,7 @@ const Character = () => {
   } = useQuery(['characterList', id], () => getCharacterExist(id), {
     enabled: !!id,
     refetchOnWindowFocus: false,
-    staleTime: 1000 * 60 * 5,
+    staleTime: Infinity,
   });
 
   const isExist = holdingCharacter && true;
@@ -52,7 +52,7 @@ const Character = () => {
   } = useQuery(['profile', id], () => getProfile(id), {
     enabled: !!id,
     refetchOnWindowFocus: false,
-    staleTime: 1000 * 60 * 5,
+    staleTime: Infinity,
   });
 
   const {
@@ -62,7 +62,7 @@ const Character = () => {
   } = useQuery(['equipment', id], () => getEquipment(id), {
     enabled: !!id,
     refetchOnWindowFocus: false,
-    staleTime: 1000 * 60 * 5,
+    staleTime: Infinity,
   });
 
   const {
@@ -72,7 +72,7 @@ const Character = () => {
   } = useQuery(['avatars', id], () => getAvatars(id), {
     enabled: !!id,
     refetchOnWindowFocus: false,
-    staleTime: 1000 * 60 * 5,
+    staleTime: Infinity,
   });
 
   const {
@@ -82,7 +82,7 @@ const Character = () => {
   } = useQuery(['engraving', id], () => getEngravings(id), {
     enabled: !!id,
     refetchOnWindowFocus: false,
-    staleTime: 1000 * 60 * 5,
+    staleTime: Infinity,
   });
 
   const {
@@ -92,7 +92,7 @@ const Character = () => {
   } = useQuery(['combatSkills', id], () => getCombatSkills(id), {
     enabled: !!id,
     refetchOnWindowFocus: false,
-    staleTime: 1000 * 60 * 5,
+    staleTime: Infinity,
   });
 
   const {
@@ -102,7 +102,7 @@ const Character = () => {
   } = useQuery(['cards', id], () => getCards(id), {
     enabled: !!id,
     refetchOnWindowFocus: false,
-    staleTime: 1000 * 60 * 5,
+    staleTime: Infinity,
   });
 
   const {
@@ -112,7 +112,7 @@ const Character = () => {
   } = useQuery(['gems', id], () => getGems(id), {
     enabled: !!id,
     refetchOnWindowFocus: false,
-    staleTime: 1000 * 60 * 5,
+    staleTime: Infinity,
   });
 
   const {
@@ -122,7 +122,7 @@ const Character = () => {
   } = useQuery(['collectibles', id], () => getCollectibles(id), {
     enabled: !!id,
     refetchOnWindowFocus: false,
-    staleTime: 1000 * 60 * 5,
+    staleTime: Infinity,
   });
 
   useEffect(() => {
@@ -238,7 +238,12 @@ const Character = () => {
         )}
         {isExist && !characterIsLoading && (
           <ContentBox>
-            <Aside />
+            <Aside
+              collectibles={collectibles}
+              collectiblesIsLoading={characterIsLoading}
+              profile={profile}
+              profileIsLoading={profileIsLoading}
+            />
             <Section>
               <NaviWrap>
                 <Navigation>

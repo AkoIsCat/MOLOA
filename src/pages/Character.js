@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import Loading from '../components/UI/Loading';
 import {
@@ -121,6 +121,13 @@ const Character = () => {
       staleTime: 1000 * 60 * 5,
     }
   );
+
+  useEffect(() => {
+    const id = setInterval(() => {
+      setTimer((prev) => prev + 1);
+    }, 1000 * 60);
+    return () => clearInterval(id);
+  }, []);
 
   const selectMenuHandler = (index) => {
     setCurrentTab(index);

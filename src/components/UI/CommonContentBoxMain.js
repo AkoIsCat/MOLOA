@@ -31,7 +31,7 @@ export default React.memo(CommonContentBoxMain);
 export const Content = memo(styled.div`
   width: ${(props) =>
     props.main
-      ? '164.6px'
+      ? '220px'
       : props.equipment
       ? '100%'
       : props.collect

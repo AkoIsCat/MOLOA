@@ -15,8 +15,8 @@ const CalenderList = ({
 
   const islandItem =
     adventureIslandList &&
-    adventureIslandList.weekday &&
-    adventureIslandList.weekday.map((item, index) =>
+    adventureIslandList.weekdayList &&
+    adventureIslandList.weekdayList.map((item, index) =>
       adventureIslandList.weekdayList.length === index + 1 ? (
         <IslandItem key={index}>{item.ContentsName}</IslandItem>
       ) : (

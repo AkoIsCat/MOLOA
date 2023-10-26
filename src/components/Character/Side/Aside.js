@@ -2,8 +2,6 @@ import styled from 'styled-components';
 import { useMediaQuery } from 'react-responsive';
 import { Fragment } from 'react';
 import { useParams } from 'react-router-dom';
-import { getProfile, getCollectibles } from '../../../api/LostArk/LostarkAxios';
-import { useQuery } from 'react-query';
 
 import { Head } from '../../UI/CommonContentBox';
 import { Content } from '../../UI/CommonContentBoxMain';

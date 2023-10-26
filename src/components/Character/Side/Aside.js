@@ -31,29 +31,13 @@ const collectImg = [
   collect9,
 ];
 
-const Aside = () => {
+const Aside = ({
+  collectibles,
+  collectiblesIsLoading,
+  profile,
+  profileIsLoading,
+}) => {
   const { id } = useParams();
-
-  const { data: profile, isLoading: profileIsLoading } = useQuery(
-    ['profile', id],
-    () => getProfile(id),
-    {
-      enabled: !!id,
-      refetchOnWindowFocus: false,
-      staleTime: 1000 * 60 * 5,
-    }
-  );
-
-  const { data: collectibles, isLoading: collectiblesIsLoading } = useQuery(
-    ['collectibles', id],
-    () => getCollectibles(id),
-    {
-      enabled: !!id,
-      refetchOnWindowFocus: false,
-      staleTime: 1000 * 60 * 5,
-    }
-  );
-
   const isPc = useMediaQuery({
     query: '(min-width:1024px)',
   });

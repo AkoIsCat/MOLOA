@@ -41,7 +41,7 @@ const CharacterCards = ({ cards }) => {
       });
     }
   }
-  console.log(effectList);
+
   return (
     <div>
       <ContentWrap>
@@ -58,7 +58,7 @@ const CharacterCards = ({ cards }) => {
               ) : (
                 <Fragment key={item.setName}>
                   <span>
-                    {item.lastEffect}
+                    {item.setName}
                     {item.awake}
                     {item.awake && '각'}
                   </span>

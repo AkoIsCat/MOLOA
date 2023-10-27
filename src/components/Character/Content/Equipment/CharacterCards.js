@@ -41,22 +41,22 @@ const CharacterCards = ({ cards }) => {
       });
     }
   }
-
+  console.log(effectList);
   return (
     <div>
-      <ContentWrap style={{ flexDirection: 'column', padding: '10px 0 0' }}>
+      <ContentWrap>
         <CardEffectNames>
           <CharacteristicsBox>카드</CharacteristicsBox>
           <div className="cardEffect">
             {effectList.map((item, index) =>
               index === effectList.length - 1 ? (
-                <span key={index}>
+                <span key={item.setName}>
                   {item.setName}
                   {item.awake}
                   {item.awake && '각'}
                 </span>
               ) : (
-                <Fragment key={index}>
+                <Fragment key={item.setName}>
                   <span>
                     {item.lastEffect}
                     {item.awake}
@@ -129,10 +129,10 @@ const ContentWrap = styled.div`
   width: ${(props) => (props.characteristics ? '32%' : '100%')};
   display: flex;
   justify-content: center;
+  flex-direction: column;
   background: #181c1e;
   border-radius: 10px;
-  padding: ${(props) =>
-    props.characteristics ? '10px 0 10px 0' : '10px 0 35px 0'};
+  padding: 10px 0 0;
   margin: 20px 0 0 0;
 `;
 

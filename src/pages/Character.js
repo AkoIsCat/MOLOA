@@ -33,11 +33,11 @@ const Character = () => {
   const { id } = useParams();
 
   const {
-    data: holdingCharacter,
-    isLoading: holdingCharacterIsLoading,
-    refetch: refetchHoldingCharacter,
+    data: profile,
+    isLoading: profileIsLoading,
+    refetch: refetchProfile,
     dataUpdatedAt,
-  } = useQuery(['characterList', id], () => getCharacterExist(id), {
+  } = useQuery(['profile', id], () => getProfile(id), {
     enabled: !!id,
     refetchOnWindowFocus: false,
     staleTime: Infinity,
@@ -48,17 +48,18 @@ const Character = () => {
       ? ~~((new Date().getTime() - dataUpdatedAt) / (60 * 1000))
       : 0
   ); // 데이터가 업데이트 됐었던 시점을 기준으로 함
-  const isExist = holdingCharacter && true;
 
   const {
-    data: profile,
-    isLoading: profileIsLoading,
-    refetch: refetchProfile,
-  } = useQuery(['profile', id], () => getProfile(id), {
+    data: holdingCharacter,
+    isLoading: holdingCharacterIsLoading,
+    refetch: refetchHoldingCharacter,
+  } = useQuery(['characterList', id], () => getCharacterExist(id), {
     enabled: !!id,
     refetchOnWindowFocus: false,
     staleTime: Infinity,
   });
+
+  const isExist = holdingCharacter && true;
 
   const {
     data: equipment,

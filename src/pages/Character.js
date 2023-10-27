@@ -29,25 +29,9 @@ import Footer from '../components/UI/Footer';
 const Character = () => {
   const [currentTab, setCurrentTab] = useState(0); // 네비게이션 탭
   const [currentGems, setCurrentGems] = useState([]); // 스킬 - 보석 정보 전달
+  const [timer, setTimer] = useState();
 
   const { id } = useParams();
-
-  const {
-    data: profile,
-    isLoading: profileIsLoading,
-    refetch: refetchProfile,
-    dataUpdatedAt,
-  } = useQuery(['profile', id], () => getProfile(id), {
-    enabled: !!id,
-    refetchOnWindowFocus: false,
-    staleTime: Infinity,
-  });
-
-  const [timer, setTimer] = useState(
-    dataUpdatedAt !== 0
-      ? ~~((new Date().getTime() - dataUpdatedAt) / (60 * 1000))
-      : 0
-  ); // 데이터가 업데이트 됐었던 시점을 기준으로 함
 
   const {
     data: holdingCharacter,
@@ -60,6 +44,17 @@ const Character = () => {
   });
 
   const isExist = holdingCharacter && true;
+
+  const {
+    data: profile,
+    isLoading: profileIsLoading,
+    refetch: refetchProfile,
+    dataUpdatedAt,
+  } = useQuery(['profile', id], () => getProfile(id), {
+    enabled: !!id,
+    refetchOnWindowFocus: false,
+    staleTime: Infinity,
+  });
 
   const {
     data: equipment,
@@ -132,11 +127,15 @@ const Character = () => {
   });
 
   useEffect(() => {
-    const id = setInterval(() => {
-      setTimer((prev) => prev + 1);
-    }, 1000 * 60);
-    return () => clearInterval(id);
-  }, []);
+    // 컴포넌트가 렌더링 될 때마다 업데이트
+    // 데이터가 업데이트 됐었던 시점을 기준으로 함
+    setTimer(
+      dataUpdatedAt !== 0
+        ? ~~((new Date().getTime() - dataUpdatedAt) / (60 * 1000))
+        : 0
+    );
+  }, [dataUpdatedAt]);
+
   const selectMenuHandler = (index) => {
     setCurrentTab(index);
   };

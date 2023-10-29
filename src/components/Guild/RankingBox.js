@@ -30,19 +30,18 @@ const RankingBox = ({ isSelect, serverName, guildRanking, isLoading }) => {
                   <li className="guildMessage">길드소개</li>
                 </ul>
               </div>
-              <div style={{ margin: '15px 0' }}>
-                <ul style={{ flexDirection: 'column', border: '0' }}>
-                  {guildRanking &&
-                    guildRanking.map((item) => (
-                      <div className="listWrap" key={item.GuildName}>
-                        <li className="rank">{item.Rank}</li>
-                        <li className="guildName">{item.GuildName}</li>
-                        <li className="serverName">{serverName}</li>
-                        <li className="memberCount">{item.MemberCount}</li>
-                        <li className="masterName">{item.MasterName}</li>
-                        <li className="guildMessage">{item.GuildMessage}</li>
-                      </div>
-                    ))}
+              <div className="rank-wrap">
+                <ul className="column">
+                  {guildRanking.map((item) => (
+                    <div className="listWrap" key={item.GuildName}>
+                      <li className="rank">{item.Rank}</li>
+                      <li className="guildName">{item.GuildName}</li>
+                      <li className="serverName">{serverName}</li>
+                      <li className="memberCount">{item.MemberCount}</li>
+                      <li className="masterName">{item.MasterName}</li>
+                      <li className="guildMessage">{item.GuildMessage}</li>
+                    </div>
+                  ))}
                 </ul>
               </div>
             </RankIndexWrap>
@@ -73,6 +72,15 @@ const RankIndexWrap = styled.div`
   width: auto;
   margin: 30px 25px;
   font-family: 'Nanum Gothic';
+
+  .column {
+    flex-direction: column;
+    border: 0;
+  }
+
+  .rank-wrap {
+    margin: 15px 0;
+  }
 
   ul {
     font-size: 15px;

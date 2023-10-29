@@ -29,16 +29,28 @@ const CalenderList = ({
   const amIslandItem =
     adventureIslandList &&
     adventureIslandList.weekendAmList &&
-    adventureIslandList.weekendAmList.map((item) => (
-      <IslandItem key={item.ContentsName}>{item.ContentsName}</IslandItem>
-    ));
+    adventureIslandList.weekendAmList.map((item, index) =>
+      adventureIslandList.weekendAmList.length === index + 1 ? (
+        <IslandItem key={item.ContentsName}>{item.ContentsName}</IslandItem>
+      ) : (
+        <IslandItem key={item.ContentsName} border="true">
+          {item.ContentsName}
+        </IslandItem>
+      )
+    );
 
   const pmIslandItem =
     adventureIslandList &&
     adventureIslandList.weekendPmList &&
-    adventureIslandList.weekendPmList.map((item) => (
-      <IslandItem key={item.ContentsName}>{item.ContentsName}</IslandItem>
-    ));
+    adventureIslandList.weekendPmList.map((item, index) =>
+      adventureIslandList.weekendPmList.length === index + 1 ? (
+        <IslandItem key={item.ContentsName}>{item.ContentsName}</IslandItem>
+      ) : (
+        <IslandItem key={item.ContentsName} border="true">
+          {item.ContentsName}
+        </IslandItem>
+      )
+    );
 
   const calenderListItem = calender.map((item, index) =>
     // 마지막 요소

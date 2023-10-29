@@ -97,10 +97,7 @@ const CharacterList = ({
                   {holdingCharacterList[index][serverName].map((items) => (
                     <CharacterProfile
                       key={items.obj.CharacterName}
-                      CharacterClass={items.obj.CharacterClassName.replace(
-                        /'/g,
-                        ''
-                      )}
+                      CharacterClass={items.obj.CharacterClassName}
                     >
                       <div className="profileWrap">
                         <div className="infoWrap">

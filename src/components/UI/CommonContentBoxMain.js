@@ -5,7 +5,6 @@ const CommonContentBoxMain = (props) => {
   return (
     <Content
       key={props.id}
-      id={props.id}
       font={props.font}
       height={props.height}
       border={props.border}

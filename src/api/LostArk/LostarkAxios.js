@@ -11,7 +11,7 @@ export const getNotificationList = async () => {
     return data;
   } catch (error) {
     console.error(error);
-    console.log('Notification error');
+    throw new Error('Notification error');
   }
 };
 
@@ -21,7 +21,7 @@ export const getCalenderIsland = async () => {
     return data;
   } catch (error) {
     console.error(error);
-    console.log('Calender error');
+    throw new Error('Calender error');
   }
 };
 
@@ -30,8 +30,7 @@ export const getEventList = async () => {
     const { data } = await LostarkAuthInstance().get('/news/events');
     return data;
   } catch (error) {
-    console.error(error);
-    console.log('Event error');
+    throw new Error('Event error');
   }
 };
 
@@ -44,8 +43,7 @@ export const getGuildRanking = async (serverName) => {
     });
     return data;
   } catch (error) {
-    console.error(error);
-    console.log('Guild error');
+    throw new Error('Guild error');
   }
 };
 
@@ -56,8 +54,7 @@ export const getCharacterExist = async (id) => {
     );
     return data;
   } catch (error) {
-    console.error(error);
-    console.log('Character Exist error');
+    throw new Error('Character Exist error');
   }
 };
 
@@ -66,8 +63,7 @@ export const getProfile = async (id) => {
     const { data } = await LostArkCharacterInstance().get(`/${id}/profiles`);
     return data;
   } catch (error) {
-    console.error(error);
-    console.log('Profile error');
+    throw new Error('Profile error');
   }
 };
 
@@ -76,8 +72,7 @@ export const getEquipment = async (id) => {
     const { data } = await LostArkCharacterInstance().get(`/${id}/equipment`);
     return data;
   } catch (error) {
-    console.error(error);
-    console.log('Equipment error');
+    throw new Error('Equipment error');
   }
 };
 
@@ -86,8 +81,7 @@ export const getAvatars = async (id) => {
     const { data } = await LostArkCharacterInstance().get(`/${id}/avatars`);
     return data;
   } catch (error) {
-    console.error(error);
-    console.log('Avatars error');
+    throw new Error('Avatars error');
   }
 };
 
@@ -98,8 +92,7 @@ export const getCombatSkills = async (id) => {
     );
     return data;
   } catch (error) {
-    console.error(error);
-    console.log('Combat Skills error');
+    throw new Error('Combat Skills error');
   }
 };
 
@@ -108,8 +101,7 @@ export const getEngravings = async (id) => {
     const { data } = await LostArkCharacterInstance().get(`/${id}/engravings`);
     return data;
   } catch (error) {
-    console.error(error);
-    console.log('Engravings error');
+    throw new Error('Engravings error');
   }
 };
 
@@ -118,8 +110,7 @@ export const getCards = async (id) => {
     const { data } = await LostArkCharacterInstance().get(`/${id}/cards`);
     return data;
   } catch (error) {
-    console.error(error);
-    console.log('Cards error');
+    throw new Error('Cards error');
   }
 };
 
@@ -128,8 +119,7 @@ export const getGems = async (id) => {
     const { data } = await LostArkCharacterInstance().get(`/${id}/gems`);
     return data;
   } catch (error) {
-    console.error(error);
-    console.log('Gems error');
+    throw new Error('Gems error');
   }
 };
 
@@ -140,7 +130,6 @@ export const getCollectibles = async (id) => {
     );
     return data;
   } catch (error) {
-    console.error(error);
-    console.log('Collectibles error');
+    throw new Error('Collectibles error');
   }
 };

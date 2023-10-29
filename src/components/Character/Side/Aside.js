@@ -126,19 +126,7 @@ const Aside = ({
 
   return (
     <FullWrap>
-      {isPc && (
-        <Wrap>
-          <Nickname>
-            <p>{id}</p>
-          </Nickname>
-          <Side>
-            {infoItem}
-            {collectItem}
-            {avatarImage}
-          </Side>
-        </Wrap>
-      )}
-      {isTablet && (
+      {(isPc || isTablet) && (
         <Wrap>
           <Nickname>
             <p>{id}</p>

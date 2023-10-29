@@ -21,6 +21,7 @@ const CharacterGemsPart = ({ gems, getGemsList }) => {
             tooltipObject[key].value['Element_001'].match(effectRegex);
           const skillName = matchValue[1];
           const skillShame = matchValue[2];
+
           gemsEffect.push({
             level: gems.Gems[i].Level,
             name: gems.Gems[i].Name.match(gemsRegex)[1],

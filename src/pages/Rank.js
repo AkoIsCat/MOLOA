@@ -52,6 +52,8 @@ const Rank = () => {
     {
       select: (data) => Object.values(data),
       refetchOnWindowFocus: false,
+      staleTime: Infinity,
+      cacheTime: Infinity,
     }
   );
 

@@ -147,7 +147,6 @@ const Character = () => {
   }, []);
 
   const onClickUpdateBtn = () => {
-    clearInterval(timer);
     setTimer(0);
     refetchHoldingCharacter();
     refetchAvartars();

@@ -58,7 +58,6 @@ const CharacterList = ({
   }
 
   const holdingCharacterList = [];
-  let serverNameList = [];
 
   const sortHoldingCharacterList = holdingCharacter.sort((a, b) => {
     const itemMaxLevelA = parseFloat(a.ItemMaxLevel.replace(/,/g, '')); // 쉼표 제거 후 숫자로 변환
@@ -73,10 +72,12 @@ const CharacterList = ({
     if (!classificationByServer[name]) {
       classificationByServer[name] = [];
     }
+
     classificationByServer[name].push({ obj });
   });
+
   const keys = Object.keys(classificationByServer);
-  serverNameList = keys.map((key) => `${key}`);
+  const serverNameList = keys.map((key) => `${key}`);
 
   // 배열 안에 대입
   for (let key in classificationByServer) {

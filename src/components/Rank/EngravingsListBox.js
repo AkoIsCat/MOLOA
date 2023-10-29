@@ -28,17 +28,15 @@ const EngravingsListBox = ({
     sendData();
   }, [sendData]);
 
-  const selectedEngreving1 = (index, item) => {
+  const selectedEngreving1 = (item) => {
     setCurrentClassEngraving({
-      index,
       name: item.engraving.engraving1,
       click: !currentClassEngraving.click,
     });
   };
 
-  const selectedEngreving2 = (index, item) => {
+  const selectedEngreving2 = (item) => {
     setCurrentClassEngraving2({
-      index,
       name: item.engraving.engraving2,
       click: !currentClassEngraving2.click,
     });
@@ -66,7 +64,7 @@ const EngravingsListBox = ({
                       classList[currentClassTab].engraving.engraving1
                     } 1`}
                     onClick={() => {
-                      selectedEngreving1(index, item);
+                      selectedEngreving1(item);
                     }}
                     active={currentClassEngraving.click && 'true'}
                     style={{ width: '45%' }}
@@ -85,7 +83,7 @@ const EngravingsListBox = ({
                       classList[currentClassTab].engraving.engraving2
                     } 2`}
                     onClick={() => {
-                      selectedEngreving2(index, item);
+                      selectedEngreving2(item);
                     }}
                     active2={currentClassEngraving2.click && 'true'}
                     style={{ width: '45%' }}

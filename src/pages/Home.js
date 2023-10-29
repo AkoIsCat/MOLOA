@@ -21,24 +21,7 @@ const Home = () => {
 
   return (
     <div>
-      {isPc && (
-        <Background>
-          <Header />
-          <Container>
-            <LeftSide>
-              <LeftAside />
-            </LeftSide>
-            <MainContent>
-              <MainContents />
-            </MainContent>
-            <LeftSide>
-              <RightAside />
-            </LeftSide>
-          </Container>
-          <Footer />
-        </Background>
-      )}
-      {isTablet && (
+      {(isPc || isTablet) && (
         <Background>
           <Header />
           <Container>

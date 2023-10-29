@@ -34,12 +34,11 @@ const CharacterCards = ({ cards }) => {
   }
 
   for (let j = 0; j <= effectList.length - 1; j++) {
-    for (let i = 0; i <= effectList[j].items.length - 1; i++) {
-      totalEffect.push({
-        Name: effectList[j].items[i].Name,
-        Description: effectList[j].items[i].Description,
-      });
-    }
+    const lastEffect = effectList[j].items[effectList[j].items.length - 1];
+    totalEffect.push({
+      Name: lastEffect.Name,
+      Description: lastEffect.Description,
+    });
   }
 
   return (

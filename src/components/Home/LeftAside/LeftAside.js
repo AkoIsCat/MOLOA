@@ -19,8 +19,14 @@ const LeftAside = () => {
     'moloaNotification',
     () => getFirebaseData('MoloaNoti'),
     {
-      select: (item) =>
-        item[0].id !== item.length - 1 ? item.reverse() : item,
+      select: (item) => {
+        const sliceData = item.length > 5 ? item.slice(0, 5) : item;
+        const reverseData =
+          sliceData[0].id !== sliceData.length - 1
+            ? sliceData.reverse()
+            : sliceData;
+        return reverseData;
+      },
       refetchOnWindowFocus: false,
     }
   );

@@ -290,7 +290,7 @@ const Character = () => {
                 </Navigation>
                 <UpdateBox>
                   <TimerMessage>
-                    {timer < 60 ? `${timer}분 전` : `${~~timer / 60}시간 전`}
+                    {timer < 60 ? `${timer}분 전` : `${~~(timer / 60)}시간 전`}
                   </TimerMessage>
                   <UpdateButton
                     disabled={timer >= 5 ? false : true}

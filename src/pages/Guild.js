@@ -25,7 +25,7 @@ const Guild = () => {
   const [serverName, setServerName] = useState(); // 선택된 서버 이름
 
   const { data: guildRanking, isLoading: guildRankingIsLoading } = useQuery(
-    'guildRank',
+    ['guildRank', serverName],
     () => getGuildRanking(serverName),
     {
       refetchOnWindowFocus: false,

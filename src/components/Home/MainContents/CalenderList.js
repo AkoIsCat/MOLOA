@@ -18,9 +18,9 @@ const CalenderList = ({
     adventureIslandList.weekdayList &&
     adventureIslandList.weekdayList.map((item, index) =>
       adventureIslandList.weekdayList.length === index + 1 ? (
-        <IslandItem key={index}>{item.ContentsName}</IslandItem>
+        <IslandItem key={item.ContentsName}>{item.ContentsName}</IslandItem>
       ) : (
-        <IslandItem key={index} border="true">
+        <IslandItem key={item.ContentsName} border="true">
           {item.ContentsName}
         </IslandItem>
       )
@@ -29,21 +29,26 @@ const CalenderList = ({
   const amIslandItem =
     adventureIslandList &&
     adventureIslandList.weekendAmList &&
-    adventureIslandList.weekendAmList.map((item, index) => (
-      <IslandItem key={index}>{item.ContentsName}</IslandItem>
+    adventureIslandList.weekendAmList.map((item) => (
+      <IslandItem key={item.ContentsName}>{item.ContentsName}</IslandItem>
     ));
 
   const pmIslandItem =
     adventureIslandList &&
     adventureIslandList.weekendPmList &&
-    adventureIslandList.weekendPmList.map((item, index) => (
-      <IslandItem key={index}>{item.ContentsName}</IslandItem>
+    adventureIslandList.weekendPmList.map((item) => (
+      <IslandItem key={item.ContentsName}>{item.ContentsName}</IslandItem>
     ));
 
   const calenderListItem = calender.map((item, index) =>
     // 마지막 요소
     calender.length === index + 1 ? (
-      <CommonContentBoxMain key={index} id={index} main="true" rightBtm="true">
+      <CommonContentBoxMain
+        key={item.name}
+        id={item.name}
+        main="true"
+        rightBtm="true"
+      >
         <LineDivision>{item.name}</LineDivision>
         <LineDivision>오늘 출현 {item.emergence ? 'O' : 'X'}</LineDivision>
         <ImageContent>
@@ -60,8 +65,8 @@ const CalenderList = ({
     ) : // 첫 요소
     index === 0 ? (
       <CommonContentBoxMain
-        key={index}
-        id={index}
+        key={item.name}
+        id={item.name}
         main="true"
         leftBtm="true"
         rightBrd="true"
@@ -75,8 +80,8 @@ const CalenderList = ({
     ) : (
       // 가운데 요소
       <CommonContentBoxMain
-        key={index}
-        id={index}
+        key={item.name}
+        id={item.name}
         main="true"
         sideBorder="true"
         rightBrd="true"

@@ -46,7 +46,7 @@ export const Content = memo(styled.div`
       props.event
         ? '100%'
         : props.main
-        ? '24.8%'
+        ? '33.1%'
         : props.collect
         ? '100%'
         : '100%'};

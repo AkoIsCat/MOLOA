@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import { useState, useEffect, useCallback } from 'react';
 
 import CommonContentBox from '../UI/CommonContentBox';
 
@@ -28,29 +27,9 @@ const server = [
   {
     name: '니나브',
   },
-  {
-    name: '전체',
-  },
 ];
 
-const ServerList = ({ getSelectedData }) => {
-  const [serverName, setServerName] = useState();
-  const [currentTab, setCurrentTab] = useState();
-
-  const sendData = useCallback(() => {
-    getSelectedData(serverName);
-  }, [serverName, getSelectedData]);
-
-  useEffect(() => {
-    if (serverName !== '') {
-      sendData();
-    }
-  }, [serverName, sendData]);
-
-  const selectMenuHandler = (index) => {
-    setCurrentTab(index);
-  };
-
+const ServerList = ({ selectServer, serverNumber }) => {
   const serverListItem = (
     <ServerListBox>
       <ul>
@@ -59,10 +38,12 @@ const ServerList = ({ getSelectedData }) => {
             borderFirst="true"
             key={item.name}
             onClick={() => {
-              selectMenuHandler(index);
-              setServerName(item.name);
+              selectServer({
+                server: item.name,
+                serverNumber: index,
+              });
             }}
-            active={currentTab === index && 'true'}
+            active={serverNumber === index && 'true'}
           >
             {item.name}
           </ServerListli>

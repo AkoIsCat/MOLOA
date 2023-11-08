@@ -2,6 +2,8 @@ import styled from 'styled-components';
 import { useState } from 'react';
 import { getFirebaseData } from '../api/Firebase/FirebaseAxios';
 import { useQuery } from 'react-query';
+import { useSelector, useDispatch } from 'react-redux';
+import { SELECT_SERVER } from '../redux/modules/serverSlice';
 
 import Header from '../components/Header/Header';
 import Background from '../components/UI/BackBox';
@@ -13,7 +15,6 @@ import EngravingsListBox from '../components/Rank/EngravingsListBox';
 import Footer from '../components/UI/Footer';
 
 const Rank = () => {
-  const [serverName, setServerName] = useState(); // 선택된 서버 이름
   const [currentClassTab, setCurrentClassTab] = useState(); // 직업 네비게이션
   const [className, setClassName] = useState(); // 선택된 직업 이름
   const [currentClassEngraving, setCurrentClassEngraving] = useState({
@@ -22,6 +23,12 @@ const Rank = () => {
   const [currentClassEngraving2, setCurrentClassEngraving2] = useState({
     click: false,
   }); // 직각2 네비게이션
+
+  const { server } = useSelector((state) => state.server);
+  const { serverNumber } = useSelector((state) => state.server);
+  const dispatch = useDispatch();
+
+  const selectServer = (payload) => dispatch(SELECT_SERVER(payload));
 
   const { data: characterList } = useQuery(
     'characterList',
@@ -80,10 +87,6 @@ const Rank = () => {
     return sortCharacterList;
   }
 
-  const getSelectedData = (serverName) => {
-    setServerName(serverName);
-  };
-
   const getSelectedClassData = (className, engraving1, engraving2, tab) => {
     setClassName(className);
     setCurrentClassEngraving(engraving1);
@@ -105,7 +108,7 @@ const Rank = () => {
           className={className}
           currentClassEngraving={currentClassEngraving}
           currentClassEngraving2={currentClassEngraving2}
-          serverName={serverName}
+          serverName={server}
           engraving={jobEngravings}
         />
         <ServerWrap>
@@ -120,7 +123,7 @@ const Rank = () => {
             currentClassTab={currentClassTab}
             getSelectedEngravingsData={getSelectedEngravingsData}
           />
-          <ServerList getSelectedData={getSelectedData} />
+          <ServerList serverNumber={serverNumber} selectServer={selectServer} />
         </ServerWrap>
       </ContainerBox>
       <Footer />

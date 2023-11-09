@@ -8,9 +8,9 @@ const CharacterRank = ({
   characterList,
   className,
   serverName,
-  currentClassEngraving,
-  currentClassEngraving2,
   engraving,
+  engraving1,
+  engraving2,
 }) => {
   const navigate = useNavigate();
 
@@ -24,16 +24,14 @@ const CharacterRank = ({
     const isServerMatch =
       !serverName || serverName === '전체' || item.server === serverName;
     const hasEngravingMatch =
-      (!currentClassEngraving.click ||
+      (!engraving1 ||
         (item.engravings &&
           item.engravings.some(
-            (engraving) => engraving.name === currentClassEngraving.name
+            (engraving) => engraving.name === engraving1
           ))) &&
-      (!currentClassEngraving2.click ||
+      (!engraving2 ||
         (item.engravings &&
-          item.engravings.some(
-            (engraving) => engraving.name === currentClassEngraving2.name
-          )));
+          item.engravings.some((engraving) => engraving.name === engraving2)));
     return isClassMatch && isServerMatch && hasEngravingMatch;
   });
 

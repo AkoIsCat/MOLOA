@@ -6,10 +6,10 @@ import CharacterRank from './CharacterRank';
 const RankingBox = ({
   characterList,
   className,
-  currentClassEngraving,
-  currentClassEngraving2,
   serverName,
   engraving,
+  engraving1,
+  engraving2,
 }) => {
   return (
     <RankingWrap>
@@ -35,8 +35,8 @@ const RankingBox = ({
             characterList={characterList}
             className={className}
             serverName={serverName}
-            currentClassEngraving={currentClassEngraving}
-            currentClassEngraving2={currentClassEngraving2}
+            engraving1={engraving1}
+            engraving2={engraving2}
             engraving={engraving}
           />
         </RankIndexWrap>

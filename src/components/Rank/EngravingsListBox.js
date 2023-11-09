@@ -1,4 +1,4 @@
-import { Fragment, useState, useEffect, useCallback } from 'react';
+import { Fragment } from 'react';
 
 import { ServerListBox, ServerListli, ServerWrap } from './ServerList';
 import CommonContentBox from '../UI/CommonContentBox';
@@ -6,42 +6,12 @@ import CommonContentBox from '../UI/CommonContentBox';
 const EngravingsListBox = ({
   classList,
   className,
-  currentClassTab,
-  getSelectedEngravingsData,
+  selectEngraving1,
+  selectEngraving2,
+  engraving1,
+  engraving2,
+  classNumber,
 }) => {
-  const [currentClassEngraving, setCurrentClassEngraving] = useState({
-    click: false,
-  }); // 직각 네비게이션
-  const [currentClassEngraving2, setCurrentClassEngraving2] = useState({
-    click: false,
-  }); // 직각2 네비게이션
-
-  const sendData = useCallback(() => {
-    getSelectedEngravingsData(currentClassEngraving, currentClassEngraving2);
-  }, [
-    currentClassEngraving,
-    currentClassEngraving2,
-    getSelectedEngravingsData,
-  ]);
-
-  useEffect(() => {
-    sendData();
-  }, [sendData]);
-
-  const selectedEngreving1 = (item) => {
-    setCurrentClassEngraving({
-      name: item.engraving.engraving1,
-      click: !currentClassEngraving.click,
-    });
-  };
-
-  const selectedEngreving2 = (item) => {
-    setCurrentClassEngraving2({
-      name: item.engraving.engraving2,
-      click: !currentClassEngraving2.click,
-    });
-  };
-
   const classEngravingItem = (
     <ServerListBox>
       <ul>
@@ -49,49 +19,51 @@ const EngravingsListBox = ({
           classList.map(
             (item, index) =>
               className &&
-              currentClassTab === index && (
+              classNumber === index && (
                 <Fragment
                   key={`${
-                    classList && classList[currentClassTab].engraving.engraving1
+                    classList && classList[classNumber].engraving.engraving1
                   } ${
-                    classList && classList[currentClassTab].engraving.engraving2
+                    classList && classList[classNumber].engraving.engraving2
                   }`}
                 >
                   <ServerListli
                     borderFirst="true"
                     key={`${
-                      classList &&
-                      classList[currentClassTab].engraving.engraving1
+                      classList && classList[classNumber].engraving.engraving1
                     } 1`}
                     onClick={() => {
-                      selectedEngreving1(item);
+                      selectEngraving1({
+                        engraving: item.engraving.engraving1,
+                      });
                     }}
-                    active={currentClassEngraving.click && 'true'}
+                    active={engraving1 && 'true'}
                     style={{ width: '45%' }}
                   >
                     <div className="engravings">
                       <div>
                         {classList &&
-                          classList[currentClassTab].engraving.engraving1}
+                          classList[classNumber].engraving.engraving1}
                       </div>
                     </div>
                   </ServerListli>
                   <ServerListli
                     borderFirst="true"
                     key={`${
-                      classList &&
-                      classList[currentClassTab].engraving.engraving2
+                      classList && classList[classNumber].engraving.engraving2
                     } 2`}
                     onClick={() => {
-                      selectedEngreving2(item);
+                      selectEngraving2({
+                        engraving: item.engraving.engraving2,
+                      });
                     }}
-                    active2={currentClassEngraving2.click && 'true'}
+                    active2={engraving2 && 'true'}
                     style={{ width: '45%' }}
                   >
                     <div className="engravings">
                       <div>
                         {classList &&
-                          classList[currentClassTab].engraving.engraving2}
+                          classList[classNumber].engraving.engraving2}
                       </div>
                     </div>
                   </ServerListli>

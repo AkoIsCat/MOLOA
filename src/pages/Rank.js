@@ -1,10 +1,14 @@
 import styled from 'styled-components';
-import { useState } from 'react';
 import { getFirebaseData } from '../api/Firebase/FirebaseAxios';
 import { useQuery } from 'react-query';
 import { useSelector, useDispatch } from 'react-redux';
 import { SELECT_SERVER } from '../redux/modules/serverSlice';
 import { SELECT_CLASS } from '../redux/modules/classSlice';
+import {
+  INITIAL_ENGRAVINGS,
+  SELECT_ENGRAVING1,
+  SELECT_ENGRAVING2,
+} from '../redux/modules/jobEngravingSlice';
 
 import Header from '../components/Header/Header';
 import Background from '../components/UI/BackBox';
@@ -16,22 +20,19 @@ import EngravingsListBox from '../components/Rank/EngravingsListBox';
 import Footer from '../components/UI/Footer';
 
 const Rank = () => {
-  const [currentClassTab, setCurrentClassTab] = useState(); // 직업 네비게이션
-  const [currentClassEngraving, setCurrentClassEngraving] = useState({
-    click: false,
-  }); // 직각 네비게이션
-  const [currentClassEngraving2, setCurrentClassEngraving2] = useState({
-    click: false,
-  }); // 직각2 네비게이션
-
   const { server } = useSelector((state) => state.server);
   const { serverNumber } = useSelector((state) => state.server);
   const { class: className } = useSelector((state) => state.class);
   const { classNumber } = useSelector((state) => state.class);
+  const { engraving1 } = useSelector((state) => state.jobEngraving);
+  const { engraving2 } = useSelector((state) => state.jobEngraving);
 
   const dispatch = useDispatch();
   const selectServer = (payload) => dispatch(SELECT_SERVER(payload));
   const selectClass = (payload) => dispatch(SELECT_CLASS(payload));
+  const selectEngraving1 = (payload) => dispatch(SELECT_ENGRAVING1(payload));
+  const selectEngraving2 = (payload) => dispatch(SELECT_ENGRAVING2(payload));
+  const initialEngraving = () => dispatch(INITIAL_ENGRAVINGS());
 
   const { data: characterList } = useQuery(
     'characterList',
@@ -90,17 +91,6 @@ const Rank = () => {
     return sortCharacterList;
   }
 
-  const getSelectedClassData = (className, engraving1, engraving2, tab) => {
-    setCurrentClassEngraving(engraving1);
-    setCurrentClassEngraving2(engraving2);
-    setCurrentClassTab(tab);
-  };
-
-  const getSelectedEngravingsData = (engraving1, engraving2) => {
-    setCurrentClassEngraving(engraving1);
-    setCurrentClassEngraving2(engraving2);
-  };
-
   return (
     <Background>
       <Header />
@@ -108,8 +98,8 @@ const Rank = () => {
         <RankingBox
           characterList={characterList}
           className={className}
-          currentClassEngraving={currentClassEngraving}
-          currentClassEngraving2={currentClassEngraving2}
+          engraving1={engraving1}
+          engraving2={engraving2}
           serverName={server}
           engraving={jobEngravings}
         />
@@ -117,15 +107,18 @@ const Rank = () => {
           <ClassListBox
             classList={classList}
             isLoading={classIsLoading}
-            getSelectedClassData={getSelectedClassData}
             selectClass={selectClass}
             classNumber={classNumber}
+            initialEngraving={initialEngraving}
           />
           <EngravingsListBox
             classList={classList}
             className={className}
-            currentClassTab={currentClassTab}
-            getSelectedEngravingsData={getSelectedEngravingsData}
+            classNumber={classNumber}
+            engraving1={engraving1}
+            engraving2={engraving2}
+            selectEngraving1={selectEngraving1}
+            selectEngraving2={selectEngraving2}
           />
           <ServerList serverNumber={serverNumber} selectServer={selectServer} />
         </ServerWrap>

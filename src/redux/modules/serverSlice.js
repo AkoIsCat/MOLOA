@@ -30,6 +30,9 @@ const serverSlice = createSlice({
             : undefined,
       };
     },
+    INITIAL_SERVER: () => {
+      return initialState;
+    },
   },
 });
 

@@ -27,5 +27,6 @@ const classSlice = createSlice({
 });
 
 export const { SELECT_CLASS } = classSlice.actions;
+export const { INITIAL_CLASS } = classSlice.actions;
 
 export default classSlice;

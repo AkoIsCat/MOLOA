@@ -37,5 +37,6 @@ const serverSlice = createSlice({
 });
 
 export const { SELECT_SERVER } = serverSlice.actions;
+export const { INITIAL_SERVER } = serverSlice.actions;
 
 export default serverSlice;

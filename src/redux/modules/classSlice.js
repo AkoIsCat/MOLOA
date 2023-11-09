@@ -20,6 +20,9 @@ const classSlice = createSlice({
             : undefined,
       };
     },
+    INITIAL_CLASS: () => {
+      return initialState;
+    },
   },
 });
 

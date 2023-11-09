@@ -18,6 +18,7 @@ import ServerList from '../components/Rank/ServerList';
 import ClassListBox from '../components/Rank/ClassListBox';
 import EngravingsListBox from '../components/Rank/EngravingsListBox';
 import Footer from '../components/UI/Footer';
+import InitialButton from '../components/Rank/InitialButton';
 
 const Rank = () => {
   const { server } = useSelector((state) => state.server);
@@ -104,6 +105,7 @@ const Rank = () => {
           engraving={jobEngravings}
         />
         <ServerWrap>
+          <InitialButton />
           <ClassListBox
             classList={classList}
             isLoading={classIsLoading}
@@ -147,6 +149,7 @@ const ContainerBox = styled(Container)`
 const ServerWrap = styled.div`
   display: flex;
   flex-direction: column;
+  align-items: end;
   width: auto;
   margin: 100px 20px 100px 0;
 `;

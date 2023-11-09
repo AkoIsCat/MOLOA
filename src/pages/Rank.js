@@ -4,6 +4,7 @@ import { getFirebaseData } from '../api/Firebase/FirebaseAxios';
 import { useQuery } from 'react-query';
 import { useSelector, useDispatch } from 'react-redux';
 import { SELECT_SERVER } from '../redux/modules/serverSlice';
+import { SELECT_CLASS } from '../redux/modules/classSlice';
 
 import Header from '../components/Header/Header';
 import Background from '../components/UI/BackBox';
@@ -16,7 +17,6 @@ import Footer from '../components/UI/Footer';
 
 const Rank = () => {
   const [currentClassTab, setCurrentClassTab] = useState(); // 직업 네비게이션
-  const [className, setClassName] = useState(); // 선택된 직업 이름
   const [currentClassEngraving, setCurrentClassEngraving] = useState({
     click: false,
   }); // 직각 네비게이션
@@ -26,9 +26,12 @@ const Rank = () => {
 
   const { server } = useSelector((state) => state.server);
   const { serverNumber } = useSelector((state) => state.server);
-  const dispatch = useDispatch();
+  const { class: className } = useSelector((state) => state.class);
+  const { classNumber } = useSelector((state) => state.class);
 
+  const dispatch = useDispatch();
   const selectServer = (payload) => dispatch(SELECT_SERVER(payload));
+  const selectClass = (payload) => dispatch(SELECT_CLASS(payload));
 
   const { data: characterList } = useQuery(
     'characterList',
@@ -88,7 +91,6 @@ const Rank = () => {
   }
 
   const getSelectedClassData = (className, engraving1, engraving2, tab) => {
-    setClassName(className);
     setCurrentClassEngraving(engraving1);
     setCurrentClassEngraving2(engraving2);
     setCurrentClassTab(tab);
@@ -116,6 +118,8 @@ const Rank = () => {
             classList={classList}
             isLoading={classIsLoading}
             getSelectedClassData={getSelectedClassData}
+            selectClass={selectClass}
+            classNumber={classNumber}
           />
           <EngravingsListBox
             classList={classList}

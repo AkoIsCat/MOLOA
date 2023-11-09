@@ -3,7 +3,13 @@ import { useState, useEffect, useCallback } from 'react';
 import { ServerListBox, ServerListli, ServerWrap } from './ServerList';
 import CommonContentBox from '../UI/CommonContentBox';
 
-const ClassListBox = ({ classList, getSelectedClassData, isLoading }) => {
+const ClassListBox = ({
+  classList,
+  getSelectedClassData,
+  isLoading,
+  selectClass,
+  classNumber,
+}) => {
   const [currentClassTab, setCurrentClassTab] = useState(); // 직업 네비게이션
   const [className, setClassName] = useState(); // 선택된 직업 이름
   const [currentClassEngraving, setCurrentClassEngraving] = useState({
@@ -55,8 +61,9 @@ const ClassListBox = ({ classList, getSelectedClassData, isLoading }) => {
                 selectClassMenuHandler(index);
                 setClassName(item.fullName);
                 initialEngravings();
+                selectClass({ class: item.fullName, classNumber: index });
               }}
-              active={currentClassTab === index && 'true'}
+              active={classNumber === index && 'true'}
               style={{
                 width: '15%',
                 fontSize: '12px',

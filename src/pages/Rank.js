@@ -2,8 +2,8 @@ import styled from 'styled-components';
 import { getFirebaseData } from '../api/Firebase/FirebaseAxios';
 import { useQuery } from 'react-query';
 import { useSelector, useDispatch } from 'react-redux';
-import { SELECT_SERVER } from '../redux/modules/serverSlice';
-import { SELECT_CLASS } from '../redux/modules/classSlice';
+import { SELECT_SERVER, INITIAL_SERVER } from '../redux/modules/serverSlice';
+import { SELECT_CLASS, INITIAL_CLASS } from '../redux/modules/classSlice';
 import {
   INITIAL_ENGRAVINGS,
   SELECT_ENGRAVING1,
@@ -34,6 +34,8 @@ const Rank = () => {
   const selectEngraving1 = (payload) => dispatch(SELECT_ENGRAVING1(payload));
   const selectEngraving2 = (payload) => dispatch(SELECT_ENGRAVING2(payload));
   const initialEngraving = () => dispatch(INITIAL_ENGRAVINGS());
+  const initialClass = () => dispatch(INITIAL_CLASS());
+  const initialServer = () => dispatch(INITIAL_SERVER());
 
   const { data: characterList } = useQuery(
     'characterList',
@@ -105,7 +107,11 @@ const Rank = () => {
           engraving={jobEngravings}
         />
         <ServerWrap>
-          <InitialButton />
+          <InitialButton
+            initialClass={initialClass}
+            initialServer={initialServer}
+            initialEngraving={initialEngraving}
+          />
           <ClassListBox
             classList={classList}
             isLoading={classIsLoading}

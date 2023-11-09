@@ -1,7 +1,13 @@
 import styled from 'styled-components';
 
-const InitialButton = () => {
-  return <Btn>선택 초기화</Btn>;
+const InitialButton = ({ initialServer, initialClass, initialEngraving }) => {
+  const onClickInitialBtn = () => {
+    initialClass();
+    initialEngraving();
+    initialServer();
+  };
+
+  return <Btn onClick={onClickInitialBtn}>선택 초기화</Btn>;
 };
 
 export default InitialButton;

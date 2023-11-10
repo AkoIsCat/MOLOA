@@ -4,15 +4,15 @@ import Loading from '../UI/Loading';
 import SelectServerPhrases from './SelectServerPhrases';
 import Notice from '../UI/Notice';
 
-const RankingBox = ({ isSelect, serverName, guildRanking, isLoading }) => {
+const RankingBox = ({ serverName, guildRanking, isLoading }) => {
   return (
     <>
       <RankingWrap>
-        {!isSelect && (
+        {!serverName && (
           <SelectServerPhrases>서버를 먼저 선택해 주세요.</SelectServerPhrases>
         )}
-        {isSelect && isLoading && <Loading />}
-        {isSelect && !isLoading && (
+        {isLoading && <Loading />}
+        {!isLoading && serverName && (
           <>
             <Notice
               Instructions={

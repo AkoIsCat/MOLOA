@@ -1,8 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 
 import CommonContentBox from '../UI/CommonContentBox';
-import { useCallback } from 'react';
 
 const server = [
   {
@@ -31,27 +30,7 @@ const server = [
   },
 ];
 
-const ServerList = ({ getSelectedData }) => {
-  const [currentTab, setCurrentTab] = useState(); // 서버 네비게이션
-  const [isSelect, setIsSelect] = useState(false); // 초기 서버 선택 여부
-  const [serverName, setServerName] = useState(); // 선택된 서버 이름
-
-  const sendData = useCallback(() => {
-    getSelectedData(isSelect, serverName);
-  }, [isSelect, serverName, getSelectedData]);
-
-  useEffect(() => {
-    if (isSelect && serverName !== '') {
-      sendData();
-    }
-  }, [isSelect, serverName, sendData]);
-
-  const selectServerHandler = (index, name) => {
-    setCurrentTab(index);
-    setIsSelect(true);
-    setServerName(name);
-  };
-
+const ServerList = ({ selectServer, serverNumber }) => {
   const serverListItem = (
     <ServerListBox>
       <ul>
@@ -60,9 +39,12 @@ const ServerList = ({ getSelectedData }) => {
             borderFirst="true"
             key={item.name}
             onClick={() => {
-              selectServerHandler(index, item.name);
+              selectServer({
+                server: item.name,
+                number: index,
+              });
             }}
-            active={currentTab === index && 'true'}
+            active={serverNumber === index && 'true'}
           >
             {item.name}
           </ServerListli>

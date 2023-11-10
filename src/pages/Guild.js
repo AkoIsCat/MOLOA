@@ -1,7 +1,8 @@
 import styled from 'styled-components';
-import { useState } from 'react';
 import { getGuildRanking } from '../api/LostArk/LostarkAxios';
 import { useGetLostArkData } from '../hooks/useGetLostArkData';
+import { useSelector, useDispatch } from 'react-redux';
+import { SELECT_GUILD } from '../redux/modules/guildSlice';
 
 import Header from '../components/Header/Header';
 import Background from '../components/UI/BackBox';
@@ -21,33 +22,30 @@ const Guild = () => {
   contentUpdateTime.setMinutes(0);
   contentUpdateTime.setSeconds(0);
 
-  const [selectServer, setSelectServer] = useState(false); // 초기 서버 선택 여부
-  const [serverName, setServerName] = useState(); // 선택된 서버 이름
+  const { server } = useSelector((state) => state.guild);
+  const { serverNumber } = useSelector((state) => state.guild);
+
+  const dispatch = useDispatch();
+  const selectServer = (payload) => dispatch(SELECT_GUILD(payload));
 
   const { data: guildRanking, isLoading: guildRankingIsLoading } =
     useGetLostArkData(
       'guildRank',
-      serverName,
+      server,
       getGuildRanking,
       contentUpdateTime.getTime() - date.getTime()
     );
-
-  const getSelectedData = (isSelected, serverName) => {
-    setSelectServer(isSelected);
-    setServerName(serverName);
-  };
 
   return (
     <Background>
       <Header />
       <ContainerBox>
         <RankingBox
-          isSelect={selectServer}
-          serverName={serverName}
+          serverName={server}
           guildRanking={guildRanking}
           isLoading={guildRankingIsLoading}
         />
-        <ServerList getSelectedData={getSelectedData} />
+        <ServerList selectServer={selectServer} serverNumber={serverNumber} />
       </ContainerBox>
       <Footer />
     </Background>

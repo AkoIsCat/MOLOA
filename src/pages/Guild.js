@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { useState } from 'react';
 import { getGuildRanking } from '../api/LostArk/LostarkAxios';
-import { useQuery } from 'react-query';
+import { useGetLostArkData } from '../hooks/useGetLostArkData';
 
 import Header from '../components/Header/Header';
 import Background from '../components/UI/BackBox';
@@ -24,15 +24,13 @@ const Guild = () => {
   const [selectServer, setSelectServer] = useState(false); // 초기 서버 선택 여부
   const [serverName, setServerName] = useState(); // 선택된 서버 이름
 
-  const { data: guildRanking, isLoading: guildRankingIsLoading } = useQuery(
-    ['guildRank', serverName],
-    () => getGuildRanking(serverName),
-    {
-      refetchOnWindowFocus: false,
-      staleTime: contentUpdateTime.getTime() - date.getTime(),
-      enabled: !!selectServer,
-    }
-  );
+  const { data: guildRanking, isLoading: guildRankingIsLoading } =
+    useGetLostArkData(
+      'guildRank',
+      serverName,
+      getGuildRanking,
+      contentUpdateTime.getTime() - date.getTime()
+    );
 
   const getSelectedData = (isSelected, serverName) => {
     setSelectServer(isSelected);

@@ -13,7 +13,7 @@ import {
   getGems,
   getEquipment,
 } from '../api/LostArk/LostarkAxios';
-import { useQuery } from 'react-query';
+import { useGetLostArkData } from '../hooks/useGetLostArkData';
 
 import Aside from '../components/Character/Side/Aside'; // 좌측 캐릭터 정보
 import Header from '../components/Header/Header'; // 헤더
@@ -37,11 +37,7 @@ const Character = () => {
     data: holdingCharacter,
     isLoading: holdingCharacterIsLoading,
     refetch: refetchHoldingCharacter,
-  } = useQuery(['characterList', id], () => getCharacterExist(id), {
-    enabled: !!id,
-    refetchOnWindowFocus: false,
-    staleTime: Infinity,
-  });
+  } = useGetLostArkData('characterList', id, getCharacterExist, Infinity);
 
   const isExist = holdingCharacter && true;
 
@@ -50,81 +46,49 @@ const Character = () => {
     isLoading: profileIsLoading,
     refetch: refetchProfile,
     dataUpdatedAt,
-  } = useQuery(['profile', id], () => getProfile(id), {
-    enabled: !!id,
-    refetchOnWindowFocus: false,
-    staleTime: Infinity,
-  });
+  } = useGetLostArkData('profile', id, getProfile, Infinity);
 
   const {
     data: equipment,
     isLoading: equipmentIsLoading,
     refetch: refetchEquipment,
-  } = useQuery(['equipment', id], () => getEquipment(id), {
-    enabled: !!id,
-    refetchOnWindowFocus: false,
-    staleTime: Infinity,
-  });
+  } = useGetLostArkData('equipment', id, getEquipment, Infinity);
 
   const {
     data: avatars,
     isLoading: avatarsIsLoading,
     refetch: refetchAvartars,
-  } = useQuery(['avatars', id], () => getAvatars(id), {
-    enabled: !!id,
-    refetchOnWindowFocus: false,
-    staleTime: Infinity,
-  });
+  } = useGetLostArkData('avatars', id, getAvatars, Infinity);
 
   const {
     data: engraving,
     isLoading: engravingIsLoading,
     refetch: refetchEngraving,
-  } = useQuery(['engraving', id], () => getEngravings(id), {
-    enabled: !!id,
-    refetchOnWindowFocus: false,
-    staleTime: Infinity,
-  });
+  } = useGetLostArkData('engraving', id, getEngravings, Infinity);
 
   const {
     data: combatSkills,
     isLoading: combatSkillsIsLoading,
     refetch: refetchSkills,
-  } = useQuery(['combatSkills', id], () => getCombatSkills(id), {
-    enabled: !!id,
-    refetchOnWindowFocus: false,
-    staleTime: Infinity,
-  });
+  } = useGetLostArkData('combatSkills', id, getCombatSkills, Infinity);
 
   const {
     data: cards,
     isLoading: cardsIsLoading,
     refetch: refetchCards,
-  } = useQuery(['cards', id], () => getCards(id), {
-    enabled: !!id,
-    refetchOnWindowFocus: false,
-    staleTime: Infinity,
-  });
+  } = useGetLostArkData('cards', id, getCards, Infinity);
 
   const {
     data: gems,
     isLoading: gemsIsLoading,
     refetch: refetchGems,
-  } = useQuery(['gems', id], () => getGems(id), {
-    enabled: !!id,
-    refetchOnWindowFocus: false,
-    staleTime: Infinity,
-  });
+  } = useGetLostArkData('gems', id, getGems, Infinity);
 
   const {
     data: collectibles,
     isLoading: characterIsLoading,
     refetch: refetchCollectibles,
-  } = useQuery(['collectibles', id], () => getCollectibles(id), {
-    enabled: !!id,
-    refetchOnWindowFocus: false,
-    staleTime: Infinity,
-  });
+  } = useGetLostArkData('collectibles', id, getCollectibles, Infinity);
 
   useEffect(() => {
     // 컴포넌트가 렌더링 될 때마다 업데이트

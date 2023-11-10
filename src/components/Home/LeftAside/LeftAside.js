@@ -3,17 +3,27 @@ import React from 'react';
 import { getNotificationList } from '../../../api/LostArk/LostarkAxios';
 import { getFirebaseData } from '../../../api/Firebase/FirebaseAxios';
 import { useQuery } from 'react-query';
+import { useGetLostArkDataNotId } from '../../../hooks/useGetLostArkData';
 
 import { HiOutlineSpeakerphone } from 'react-icons/hi';
 import ContentBox from './ContentBox';
 import InnerContent from '../../UI/InnerContent';
 
 const LeftAside = () => {
+  function sliceList(data) {
+    const sliceArray = [];
+    for (let i = 0; i < 5; i++) {
+      sliceArray.push(data[i]);
+    }
+    return sliceArray;
+  }
   const { data: lostarkNotification, isLoading: lostarkNotiIsLoading } =
-    useQuery('loastarkNotification', () => getNotificationList(), {
-      select: (item) => item.slice(0, 5),
-      refetchOnWindowFocus: false,
-    });
+    useGetLostArkDataNotId(
+      'loastarkNotification',
+      getNotificationList,
+      0,
+      sliceList
+    );
 
   const { data: moloaNotification, isLoading: moloaNotiIsLoading } = useQuery(
     'moloaNotification',

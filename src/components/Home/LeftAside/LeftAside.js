@@ -1,22 +1,14 @@
 import styled from 'styled-components';
 import React from 'react';
 import { getNotificationList } from '../../../api/LostArk/LostarkAxios';
-import { getFirebaseData } from '../../../api/Firebase/FirebaseAxios';
-import { useQuery } from 'react-query';
 import { useGetLostArkDataNotId } from '../../../hooks/useGetLostArkData';
+import useGetFirebaseData from '../../../hooks/useGetFirebaseData';
 
 import { HiOutlineSpeakerphone } from 'react-icons/hi';
 import ContentBox from './ContentBox';
 import InnerContent from '../../UI/InnerContent';
 
 const LeftAside = () => {
-  function sliceList(data) {
-    const sliceArray = [];
-    for (let i = 0; i < 5; i++) {
-      sliceArray.push(data[i]);
-    }
-    return sliceArray;
-  }
   const { data: lostarkNotification, isLoading: lostarkNotiIsLoading } =
     useGetLostArkDataNotId(
       'loastarkNotification',
@@ -25,21 +17,23 @@ const LeftAside = () => {
       sliceList
     );
 
-  const { data: moloaNotification, isLoading: moloaNotiIsLoading } = useQuery(
-    'moloaNotification',
-    () => getFirebaseData('MoloaNoti'),
-    {
-      select: (item) => {
-        const sliceData = item.length > 5 ? item.slice(0, 5) : item;
-        const reverseData =
-          sliceData[0].id !== sliceData.length - 1
-            ? sliceData.reverse()
-            : sliceData;
-        return reverseData;
-      },
-      refetchOnWindowFocus: false,
+  const { data: moloaNotification, isLoading: moloaNotiIsLoading } =
+    useGetFirebaseData('moloaNotification', `MoloaNoti`, 0, (data) => {
+      const sliceData = sliceList(data);
+      const reverseData =
+        sliceData[0].id !== sliceData.length - 1
+          ? sliceData.reverse()
+          : sliceData;
+      return reverseData;
+    });
+
+  function sliceList(data) {
+    const sliceArray = [];
+    for (let i = 0; i < 5; i++) {
+      sliceArray.push(data[i]);
     }
-  );
+    return sliceArray;
+  }
 
   return (
     <LeftWrap>

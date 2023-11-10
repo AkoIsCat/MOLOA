@@ -1,7 +1,6 @@
 import styled from 'styled-components';
-import { useQuery } from 'react-query';
-import { getFirebaseData } from '../api/Firebase/FirebaseAxios';
 import { useNavigate } from 'react-router-dom';
+import useGetFirebaseData from '../hooks/useGetFirebaseData';
 
 import Background from '../components/UI/BackBox';
 import Header from '../components/Header/Header';
@@ -12,12 +11,10 @@ import Loading from '../components/UI/Loading';
 const MoloaNotiList = () => {
   const navigate = useNavigate();
 
-  const { data, isLoading } = useQuery(
+  const { data, isLoading } = useGetFirebaseData(
     'moloaNotification',
-    () => getFirebaseData('MoloaNoti'),
-    {
-      refetchOnWindowFocus: false,
-    }
+    `MoloaNoti`,
+    0
   );
 
   return (

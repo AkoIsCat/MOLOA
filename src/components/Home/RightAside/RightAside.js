@@ -1,6 +1,5 @@
 import styled from 'styled-components';
-import { getFirebaseData } from '../../../api/Firebase/FirebaseAxios';
-import { useQuery } from 'react-query';
+import useGetFirebaseData from '../../../hooks/useGetFirebaseData';
 
 import { TbMessageCircle2Filled } from 'react-icons/tb';
 import { GiFallingStar } from 'react-icons/gi';
@@ -10,44 +9,29 @@ import DiscordList from './DiscordList';
 import InquiryAndSupportBox from './InquiryAndSupportBox';
 
 const RightAside = () => {
-  const { data: couponCode, isLoading: couponIsLoading } = useQuery(
+  const { data: couponCode, isLoading: couponIsLoading } = useGetFirebaseData(
     'couponCode',
-    () => getFirebaseData('Coupon'),
-    {
-      refetchOnWindowFocus: false,
-    }
+    `Coupon`,
+    Infinity
   );
 
-  const { data: discord, isLoading: discordIsLoading } = useQuery(
+  const { data: discord, isLoading: discordIsLoading } = useGetFirebaseData(
     'discord',
-    () => getFirebaseData('Discord'),
-    {
-      refetchOnWindowFocus: false,
-      staleTime: Infinity,
-      cacheTime: Infinity,
-    }
+    `Discord`,
+    Infinity
   );
 
-  const { data: popularCharacter, isLoading: popularIsLoading } = useQuery(
-    'populerCharacter',
-    () => getFirebaseData('CharacterSearch'),
-    {
-      select: (data) => {
-        const changeArray = changeObjectToObjectArray(data);
-        return changeArray.sort((a, b) => b.views - a.views).slice(0, 5);
-      },
-    }
-  );
+  const { data: popularCharacter, isLoading: popularIsLoading } =
+    useGetFirebaseData('populerCharacter', `CharacterSearch`, 0, (data) => {
+      const changeArray = changeObjectToObjectArray(data);
+      return changeArray.sort((a, b) => b.views - a.views).slice(0, 5);
+    });
 
-  const { data: jobEngravings } = useQuery(
+  const { data: jobEngravings } = useGetFirebaseData(
     'jobEngravings',
-    () => getFirebaseData('JobEngraving'),
-    {
-      select: (data) => Object.values(data),
-      refetchOnWindowFocus: false,
-      staleTime: Infinity,
-      cacheTime: Infinity,
-    }
+    `JobEngraving`,
+    Infinity,
+    (data) => Object.values(data)
   );
 
   function changeObjectToObjectArray(data) {

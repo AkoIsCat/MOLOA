@@ -1,6 +1,4 @@
 import styled from 'styled-components';
-import { getFirebaseData } from '../api/Firebase/FirebaseAxios';
-import { useQuery } from 'react-query';
 import { useSelector, useDispatch } from 'react-redux';
 import { SELECT_SERVER, INITIAL_SERVER } from '../redux/modules/serverSlice';
 import { SELECT_CLASS, INITIAL_CLASS } from '../redux/modules/classSlice';
@@ -9,6 +7,7 @@ import {
   SELECT_ENGRAVING1,
   SELECT_ENGRAVING2,
 } from '../redux/modules/jobEngravingSlice';
+import useGetFirebaseData from '../hooks/useGetFirebaseData';
 
 import Header from '../components/Header/Header';
 import Background from '../components/UI/BackBox';
@@ -37,38 +36,28 @@ const Rank = () => {
   const initialClass = () => dispatch(INITIAL_CLASS());
   const initialServer = () => dispatch(INITIAL_SERVER());
 
-  const { data: characterList } = useQuery(
+  const { data: characterList } = useGetFirebaseData(
     'characterList',
-    () => getFirebaseData('CharacterSearch'),
-    {
-      select: (data) => {
-        const changeArray = changeObjectToObjectArray(data);
-        const sortCharacterList = sortArray(changeArray);
-        return sortCharacterList;
-      },
-      refetchOnWindowFocus: false,
+    'CharacterSearch',
+    0,
+    (data) => {
+      const changeArray = changeObjectToObjectArray(data);
+      const sortCharacterList = sortArray(changeArray);
+      return sortCharacterList;
     }
   );
 
-  const { data: classList, isLoading: classIsLoading } = useQuery(
+  const { data: classList, isLoading: classIsLoading } = useGetFirebaseData(
     'classList',
-    () => getFirebaseData('ClassList'),
-    {
-      refetchOnWindowFocus: false,
-      staleTime: Infinity,
-      cacheTime: Infinity,
-    }
+    'ClassList',
+    Infinity
   );
 
-  const { data: jobEngravings } = useQuery(
+  const { data: jobEngravings } = useGetFirebaseData(
     'jobEngravings',
-    () => getFirebaseData('JobEngraving'),
-    {
-      select: (data) => Object.values(data),
-      refetchOnWindowFocus: false,
-      staleTime: Infinity,
-      cacheTime: Infinity,
-    }
+    'JobEngraving',
+    Infinity,
+    (data) => Object.values(data)
   );
 
   function changeObjectToObjectArray(data) {

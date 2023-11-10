@@ -3,9 +3,8 @@ import {
   getCalenderIsland,
   getEventList,
 } from '../../../api/LostArk/LostarkAxios';
-import { getFirebaseData } from '../../../api/Firebase/FirebaseAxios';
-import { useQuery } from 'react-query';
 import { useGetLostArkDataNotId } from '../../../hooks/useGetLostArkData';
+import useGetFirebaseData from '../../../hooks/useGetFirebaseData';
 
 import MoloaNotification from './MoloaNotification';
 import Banner from './Banner';
@@ -134,18 +133,14 @@ const MainContents = () => {
   );
 
   const { data: recentMoloaNotification, recentMoloaNotificationIsLoading } =
-    useQuery('moloaNotification', () => getFirebaseData('MoloaNoti'), {
-      refetchOnWindowFocus: false,
-      select: (data) => data.slice(0, 1),
-    });
+    useGetFirebaseData('moloaNotification', `MoloaNoti`, 0, (data) =>
+      data.slice(-1)
+    );
 
-  const { data: bannerUrl, isLoading: bannerIsLoading } = useQuery(
+  const { data: bannerUrl, isLoading: bannerIsLoading } = useGetFirebaseData(
     'banner',
-    () => getFirebaseData('Banner'),
-    {
-      refetchOnWindowFocus: false,
-      staleTime: Infinity,
-    }
+    `Banner`,
+    Infinity
   );
 
   return (

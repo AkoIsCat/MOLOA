@@ -1,7 +1,6 @@
 import styled from 'styled-components';
 import { useParams } from 'react-router-dom';
-import { getFirebaseData } from '../api/Firebase/FirebaseAxios';
-import { useQuery } from 'react-query';
+import useGetFirebaseData from '../hooks/useGetFirebaseData';
 
 import Background from '../components/UI/BackBox';
 import Header from '../components/Header/Header';
@@ -12,8 +11,10 @@ import Loading from '../components/UI/Loading';
 const Notification = () => {
   const { id } = useParams();
 
-  const { data, isLoading } = useQuery('notification', () =>
-    getFirebaseData(`MoloaNoti/${id}`)
+  const { data, isLoading } = useGetFirebaseData(
+    'notification',
+    `MoloaNoti/${id}`,
+    0
   );
 
   return (

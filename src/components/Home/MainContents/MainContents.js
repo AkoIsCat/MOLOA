@@ -5,6 +5,7 @@ import {
 } from '../../../api/LostArk/LostarkAxios';
 import { getFirebaseData } from '../../../api/Firebase/FirebaseAxios';
 import { useQuery } from 'react-query';
+import { useGetLostArkDataNotId } from '../../../hooks/useGetLostArkData';
 
 import MoloaNotification from './MoloaNotification';
 import Banner from './Banner';
@@ -58,6 +59,7 @@ const MainContents = () => {
       image: 'https://i.ibb.co/yp9315G/heart.png',
     },
   ];
+
   const weekend =
     (today === '토' && checkAfterFiveOClock(hour)) ||
     today === '일' ||
@@ -113,26 +115,22 @@ const MainContents = () => {
     return { weekdayList, weekendAmList, weekendPmList };
   }
 
-  const { data, isLoading: adventureIslandIsLoading } = useQuery(
+  function islandSelectFn(data) {
+    const extractList = extractAdventureIsland(data);
+    return divideAdventureIslandsDayWeek(extractList);
+  }
+
+  const { data, isLoading: adventureIslandIsLoading } = useGetLostArkDataNotId(
     'adventureIsland',
-    () => getCalenderIsland(),
-    {
-      refetchOnWindowFocus: false,
-      staleTime: contentUpdateTime.getTime() - date.getTime(),
-      select: (data) => {
-        const extractList = extractAdventureIsland(data);
-        return divideAdventureIslandsDayWeek(extractList);
-      },
-    }
+    getCalenderIsland,
+    contentUpdateTime.getTime() - date.getTime(),
+    islandSelectFn
   );
 
-  const { data: eventList, isLoading: eventIsLoading } = useQuery(
+  const { data: eventList, isLoading: eventIsLoading } = useGetLostArkDataNotId(
     'eventList',
-    () => getEventList(),
-    {
-      refetchOnWindowFocus: false,
-      staleTime: contentUpdateTime.getTime() - date.getTime(),
-    }
+    getEventList,
+    contentUpdateTime.getTime() - date.getTime()
   );
 
   const { data: recentMoloaNotification, recentMoloaNotificationIsLoading } =

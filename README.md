@@ -52,7 +52,7 @@ Link : https://moloa.netlify.app/
 - 프로젝트를 기획하게 된 계기가 궁금해요. [👉 프로젝트 소개 바로가기](https://github.com/AkoIsCat/MOLOA/wiki/%E2%9C%A8%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-%EC%86%8C%EA%B0%9C)
 - 주요 기능이 궁금해요. [👉 MOLOA 사용 설명서 바로가기](https://github.com/AkoIsCat/MOLOA/wiki/%F0%9F%92%A1-%EC%82%AC%EC%9A%A9-%EC%84%A4%EB%AA%85%EC%84%9C)
 - 프로젝트를 직접 설치하고 싶어요. [👉 설치 가이드 바로가기](https://github.com/AkoIsCat/MOLOA/wiki/%F0%9F%94%A6-%EC%84%A4%EC%B9%98-%EA%B0%80%EC%9D%B4%EB%93%9C)
-- 사용한 기술이 궁금해요. [👉 기술 스택 바로가기](https://github.com/AkoIsCat/MOLOA/wiki/%F0%9F%94%A6-%EC%84%A4%EC%B9%98-%EA%B0%80%EC%9D%B4%EB%93%9C)
+- 사용한 기술이 궁금해요. [👉 기술 스택 바로가기](https://github.com/AkoIsCat/MOLOA/wiki/%F0%9F%97%82-%EA%B8%B0%EC%88%A0-%EC%8A%A4%ED%83%9D)
 - 커밋 규칙을 알아보고 싶어요. [👉 커밋 가이드 바로가기](https://github.com/AkoIsCat/MOLOA/wiki/%F0%9F%93%9C-%EC%BB%A4%EB%B0%8B-%EA%B0%80%EC%9D%B4%EB%93%9C)
 - 프로젝트를 하면서 겪은 고민들이 궁금해요. [👉 고민 모음집 바로가기](https://github.com/AkoIsCat/MOLOA/wiki/%F0%9F%A7%90-%EA%B3%A0%EB%AF%BC)
 - 프로젝트를 하면서 겪었던 문제들이 궁금해요. [👉 Trouble Shooting 내역 바로가기](https://github.com/AkoIsCat/MOLOA/wiki/%E2%9A%BD-Trouble-Shooting)

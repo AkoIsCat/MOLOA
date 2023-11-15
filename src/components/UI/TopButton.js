@@ -3,8 +3,15 @@ import styled from 'styled-components';
 import { FaArrowUp } from 'react-icons/fa';
 
 const TopButton = () => {
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'auto',
+    });
+  };
+
   return (
-    <Btn>
+    <Btn onClick={scrollToTop}>
       <FaArrowUp size="20" color="#fff" />
     </Btn>
   );

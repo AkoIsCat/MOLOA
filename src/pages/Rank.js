@@ -18,6 +18,7 @@ import ClassListBox from '../components/Rank/ClassListBox';
 import EngravingsListBox from '../components/Rank/EngravingsListBox';
 import Footer from '../components/UI/Footer';
 import InitialButton from '../components/Rank/InitialButton';
+import TopButton from '../components/UI/TopButton';
 
 const Rank = () => {
   const { server } = useSelector((state) => state.server);
@@ -119,6 +120,7 @@ const Rank = () => {
           />
           <ServerList serverNumber={serverNumber} selectServer={selectServer} />
         </ServerWrap>
+        <TopButton />
       </ContainerBox>
       <Footer />
     </Background>

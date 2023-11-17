@@ -55,7 +55,7 @@ const Characteristics = ({ combatSkills, profile, engraving }) => {
     const deleteNotUsedTripodList = usingSkills;
     for (let key in usingSkills) {
       for (let keys in usingSkills[key].Tripods) {
-        if (usingSkills[key].Tripods[keys].IsSelected === false) {
+        if (usingSkills[key].Tripods[keys]?.IsSelected === false) {
           delete deleteNotUsedTripodList[key].Tripods[keys];
         }
       }

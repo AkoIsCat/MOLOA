@@ -7,6 +7,7 @@ import Header from '../components/Header/Header';
 import { Container } from './Home';
 import Footer from '../components/UI/Footer';
 import Loading from '../components/UI/Loading';
+import TopButton from '../components/UI/TopButton';
 
 const MoloaNotiList = () => {
   const navigate = useNavigate();
@@ -38,6 +39,7 @@ const MoloaNotiList = () => {
           </List>
         }
       </ContainerBox>
+      <TopButton />
       <Footer />
     </Background>
   );

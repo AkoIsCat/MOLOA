@@ -10,6 +10,7 @@ import Footer from '../components/UI/Footer';
 import { Container } from './Home';
 import ServerList from '../components/Guild/ServerList';
 import RankingBox from '../components/Guild/RankingBox';
+import TopButton from '../components/UI/TopButton';
 
 const Guild = () => {
   const WEEKDAY = ['일', '월', '화', '수', '목', '금', '토'];
@@ -47,6 +48,7 @@ const Guild = () => {
         />
         <ServerList selectServer={selectServer} serverNumber={serverNumber} />
       </ContainerBox>
+      <TopButton />
       <Footer />
     </Background>
   );

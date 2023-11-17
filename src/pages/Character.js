@@ -25,6 +25,7 @@ import CharacterList from '../components/Character/Content/CharacterList'; // �
 import Skill from '../components/Character/Content/Skill'; // 스킬탭
 import Collect from '../components/Character/Content/Collect'; // 수집탭
 import Footer from '../components/UI/Footer';
+import TopButton from '../components/UI/TopButton';
 
 const Character = () => {
   const [currentTab, setCurrentTab] = useState(0); // 네비게이션 탭
@@ -268,6 +269,7 @@ const Character = () => {
           </ContentBox>
         )}
         {isExist && characterIsLoading && <Loading />}
+        <TopButton />
       </ContainerBox>
       <Footer />
     </Background>

@@ -7,6 +7,7 @@ import LeftAside from '../components/Home/LeftAside/LeftAside';
 import RightAside from '../components/Home/RightAside/RightAside';
 import MainContents from '../components/Home/MainContents/MainContents';
 import Footer from '../components/UI/Footer';
+import TopButton from '../components/UI/TopButton';
 
 const Home = () => {
   const isPc = useMediaQuery({
@@ -34,6 +35,7 @@ const Home = () => {
             <LeftSide>
               <RightAside />
             </LeftSide>
+            <TopButton />
           </Container>
           <Footer />
         </Background>
@@ -51,6 +53,7 @@ const Home = () => {
             <LeftSide>
               <RightAside />
             </LeftSide>
+            <TopButton />
             <Footer />
           </Container>
         </Background>

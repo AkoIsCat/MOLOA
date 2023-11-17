@@ -8,6 +8,7 @@ import CommonContentBox from '../components/UI/CommonContentBox';
 import Portal from '../components/Modal/Portal';
 import Modal from '../components/Modal/Modal';
 import Footer from '../components/UI/Footer';
+import TopButton from '../components/UI/TopButton';
 
 const Utility = () => {
   const [modalOn, setModalOn] = useState(false);
@@ -79,6 +80,7 @@ const Utility = () => {
           </InnerContent>
         </InnerMargin>
       </ContainerBox>
+      <TopButton />
       <Footer />
     </Background>
   );

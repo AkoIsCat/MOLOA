@@ -7,6 +7,7 @@ import Header from '../components/Header/Header';
 import Footer from '../components/UI/Footer';
 import { Container } from './Home';
 import Loading from '../components/UI/Loading';
+import TopButton from '../components/UI/TopButton';
 
 const Notification = () => {
   const { id } = useParams();
@@ -34,6 +35,7 @@ const Notification = () => {
           </ContentWrap>
         )}
       </ContainerBox>
+      <TopButton />
       <Footer />
     </Background>
   );

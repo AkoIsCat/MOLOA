@@ -33,6 +33,10 @@ const Btn = styled.button`
   right: 12%;
   bottom: 2.3%;
 
+  &:hover {
+    box-shadow: 0px 0px 7px #fff;
+  }
+
   @media ${(props) => props.theme.tablet} {
     right: 4%;
   }

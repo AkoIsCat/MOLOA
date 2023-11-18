@@ -2,6 +2,13 @@ import styled from 'styled-components';
 import React from 'react';
 
 const Avatar = ({ profile, avatars }) => {
+  if (!avatars) {
+    return (
+      <div>
+        <ContentWrap></ContentWrap>
+      </div>
+    );
+  }
   const legendAvatarTrueInner = [
     { type: '무기 아바타' },
     { type: '머리 아바타' },
@@ -51,13 +58,11 @@ const Avatar = ({ profile, avatars }) => {
         <div className="content">
           <TrueInner>
             {legendAvatarTrueInner.map((item, index) => (
-              <div key={index}>
+              <div key={item.type}>
                 <ImageBox
-                  key={index}
                   exist={
-                    avatars !== null &&
-                    avatars[index] !== undefined &&
-                    avatars[index] !== null &&
+                    avatars &&
+                    avatars[index] &&
                     avatars[index]?.Grade === '전설' &&
                     avatars[index]?.IsInner
                       ? avatars[index]?.Grade
@@ -91,13 +96,13 @@ const Avatar = ({ profile, avatars }) => {
             ))}
           </TrueInner>
           <FalseInner>
-            {legendAvatarfalseInner.map((item, index) => (
-              <div key={index}>
-                <ImageBox key={index}>
+            {legendAvatarfalseInner.map((item) => (
+              <div key={item.type}>
+                <ImageBox>
                   {isInnerFalse &&
-                    isInnerFalse.map((items, index) =>
+                    isInnerFalse.map((items) =>
                       avatars !== null && items.Type === item.TypeAs ? (
-                        <ImageBoxColor key={index} exist={items.Grade}>
+                        <ImageBoxColor key={items.Name} exist={items.Grade}>
                           <img src={items.Icon} alt="아바타" />
                         </ImageBoxColor>
                       ) : (
@@ -108,9 +113,9 @@ const Avatar = ({ profile, avatars }) => {
                 <div className="desc">
                   <p className="type">{item.type}</p>
                   {isInnerFalse &&
-                    isInnerFalse.map((items, index) =>
+                    isInnerFalse.map((items) =>
                       avatars !== null && items.Type === item.TypeAs ? (
-                        <p key={index} className="name">
+                        <p key={items.Name} className="name">
                           {items.Name !== '' ? items.Name : ''}
                         </p>
                       ) : (

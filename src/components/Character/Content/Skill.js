@@ -21,8 +21,8 @@ const Skill = ({ combatSkills, profile, getGems }) => {
   // 안쓰는 트포 삭제
   for (let key in notNullRune) {
     for (let keys in notNullRune[key].Tripods) {
-      if (notNullRune[key].Tripods[keys].IsSelected === false) {
-        delete notNullRune[key].Tripods[keys];
+      if (notNullRune[key].Tripods[keys]?.IsSelected === false) {
+        notNullRune[key].Tripods[keys] = undefined;
       }
     }
   }
@@ -135,11 +135,14 @@ const Skill = ({ combatSkills, profile, getGems }) => {
                   <div className="skillNameAndSlot">
                     <div className="skillName">{item.skillName}</div>
                     <div className="tripodSlot">
-                      {item.skillTripod.map((items) => (
-                        <TripodWrap key={items.Name} tier={items.Tier}>
-                          {items.Slot}
-                        </TripodWrap>
-                      ))}
+                      {item.skillTripod.map(
+                        (items) =>
+                          items && (
+                            <TripodWrap key={items.Name} tier={items.Tier}>
+                              {items.Slot}
+                            </TripodWrap>
+                          )
+                      )}
                     </div>
                   </div>
                 </div>
@@ -167,12 +170,15 @@ const Skill = ({ combatSkills, profile, getGems }) => {
                   </div>
                 </RuneAneGemsBox>
                 <div className="tripodsBox">
-                  {item.skillTripod.map((items) => (
-                    <TripodItem
-                      items={items}
-                      key={`${items.Name} ${items.Level}`}
-                    />
-                  ))}
+                  {item.skillTripod.map(
+                    (items) =>
+                      items && (
+                        <TripodItem
+                          items={items}
+                          key={`${items.Name} ${items.Level}`}
+                        />
+                      )
+                  )}
                 </div>
               </SkillItem>
             ) : (
@@ -182,11 +188,14 @@ const Skill = ({ combatSkills, profile, getGems }) => {
                   <div className="skillNameAndSlot">
                     <div className="skillName">{item.skillName}</div>
                     <div className="tripodSlot">
-                      {item.skillTripod.map((items) => (
-                        <TripodWrap key={items.Name} tier={items.Tier}>
-                          {items.Slot}
-                        </TripodWrap>
-                      ))}
+                      {item.skillTripod.map(
+                        (items) =>
+                          items && (
+                            <TripodWrap key={items.Name} tier={items.Tier}>
+                              {items.Slot}
+                            </TripodWrap>
+                          )
+                      )}
                     </div>
                   </div>
                 </div>
@@ -214,12 +223,15 @@ const Skill = ({ combatSkills, profile, getGems }) => {
                   </div>
                 </RuneAneGemsBox>
                 <div className="tripodsBox">
-                  {item.skillTripod.map((items) => (
-                    <TripodItem
-                      items={items}
-                      key={`${items.Name} ${items.Level}`}
-                    />
-                  ))}
+                  {item.skillTripod.map(
+                    (items) =>
+                      items && (
+                        <TripodItem
+                          items={items}
+                          key={`${items.Name} ${items.Level}`}
+                        />
+                      )
+                  )}
                 </div>
               </SkillItem>
             )

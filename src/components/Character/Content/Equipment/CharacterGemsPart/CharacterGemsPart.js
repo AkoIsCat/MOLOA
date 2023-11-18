@@ -63,13 +63,19 @@ const CharacterGemsPart = ({ gems, getGemsList }) => {
   return (
     <ContentWrap>
       <GemsFlex>
-        {extinction.map((item) => (
-          <GemsItemTooltip key={`${item.skillName} ${item.name}`} item={item} />
+        {extinction.map((item, index) => (
+          <GemsItemTooltip
+            key={`${item.skillName} ${item.name} ${index}`}
+            item={item}
+          />
         ))}
       </GemsFlex>
       <GemsFlex>
-        {prominence.map((item) => (
-          <GemsItemTooltip key={`${item.skillName} ${item.name}`} item={item} />
+        {prominence.map((item, index) => (
+          <GemsItemTooltip
+            key={`${item.skillName} ${item.name} ${index}`}
+            item={item}
+          />
         ))}
       </GemsFlex>
     </ContentWrap>

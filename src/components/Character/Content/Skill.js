@@ -6,7 +6,7 @@ import ContentWrap from '../../UI/ContentWrap';
 const Skill = ({ combatSkills, profile, getGems }) => {
   const skillList = [];
 
-  if (combatSkills === null) {
+  if (combatSkills === null || combatSkills === undefined) {
     return (
       <div>
         <ContentWrap></ContentWrap>

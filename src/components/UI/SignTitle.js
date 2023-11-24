@@ -8,6 +8,9 @@ export default SignTitle;
 
 const Title = styled.p`
   width: ${(props) => (props.size === 'small' ? '70px' : '140px')};
-  margin-right: 0px;
+  margin-right: 10px;
   font-size: 16px;
+  color: #c1c1c1;
+  display: flex;
+  justify-content: flex-end;
 `;

@@ -5,6 +5,7 @@ import useValidation from '../../hooks/useValidation';
 import SignTitle from '../UI/SignTitle';
 import InputField from '../UI/InputField';
 import SignButton from '../UI/SignButton';
+import { postSignUpData } from '../../api/Sign/SignAxios';
 
 const SignUp = () => {
   const [inputData, setInputData] = useState({
@@ -28,6 +29,10 @@ const SignUp = () => {
     });
   };
 
+  const onSubmitButton = () => {
+    postSignUpData(inputData);
+  };
+
   return (
     <Wrap>
       <FormWrap>
@@ -46,7 +51,12 @@ const SignUp = () => {
         <ItemWrap>
           <div className="message">{pwStatus.message}</div>
         </ItemWrap>
-        <SignButton name="회원가입" idStatus={idStatus} pwStatus={pwStatus} />
+        <SignButton
+          name="회원가입"
+          idStatus={idStatus}
+          pwStatus={pwStatus}
+          onClick={onSubmitButton}
+        />
       </FormWrap>
     </Wrap>
   );

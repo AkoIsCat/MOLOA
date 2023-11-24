@@ -1,15 +1,13 @@
 import styled from 'styled-components';
-import { useNavigate } from 'react-router-dom';
 
-const SignButton = ({ name, idStatus, pwStatus }) => {
-  const navigate = useNavigate();
-
+const SignButton = (props) => {
   return (
     <SignInBtn
-      disabled={!(idStatus.status && pwStatus.status)}
-      onClick={() => navigate('/community')}
+      disabled={!(props.idStatus.status && props.pwStatus.status)}
+      name={props.name}
+      onClick={props.onClick}
     >
-      {name}
+      {props.name}
     </SignInBtn>
   );
 };

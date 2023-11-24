@@ -1,19 +1,31 @@
 import styled from 'styled-components';
+import { useState } from 'react';
 
 import InputField from '../UI/InputField';
 import SignTitle from '../UI/SignTitle';
 import TopButton from '../UI/TopButton';
 
 const SignIn = () => {
+  const [id, setId] = useState('');
+  const [password, setPassword] = useState('');
+
+  const onChangeId = (e) => {
+    setId(e.target.value);
+  };
+
+  const onChangePw = (e) => {
+    setPassword(e.target.value);
+  };
+
   return (
     <Wrap>
       <ItemWrap>
         <SignTitle size="small" title="아이디" />
-        <InputField type="id" />
+        <InputField type="id" onChange={onChangeId} />
       </ItemWrap>
       <ItemWrap>
         <SignTitle size="small" title="비밀번호" />
-        <InputField type="password" />
+        <InputField type="password" onChangePw={onChangePw} />
       </ItemWrap>
       <SignInBtn>로그인</SignInBtn>
       <ItemWrap>

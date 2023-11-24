@@ -48,7 +48,12 @@ const SignIn = () => {
       <ItemWrap>
         <div className="message">{pwStatus.message}</div>
       </ItemWrap>
-      <SignButton name="로그인" idStatus={idStatus} pwStatus={pwStatus} />
+      <SignButton
+        name="로그인"
+        idStatus={idStatus}
+        pwStatus={pwStatus}
+        onClick={() => navigate('/community')}
+      />
       <ItemWrap>
         <div className="info">아이디가 없으신가요?</div>
         <div className="signup" onClick={() => navigate('/signup')}>
@@ -64,7 +69,7 @@ export default SignIn;
 
 const Wrap = styled.div`
   width: 85%;
-  height: 200px;
+  height: 220px;
   background: #353c42;
   display: flex;
   flex-direction: column;

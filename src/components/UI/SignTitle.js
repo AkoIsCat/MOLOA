@@ -7,10 +7,10 @@ const SignTitle = (props) => {
 export default SignTitle;
 
 const Title = styled.p`
-  width: ${(props) => (props.size === 'small' ? '70px' : '140px')};
+  width: ${(props) => (props.size === 'small' ? '70px' : '120px')};
   margin: 0;
   margin-right: 10px;
-  font-size: 16px;
+  font-size: ${(props) => (props.size === 'small' ? '16px' : '30px')};
   color: #c1c1c1;
   display: flex;
   justify-content: flex-end;

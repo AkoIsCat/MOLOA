@@ -1,6 +1,8 @@
 import styled from 'styled-components';
+
 import InputField from '../UI/InputField';
 import SignTitle from '../UI/SignTitle';
+import TopButton from '../UI/TopButton';
 
 const SignIn = () => {
   return (
@@ -18,6 +20,7 @@ const SignIn = () => {
         <div className="info">아이디가 없으신가요?</div>
         <div className="signup">회원가입</div>
       </ItemWrap>
+      <TopButton />
     </Wrap>
   );
 };
@@ -25,38 +28,51 @@ const SignIn = () => {
 export default SignIn;
 
 const Wrap = styled.div`
-  width: 95%;
+  width: 85%;
   height: 200px;
-  background: pink;
+  background: #353c42;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   margin: 30px 0;
   border-radius: 10px;
+  font-family: 'Nanum Gothic';
 `;
 
 const ItemWrap = styled.div`
   display: flex;
-  align-items: center;
+  color: #c1c1c1;
 
   .info {
     font-size: 14px;
+    margin-top: 10px;
   }
 
   .signup {
     margin-left: 10px;
+    margin-top: 10px;
     font-size: 14px;
-    color: blue;
+    color: #358ed0;
     cursor: pointer;
+
+    &:hover {
+      color: skyblue;
+    }
   }
 `;
 
 const SignInBtn = styled.button`
   width: 85%;
   height: 30px;
-  background: white;
+  background: #c1c1c1;
   border-radius: 10px;
-  border: 1px solid #d4d4d8;
+  border: 0;
   margin: 5px 0;
+  cursor: pointer;
+  font-family: 'Nanum Gothic';
+
+  &:hover {
+    background: skyblue;
+  }
 `;

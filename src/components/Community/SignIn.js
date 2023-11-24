@@ -1,20 +1,31 @@
 import styled from 'styled-components';
 import { useState } from 'react';
+import useValidation from '../../hooks/useValidation';
 
 import InputField from '../UI/InputField';
 import SignTitle from '../UI/SignTitle';
 import TopButton from '../UI/TopButton';
 
 const SignIn = () => {
-  const [id, setId] = useState('');
-  const [password, setPassword] = useState('');
+  const [inputData, setInputData] = useState({
+    id: '',
+    password: '',
+  });
+
+  const [idStatus, pwStatus] = useValidation(inputData);
 
   const onChangeId = (e) => {
-    setId(e.target.value);
+    setInputData({
+      ...inputData,
+      id: e.target.value,
+    });
   };
 
   const onChangePw = (e) => {
-    setPassword(e.target.value);
+    setInputData({
+      ...inputData,
+      password: e.target.value,
+    });
   };
 
   return (
@@ -24,10 +35,18 @@ const SignIn = () => {
         <InputField type="id" onChange={onChangeId} />
       </ItemWrap>
       <ItemWrap>
-        <SignTitle size="small" title="비밀번호" />
-        <InputField type="password" onChangePw={onChangePw} />
+        <div className="message">{idStatus.message}</div>
       </ItemWrap>
-      <SignInBtn>로그인</SignInBtn>
+      <ItemWrap>
+        <SignTitle size="small" title="비밀번호" />
+        <InputField type="password" onChange={onChangePw} />
+      </ItemWrap>
+      <ItemWrap>
+        <div className="message">{pwStatus.message}</div>
+      </ItemWrap>
+      <SignInBtn disabled={!(idStatus.status && pwStatus.status)}>
+        로그인
+      </SignInBtn>
       <ItemWrap>
         <div className="info">아이디가 없으신가요?</div>
         <div className="signup">회원가입</div>
@@ -55,6 +74,7 @@ const Wrap = styled.div`
 const ItemWrap = styled.div`
   display: flex;
   color: #c1c1c1;
+  align-items: center;
 
   .info {
     font-size: 14px;
@@ -72,6 +92,14 @@ const ItemWrap = styled.div`
       color: skyblue;
     }
   }
+
+  .message {
+    height: auto;
+    margin: 10px 0;
+    font-size: 12px;
+    height: 5px;
+    color: #ed895d;
+  }
 `;
 
 const SignInBtn = styled.button`
@@ -84,7 +112,10 @@ const SignInBtn = styled.button`
   cursor: pointer;
   font-family: 'Nanum Gothic';
 
-  &:hover {
+  &:enabled {
     background: skyblue;
+    &:hover {
+      background: #358ed0;
+    }
   }
 `;

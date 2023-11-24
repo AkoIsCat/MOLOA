@@ -7,7 +7,7 @@ import { Message } from './Character';
 import SignIn from '../components/Community/SignIn';
 
 const Coummunity = () => {
-  const toggle = true;
+  const toggle = false;
 
   return (
     <Background>

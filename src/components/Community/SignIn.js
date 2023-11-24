@@ -1,9 +1,11 @@
 import styled from 'styled-components';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import useValidation from '../../hooks/useValidation';
 
 import InputField from '../UI/InputField';
 import SignTitle from '../UI/SignTitle';
+import SignButton from '../UI/SignButton';
 import TopButton from '../UI/TopButton';
 
 const SignIn = () => {
@@ -13,6 +15,8 @@ const SignIn = () => {
   });
 
   const [idStatus, pwStatus] = useValidation(inputData);
+
+  const navigate = useNavigate();
 
   const onChangeId = (e) => {
     setInputData({
@@ -44,12 +48,12 @@ const SignIn = () => {
       <ItemWrap>
         <div className="message">{pwStatus.message}</div>
       </ItemWrap>
-      <SignInBtn disabled={!(idStatus.status && pwStatus.status)}>
-        로그인
-      </SignInBtn>
+      <SignButton name="로그인" idStatus={idStatus} pwStatus={pwStatus} />
       <ItemWrap>
         <div className="info">아이디가 없으신가요?</div>
-        <div className="signup">회원가입</div>
+        <div className="signup" onClick={() => navigate('/signup')}>
+          회원가입
+        </div>
       </ItemWrap>
       <TopButton />
     </Wrap>
@@ -74,7 +78,7 @@ const Wrap = styled.div`
 const ItemWrap = styled.div`
   display: flex;
   color: #c1c1c1;
-  align-items: center;
+  align-items: flex-end;
 
   .info {
     font-size: 14px;
@@ -99,23 +103,5 @@ const ItemWrap = styled.div`
     font-size: 12px;
     height: 5px;
     color: #ed895d;
-  }
-`;
-
-const SignInBtn = styled.button`
-  width: 85%;
-  height: 30px;
-  background: #c1c1c1;
-  border-radius: 10px;
-  border: 0;
-  margin: 5px 0;
-  cursor: pointer;
-  font-family: 'Nanum Gothic';
-
-  &:enabled {
-    background: skyblue;
-    &:hover {
-      background: #358ed0;
-    }
   }
 `;

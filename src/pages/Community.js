@@ -5,9 +5,20 @@ import Footer from '../components/UI/Footer';
 import { Container } from './Home';
 import { Message } from './Character';
 import SignIn from '../components/Community/SignIn';
+import { useEffect, useState } from 'react';
+import { getNickname } from '../api/Sign/SignAxios';
 
 const Coummunity = () => {
   const toggle = false;
+  const [nickname, setNickname] = useState(undefined);
+
+  useEffect(() => {
+    const getNicknameData = async () => {
+      const response = await getNickname();
+      setNickname(response.nickname);
+    };
+    toggle && getNicknameData();
+  }, [toggle]);
 
   return (
     <Background>
@@ -17,7 +28,7 @@ const Coummunity = () => {
         {toggle && (
           <>
             <Side>
-              <SignIn />
+              <SignIn nickname={nickname} />
             </Side>
             <Section></Section>
           </>

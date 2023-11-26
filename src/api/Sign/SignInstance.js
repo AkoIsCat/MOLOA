@@ -1,7 +1,6 @@
 import axios from 'axios';
 
-const BASE_URL = 'http://localhost:8000';
-console.log(BASE_URL);
+// const BASE_URL = 'http://localhost:8000';
 
 export const SignInstance = () => {
   const instance = axios.create({

@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import { useState } from 'react';
-import useValidation from '../../hooks/useValidation';
+import { useNavigate } from 'react-router-dom';
+import useSignUpValidation from '../../hooks/useSignUpValidation';
 
 import SignTitle from '../UI/SignTitle';
 import InputField from '../UI/InputField';
@@ -11,9 +12,12 @@ const SignUp = () => {
   const [inputData, setInputData] = useState({
     id: '',
     password: '',
+    nickname: '',
   });
 
-  const [idStatus, pwStatus] = useValidation(inputData);
+  const navigate = useNavigate();
+
+  const [idStatus, pwStatus, nkStatus] = useSignUpValidation(inputData);
 
   const onChangeId = (e) => {
     setInputData({
@@ -29,8 +33,21 @@ const SignUp = () => {
     });
   };
 
-  const onSubmitButton = () => {
-    postSignUpData(inputData);
+  const onChangeNk = (e) => {
+    setInputData({
+      ...inputData,
+      nickname: e.target.value,
+    });
+  };
+
+  const onSubmitButton = async () => {
+    const response = await postSignUpData(inputData);
+    if (response.success) {
+      alert('회원가입이 완료되었습니다.');
+      navigate('/community');
+    } else if (response.error) {
+      alert('이미 존재하는 아이디입니다.');
+    }
   };
 
   return (
@@ -50,6 +67,13 @@ const SignUp = () => {
         </ItemWrap>
         <ItemWrap>
           <div className="message">{pwStatus.message}</div>
+        </ItemWrap>
+        <ItemWrap>
+          <SignTitle size="small" title="닉네임" />
+          <InputField type="nickname" onChange={onChangeNk} />
+        </ItemWrap>
+        <ItemWrap>
+          <div className="message">{nkStatus.message}</div>
         </ItemWrap>
         <SignButton
           name="회원가입"

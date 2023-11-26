@@ -18,6 +18,16 @@ export const signInData = async (data) => {
       return response.data;
     }
   } catch (error) {
-    return error.response.data;
+    return error.response;
+  }
+};
+
+export const getNickname = async () => {
+  try {
+    const userId = localStorage.getItem('userId');
+    const response = await SignInstance().get(`/getNickname?userId=${userId}`);
+    return response.data;
+  } catch (error) {
+    return error.response;
   }
 };

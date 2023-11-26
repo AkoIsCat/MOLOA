@@ -65,11 +65,13 @@ const MainContents = () => {
     (today === '월' && checkBeforeFiveOClock(hour));
 
   function checkBeforeFiveOClock(hour) {
-    return hour < 5 ? true : false;
+    // 6시 이전엔 날짜가 지나지 않음
+    return hour <= 5 ? true : false;
   }
 
   function checkAfterFiveOClock(hour) {
-    return hour > 5 ? true : false;
+    // 6시부터 날짜가 지남
+    return hour >= 6 ? true : false;
   }
 
   function extractAdventureIsland(data) {

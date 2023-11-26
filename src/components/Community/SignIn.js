@@ -7,9 +7,8 @@ import InputField from '../UI/InputField';
 import SignTitle from '../UI/SignTitle';
 import SignButton from '../UI/SignButton';
 import TopButton from '../UI/TopButton';
-import { signInData } from '../../api/Sign/SignAxios';
 
-const SignIn = () => {
+const SignIn = ({ nickname, onClickLogout, onClickSignIn }) => {
   const [inputData, setInputData] = useState({
     id: '',
     password: '',
@@ -34,37 +33,42 @@ const SignIn = () => {
   };
 
   const onSubmitButton = async () => {
-    const response = await signInData(inputData);
-    localStorage.setItem('userId', inputData.id);
-    if (response.success) {
-      alert('로그인에 성공하였습니다.');
-    } else if (response.data.error) {
-      alert('아이디나 비밀번호가 일치하지 않습니다.');
-    }
+    onClickSignIn(inputData);
   };
 
   return (
     <Wrap>
-      <ItemWrap>
-        <SignTitle size="small" title="아이디" />
-        <InputField type="id" onChange={onChangeId} />
-      </ItemWrap>
-      <ItemWrap>
-        <SignTitle size="small" title="비밀번호" />
-        <InputField type="password" onChange={onChangePw} />
-      </ItemWrap>
-      <SignButton
-        name="로그인"
-        idStatus={idStatus}
-        pwStatus={pwStatus}
-        onClick={() => onSubmitButton()}
-      />
-      <ItemWrap>
-        <div className="info">아이디가 없으신가요?</div>
-        <div className="signup" onClick={() => navigate('/signup')}>
-          회원가입
-        </div>
-      </ItemWrap>
+      {!nickname && (
+        <>
+          <ItemWrap>
+            <SignTitle size="small" title="아이디" />
+            <InputField type="id" onChange={onChangeId} />
+          </ItemWrap>
+          <ItemWrap>
+            <SignTitle size="small" title="비밀번호" />
+            <InputField type="password" onChange={onChangePw} />
+          </ItemWrap>
+          <SignButton
+            name="로그인"
+            data={inputData}
+            idStatus={idStatus}
+            pwStatus={pwStatus}
+            onClick={onSubmitButton}
+          />
+          <ItemWrap>
+            <div className="info">아이디가 없으신가요?</div>
+            <div className="signup" onClick={() => navigate('/signup')}>
+              회원가입
+            </div>
+          </ItemWrap>
+        </>
+      )}
+      {nickname && (
+        <>
+          <ItemWrap>{nickname}님, 어서오세요!</ItemWrap>
+          <LogOutBtn onClick={onClickLogout}>로그아웃</LogOutBtn>
+        </>
+      )}
       <TopButton />
     </Wrap>
   );
@@ -114,5 +118,22 @@ const ItemWrap = styled.div`
     font-size: 12px;
     height: 5px;
     color: #ed895d;
+  }
+`;
+
+const LogOutBtn = styled.button`
+  width: 85%;
+  height: 30px;
+  border-radius: 10px;
+  border: 0;
+  margin: 5px 0;
+  cursor: pointer;
+  font-family: 'Nanum Gothic';
+
+  &:enabled {
+    background: skyblue;
+    &:hover {
+      background: #358ed0;
+    }
   }
 `;

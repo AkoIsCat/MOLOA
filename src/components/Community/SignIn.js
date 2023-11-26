@@ -35,9 +35,10 @@ const SignIn = () => {
 
   const onSubmitButton = async () => {
     const response = await signInData(inputData);
+    localStorage.setItem('userId', inputData.id);
     if (response.success) {
       alert('로그인에 성공하였습니다.');
-    } else if (response.error) {
+    } else if (response.data.error) {
       alert('아이디나 비밀번호가 일치하지 않습니다.');
     }
   };

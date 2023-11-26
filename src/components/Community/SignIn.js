@@ -1,12 +1,13 @@
 import styled from 'styled-components';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import useValidation from '../../hooks/useValidation';
+import useSignInValidation from '../../hooks/useSignInValidation';
 
 import InputField from '../UI/InputField';
 import SignTitle from '../UI/SignTitle';
 import SignButton from '../UI/SignButton';
 import TopButton from '../UI/TopButton';
+import { signInData } from '../../api/Sign/SignAxios';
 
 const SignIn = () => {
   const [inputData, setInputData] = useState({
@@ -14,7 +15,7 @@ const SignIn = () => {
     password: '',
   });
 
-  const [idStatus, pwStatus] = useValidation(inputData);
+  const [idStatus, pwStatus] = useSignInValidation(inputData);
 
   const navigate = useNavigate();
 
@@ -32,6 +33,15 @@ const SignIn = () => {
     });
   };
 
+  const onSubmitButton = async () => {
+    const response = await signInData(inputData);
+    if (response.success) {
+      alert('로그인에 성공하였습니다.');
+    } else if (response.error) {
+      alert('아이디나 비밀번호가 일치하지 않습니다.');
+    }
+  };
+
   return (
     <Wrap>
       <ItemWrap>
@@ -39,20 +49,14 @@ const SignIn = () => {
         <InputField type="id" onChange={onChangeId} />
       </ItemWrap>
       <ItemWrap>
-        <div className="message">{idStatus.message}</div>
-      </ItemWrap>
-      <ItemWrap>
         <SignTitle size="small" title="비밀번호" />
         <InputField type="password" onChange={onChangePw} />
-      </ItemWrap>
-      <ItemWrap>
-        <div className="message">{pwStatus.message}</div>
       </ItemWrap>
       <SignButton
         name="로그인"
         idStatus={idStatus}
         pwStatus={pwStatus}
-        onClick={() => navigate('/community')}
+        onClick={() => onSubmitButton()}
       />
       <ItemWrap>
         <div className="info">아이디가 없으신가요?</div>
@@ -84,6 +88,7 @@ const ItemWrap = styled.div`
   display: flex;
   color: #c1c1c1;
   align-items: flex-end;
+  margin: 10px 0;
 
   .info {
     font-size: 14px;

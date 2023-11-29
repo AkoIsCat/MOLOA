@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import Background from '../components/UI/BackBox';
@@ -7,9 +6,8 @@ import Header from '../components/Header/Header';
 import Footer from '../components/UI/Footer';
 import { Container } from './Home';
 import { Message } from './Character';
-import SignIn from '../components/Community/SignIn';
-import { getNickname, signInData } from '../api/Sign/SignAxios';
 import SignButton from '../components/UI/SignButton';
+import Side from '../components/Community/Side';
 
 const list = [
   {
@@ -17,6 +15,7 @@ const list = [
     post_title: '첫 글',
     author: '으네',
     comment_count: 0,
+    contents: '므에므에',
     post_date: 0,
     view_count: 0,
     like_count: 0,
@@ -25,40 +24,13 @@ const list = [
 
 const Coummunity = () => {
   const toggle = false;
-  const [nickname, setNickname] = useState(undefined);
 
   const navigate = useNavigate();
-
-  const getNicknameData = async () => {
-    const response = await getNickname();
-    setNickname(response.nickname);
-  };
-
-  useEffect(() => {
-    toggle && getNicknameData();
-  }, [toggle, nickname]);
-
-  const onClickSignIn = async (data) => {
-    const response = await signInData(data);
-    if (response.success) {
-      localStorage.setItem('userId', data.id);
-      const nicknameRes = await getNickname();
-      setNickname(nicknameRes.nickname);
-      alert('로그인에 성공하였습니다.');
-    } else if (response.data.error) {
-      alert('아이디나 비밀번호가 일치하지 않습니다.');
-    }
-  };
-
-  const onClickLogout = () => {
-    localStorage.removeItem('userId');
-    setNickname(undefined);
-  };
 
   const onClickWrite = () => {
     const id = localStorage.getItem('userId');
     if (id) {
-      navigate('/board-posts');
+      // navigate('/board-posts');
     } else {
       alert('로그인 후 작성 가능합니다.');
     }
@@ -71,13 +43,7 @@ const Coummunity = () => {
         {!toggle && <Message>페이지 준비 중 입니다.</Message>}
         {toggle && (
           <>
-            <Side>
-              <SignIn
-                nickname={nickname}
-                onClickLogout={onClickLogout}
-                onClickSignIn={onClickSignIn}
-              />
-            </Side>
+            <Side toggle={toggle} />
             <Section>
               <h1>커뮤니티</h1>
               <Table border="1">
@@ -93,9 +59,16 @@ const Coummunity = () => {
                 </thead>
                 <tbody>
                   {list.map((item) => (
-                    <tr>
+                    <tr key={item.post_id}>
                       <td className="number">{item.post_id}</td>
-                      <td className="title">{item.post_title}</td>
+                      <td
+                        className="title"
+                        onClick={() =>
+                          navigate(`/posts-detail/${item.post_id}`)
+                        }
+                      >
+                        {item.post_title}
+                      </td>
                       <td className="writer">{item.author}</td>
                       <td className="date">{item.post_date}</td>
                       <td className="views">{item.view_count}</td>
@@ -127,17 +100,6 @@ const ContainerBox = styled(Container)`
   min-height: 75vh;
   height: auto;
   position: relative;
-`;
-
-const Side = styled.aside`
-  width: 20vw;
-  height: auto;
-  display: flex;
-  justify-content: center;
-
-  @media ${(props) => props.theme.mobile} {
-    width: 100%;
-  }
 `;
 
 const Section = styled.section`
@@ -182,6 +144,7 @@ const Table = styled.table`
 
   .title {
     width: 35vw;
+    cursor: pointer;
   }
 `;
 

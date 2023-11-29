@@ -8,7 +8,7 @@ import { Container } from './Home';
 import SignButton from '../components/UI/SignButton';
 import Side from '../components/Community/Side';
 
-const BoardPosts = () => {
+const PostsDetail = () => {
   const navigate = useNavigate();
 
   const onClickWrite = () => {
@@ -56,7 +56,7 @@ const BoardPosts = () => {
   );
 };
 
-export default BoardPosts;
+export default PostsDetail;
 
 const ContainerBox = styled(Container)`
   width: 100%;

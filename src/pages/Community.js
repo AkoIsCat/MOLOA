@@ -55,6 +55,15 @@ const Coummunity = () => {
     setNickname(undefined);
   };
 
+  const onClickWrite = () => {
+    const id = localStorage.getItem('userId');
+    if (id) {
+      navigate('/board-posts');
+    } else {
+      alert('로그인 후 작성 가능합니다.');
+    }
+  };
+
   return (
     <Background>
       <Header />
@@ -100,7 +109,7 @@ const Coummunity = () => {
                   onClick={() => navigate('/community')}
                   name="목록"
                 />
-                <SignButton name="글쓰기" />
+                <SignButton name="글쓰기" onClick={onClickWrite} />
               </ButtonWrap>
             </Section>
           </>

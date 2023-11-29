@@ -1,11 +1,13 @@
 import styled from 'styled-components';
+import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+
 import Background from '../components/UI/BackBox';
 import Header from '../components/Header/Header';
 import Footer from '../components/UI/Footer';
 import { Container } from './Home';
 import { Message } from './Character';
 import SignIn from '../components/Community/SignIn';
-import { useEffect, useState } from 'react';
 import { getNickname, signInData } from '../api/Sign/SignAxios';
 import SignButton from '../components/UI/SignButton';
 
@@ -24,6 +26,8 @@ const list = [
 const Coummunity = () => {
   const toggle = false;
   const [nickname, setNickname] = useState(undefined);
+
+  const navigate = useNavigate();
 
   const getNicknameData = async () => {
     const response = await getNickname();
@@ -92,7 +96,10 @@ const Coummunity = () => {
                 </tbody>
               </Table>
               <ButtonWrap>
-                <SignButton name="목록" />
+                <SignButton
+                  onClick={() => navigate('/community')}
+                  name="목록"
+                />
                 <SignButton name="글쓰기" />
               </ButtonWrap>
             </Section>

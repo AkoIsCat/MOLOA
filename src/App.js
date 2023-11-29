@@ -28,7 +28,7 @@ function App() {
         <Route path="/community" element={<Community />} />
         <Route path="/notilist" element={<MoloaNotiList />} />
         <Route path="/signup" element={<SignUp />} />
-        <Route path="/board-posts" element={<BoardPosts />} />
+        <Route path="/posts-detail/:id" element={<BoardPosts />} />
       </Routes>
     </QueryClientProvider>
   );

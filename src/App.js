@@ -8,6 +8,7 @@ import Notification from './pages/Notification';
 import MoloaNotiList from './pages/MoloaNotiList';
 import SignUp from './pages/SingUp';
 import BoardPosts from './pages/PostsDetail';
+import CreatePosts from './pages/CreatePosts';
 
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
@@ -29,6 +30,7 @@ function App() {
         <Route path="/notilist" element={<MoloaNotiList />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/posts-detail/:id" element={<BoardPosts />} />
+        <Route path="/board-posts" element={<CreatePosts />} />
       </Routes>
     </QueryClientProvider>
   );

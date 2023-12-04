@@ -10,6 +10,7 @@ const SignButton = (props) => {
       }
       name={props.name}
       onClick={props.onClick}
+      type="submit"
     >
       {props.name}
     </SignInBtn>

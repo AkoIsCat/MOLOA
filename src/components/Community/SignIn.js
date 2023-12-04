@@ -32,14 +32,15 @@ const SignIn = ({ nickname, onClickLogout, onClickSignIn }) => {
     });
   };
 
-  const onSubmitButton = async () => {
+  const onSubmitButton = async (e) => {
+    e.preventDefault();
     onClickSignIn(inputData);
   };
 
   return (
     <Wrap>
       {!nickname && (
-        <>
+        <form>
           <ItemWrap>
             <SignTitle size="small" title="아이디" />
             <InputField type="id" onChange={onChangeId} />
@@ -48,20 +49,22 @@ const SignIn = ({ nickname, onClickLogout, onClickSignIn }) => {
             <SignTitle size="small" title="비밀번호" />
             <InputField type="password" onChange={onChangePw} />
           </ItemWrap>
-          <SignButton
-            name="로그인"
-            data={inputData}
-            idStatus={idStatus}
-            pwStatus={pwStatus}
-            onClick={onSubmitButton}
-          />
-          <ItemWrap>
+          <ItemWrap center={true}>
+            <SignButton
+              name="로그인"
+              data={inputData}
+              idStatus={idStatus}
+              pwStatus={pwStatus}
+              onClick={onSubmitButton}
+            />
+          </ItemWrap>
+          <ItemWrap center={true}>
             <div className="info">아이디가 없으신가요?</div>
             <div className="signup" onClick={() => navigate('/signup')}>
               회원가입
             </div>
           </ItemWrap>
-        </>
+        </form>
       )}
       {nickname && (
         <>
@@ -94,6 +97,7 @@ const ItemWrap = styled.div`
   color: #c1c1c1;
   align-items: flex-end;
   margin: 10px 0;
+  justify-content: ${(props) => (props.center === true ? 'center' : '')};
 
   .info {
     font-size: 14px;

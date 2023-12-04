@@ -7,6 +7,7 @@ import Footer from '../components/UI/Footer';
 import { Container } from './Home';
 import SignButton from '../components/UI/SignButton';
 import Side from '../components/Community/Side';
+import { AiFillLike } from 'react-icons/ai';
 
 const PostsDetail = () => {
   const navigate = useNavigate();
@@ -35,13 +36,17 @@ const PostsDetail = () => {
                 <td className="likes">좋아요</td>
               </tr>
               <tr className="title">
-                <td>제목</td>
+                <td colspan="4">제목</td>
               </tr>
               <tr className="contents">
-                <td>내용</td>
+                <td colspan="4">내용</td>
               </tr>
               <tr className="likeBtn">
-                <td>좋아요 버튼</td>
+                <td colspan="4">
+                  <LikeButton>
+                    <AiFillLike size="25" color="#fff" />
+                  </LikeButton>
+                </td>
               </tr>
             </tbody>
           </Table>
@@ -94,7 +99,12 @@ const Table = styled.table`
   .title,
   .contents,
   .likeBtn {
+    width: 100%;
     line-height: 3rem;
+  }
+
+  .likeBtn {
+    text-align: center;
   }
 `;
 
@@ -102,4 +112,17 @@ const ButtonWrap = styled.div`
   margin: 10px 45px;
   display: flex;
   justify-content: flex-end;
+`;
+
+const LikeButton = styled.button`
+  width: 50px;
+  height: 50px;
+  background: #6d7276;
+  border: 0;
+  border-radius: 10px;
+  cursor: pointer;
+
+  &:hover {
+    background: #4b535a;
+  }
 `;

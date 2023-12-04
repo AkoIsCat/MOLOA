@@ -15,7 +15,7 @@ const PostsDetail = () => {
   const onClickWrite = () => {
     const id = localStorage.getItem('userId');
     if (id) {
-      // navigate('/board-posts');
+      navigate('/board-posts');
     } else {
       alert('로그인 후 작성 가능합니다.');
     }

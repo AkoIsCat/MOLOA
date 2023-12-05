@@ -13,7 +13,6 @@ const CreatePosts = () => {
 
   const onSubmitForm = async (e) => {
     e.preventDefault();
-    console.log('submit');
     const data = {
       id: localStorage.getItem('userId'),
       post_title: titleRef.current.value,

@@ -1,5 +1,7 @@
 import styled from 'styled-components';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
+import { useQuery } from 'react-query';
+import { getDetailPosts } from '../api/Posts/PostAxios';
 
 import Background from '../components/UI/BackBox';
 import Header from '../components/Header/Header';
@@ -8,8 +10,15 @@ import { Container } from './Home';
 import SignButton from '../components/UI/SignButton';
 import Side from '../components/Community/Side';
 import { AiFillLike } from 'react-icons/ai';
+import Loading from '../components/UI/Loading';
 
 const PostsDetail = () => {
+  const { id } = useParams();
+
+  const { data, isLoading } = useQuery('posts-detail', () =>
+    getDetailPosts({ postId: id })
+  );
+
   const navigate = useNavigate();
 
   const onClickWrite = () => {
@@ -29,25 +38,46 @@ const PostsDetail = () => {
         <ContentsWrap>
           <Table>
             <tbody>
-              <tr className="head">
-                <td className="writer">작성자</td>
-                <td className="date">시간</td>
-                <td className="view">조회</td>
-                <td className="likes">좋아요</td>
-              </tr>
-              <tr className="title">
-                <td colspan="4">제목</td>
-              </tr>
-              <tr className="contents">
-                <td colspan="4">내용</td>
-              </tr>
-              <tr className="likeBtn">
-                <td colspan="4">
-                  <LikeButton>
-                    <AiFillLike size="25" color="#fff" />
-                  </LikeButton>
-                </td>
-              </tr>
+              {isLoading && (
+                <tr>
+                  <td>
+                    <Loading />
+                  </td>
+                </tr>
+              )}
+              {!isLoading && (
+                <>
+                  <tr className="title">
+                    <td colSpan="2" className="title_contents">
+                      {data.post_title}
+                    </td>
+                    <td colSpan="2" className="date">
+                      {data.post_date}
+                    </td>
+                  </tr>
+                  <tr className="head">
+                    <td className="writer">{data.writer}</td>
+                    <td className="view">조회: {data.view_count}</td>
+                    <td className="likes">좋아요: {data.like_count}</td>
+                    <td className="commentCount">댓글: {data.comment_count}</td>
+                  </tr>
+                  <tr className="contents">
+                    <td colSpan="4">
+                      <p> </p>
+                      {data.post_contents.split('\n').map((item) => (
+                        <p key={item}>{item}</p>
+                      ))}
+                    </td>
+                  </tr>
+                  <tr className="likeBtn">
+                    <td colSpan="4">
+                      <LikeButton>
+                        <AiFillLike size="25" color="#fff" />
+                      </LikeButton>
+                    </td>
+                  </tr>
+                </>
+              )}
             </tbody>
           </Table>
           <ButtonWrap>
@@ -78,17 +108,31 @@ const ContentsWrap = styled.div`
 const Table = styled.table`
   width: 95%;
   border: none;
-  border-top: 1px solid lightgray;
+  border-top: 1px solid #eeeeee;
   color: #c1c1c1;
   border-collapse: collapse;
 
+  .title {
+    line-height: 3rem;
+    border-bottom: 1px solid #eeeeee;
+    background-color: rgba(109, 114, 118, 0.3);
+  }
+
+  .title .title_contents {
+    font-weight: bold;
+    font-size: 25px;
+    padding: 0 15px;
+  }
+
   .head {
-    height: 50px;
-    border-bottom: 1px solid lightgray;
+    height: 35px;
+    font-size: 15px;
+    border-bottom: 1px solid #cccccc;
   }
 
   .writer {
     width: 30vw;
+    padding: 0 10px;
   }
 
   .view,
@@ -96,11 +140,14 @@ const Table = styled.table`
     width: 5vw;
   }
 
+  p {
+    height: 20px;
+  }
+
   .title,
   .contents,
   .likeBtn {
     width: 100%;
-    line-height: 3rem;
   }
 
   .likeBtn {

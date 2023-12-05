@@ -148,6 +148,7 @@ const Table = styled.table`
   .like {
     width: 5vw;
     text-align: center;
+    height: 40px;
   }
 
   .title {

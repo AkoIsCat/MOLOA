@@ -11,6 +11,7 @@ import SignButton from '../components/UI/SignButton';
 import Side from '../components/Community/Side';
 import { AiFillLike } from 'react-icons/ai';
 import Loading from '../components/UI/Loading';
+import { collect1 } from '../asset/icon';
 
 const PostsDetail = () => {
   const { id } = useParams();
@@ -56,7 +57,10 @@ const PostsDetail = () => {
                     </td>
                   </tr>
                   <tr className="head">
-                    <td className="writer">{data.writer}</td>
+                    <td className="writer">
+                      {data.writer}
+                      <img src={collect1} alt="모코코씨앗" />
+                    </td>
                     <td className="view">조회: {data.view_count}</td>
                     <td className="likes">좋아요: {data.like_count}</td>
                     <td className="commentCount">댓글: {data.comment_count}</td>
@@ -125,6 +129,7 @@ const Table = styled.table`
   }
 
   .head {
+    width: 100%;
     height: 35px;
     font-size: 15px;
     border-bottom: 1px solid #cccccc;
@@ -133,6 +138,15 @@ const Table = styled.table`
   .writer {
     width: 30vw;
     padding: 0 10px;
+    position: relative;
+  }
+
+  .writer img {
+    width: 18px;
+    height: 18px;
+    position: relative;
+    top: 3px;
+    left: 3px;
   }
 
   .view,

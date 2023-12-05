@@ -1,5 +1,7 @@
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
+import { getPosts } from '../api/Posts/PostAxios';
+import { useQuery } from 'react-query';
 
 import Background from '../components/UI/BackBox';
 import Header from '../components/Header/Header';
@@ -8,19 +10,7 @@ import { Container } from './Home';
 import { Message } from './Character';
 import SignButton from '../components/UI/SignButton';
 import Side from '../components/Community/Side';
-
-const list = [
-  {
-    post_id: 1,
-    post_title: '첫 글',
-    author: '으네',
-    comment_count: 0,
-    contents: '므에므에',
-    post_date: 0,
-    view_count: 0,
-    like_count: 0,
-  },
-];
+import Loading from '../components/UI/Loading';
 
 const Coummunity = () => {
   const toggle = false;
@@ -35,6 +25,17 @@ const Coummunity = () => {
       alert('로그인 후 작성 가능합니다.');
     }
   };
+
+  const { data: postsList, isLoading: postsListisLoading } = useQuery(
+    'postsList',
+    () => getPosts(),
+    {
+      staleTime: 0,
+      refetchOnWindowFocus: false,
+      select: (data) =>
+        data[0].post_id === data.length ? data : data.reverse(),
+    }
+  );
 
   return (
     <Background>
@@ -58,23 +59,31 @@ const Coummunity = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {list.map((item) => (
-                    <tr key={item.post_id}>
-                      <td className="number">{item.post_id}</td>
-                      <td
-                        className="title"
-                        onClick={() =>
-                          navigate(`/posts-detail/${item.post_id}`)
-                        }
-                      >
-                        {item.post_title}
+                  {postsListisLoading && (
+                    <tr>
+                      <td>
+                        <Loading />
                       </td>
-                      <td className="writer">{item.author}</td>
-                      <td className="date">{item.post_date}</td>
-                      <td className="views">{item.view_count}</td>
-                      <td className="like">{item.like_count}</td>
                     </tr>
-                  ))}
+                  )}
+                  {!postsListisLoading &&
+                    postsList.map((item) => (
+                      <tr key={item.post_id}>
+                        <td className="number">{item.post_id}</td>
+                        <td
+                          className="title"
+                          onClick={() =>
+                            navigate(`/posts-detail/${item.post_id}`)
+                          }
+                        >
+                          {item.post_title}
+                        </td>
+                        <td className="writer">{item.author}</td>
+                        <td className="date">{item.post_date}</td>
+                        <td className="views">{item.view_count}</td>
+                        <td className="like">{item.like_count}</td>
+                      </tr>
+                    ))}
                 </tbody>
               </Table>
               <ButtonWrap>

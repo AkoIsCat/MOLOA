@@ -4,7 +4,7 @@ import axios from 'axios';
 
 export const SignInstance = () => {
   const instance = axios.create({
-    baseURL: 'http://localhost:8000',
+    baseURL: 'http://localhost:8000/auth',
     headers: {
       'Content-Type': 'application/json',
     },

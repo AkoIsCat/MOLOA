@@ -19,9 +19,8 @@ const CreatePosts = () => {
       post_contents: contentsRef.current.value,
     };
     const response = await writingPosts(data);
-    console.log(response);
-    if (response.status) {
-      alert(response.data.message);
+    if (response) {
+      alert(response);
     }
   };
 

@@ -32,8 +32,7 @@ const Coummunity = () => {
     {
       staleTime: 0,
       refetchOnWindowFocus: false,
-      select: (data) =>
-        data[0].post_id === data.length ? data : data.reverse(),
+      select: (data) => data.sort((a, b) => b.post_id - a.post_id),
     }
   );
 

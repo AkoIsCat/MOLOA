@@ -23,3 +23,16 @@ export const getPosts = async () => {
     return error.response;
   }
 };
+
+export const getDetailPosts = async (data) => {
+  try {
+    const response = await PostsInstance().get(`/${data.postId}`, {
+      params: {
+        postId: data.posrId,
+      },
+    });
+    return response.data;
+  } catch (error) {
+    return error.response;
+  }
+};

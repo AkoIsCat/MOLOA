@@ -150,6 +150,10 @@ const Table = styled.table`
     width: 100%;
   }
 
+  .contents td {
+    padding: 0 10px;
+  }
+
   .likeBtn {
     text-align: center;
   }

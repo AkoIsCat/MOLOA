@@ -20,6 +20,9 @@ const CreatePosts = () => {
     };
     const response = await writingPosts(data);
     console.log(response);
+    if (response.status) {
+      alert(response.data.message);
+    }
   };
 
   return (

@@ -1,4 +1,6 @@
 import styled from 'styled-components';
+import { useRef } from 'react';
+import { writingPosts } from '../api/Posts/PostAxios';
 
 import Background from '../components/UI/BackBox';
 import Header from '../components/Header/Header';
@@ -6,18 +8,33 @@ import { Container } from './Home';
 import Footer from '../components/UI/Footer';
 
 const CreatePosts = () => {
+  const titleRef = useRef();
+  const contentsRef = useRef();
+
+  const onSubmitForm = async (e) => {
+    e.preventDefault();
+    console.log('submit');
+    const data = {
+      id: localStorage.getItem('userId'),
+      post_title: titleRef.current.value,
+      post_contents: contentsRef.current.value,
+    };
+    const response = await writingPosts(data);
+    console.log(response);
+  };
+
   return (
     <Background>
       <Header />
       <ContainerBox>
         <Title>게시글 작성</Title>
-        <Form>
-          <Input placeholder="제목을 입력해 주세요." />
-          <Textarea placeholder="내용을 입력해 주세요." />
+        <Form onSubmit={onSubmitForm}>
+          <Input placeholder="제목을 입력해 주세요." ref={titleRef} />
+          <Textarea placeholder="내용을 입력해 주세요." ref={contentsRef} />
+          <ButtonWrap>
+            <SubmitButton>등록</SubmitButton>
+          </ButtonWrap>
         </Form>
-        <ButtonWrap>
-          <SubmitButton>등록</SubmitButton>
-        </ButtonWrap>
       </ContainerBox>
       <Footer />
     </Background>
@@ -73,7 +90,8 @@ const Textarea = styled.textarea`
 `;
 
 const ButtonWrap = styled.div`
-  margin: 10px 45px;
+  width: 100%;
+  margin: 20px;
   display: flex;
   justify-content: flex-end;
 `;

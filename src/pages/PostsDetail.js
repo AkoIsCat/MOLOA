@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useQuery } from 'react-query';
 import { getDetailPosts } from '../api/Posts/PostAxios';
+import { dateTransformation } from '../utils/dateTransformation';
 
 import Background from '../components/UI/BackBox';
 import Header from '../components/Header/Header';
@@ -53,7 +54,7 @@ const PostsDetail = () => {
                       {data.post_title}
                     </td>
                     <td colSpan="2" className="date">
-                      {data.post_date}
+                      {dateTransformation(data.post_date)}
                     </td>
                   </tr>
                   <tr className="head">

@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import { getPosts } from '../api/Posts/PostAxios';
 import { useQuery } from 'react-query';
+import { dateTransformation } from '../utils/dateTransformation';
 
 import Background from '../components/UI/BackBox';
 import Header from '../components/Header/Header';
@@ -78,7 +79,9 @@ const Coummunity = () => {
                           {item.post_title}
                         </td>
                         <td className="writer">{item.writer}</td>
-                        <td className="date">{item.post_date}</td>
+                        <td className="date">
+                          {dateTransformation(item.post_date)}
+                        </td>
                         <td className="views">{item.view_count}</td>
                         <td className="like">{item.like_count}</td>
                       </tr>

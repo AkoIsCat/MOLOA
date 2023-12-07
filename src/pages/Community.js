@@ -77,7 +77,7 @@ const Coummunity = () => {
                         >
                           {item.post_title}
                         </td>
-                        <td className="writer">{item.author}</td>
+                        <td className="writer">{item.writer}</td>
                         <td className="date">{item.post_date}</td>
                         <td className="views">{item.view_count}</td>
                         <td className="like">{item.like_count}</td>

@@ -1,15 +1,19 @@
 import styled from 'styled-components';
 import { useRef } from 'react';
 import { writingPosts } from '../api/Posts/PostAxios';
+import { useNavigate } from 'react-router-dom';
 
 import Background from '../components/UI/BackBox';
 import Header from '../components/Header/Header';
 import { Container } from './Home';
+import SignButton from '../components/UI/SignButton';
 import Footer from '../components/UI/Footer';
 
 const CreatePosts = () => {
   const titleRef = useRef();
   const contentsRef = useRef();
+
+  const navigate = useNavigate();
 
   const onSubmitForm = async (e) => {
     e.preventDefault();
@@ -33,6 +37,7 @@ const CreatePosts = () => {
           <Input placeholder="제목을 입력해 주세요." ref={titleRef} />
           <Textarea placeholder="내용을 입력해 주세요." ref={contentsRef} />
           <ButtonWrap>
+            <SignButton onClick={() => navigate('/community')} name="목록" />
             <SubmitButton>등록</SubmitButton>
           </ButtonWrap>
         </Form>
@@ -98,17 +103,18 @@ const ButtonWrap = styled.div`
 `;
 
 const SubmitButton = styled.button`
-  width: 70px;
-  height: 50px;
+  width: 8%;
+  height: 40px;
   border-radius: 10px;
   border: 0;
+  margin: 5px;
   outline: none;
-  background: #4b535a;
+  background: #6d7276;
   cursor: pointer;
-  color: #c1c1c1;
-  font-size: 18px;
+  font-family: 'Nanum Gothic';
+  font-size: 14px;
 
   &:hover {
-    background: #6d7276;
+    background: #4b535a;
   }
 `;

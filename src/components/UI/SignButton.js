@@ -10,7 +10,7 @@ const SignButton = (props) => {
       }
       name={props.name}
       onClick={props.onClick}
-      type="submit"
+      type={props.name === '목록' ? 'button' : 'submit'}
     >
       {props.name}
     </SignInBtn>

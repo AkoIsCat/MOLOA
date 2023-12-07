@@ -13,7 +13,7 @@ const Notification = () => {
   const { id } = useParams();
 
   const { data, isLoading } = useGetFirebaseData(
-    'notification',
+    { key: 'notification', id: id },
     `MoloaNoti/${id}`,
     0
   );

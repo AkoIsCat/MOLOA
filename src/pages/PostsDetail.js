@@ -16,7 +16,7 @@ import { collect1 } from '../asset/icon';
 const PostsDetail = () => {
   const { id } = useParams();
 
-  const { data, isLoading } = useQuery('posts-detail', () =>
+  const { data, isLoading } = useQuery(['posts-detail', id], () =>
     getDetailPosts({ postId: id })
   );
 

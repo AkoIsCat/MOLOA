@@ -3,7 +3,9 @@ import { getFirebaseData } from '../api/Firebase/FirebaseAxios';
 
 const useGetFirebaseData = (queryKey, path, staleTime, selectFn) => {
   const { data, isLoading } = useQuery(
-    [`${queryKey}`],
+    queryKey.key === 'notification'
+      ? [`${queryKey}`, `${queryKey.id}`]
+      : [`${queryKey}`],
     () => getFirebaseData(path),
     {
       refetchOnWindowFocus: false,

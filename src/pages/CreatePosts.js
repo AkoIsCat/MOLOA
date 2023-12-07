@@ -28,6 +28,14 @@ const CreatePosts = () => {
     }
   };
 
+  const onConfirmBtn = () => {
+    if (
+      window.confirm('작성중인 게시글 내용이 사라집니다. 이동하시겠습니까?')
+    ) {
+      navigate('/community');
+    }
+  };
+
   return (
     <Background>
       <Header />
@@ -37,7 +45,7 @@ const CreatePosts = () => {
           <Input placeholder="제목을 입력해 주세요." ref={titleRef} />
           <Textarea placeholder="내용을 입력해 주세요." ref={contentsRef} />
           <ButtonWrap>
-            <SignButton onClick={() => navigate('/community')} name="목록" />
+            <SignButton onClick={() => onConfirmBtn()} name="목록" />
             <SubmitButton>등록</SubmitButton>
           </ButtonWrap>
         </Form>

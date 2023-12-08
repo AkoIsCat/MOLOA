@@ -9,9 +9,9 @@ import Header from '../components/Header/Header';
 import Footer from '../components/UI/Footer';
 import { Container } from './Home';
 import { Message } from './Character';
-import SignButton from '../components/UI/SignButton';
 import Side from '../components/Community/Side';
 import Loading from '../components/UI/Loading';
+import PostsButton from '../components/UI/PostsButton';
 
 const Coummunity = () => {
   const toggle = false;
@@ -89,11 +89,11 @@ const Coummunity = () => {
                 </tbody>
               </Table>
               <ButtonWrap>
-                <SignButton
+                <PostsButton
                   onClick={() => navigate('/community')}
                   name="목록"
                 />
-                <SignButton name="글쓰기" onClick={onClickWrite} />
+                <PostsButton name="글쓰기" onClick={onClickWrite} />
               </ButtonWrap>
             </Section>
           </>

@@ -8,11 +8,11 @@ import Background from '../components/UI/BackBox';
 import Header from '../components/Header/Header';
 import Footer from '../components/UI/Footer';
 import { Container } from './Home';
-import SignButton from '../components/UI/SignButton';
 import Side from '../components/Community/Side';
 import { AiFillLike } from 'react-icons/ai';
 import Loading from '../components/UI/Loading';
 import { collect1 } from '../asset/icon';
+import PostsButton from '../components/UI/PostsButton';
 
 const PostsDetail = () => {
   const { id } = useParams();
@@ -86,8 +86,10 @@ const PostsDetail = () => {
             </tbody>
           </Table>
           <ButtonWrap>
-            <SignButton onClick={() => navigate('/community')} name="목록" />
-            <SignButton name="글쓰기" onClick={onClickWrite} />
+            <PostsButton onClick={() => navigate('/community')} name="목록" />
+            <PostsButton name="수정" />
+            <PostsButton name="삭제" />
+            <PostsButton name="글쓰기" onClick={onClickWrite} />
           </ButtonWrap>
         </ContentsWrap>
       </ContainerBox>

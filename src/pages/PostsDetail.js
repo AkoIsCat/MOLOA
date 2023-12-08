@@ -17,8 +17,12 @@ import PostsButton from '../components/UI/PostsButton';
 const PostsDetail = () => {
   const { id } = useParams();
 
-  const { data, isLoading } = useQuery(['posts-detail', id], () =>
-    getDetailPosts({ postId: id })
+  const { data, isLoading } = useQuery(
+    ['posts-detail', id],
+    () => getDetailPosts({ postId: id }),
+    {
+      refetchOnWindowFocus: false,
+    }
   );
 
   const navigate = useNavigate();
@@ -59,7 +63,7 @@ const PostsDetail = () => {
                   </tr>
                   <tr className="head">
                     <td className="writer">
-                      {data.writer}
+                      {data.writer_nk}
                       <img src={collect1} alt="모코코씨앗" />
                     </td>
                     <td className="view">조회: {data.view_count}</td>

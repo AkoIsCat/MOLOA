@@ -6,14 +6,23 @@ import { useNavigate } from 'react-router-dom';
 import Background from '../components/UI/BackBox';
 import Header from '../components/Header/Header';
 import { Container } from './Home';
-import SignButton from '../components/UI/SignButton';
 import Footer from '../components/UI/Footer';
+import PostsButton from '../components/UI/PostsButton';
+import { useEffect } from 'react';
 
 const CreatePosts = () => {
   const titleRef = useRef();
   const contentsRef = useRef();
 
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const id = localStorage.getItem('userId');
+    if (!id) {
+      alert('로그인 후 작성 가능합니다.');
+      navigate('/community');
+    }
+  }, [navigate]);
 
   const onSubmitForm = async (e) => {
     e.preventDefault();
@@ -60,7 +69,7 @@ const CreatePosts = () => {
           <Input placeholder="제목을 입력해 주세요." ref={titleRef} />
           <Textarea placeholder="내용을 입력해 주세요." ref={contentsRef} />
           <ButtonWrap>
-            <SignButton onClick={() => onConfirmBtn()} name="목록" />
+            <PostsButton onClick={() => onConfirmBtn()} name="목록" />
             <SubmitButton>등록</SubmitButton>
           </ButtonWrap>
         </Form>

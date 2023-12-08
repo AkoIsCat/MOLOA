@@ -11,7 +11,7 @@ import BoardPosts from './pages/PostsDetail';
 import CreatePosts from './pages/CreatePosts';
 
 import React from 'react';
-import { Route, Routes } from 'react-router-dom';
+import { Route, Routes, redirect } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from 'react-query';
 
 function App() {
@@ -30,7 +30,18 @@ function App() {
         <Route path="/notilist" element={<MoloaNotiList />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/posts-detail/:id" element={<BoardPosts />} />
-        <Route path="/board-posts" element={<CreatePosts />} />
+        <Route
+          path="/board-posts"
+          element={<CreatePosts />}
+          loader={() => {
+            const id = localStorage.getItem('userId');
+            if (!id) {
+              alert('로그인 후 작성 가능합니다.');
+              return redirect('/community');
+            }
+            return true;
+          }}
+        />
       </Routes>
     </QueryClientProvider>
   );

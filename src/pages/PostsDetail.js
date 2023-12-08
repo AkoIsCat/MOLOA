@@ -16,6 +16,7 @@ import PostsButton from '../components/UI/PostsButton';
 
 const PostsDetail = () => {
   const { id } = useParams();
+  const userId = localStorage.getItem('userId');
 
   const { data, isLoading } = useQuery(
     ['posts-detail', id],
@@ -24,6 +25,8 @@ const PostsDetail = () => {
       refetchOnWindowFocus: false,
     }
   );
+
+  const isItSameId = !isLoading && userId === data?.writer_id;
 
   const navigate = useNavigate();
 
@@ -91,8 +94,8 @@ const PostsDetail = () => {
           </Table>
           <ButtonWrap>
             <PostsButton onClick={() => navigate('/community')} name="목록" />
-            <PostsButton name="수정" />
-            <PostsButton name="삭제" />
+            {isItSameId && <PostsButton name="수정" />}
+            {isItSameId && <PostsButton name="삭제" />}
             <PostsButton name="글쓰기" onClick={onClickWrite} />
           </ButtonWrap>
         </ContentsWrap>

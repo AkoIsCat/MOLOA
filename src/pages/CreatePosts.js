@@ -48,7 +48,7 @@ const CreatePosts = () => {
     const response = await writingPosts(data);
 
     if (response) {
-      alert(response);
+      alert(response.message);
     }
   };
 

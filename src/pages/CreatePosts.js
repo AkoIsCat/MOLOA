@@ -17,12 +17,27 @@ const CreatePosts = () => {
 
   const onSubmitForm = async (e) => {
     e.preventDefault();
+
+    const isEmptyTitle = titleRef.current?.value.length === 0;
+    const isEmptyContents = contentsRef.current?.value?.length === 0;
+
+    if (isEmptyTitle) {
+      alert('제목을 입력해 주세요.');
+      return;
+    }
+    if (isEmptyContents) {
+      alert('내용을 입력해 주세요.');
+      return;
+    }
+
     const data = {
       id: localStorage.getItem('userId'),
       post_title: titleRef.current.value,
       post_contents: contentsRef.current.value,
     };
+
     const response = await writingPosts(data);
+
     if (response) {
       alert(response);
     }
@@ -117,12 +132,12 @@ const SubmitButton = styled.button`
   border: 0;
   margin: 5px;
   outline: none;
-  background: #6d7276;
+  background: skyblue;
   cursor: pointer;
   font-family: 'Nanum Gothic';
   font-size: 14px;
 
   &:hover {
-    background: #4b535a;
+    background: #358ed0;
   }
 `;

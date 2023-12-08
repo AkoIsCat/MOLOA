@@ -1,7 +1,11 @@
 import styled from 'styled-components';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useQuery } from 'react-query';
-import { getDetailPosts, removePosts } from '../api/Posts/PostAxios';
+import {
+  getDetailPosts,
+  removePosts,
+  increaseLike,
+} from '../api/Posts/PostAxios';
 import { dateTransformation } from '../utils/dateTransformation';
 
 import Background from '../components/UI/BackBox';
@@ -36,6 +40,11 @@ const PostsDetail = () => {
     } else {
       alert('로그인 후 작성 가능합니다.');
     }
+  };
+
+  const onClickLike = async () => {
+    const response = await increaseLike({ userId, postId: id });
+    alert(response.message);
   };
 
   const onClickRemove = async () => {
@@ -92,7 +101,7 @@ const PostsDetail = () => {
                   </tr>
                   <tr className="likeBtn">
                     <td colSpan="4">
-                      <LikeButton>
+                      <LikeButton onClick={onClickLike}>
                         <AiFillLike size="25" color="#fff" />
                       </LikeButton>
                     </td>

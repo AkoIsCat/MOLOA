@@ -49,3 +49,15 @@ export const removePosts = async (data) => {
     return error.response;
   }
 };
+
+export const increaseLike = async (data) => {
+  try {
+    const response = await PostsInstance().post('/like', {
+      userId: data.userId,
+      postId: data.postId,
+    });
+    return response.data;
+  } catch (error) {
+    return error.response.data;
+  }
+};

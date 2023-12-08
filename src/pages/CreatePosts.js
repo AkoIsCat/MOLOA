@@ -49,6 +49,7 @@ const CreatePosts = () => {
 
     if (response) {
       alert(response.message);
+      navigate('/community');
     }
   };
 

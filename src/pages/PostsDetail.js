@@ -65,25 +65,27 @@ const PostsDetail = () => {
                 <>
                   <tr className="title">
                     <td colSpan="2" className="title_contents">
-                      {data.post_title}
+                      {data.post.post_title}
                     </td>
                     <td colSpan="2" className="date">
-                      {dateTransformation(data.post_date)}
+                      {dateTransformation(data.post.post_date)}
                     </td>
                   </tr>
                   <tr className="head">
                     <td className="writer">
-                      {data.writer_nk}
+                      {data.post.writer_nk}
                       <img src={collect1} alt="모코코씨앗" />
                     </td>
-                    <td className="view">조회: {data.view_count}</td>
-                    <td className="likes">좋아요: {data.like_count}</td>
-                    <td className="commentCount">댓글: {data.comment_count}</td>
+                    <td className="view">조회: {data.post.view_count}</td>
+                    <td className="likes">좋아요: {data.post.like_count}</td>
+                    <td className="commentCount">
+                      댓글: {data.post.comment_count}
+                    </td>
                   </tr>
                   <tr className="contents">
                     <td colSpan="4">
                       <p> </p>
-                      {data.post_contents.split('\n').map((item) => (
+                      {data.post.post_contents.split('\n').map((item) => (
                         <p key={item}>{item}</p>
                       ))}
                     </td>

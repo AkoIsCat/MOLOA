@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useQuery } from 'react-query';
-import { getDetailPosts } from '../api/Posts/PostAxios';
+import { getDetailPosts, removePosts } from '../api/Posts/PostAxios';
 import { dateTransformation } from '../utils/dateTransformation';
 
 import Background from '../components/UI/BackBox';
@@ -31,11 +31,18 @@ const PostsDetail = () => {
   const navigate = useNavigate();
 
   const onClickWrite = () => {
-    const id = localStorage.getItem('userId');
-    if (id) {
+    if (userId) {
       navigate('/board-posts');
     } else {
       alert('로그인 후 작성 가능합니다.');
+    }
+  };
+
+  const onClickRemove = async () => {
+    if (window.confirm('게시글이 삭제됩니다. 정말 삭제 하시겠습니까?')) {
+      const response = await removePosts({ postId: id });
+      alert(response.message);
+      navigate('/community');
     }
   };
 
@@ -95,7 +102,7 @@ const PostsDetail = () => {
           <ButtonWrap>
             <PostsButton onClick={() => navigate('/community')} name="목록" />
             {isItSameId && <PostsButton name="수정" />}
-            {isItSameId && <PostsButton name="삭제" />}
+            {isItSameId && <PostsButton name="삭제" onClick={onClickRemove} />}
             <PostsButton name="글쓰기" onClick={onClickWrite} />
           </ButtonWrap>
         </ContentsWrap>

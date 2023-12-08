@@ -28,7 +28,20 @@ export const getDetailPosts = async (data) => {
   try {
     const response = await PostsInstance().get(`/${data.postId}`, {
       params: {
-        postId: data.posrId,
+        postId: data.postId,
+      },
+    });
+    return response.data;
+  } catch (error) {
+    return error.response;
+  }
+};
+
+export const removePosts = async (data) => {
+  try {
+    const response = await PostsInstance().delete(`/posts/${data.postId}`, {
+      params: {
+        postId: data.postId,
       },
     });
     return response.data;

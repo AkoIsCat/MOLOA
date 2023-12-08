@@ -3,14 +3,10 @@ import styled from 'styled-components';
 const SignButton = (props) => {
   return (
     <SignInBtn
-      disabled={
-        props.name === '글쓰기' || props.name === '목록'
-          ? false
-          : !(props.idStatus.status && props.pwStatus.status)
-      }
+      disabled={!(props.idStatus.status && props.pwStatus.status)}
       name={props.name}
       onClick={props.onClick}
-      type={props.name === '목록' ? 'button' : 'submit'}
+      type="submit"
     >
       {props.name}
     </SignInBtn>
@@ -20,10 +16,8 @@ const SignButton = (props) => {
 export default SignButton;
 
 const SignInBtn = styled.button`
-  width: ${(props) =>
-    props.name === '글쓰기' || props.name === '목록' ? '8%' : '85%'};
-  height: ${(props) =>
-    props.name === '로그인' ? '30px' : props === '회원가입' ? '50px' : '40px'};
+  width: 85%;
+  height: ${(props) => (props.name === '로그인' ? '30px' : '50px')};
   border-radius: 10px;
   border: 0;
   margin: 5px;
@@ -31,9 +25,9 @@ const SignInBtn = styled.button`
   font-family: 'Nanum Gothic';
 
   &:enabled {
-    background: ${(props) => (props.name === '목록' ? '#6D7276' : 'skyblue')};
+    background: skyblue;
     &:hover {
-      background: ${(props) => (props.name === '목록' ? '#4B535A' : '#358ed0')};
+      background: #358ed0;
     }
   }
 `;

@@ -78,7 +78,7 @@ const Coummunity = () => {
                         >
                           {item.post_title}
                         </td>
-                        <td className="writer">{item.writer}</td>
+                        <td className="writer">{item.writer_nk}</td>
                         <td className="date">
                           {dateTransformation(item.post_date)}
                         </td>

@@ -20,7 +20,6 @@ import PostsButton from '../components/UI/PostsButton';
 
 const PostsDetail = () => {
   const { id } = useParams();
-  const userId = localStorage.getItem('userId');
 
   const { data, isLoading } = useQuery(
     ['posts-detail', id],
@@ -30,12 +29,14 @@ const PostsDetail = () => {
     }
   );
 
-  const isItSameId = !isLoading && userId === data.post.writer_id;
+  const isItSameId =
+    !isLoading && localStorage.getItem('userId') === data.post.writer_id;
 
   const navigate = useNavigate();
 
   const onClickWrite = () => {
-    if (userId) {
+    const blockUserId = localStorage.getItem('userId');
+    if (blockUserId) {
       navigate('/board-posts');
     } else {
       alert('로그인 후 작성 가능합니다.');
@@ -43,15 +44,21 @@ const PostsDetail = () => {
   };
 
   const onClickLike = async () => {
-    if (!userId) {
+    const blockUserId = localStorage.getItem('userId');
+    if (!blockUserId) {
       alert('로그인 후 이용 가능합니다.');
       return;
     }
-    const response = await increaseLike({ userId, postId: id });
+    const response = await increaseLike({ blockUserId, postId: id });
     alert(response.message);
   };
 
   const onClickRemove = async () => {
+    const blockUserId = localStorage.getItem('userId');
+    if (!blockUserId) {
+      alert('로그인 후 이용 가능합니다.');
+      return;
+    }
     if (window.confirm('게시글이 삭제됩니다. 정말 삭제 하시겠습니까?')) {
       const response = await removePosts({ postId: id });
       alert(response.message);

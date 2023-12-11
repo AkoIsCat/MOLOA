@@ -9,6 +9,7 @@ import MoloaNotiList from './pages/MoloaNotiList';
 import SignUp from './pages/SingUp';
 import BoardPosts from './pages/PostsDetail';
 import CreatePosts from './pages/CreatePosts';
+import ModifyPosts from './pages/ModifyPosts';
 
 import React from 'react';
 import { Route, Routes, redirect } from 'react-router-dom';
@@ -42,6 +43,7 @@ function App() {
             return true;
           }}
         />
+        <Route path="/:id/modify" element={<ModifyPosts />} />
       </Routes>
     </QueryClientProvider>
   );

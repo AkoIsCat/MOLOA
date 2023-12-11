@@ -1,22 +1,37 @@
 import styled from 'styled-components';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import useSignInValidation from '../../hooks/useSignInValidation';
+import { getNickname } from '../../api/Sign/SignAxios';
+import { signInData } from '../../api/Sign/SignAxios';
 
 import InputField from '../UI/InputField';
 import SignTitle from '../UI/SignTitle';
 import SignButton from '../UI/SignButton';
 import TopButton from '../UI/TopButton';
 
-const SignIn = ({ nickname, onClickLogout, onClickSignIn }) => {
+const SignIn = () => {
   const [inputData, setInputData] = useState({
     id: '',
     password: '',
   });
-
+  const [nickname, setNickname] = useState(undefined);
   const [idStatus, pwStatus] = useSignInValidation(inputData);
 
   const navigate = useNavigate();
+
+  const getNicknameData = async () => {
+    const response = await getNickname();
+    setNickname(response.nickname);
+  };
+
+  useEffect(() => {
+    const userId = localStorage.getItem('userId');
+    if (!userId) {
+      return;
+    }
+    getNicknameData();
+  }, [nickname]);
 
   const onChangeId = (e) => {
     setInputData({
@@ -29,6 +44,27 @@ const SignIn = ({ nickname, onClickLogout, onClickSignIn }) => {
     setInputData({
       ...inputData,
       password: e.target.value,
+    });
+  };
+
+  const onClickSignIn = async (data) => {
+    const response = await signInData(data);
+    if (response.success) {
+      localStorage.setItem('userId', data.id);
+      const nicknameRes = await getNickname();
+      setNickname(nicknameRes.nickname);
+      alert('로그인에 성공하였습니다.');
+    } else if (response.data.error) {
+      alert('아이디나 비밀번호가 일치하지 않습니다.');
+    }
+  };
+
+  const onClickLogout = () => {
+    localStorage.removeItem('userId');
+    setNickname(undefined);
+    setInputData({
+      id: '',
+      password: '',
     });
   };
 

@@ -124,7 +124,8 @@ const Section = styled.section`
 `;
 
 const Table = styled.table`
-  margin-right: 20px;
+  width: 95%;
+  margin: 0 20px;
   border: none;
   border-top: 1px solid lightgray;
   color: #c1c1c1;

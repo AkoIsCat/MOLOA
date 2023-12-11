@@ -37,6 +37,26 @@ export const getDetailPosts = async (data) => {
   }
 };
 
+export const updatePosts = async (data) => {
+  try {
+    const response = await PostsInstance().put(
+      `/${data.postId}`,
+      {
+        postTitle: data.title,
+        postContents: data.contents,
+      },
+      {
+        params: {
+          postId: data.postId,
+        },
+      }
+    );
+    return response.data;
+  } catch (error) {
+    return error.response;
+  }
+};
+
 export const removePosts = async (data) => {
   try {
     const response = await PostsInstance().delete(`/posts/${data.postId}`, {

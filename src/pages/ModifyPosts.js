@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { useNavigate, useLocation } from 'react-router-dom';
+import { updatePosts } from '../api/Posts/PostAxios';
 
 import Background from '../components/UI/BackBox';
 import Header from '../components/Header/Header';
@@ -48,6 +49,15 @@ const ModifyPosts = () => {
       alert('내용을 입력해 주세요.');
       return;
     }
+
+    const data = {
+      postId: state.post_id,
+      title: inputData.title,
+      contents: inputData.contents,
+    };
+    const response = await updatePosts(data);
+    alert(response.message);
+    navigate(`/posts-detail/${state.post_id}`);
   };
 
   const onConfirmBtn = () => {

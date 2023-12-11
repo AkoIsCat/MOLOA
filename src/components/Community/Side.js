@@ -14,6 +14,10 @@ const Side = () => {
   };
 
   useEffect(() => {
+    const userId = localStorage.getItem('userId');
+    if (!userId) {
+      return;
+    }
     getNicknameData();
   }, [nickname]);
 

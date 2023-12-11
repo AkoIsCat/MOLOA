@@ -30,7 +30,7 @@ const PostsDetail = () => {
     }
   );
 
-  const isItSameId = !isLoading && userId === data?.writer_id;
+  const isItSameId = !isLoading && userId === data.post.writer_id;
 
   const navigate = useNavigate();
 
@@ -43,6 +43,10 @@ const PostsDetail = () => {
   };
 
   const onClickLike = async () => {
+    if (!userId) {
+      alert('로그인 후 이용 가능합니다.');
+      return;
+    }
     const response = await increaseLike({ userId, postId: id });
     alert(response.message);
   };

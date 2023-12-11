@@ -49,7 +49,7 @@ const PostsDetail = () => {
       alert('로그인 후 이용 가능합니다.');
       return;
     }
-    const response = await increaseLike({ blockUserId, postId: id });
+    const response = await increaseLike({ userId: blockUserId, postId: id });
     alert(response.message);
   };
 

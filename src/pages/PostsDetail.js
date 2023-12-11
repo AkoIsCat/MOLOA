@@ -53,6 +53,17 @@ const PostsDetail = () => {
     alert(response.message);
   };
 
+  const onClickModify = () => {
+    const blockUserId = localStorage.getItem('userId');
+    if (!blockUserId) {
+      alert('로그인 후 이용 가능합니다.');
+      return;
+    }
+    navigate(`/${id}/modify`, {
+      state: data.post,
+    });
+  };
+
   const onClickRemove = async () => {
     const blockUserId = localStorage.getItem('userId');
     if (!blockUserId) {
@@ -123,7 +134,7 @@ const PostsDetail = () => {
           </Table>
           <ButtonWrap>
             <PostsButton onClick={() => navigate('/community')} name="목록" />
-            {isItSameId && <PostsButton name="수정" />}
+            {isItSameId && <PostsButton name="수정" onClick={onClickModify} />}
             {isItSameId && <PostsButton name="삭제" onClick={onClickRemove} />}
             <PostsButton name="글쓰기" onClick={onClickWrite} />
           </ButtonWrap>

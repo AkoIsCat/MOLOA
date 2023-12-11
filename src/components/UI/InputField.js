@@ -1,7 +1,14 @@
 import styled from 'styled-components';
 
 const InputField = (props) => {
-  return <Input type={props.type} onChange={props.onChange} />;
+  return (
+    <Input
+      type={props.type}
+      id={props.type}
+      onChange={props.onChange}
+      autoComplete="off"
+    />
+  );
 };
 
 export default InputField;

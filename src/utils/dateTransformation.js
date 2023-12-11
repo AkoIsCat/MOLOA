@@ -14,5 +14,5 @@ export const dateTransformation = (stringDate) => {
 
   return sameMonth && sameDate
     ? `${postsHours}:${postsMinutes}`
-    : `${postsMonth}-${postsDate}`;
+    : `${postsMonth}-${postsDate} ${postsHours}:${postsMinutes}`;
 };

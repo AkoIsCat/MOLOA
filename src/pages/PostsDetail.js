@@ -116,9 +116,11 @@ const PostsDetail = () => {
                   <tr className="contents">
                     <td colSpan="4">
                       <p> </p>
-                      {data.post.post_contents.split('\n').map((item) => (
-                        <p key={item}>{item}</p>
-                      ))}
+                      {data.post.post_contents
+                        .split('\n')
+                        .map((item, index) => (
+                          <p key={`${item} ${index}`}>{item}</p>
+                        ))}
                     </td>
                   </tr>
                   <tr className="likeBtn">

@@ -27,13 +27,13 @@ const PostsDetail = () => {
     }
   );
 
-  const { data: commentList, isLoading: commentListIsLoading } = useQuery(
-    ['comment', id],
-    () => getComments(id),
-    {
-      refetchOnWindowFocus: false,
-    }
-  );
+  // const { data: commentList, isLoading: commentListIsLoading } = useQuery(
+  //   ['comment', id],
+  //   () => getComments(id),
+  //   {
+  //     refetchOnWindowFocus: false,
+  //   }
+  // );
 
   const isItSameId =
     !postDetailIsLoading &&

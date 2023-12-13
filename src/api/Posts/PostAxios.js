@@ -1,4 +1,4 @@
-import { PostsInstance } from './Postsinstance';
+import { PostsInstance } from './PostsInstance';
 
 export const writingPosts = async (data) => {
   try {

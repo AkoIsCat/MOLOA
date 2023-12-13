@@ -2,7 +2,6 @@ import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import { getPosts } from '../api/Posts/PostAxios';
 import { useQuery } from 'react-query';
-import { dateTransformation } from '../utils/dateTransformation';
 
 import Background from '../components/UI/BackBox';
 import Header from '../components/Header/Header';
@@ -10,8 +9,8 @@ import Footer from '../components/UI/Footer';
 import { Container } from './Home';
 import { Message } from './Character';
 import Side from '../components/Community/Side';
-import Loading from '../components/UI/Loading';
 import PostsButton from '../components/UI/PostsButton';
+import ListTable from '../components/Community/ListTable';
 
 const Coummunity = () => {
   const toggle = false;
@@ -47,47 +46,10 @@ const Coummunity = () => {
             <Side toggle={toggle} />
             <Section>
               <h1>커뮤니티</h1>
-              <Table border="1">
-                <thead>
-                  <tr>
-                    <th className="number">번호</th>
-                    <th className="title">제목</th>
-                    <th className="writer">작성자</th>
-                    <th className="date">등록일</th>
-                    <th className="views">조회수</th>
-                    <th className="like">좋아요</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {postsListisLoading && (
-                    <tr>
-                      <td>
-                        <Loading />
-                      </td>
-                    </tr>
-                  )}
-                  {!postsListisLoading &&
-                    postsList.map((item) => (
-                      <tr key={item.post_id}>
-                        <td className="number">{item.post_id}</td>
-                        <td
-                          className="title"
-                          onClick={() =>
-                            navigate(`/posts-detail/${item.post_id}`)
-                          }
-                        >
-                          {item.post_title}
-                        </td>
-                        <td className="writer">{item.writer_nk}</td>
-                        <td className="date">
-                          {dateTransformation(item.post_date)}
-                        </td>
-                        <td className="views">{item.view_count}</td>
-                        <td className="like">{item.like_count}</td>
-                      </tr>
-                    ))}
-                </tbody>
-              </Table>
+              <ListTable
+                postsList={postsList}
+                postsListisLoading={postsListisLoading}
+              />
               <ButtonWrap>
                 <PostsButton
                   onClick={() => navigate('/community')}
@@ -120,44 +82,6 @@ const Section = styled.section`
     color: #c1c1c1;
     margin-right: 20px;
     text-align: center;
-  }
-`;
-
-const Table = styled.table`
-  width: 95%;
-  margin: 0 20px;
-  border: none;
-  border-top: 1px solid lightgray;
-  color: #c1c1c1;
-  border-collapse: collapse;
-
-  td {
-    border-bottom: 1px solid lightgray;
-  }
-
-  thead {
-    height: 30px;
-    border-bottom: 1px solid lightgray;
-    background: ;
-  }
-
-  tbody {
-    height: 30px;
-  }
-
-  .number,
-  .writer,
-  .date,
-  .views,
-  .like {
-    width: 5vw;
-    text-align: center;
-    height: 40px;
-  }
-
-  .title {
-    width: 35vw;
-    cursor: pointer;
   }
 `;
 

@@ -6,6 +6,7 @@ import {
   removePosts,
   increaseLike,
 } from '../api/Posts/PostAxios';
+import { getComments } from '../api/Comments/CommentsAxios';
 
 import Background from '../components/UI/BackBox';
 import Header from '../components/Header/Header';
@@ -18,7 +19,7 @@ import DetailTable from '../components/Community/PostsDetail/DetailTable';
 const PostsDetail = () => {
   const { id } = useParams();
 
-  const { data, isLoading } = useQuery(
+  const { data: postDetail, isLoading: postDetailIsLoading } = useQuery(
     ['posts-detail', id],
     () => getDetailPosts({ postId: id }),
     {
@@ -26,8 +27,17 @@ const PostsDetail = () => {
     }
   );
 
+  const { data: commentList, isLoading: commentListIsLoading } = useQuery(
+    ['comment', id],
+    () => getComments(id),
+    {
+      refetchOnWindowFocus: false,
+    }
+  );
+
   const isItSameId =
-    !isLoading && localStorage.getItem('userId') === data.post.writer_id;
+    !postDetailIsLoading &&
+    localStorage.getItem('userId') === postDetail.post.writer_id;
 
   const navigate = useNavigate();
 
@@ -57,7 +67,7 @@ const PostsDetail = () => {
       return;
     }
     navigate(`/${id}/modify`, {
-      state: data.post,
+      state: postDetail.post,
     });
   };
 
@@ -82,8 +92,8 @@ const PostsDetail = () => {
         <ContentsWrap>
           <section>
             <DetailTable
-              data={data}
-              isLoading={isLoading}
+              data={postDetail}
+              isLoading={postDetailIsLoading}
               onClickLike={onClickLike}
             />
             <ButtonWrap>
@@ -99,7 +109,9 @@ const PostsDetail = () => {
           </section>
           <section>
             <div>
-              <p>댓글 {data.post.comment_count}개</p>
+              <p>
+                댓글 {!postDetailIsLoading && postDetail.post.comment_count}개
+              </p>
             </div>
             <div>댓글 리스트</div>
             <form>

@@ -6,7 +6,7 @@ import {
   removePosts,
   increaseLike,
 } from '../api/Posts/PostAxios';
-import { getComments } from '../api/Comments/CommentsAxios';
+// import { getComments } from '../api/Comments/CommentsAxios';
 
 import Background from '../components/UI/BackBox';
 import Header from '../components/Header/Header';

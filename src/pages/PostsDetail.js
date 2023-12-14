@@ -84,6 +84,10 @@ const PostsDetail = () => {
     }
   };
 
+  const onSubmitComment = async (e) => {
+    e.preventDefault();
+  };
+
   return (
     <Background>
       <Header />
@@ -146,12 +150,12 @@ const PostsDetail = () => {
                   ))}
                 </CommentWrap>
               ))}
-            <form>
+            <CommentForm onSubmit={onSubmitComment}>
               <Textarea
                 placeholder="타인의 권리를 침해하거나 명예를 훼손하는 댓글은 법적으로 문제가 될 수 있습니다.&#10;Shift+Enter 키를 동시에 누르면 줄바꿈이 됩니다."
               ></Textarea>
-              <button>등록</button>
-            </form>
+              <CommentButton type="submit">등록</CommentButton>
+            </CommentForm>
           </section>
         </ContentsWrap>
       </ContainerBox>
@@ -178,7 +182,7 @@ const ContentsWrap = styled.div`
 const CommentCount = styled.div`
   width: 95%;
   color: #c1c1c1;
-  border-bottom: ${(props) => (props.count === 0 ? '1px solid #c1c1c1' : '')};
+  border-bottom: 1px solid #c1c1c1;
 `;
 
 const ButtonWrap = styled.div`
@@ -187,10 +191,15 @@ const ButtonWrap = styled.div`
   justify-content: flex-end;
 `;
 
+const CommentForm = styled.form`
+  display: flex;
+  align-items: center;
+`;
+
 const Textarea = styled.textarea`
-  width: 85%;
+  width: 80%;
   min-height: 80px;
-  margin: 20px 0px;
+  margin: 30px 0px;
   padding: 10px;
   font-size: 14px;
   outline: none;
@@ -199,6 +208,20 @@ const Textarea = styled.textarea`
   border: 1px solid #c1c1c1;
   border-radius: 10px;
   resize: vertical;
+`;
+
+const CommentButton = styled.button`
+  width: 11%;
+  height: 100px;
+  border: 0;
+  border-radius: 10px;
+  margin: 0 15px;
+  cursor: pointer;
+  font-size: 15px;
+
+  &:hover {
+    background: #c1c1c1;
+  }
 `;
 
 const CommentWrap = styled.div`
@@ -211,7 +234,7 @@ const Comment = styled.div`
   width: 100%;
   padding: 10px 0px;
   border-bottom: 1px solid #c1c1c1;
-  background: ${(props) => (props.writer ? 'rgba(109, 114, 118, 0.3)' : '')};
+  margin: 10px 0;
 
   .user_nk {
     font-weight: bold;
@@ -233,9 +256,8 @@ const Comment = styled.div`
 
 const Reply = styled.div`
   width: 100%;
-  padding: 20px 0 0px 0;
+  padding: 10px 0 10px 0;
   display: flex;
-  background: ${(props) => (props.writer ? 'rgba(109, 114, 118, 0.3)' : '')};
 
   .reply {
     margin: 0 10px 0 5px;

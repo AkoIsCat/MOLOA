@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { useRef } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useQuery } from 'react-query';
 import {
@@ -6,7 +7,7 @@ import {
   removePosts,
   increaseLike,
 } from '../api/Posts/PostAxios';
-import { getComments } from '../api/Comments/CommentsAxios';
+import { getComments, writingComment } from '../api/Comments/CommentsAxios';
 
 import Background from '../components/UI/BackBox';
 import Header from '../components/Header/Header';
@@ -18,22 +19,24 @@ import DetailTable from '../components/Community/PostsDetail/DetailTable';
 
 const PostsDetail = () => {
   const { id } = useParams();
+  const commentRef = useRef();
 
-  const { data: postDetail, isLoading: postDetailIsLoading } = useQuery(
-    ['posts-detail', id],
-    () => getDetailPosts({ postId: id }),
-    {
-      refetchOnWindowFocus: false,
-    }
-  );
+  const {
+    data: postDetail,
+    isLoading: postDetailIsLoading,
+    refetch: postRefetch,
+  } = useQuery(['posts-detail', id], () => getDetailPosts({ postId: id }), {
+    refetchOnWindowFocus: false,
+  });
 
-  const { data: commentList, isLoading: commentListIsLoading } = useQuery(
-    ['comment', id],
-    () => getComments(id),
-    {
-      refetchOnWindowFocus: false,
-    }
-  );
+  const {
+    data: commentList,
+    isLoading: commentListIsLoading,
+    refetch: commentRefetch,
+  } = useQuery(['comment', id], () => getComments(id), {
+    refetchOnWindowFocus: false,
+    select: (data) => data.sort((a, b) => a.comment_id - b.comment_id),
+  });
 
   const isItSameId =
     !postDetailIsLoading &&
@@ -86,6 +89,24 @@ const PostsDetail = () => {
 
   const onSubmitComment = async (e) => {
     e.preventDefault();
+    const blockUserId = localStorage.getItem('userId');
+    if (!blockUserId) {
+      alert('로그인 후 이용 가능합니다.');
+      return;
+    }
+    if (commentRef.current.value.length === 0) {
+      alert('내용을 입력해 주세요.');
+      return;
+    }
+    const response = await writingComment({
+      post_id: id,
+      user_id: blockUserId,
+      parent_comment_id: null,
+      content: commentRef.current.value,
+    });
+    alert(response.message);
+    postRefetch();
+    commentRefetch();
   };
 
   return (
@@ -152,6 +173,7 @@ const PostsDetail = () => {
               ))}
             <CommentForm onSubmit={onSubmitComment}>
               <Textarea
+                ref={commentRef}
                 placeholder="타인의 권리를 침해하거나 명예를 훼손하는 댓글은 법적으로 문제가 될 수 있습니다.&#10;Shift+Enter 키를 동시에 누르면 줄바꿈이 됩니다."
               ></Textarea>
               <CommentButton type="submit">등록</CommentButton>
@@ -226,7 +248,7 @@ const CommentButton = styled.button`
 
 const CommentWrap = styled.div`
   width: 95%;
-  border-bottom: 1px solid #c1c1c1;
+  // border-bottom: 1px solid #c1c1c1;
   padding: 0px 0;
 `;
 
@@ -258,6 +280,7 @@ const Reply = styled.div`
   width: 100%;
   padding: 10px 0 10px 0;
   display: flex;
+  border-bottom: 1px solid #c1c1c1;
 
   .reply {
     margin: 0 10px 0 5px;

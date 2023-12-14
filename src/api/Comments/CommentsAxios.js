@@ -12,3 +12,12 @@ export const getComments = async (postId) => {
     return error.response;
   }
 };
+
+export const writingComment = async (data) => {
+  try {
+    const response = await CommentsInstance().post('/', data);
+    return response.data;
+  } catch (error) {
+    return error.response;
+  }
+};

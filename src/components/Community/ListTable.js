@@ -35,7 +35,7 @@ const ListTable = ({ postsListisLoading, postsList }) => {
                 className="title"
                 onClick={() => navigate(`/posts-detail/${item.post_id}`)}
               >
-                {item.post_title}
+                {item.post_title} [{item.comment_count}]
               </td>
               <td className="writer">{item.writer_nk}</td>
               <td className="date">{dateTransformation(item.post_date)}</td>
@@ -74,6 +74,7 @@ const Table = styled.table`
 
   .number,
   .writer,
+  .comment,
   .date,
   .views,
   .like {
@@ -83,7 +84,7 @@ const Table = styled.table`
   }
 
   .title {
-    width: 35vw;
+    width: 30vw;
     cursor: pointer;
   }
 `;

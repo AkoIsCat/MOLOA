@@ -6,7 +6,7 @@ import {
   removePosts,
   increaseLike,
 } from '../api/Posts/PostAxios';
-// import { getComments } from '../api/Comments/CommentsAxios';
+import { getComments } from '../api/Comments/CommentsAxios';
 
 import Background from '../components/UI/BackBox';
 import Header from '../components/Header/Header';
@@ -27,13 +27,13 @@ const PostsDetail = () => {
     }
   );
 
-  // const { data: commentList, isLoading: commentListIsLoading } = useQuery(
-  //   ['comment', id],
-  //   () => getComments(id),
-  //   {
-  //     refetchOnWindowFocus: false,
-  //   }
-  // );
+  const { data: commentList, isLoading: commentListIsLoading } = useQuery(
+    ['comment', id],
+    () => getComments(id),
+    {
+      refetchOnWindowFocus: false,
+    }
+  );
 
   const isItSameId =
     !postDetailIsLoading &&
@@ -108,12 +108,44 @@ const PostsDetail = () => {
             </ButtonWrap>
           </section>
           <section>
-            <div>
+            <CommentCount
+              count={!postDetailIsLoading && postDetail.post.comment_count}
+            >
               <p>
                 댓글 {!postDetailIsLoading && postDetail.post.comment_count}개
               </p>
-            </div>
-            <div>댓글 리스트</div>
+            </CommentCount>
+            {!commentListIsLoading &&
+              commentList.map((item) => (
+                <CommentWrap key={item.comment_id}>
+                  <Comment
+                    writer={postDetail.post.writer_id === item.user_id && true}
+                  >
+                    <div>
+                      <span className="user_nk">{item.user_nk}</span>
+                      <span className="date">({item.created_at})</span>
+                    </div>
+                    <p className="contents">{item.content}</p>
+                  </Comment>
+                  {item.replies.map((childItem) => (
+                    <Reply
+                      key={childItem.comment_id}
+                      writer={
+                        postDetail.post.writer_id === childItem.user_id && true
+                      }
+                    >
+                      <div className="reply">↳</div>
+                      <div className="contents_wrap">
+                        <div className="user_info">
+                          <span className="user_nk">{childItem.user_nk}</span>
+                          <span className="date">({childItem.created_at})</span>
+                        </div>
+                        <p className="contents">{childItem.content}</p>
+                      </div>
+                    </Reply>
+                  ))}
+                </CommentWrap>
+              ))}
             <form>
               <Textarea
                 placeholder="타인의 권리를 침해하거나 명예를 훼손하는 댓글은 법적으로 문제가 될 수 있습니다.&#10;Shift+Enter 키를 동시에 누르면 줄바꿈이 됩니다."
@@ -135,11 +167,18 @@ const ContainerBox = styled(Container)`
   min-height: 75vh;
   height: auto;
   position: relative;
+  font-familiy: 'Nanum Gothic';
 `;
 
 const ContentsWrap = styled.div`
   width: 95%;
   margin: 40px 0;
+`;
+
+const CommentCount = styled.div`
+  width: 95%;
+  color: #c1c1c1;
+  border-bottom: ${(props) => (props.count === 0 ? '1px solid #c1c1c1' : '')};
 `;
 
 const ButtonWrap = styled.div`
@@ -160,4 +199,63 @@ const Textarea = styled.textarea`
   border: 1px solid #c1c1c1;
   border-radius: 10px;
   resize: vertical;
+`;
+
+const CommentWrap = styled.div`
+  width: 95%;
+  border-bottom: 1px solid #c1c1c1;
+  padding: 0px 0;
+`;
+
+const Comment = styled.div`
+  width: 100%;
+  padding: 10px 0px;
+  border-bottom: 1px solid #c1c1c1;
+  background: ${(props) => (props.writer ? 'rgba(109, 114, 118, 0.3)' : '')};
+
+  .user_nk {
+    font-weight: bold;
+    color: #fff;
+    margin: 0 5px;
+    padding: 0 5px;
+  }
+
+  .date {
+    color: #c1c1c1;
+    margin: 0 5px;
+  }
+
+  .contents {
+    color: #c1c1c1;
+    padding: 0 10px;
+  }
+`;
+
+const Reply = styled.div`
+  width: 100%;
+  padding: 20px 0 0px 0;
+  display: flex;
+  background: ${(props) => (props.writer ? 'rgba(109, 114, 118, 0.3)' : '')};
+
+  .reply {
+    margin: 0 10px 0 5px;
+    padding: 0 0px 0 10px;
+    color: #c1c1c1;
+  }
+
+  .user_nk {
+    font-weight: bold;
+    color: #fff;
+    margin: 0 5px;
+  }
+
+  .date {
+    color: #c1c1c1;
+    margin: 0 5px;
+  }
+
+  .contents {
+    color: #c1c1c1;
+    padding: 0 5px;
+  }
 `;

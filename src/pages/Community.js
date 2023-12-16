@@ -30,6 +30,7 @@ const Coummunity = () => {
     'postsList',
     () => getPosts(),
     {
+      enabled: toggle,
       staleTime: 0,
       refetchOnWindowFocus: false,
       select: (data) => data.sort((a, b) => b.post_id - a.post_id),

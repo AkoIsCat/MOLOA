@@ -21,3 +21,16 @@ export const writingComment = async (data) => {
     return error.response;
   }
 };
+
+export const deleteComment = async (commentId) => {
+  try {
+    const response = await CommentsInstance().patch(`/${commentId}`, {
+      params: {
+        commentId,
+      },
+    });
+    return response.data;
+  } catch (error) {
+    return error.response;
+  }
+};

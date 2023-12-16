@@ -144,7 +144,11 @@ const PostsDetail = () => {
               commentList.map((item) => (
                 <CommentWrap key={item.comment_id}>
                   <Comment
-                    writer={postDetail.post.writer_id === item.user_id && true}
+                    writer={
+                      postDetailIsLoading &&
+                      postDetail.post.writer_id === item.user_id &&
+                      true
+                    }
                   >
                     <div className="comment_wrap">
                       <div className="user_block">
@@ -162,7 +166,11 @@ const PostsDetail = () => {
                         </div>
                       )}
                     </div>
-                    <p className="contents">{item.content}</p>
+                    <div className="contents">
+                      {item.content.split('\n').map((line, index) => (
+                        <p key={`${line} ${index}`}>{line}</p>
+                      ))}
+                    </div>
                   </Comment>
                   {item.replies.map((childItem) => (
                     <Reply

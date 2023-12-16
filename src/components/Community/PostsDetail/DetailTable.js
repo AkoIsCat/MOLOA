@@ -6,6 +6,10 @@ import Loading from '../../UI/Loading';
 import { AiFillLike } from 'react-icons/ai';
 
 const DetailTable = ({ isLoading, data, onClickLike }) => {
+  if (isLoading) {
+    return <Loading />;
+  }
+
   return (
     <Table>
       <tbody>

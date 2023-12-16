@@ -146,8 +146,11 @@ const PostsDetail = () => {
                   <Comment
                     writer={postDetail.post.writer_id === item.user_id && true}
                   >
-                    <div>
+                    <div className="user_block">
                       <span className="user_nk">{item.user_nk}</span>
+                      {item.user_id === postDetail.post.writer_id && (
+                        <div className="writer">작성자</div>
+                      )}
                       <span className="date">({item.created_at})</span>
                     </div>
                     <p className="contents">{item.content}</p>
@@ -163,6 +166,9 @@ const PostsDetail = () => {
                       <div className="contents_wrap">
                         <div className="user_info">
                           <span className="user_nk">{childItem.user_nk}</span>
+                          {childItem.user_id === postDetail.post.writer_id && (
+                            <div className="writer">작성자</div>
+                          )}
                           <span className="date">({childItem.created_at})</span>
                         </div>
                         <p className="contents">{childItem.content}</p>
@@ -258,11 +264,23 @@ const Comment = styled.div`
   border-bottom: 1px solid #c1c1c1;
   margin: 10px 0;
 
+  .user_block {
+    display: flex;
+  }
+
   .user_nk {
     font-weight: bold;
     color: #fff;
     margin: 0 5px;
-    padding: 0 5px;
+    padding: 0 2px;
+  }
+
+  .writer {
+    border: 1px solid #c1c1c1;
+    border-radius: 20px;
+    padding: 2px 6px;
+    font-size: 12px;
+    color: #87ceeb;
   }
 
   .date {
@@ -288,10 +306,22 @@ const Reply = styled.div`
     color: #c1c1c1;
   }
 
+  .user_info {
+    display: flex;
+  }
+
   .user_nk {
     font-weight: bold;
     color: #fff;
     margin: 0 5px;
+  }
+
+  .writer {
+    border: 1px solid #c1c1c1;
+    border-radius: 20px;
+    padding: 2px 6px;
+    font-size: 12px;
+    color: #87ceeb;
   }
 
   .date {

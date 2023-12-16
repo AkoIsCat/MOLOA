@@ -7,7 +7,11 @@ import {
   removePosts,
   increaseLike,
 } from '../api/Posts/PostAxios';
-import { getComments, writingComment } from '../api/Comments/CommentsAxios';
+import {
+  getComments,
+  writingComment,
+  deleteComment,
+} from '../api/Comments/CommentsAxios';
 
 import Background from '../components/UI/BackBox';
 import Header from '../components/Header/Header';
@@ -44,9 +48,14 @@ const PostsDetail = () => {
 
   const navigate = useNavigate();
 
-  const onClickWrite = () => {
+  const checkLogin = () => {
     const blockUserId = localStorage.getItem('userId');
-    if (blockUserId) {
+    return blockUserId ? blockUserId : false;
+  };
+
+  const onClickWrite = () => {
+    const loginIsValid = checkLogin();
+    if (loginIsValid) {
       navigate('/board-posts');
     } else {
       alert('로그인 후 작성 가능합니다.');
@@ -54,18 +63,18 @@ const PostsDetail = () => {
   };
 
   const onClickLike = async () => {
-    const blockUserId = localStorage.getItem('userId');
-    if (!blockUserId) {
+    const loginIsValid = checkLogin();
+    if (!loginIsValid) {
       alert('로그인 후 이용 가능합니다.');
       return;
     }
-    const response = await increaseLike({ userId: blockUserId, postId: id });
+    const response = await increaseLike({ userId: loginIsValid, postId: id });
     alert(response.message);
   };
 
   const onClickModify = () => {
-    const blockUserId = localStorage.getItem('userId');
-    if (!blockUserId) {
+    const loginIsValid = checkLogin();
+    if (!loginIsValid) {
       alert('로그인 후 이용 가능합니다.');
       return;
     }
@@ -75,8 +84,8 @@ const PostsDetail = () => {
   };
 
   const onClickRemove = async () => {
-    const blockUserId = localStorage.getItem('userId');
-    if (!blockUserId) {
+    const loginIsValid = checkLogin();
+    if (!loginIsValid) {
       alert('로그인 후 이용 가능합니다.');
       return;
     }
@@ -89,8 +98,8 @@ const PostsDetail = () => {
 
   const onSubmitComment = async (e) => {
     e.preventDefault();
-    const blockUserId = localStorage.getItem('userId');
-    if (!blockUserId) {
+    const loginIsValid = checkLogin();
+    if (!loginIsValid) {
       alert('로그인 후 이용 가능합니다.');
       return;
     }
@@ -100,7 +109,7 @@ const PostsDetail = () => {
     }
     const response = await writingComment({
       post_id: id,
-      user_id: blockUserId,
+      user_id: loginIsValid,
       parent_comment_id: null,
       content: commentRef.current.value,
     });

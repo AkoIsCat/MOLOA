@@ -38,7 +38,7 @@ const PostsDetail = () => {
     select: (data) => data.sort((a, b) => a.comment_id - b.comment_id),
   });
 
-  const isItSameId =
+  const isItPostSameId =
     !postDetailIsLoading &&
     localStorage.getItem('userId') === postDetail.post.writer_id;
 
@@ -123,10 +123,10 @@ const PostsDetail = () => {
             />
             <ButtonWrap>
               <PostsButton onClick={() => navigate('/community')} name="목록" />
-              {isItSameId && (
+              {isItPostSameId && (
                 <PostsButton name="수정" onClick={onClickModify} />
               )}
-              {isItSameId && (
+              {isItPostSameId && (
                 <PostsButton name="삭제" onClick={onClickRemove} />
               )}
               <PostsButton name="글쓰기" onClick={onClickWrite} />
@@ -146,12 +146,21 @@ const PostsDetail = () => {
                   <Comment
                     writer={postDetail.post.writer_id === item.user_id && true}
                   >
-                    <div className="user_block">
-                      <span className="user_nk">{item.user_nk}</span>
-                      {item.user_id === postDetail.post.writer_id && (
-                        <div className="writer">작성자</div>
+                    <div className="comment_wrap">
+                      <div className="user_block">
+                        <span className="user_nk">{item.user_nk}</span>
+                        {item.user_id === postDetail.post.writer_id && (
+                          <div className="writer">작성자</div>
+                        )}
+                        <span className="date">({item.created_at})</span>
+                      </div>
+                      {localStorage.getItem('userId') === item.user_id && (
+                        <div className="writer_btn">
+                          <span className="btn">수정</span>
+                          <span>|</span>
+                          <span className="btn">삭제</span>
+                        </div>
                       )}
-                      <span className="date">({item.created_at})</span>
                     </div>
                     <p className="contents">{item.content}</p>
                   </Comment>
@@ -164,12 +173,25 @@ const PostsDetail = () => {
                     >
                       <div className="reply">↳</div>
                       <div className="contents_wrap">
-                        <div className="user_info">
-                          <span className="user_nk">{childItem.user_nk}</span>
-                          {childItem.user_id === postDetail.post.writer_id && (
-                            <div className="writer">작성자</div>
+                        <div className="comment_wrap">
+                          <div className="user_info">
+                            <span className="user_nk">{childItem.user_nk}</span>
+                            {childItem.user_id ===
+                              postDetail.post.writer_id && (
+                              <div className="writer">작성자</div>
+                            )}
+                            <span className="date">
+                              ({childItem.created_at})
+                            </span>
+                          </div>
+                          {localStorage.getItem('userId') ===
+                            childItem.user_id && (
+                            <div className="writer_btn">
+                              <span className="btn">수정</span>
+                              <span>|</span>
+                              <span className="btn">삭제</span>
+                            </div>
                           )}
-                          <span className="date">({childItem.created_at})</span>
                         </div>
                         <p className="contents">{childItem.content}</p>
                       </div>
@@ -264,8 +286,13 @@ const Comment = styled.div`
   border-bottom: 1px solid #c1c1c1;
   margin: 10px 0;
 
-  .user_block {
+  .user_block,
+  .comment_wrap {
     display: flex;
+  }
+
+  .comment_wrap {
+    justify-content: space-between;
   }
 
   .user_nk {
@@ -281,6 +308,17 @@ const Comment = styled.div`
     padding: 2px 6px;
     font-size: 12px;
     color: #87ceeb;
+  }
+
+  .writer_btn {
+    color: #c1c1c1;
+    font-size: 13px;
+    margin: 0 10px;
+
+    .btn {
+      margin: 0 3px;
+      cursor: pointer;
+    }
   }
 
   .date {
@@ -306,8 +344,13 @@ const Reply = styled.div`
     color: #c1c1c1;
   }
 
-  .user_info {
+  .user_info,
+  .comment_wrap {
     display: flex;
+  }
+
+  .comment_wrap {
+    justify-content: space-between;
   }
 
   .user_nk {
@@ -324,6 +367,17 @@ const Reply = styled.div`
     color: #87ceeb;
   }
 
+  .writer_btn {
+    color: #c1c1c1;
+    font-size: 13px;
+    margin: 0 10px;
+
+    .btn {
+      margin: 0 3px;
+      cursor: pointer;
+    }
+  }
+
   .date {
     color: #c1c1c1;
     margin: 0 5px;
@@ -332,5 +386,9 @@ const Reply = styled.div`
   .contents {
     color: #c1c1c1;
     padding: 0 5px;
+  }
+
+  .contents_wrap {
+    width: 100%;
   }
 `;

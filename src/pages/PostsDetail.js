@@ -50,72 +50,79 @@ const PostsDetail = () => {
 
   const checkLogin = () => {
     const blockUserId = localStorage.getItem('userId');
-    return blockUserId ? blockUserId : false;
+    if (!blockUserId) {
+      alert('로그인 후 사용 가능합니다.');
+      return;
+    }
+    return blockUserId;
   };
 
   const onClickWrite = () => {
     const loginIsValid = checkLogin();
     if (loginIsValid) {
       navigate('/board-posts');
-    } else {
-      alert('로그인 후 작성 가능합니다.');
     }
   };
 
   const onClickLike = async () => {
     const loginIsValid = checkLogin();
-    if (!loginIsValid) {
-      alert('로그인 후 이용 가능합니다.');
-      return;
+    if (loginIsValid) {
+      const response = await increaseLike({ userId: loginIsValid, postId: id });
+      alert(response.message);
     }
-    const response = await increaseLike({ userId: loginIsValid, postId: id });
-    alert(response.message);
   };
 
   const onClickModify = () => {
     const loginIsValid = checkLogin();
-    if (!loginIsValid) {
-      alert('로그인 후 이용 가능합니다.');
-      return;
+    if (loginIsValid) {
+      navigate(`/${id}/modify`, {
+        state: postDetail.post,
+      });
     }
-    navigate(`/${id}/modify`, {
-      state: postDetail.post,
-    });
   };
 
   const onClickRemove = async () => {
     const loginIsValid = checkLogin();
-    if (!loginIsValid) {
-      alert('로그인 후 이용 가능합니다.');
-      return;
+    if (loginIsValid) {
+      if (window.confirm('게시글이 삭제됩니다. 정말 삭제 하시겠습니까?')) {
+        const response = await removePosts({ postId: id });
+        alert(response.message);
+        navigate('/community');
+      }
     }
-    if (window.confirm('게시글이 삭제됩니다. 정말 삭제 하시겠습니까?')) {
-      const response = await removePosts({ postId: id });
-      alert(response.message);
-      navigate('/community');
+  };
+
+  const onClickCommentRemove = async (commentId) => {
+    const loginIsValid = checkLogin();
+    if (loginIsValid) {
+      if (window.confirm('댓글을 삭제 하시겠습니까?')) {
+        const response = await deleteComment(commentId);
+        alert(response.message);
+        commentRefetch();
+        postRefetch();
+      }
     }
   };
 
   const onSubmitComment = async (e) => {
     e.preventDefault();
     const loginIsValid = checkLogin();
-    if (!loginIsValid) {
-      alert('로그인 후 이용 가능합니다.');
-      return;
+    if (loginIsValid) {
+      if (commentRef.current.value.length === 0) {
+        alert('내용을 입력해 주세요.');
+        return;
+      }
+      const response = await writingComment({
+        post_id: id,
+        user_id: loginIsValid,
+        parent_comment_id: null,
+        content: commentRef.current.value,
+      });
+      alert(response.message);
+      postRefetch();
+      commentRefetch();
+      commentRef.current.value = '';
     }
-    if (commentRef.current.value.length === 0) {
-      alert('내용을 입력해 주세요.');
-      return;
-    }
-    const response = await writingComment({
-      post_id: id,
-      user_id: loginIsValid,
-      parent_comment_id: null,
-      content: commentRef.current.value,
-    });
-    alert(response.message);
-    postRefetch();
-    commentRefetch();
   };
 
   return (
@@ -154,7 +161,7 @@ const PostsDetail = () => {
                 <CommentWrap key={item.comment_id}>
                   <Comment
                     writer={
-                      postDetailIsLoading &&
+                      !postDetailIsLoading &&
                       postDetail.post.writer_id === item.user_id &&
                       true
                     }
@@ -167,13 +174,21 @@ const PostsDetail = () => {
                         )}
                         <span className="date">({item.created_at})</span>
                       </div>
-                      {localStorage.getItem('userId') === item.user_id && (
-                        <div className="writer_btn">
-                          <span className="btn">수정</span>
-                          <span>|</span>
-                          <span className="btn">삭제</span>
-                        </div>
-                      )}
+                      {localStorage.getItem('userId') === item.user_id &&
+                        item.is_deleted === 0 && (
+                          <div className="writer_btn">
+                            <span className="btn">수정</span>
+                            <span>|</span>
+                            <span
+                              className="btn"
+                              onClick={() =>
+                                onClickCommentRemove(item.comment_id)
+                              }
+                            >
+                              삭제
+                            </span>
+                          </div>
+                        )}
                     </div>
                     <div className="contents">
                       {item.content.split('\n').map((line, index) => (

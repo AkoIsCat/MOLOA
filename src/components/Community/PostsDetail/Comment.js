@@ -34,8 +34,6 @@ const Comment = ({
                 {localStorage.getItem('userId') === item.user_id &&
                   item.is_deleted === 0 && (
                     <div className="writer_btn">
-                      <span className="btn">수정</span>
-                      <span>|</span>
                       <span
                         className="btn"
                         onClick={() => onClickCommentRemove(item.comment_id)}
@@ -46,9 +44,12 @@ const Comment = ({
                   )}
               </div>
               <div className="contents">
-                {item.content.split('\n').map((line, index) => (
-                  <p key={`${line} ${index}`}>{line}</p>
-                ))}
+                <div>
+                  {item.content.split('\n').map((line, index) => (
+                    <p key={`${line} ${index}`}>{line}</p>
+                  ))}
+                </div>
+                <p className="add_comment">답글</p>
               </div>
             </CommentDiv>
             {item.replies.map((childItem) => (
@@ -68,13 +69,18 @@ const Comment = ({
                     </div>
                     {localStorage.getItem('userId') === childItem.user_id && (
                       <div className="writer_btn">
-                        <span className="btn">수정</span>
-                        <span>|</span>
                         <span className="btn">삭제</span>
                       </div>
                     )}
                   </div>
-                  <p className="contents">{childItem.content}</p>
+                  <div className="contents">
+                    <div>
+                      {item.content.split('\n').map((line, index) => (
+                        <p key={`${line} ${index}`}>{line}</p>
+                      ))}
+                    </div>
+                    <p className="add_comment">답글</p>
+                  </div>
                 </div>
               </Reply>
             ))}
@@ -148,12 +154,20 @@ const CommentDiv = styled.div`
   .contents {
     color: #c1c1c1;
     padding: 0 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+  }
+
+  .add_comment {
+    font-size: 13px;
+    cursor: pointer;
   }
 `;
 
 const Reply = styled.div`
   width: 100%;
-  padding: 15px 0 10px 0;
+  padding: 20px 0 20px 0;
   display: flex;
   border-bottom: 1px solid #c1c1c1;
   background: ${(props) => props.writer && 'rgba(109, 114, 118, 0.3)'};
@@ -205,7 +219,17 @@ const Reply = styled.div`
 
   .contents {
     color: #c1c1c1;
-    padding: 0 5px;
+    padding: 0 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+  }
+
+  .add_comment {
+    font-size: 13px;
+    margin: 0 3px;
+    padding: 0 0 5px 0;
+    cursor: pointer;
   }
 
   .contents_wrap {

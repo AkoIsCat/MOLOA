@@ -21,11 +21,7 @@ const Comment = ({
         commentList.map((item) => (
           <CommentWrap key={item.comment_id}>
             <CommentDiv
-              writer={
-                !postIsLoading &&
-                postDetail.post.writer_id === item.user_id &&
-                true
-              }
+              writer={localStorage.getItem('userId') === item.user_id && true}
             >
               <div className="comment_wrap">
                 <div className="user_block">
@@ -58,7 +54,7 @@ const Comment = ({
             {item.replies.map((childItem) => (
               <Reply
                 key={childItem.comment_id}
-                writer={postDetail.post.writer_id === childItem.user_id && true}
+                writer={localStorage.getItem('userId') === item.user_id && true}
               >
                 <div className="reply">↳</div>
                 <div className="contents_wrap">
@@ -104,9 +100,10 @@ const CommentWrap = styled.div`
 
 const CommentDiv = styled.div`
   width: 100%;
-  padding: 10px 0px;
+  padding: 20px 0px;
   border-bottom: 1px solid #c1c1c1;
-  margin: 10px 0;
+  // margin: 10px 0;
+  background: ${(props) => props.writer && 'rgba(109, 114, 118, 0.3)'};
 
   .user_block,
   .comment_wrap {
@@ -156,9 +153,10 @@ const CommentDiv = styled.div`
 
 const Reply = styled.div`
   width: 100%;
-  padding: 10px 0 10px 0;
+  padding: 15px 0 10px 0;
   display: flex;
   border-bottom: 1px solid #c1c1c1;
+  background: ${(props) => props.writer && 'rgba(109, 114, 118, 0.3)'};
 
   .reply {
     margin: 0 10px 0 5px;

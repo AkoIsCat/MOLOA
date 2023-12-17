@@ -6,6 +6,21 @@ import CommonContentBoxMain from '../../UI/CommonContentBoxMain';
 import { HiOutlineTicket } from 'react-icons/hi';
 
 const CouponList = ({ couponCode, couponIsLoading }) => {
+  if (couponCode.length === 0) {
+    return (
+      <CommonContentBoxMain
+        key="couponCode"
+        id="couponCode"
+        font="13"
+        height="20"
+        align="center"
+        border="true"
+      >
+        -
+      </CommonContentBoxMain>
+    );
+  }
+
   const renderCouponContent = (items, index, length) => {
     const isLast = index === length - 1;
     const couponNameStyle = {
@@ -21,18 +36,7 @@ const CouponList = ({ couponCode, couponIsLoading }) => {
     };
 
     if (!items) {
-      return (
-        <CommonContentBoxMain
-          key={index}
-          id={index}
-          font="13"
-          height="20"
-          align="center"
-          border={isLast ? 'true' : undefined}
-        >
-          -
-        </CommonContentBoxMain>
-      );
+      return;
     }
 
     return (

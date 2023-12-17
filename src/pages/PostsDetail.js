@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import { useRef } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useQuery } from 'react-query';
 import {
@@ -7,11 +6,7 @@ import {
   removePosts,
   increaseLike,
 } from '../api/Posts/PostAxios';
-import {
-  getComments,
-  writingComment,
-  deleteComment,
-} from '../api/Comments/CommentsAxios';
+import { getComments, deleteComment } from '../api/Comments/CommentsAxios';
 
 import Background from '../components/UI/BackBox';
 import Header from '../components/Header/Header';
@@ -21,10 +16,10 @@ import Side from '../components/Community/Side';
 import PostsButton from '../components/UI/PostsButton';
 import DetailTable from '../components/Community/PostsDetail/DetailTable';
 import Comment from '../components/Community/PostsDetail/Comment';
+import CommentForm from '../components/UI/CommentForm';
 
 const PostsDetail = () => {
   const { id } = useParams();
-  const commentRef = useRef();
 
   const {
     data: postDetail,
@@ -105,27 +100,6 @@ const PostsDetail = () => {
     }
   };
 
-  const onSubmitComment = async (e) => {
-    e.preventDefault();
-    const loginIsValid = checkLogin();
-    if (loginIsValid) {
-      if (commentRef.current.value.length === 0) {
-        alert('내용을 입력해 주세요.');
-        return;
-      }
-      const response = await writingComment({
-        post_id: id,
-        user_id: loginIsValid,
-        parent_comment_id: null,
-        content: commentRef.current.value,
-      });
-      alert(response.message);
-      postRefetch();
-      commentRefetch();
-      commentRef.current.value = '';
-    }
-  };
-
   return (
     <Background>
       <Header />
@@ -157,13 +131,10 @@ const PostsDetail = () => {
               commentList={commentList}
               onClickCommentRemove={onClickCommentRemove}
             />
-            <CommentForm onSubmit={onSubmitComment}>
-              <Textarea
-                ref={commentRef}
-                placeholder="타인의 권리를 침해하거나 명예를 훼손하는 댓글은 법적으로 문제가 될 수 있습니다.&#10;Shift+Enter 키를 동시에 누르면 줄바꿈이 됩니다."
-              ></Textarea>
-              <CommentButton type="submit">등록</CommentButton>
-            </CommentForm>
+            <CommentForm
+              postRefetch={postRefetch}
+              commentRefetch={commentRefetch}
+            />
           </section>
         </ContentsWrap>
       </ContainerBox>
@@ -191,37 +162,4 @@ const ButtonWrap = styled.div`
   margin: 10px 45px;
   display: flex;
   justify-content: flex-end;
-`;
-
-const CommentForm = styled.form`
-  display: flex;
-  align-items: center;
-`;
-
-const Textarea = styled.textarea`
-  width: 80%;
-  min-height: 80px;
-  margin: 30px 0px;
-  padding: 10px;
-  font-size: 14px;
-  outline: none;
-  background: #1e2225;
-  color: #fff;
-  border: 1px solid #c1c1c1;
-  border-radius: 10px;
-  resize: vertical;
-`;
-
-const CommentButton = styled.button`
-  width: 11%;
-  height: 100px;
-  border: 0;
-  border-radius: 10px;
-  margin: 0 15px;
-  cursor: pointer;
-  font-size: 15px;
-
-  &:hover {
-    background: #c1c1c1;
-  }
 `;

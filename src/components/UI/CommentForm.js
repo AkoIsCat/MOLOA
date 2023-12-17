@@ -3,7 +3,7 @@ import { useRef } from 'react';
 import { useParams } from 'react-router-dom';
 import { writingComment } from '../../api/Comments/CommentsAxios';
 
-const CommentForm = ({ postRefetch, commentRefetch }) => {
+const CommentForm = ({ postRefetch, commentRefetch, commentReply }) => {
   const commentRef = useRef();
 
   const { id } = useParams();
@@ -41,6 +41,7 @@ const CommentForm = ({ postRefetch, commentRefetch }) => {
     <CommentFormBox onSubmit={onSubmitComment}>
       <Textarea
         ref={commentRef}
+        commentReply={commentReply}
         placeholder="타인의 권리를 침해하거나 명예를 훼손하는 댓글은 법적으로 문제가 될 수 있습니다.&#10;Shift+Enter 키를 동시에 누르면 줄바꿈이 됩니다."
       ></Textarea>
       <CommentButton type="submit">등록</CommentButton>
@@ -56,7 +57,7 @@ const CommentFormBox = styled.form`
 `;
 
 const Textarea = styled.textarea`
-  width: 80%;
+  width: ${(props) => (props.commentReply ? '84%' : '80%')};
   min-height: 80px;
   margin: 30px 0px;
   padding: 10px;

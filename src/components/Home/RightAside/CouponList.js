@@ -6,7 +6,7 @@ import CommonContentBoxMain from '../../UI/CommonContentBoxMain';
 import { HiOutlineTicket } from 'react-icons/hi';
 
 const CouponList = ({ couponCode, couponIsLoading }) => {
-  if (couponCode.length === 0) {
+  if (!couponIsLoading && couponCode.length === 0) {
     return (
       <CommonContentBoxMain
         key="couponCode"

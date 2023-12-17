@@ -11,7 +11,14 @@ const Comment = ({
   commentList,
   onClickCommentRemove,
 }) => {
-  const [replyToggle, setReplyToggle] = useState(false);
+  const [replyToggle, setReplyToggle] = useState({
+    toggle: false,
+    id: undefined,
+  });
+
+  const onClickReply = (id) => {
+    console.log(id);
+  };
 
   if (postIsLoading || commentIsLoading) {
     return <Loading />;
@@ -53,16 +60,21 @@ const Comment = ({
                     <p key={`${line} ${index}`}>{line}</p>
                   ))}
                 </div>
-                <p className="add_comment">답글</p>
+                <p
+                  className="add_comment"
+                  onClick={() => onClickReply(item.comment_id)}
+                >
+                  답글
+                </p>
               </div>
             </CommentDiv>
+            {replyToggle.toggle && (
+              <CommentFormWrap>
+                <CommentForm commentReply="true" />
+              </CommentFormWrap>
+            )}
             {item.replies.map((childItem) => (
               <>
-                {replyToggle && (
-                  <CommentFormWrap>
-                    <CommentForm commentReply="true" />
-                  </CommentFormWrap>
-                )}
                 <Reply
                   key={childItem.comment_id}
                   writer={

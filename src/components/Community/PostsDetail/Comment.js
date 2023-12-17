@@ -1,6 +1,8 @@
 import styled from 'styled-components';
+import { useState } from 'react';
 
 import Loading from '../../UI/Loading';
+import CommentForm from '../../UI/CommentForm';
 
 const Comment = ({
   postIsLoading,
@@ -9,6 +11,8 @@ const Comment = ({
   commentList,
   onClickCommentRemove,
 }) => {
+  const [replyToggle, setReplyToggle] = useState(false);
+
   if (postIsLoading || commentIsLoading) {
     return <Loading />;
   }
@@ -53,36 +57,47 @@ const Comment = ({
               </div>
             </CommentDiv>
             {item.replies.map((childItem) => (
-              <Reply
-                key={childItem.comment_id}
-                writer={localStorage.getItem('userId') === item.user_id && true}
-              >
-                <div className="reply">↳</div>
-                <div className="contents_wrap">
-                  <div className="comment_wrap">
-                    <div className="user_info">
-                      <span className="user_nk">{childItem.user_nk}</span>
-                      {childItem.user_id === postDetail.post.writer_id && (
-                        <div className="writer">작성자</div>
-                      )}
-                      <span className="date">({childItem.created_at})</span>
-                    </div>
-                    {localStorage.getItem('userId') === childItem.user_id && (
-                      <div className="writer_btn">
-                        <span className="btn">삭제</span>
+              <>
+                {replyToggle && (
+                  <CommentFormWrap>
+                    <CommentForm commentReply="true" />
+                  </CommentFormWrap>
+                )}
+                <Reply
+                  key={childItem.comment_id}
+                  writer={
+                    localStorage.getItem('userId') === item.user_id && true
+                  }
+                >
+                  <div className="info_wrap">
+                    <div className="reply">↳</div>
+                    <div className="contents_wrap">
+                      <div className="comment_wrap">
+                        <div className="user_info">
+                          <span className="user_nk">{childItem.user_nk}</span>
+                          {childItem.user_id === postDetail.post.writer_id && (
+                            <div className="writer">작성자</div>
+                          )}
+                          <span className="date">({childItem.created_at})</span>
+                        </div>
+                        {localStorage.getItem('userId') ===
+                          childItem.user_id && (
+                          <div className="writer_btn">
+                            <span className="btn">삭제</span>
+                          </div>
+                        )}
                       </div>
-                    )}
-                  </div>
-                  <div className="contents">
-                    <div>
-                      {item.content.split('\n').map((line, index) => (
-                        <p key={`${line} ${index}`}>{line}</p>
-                      ))}
+                      <div className="contents">
+                        <div>
+                          {item.content.split('\n').map((line, index) => (
+                            <p key={`${line} ${index}`}>{line}</p>
+                          ))}
+                        </div>
+                      </div>
                     </div>
-                    <p className="add_comment">답글</p>
                   </div>
-                </div>
-              </Reply>
+                </Reply>
+              </>
             ))}
           </CommentWrap>
         ))}
@@ -162,6 +177,7 @@ const CommentDiv = styled.div`
   .add_comment {
     font-size: 13px;
     cursor: pointer;
+    margin: 0 2px 6px 0px;
   }
 `;
 
@@ -169,8 +185,13 @@ const Reply = styled.div`
   width: 100%;
   padding: 20px 0 20px 0;
   display: flex;
+  flex-direction: column;
   border-bottom: 1px solid #c1c1c1;
   background: ${(props) => props.writer && 'rgba(109, 114, 118, 0.3)'};
+
+  .info_wrap {
+    display: flex;
+  }
 
   .reply {
     margin: 0 10px 0 5px;
@@ -235,4 +256,8 @@ const Reply = styled.div`
   .contents_wrap {
     width: 100%;
   }
+`;
+
+const CommentFormWrap = styled.div`
+  background: ;
 `;

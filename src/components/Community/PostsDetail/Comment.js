@@ -17,7 +17,18 @@ const Comment = ({
   });
 
   const onClickReply = (id) => {
-    console.log(id);
+    setReplyToggle((prev) => {
+      if (prev.toggle === false) {
+        return {
+          toggle: true,
+          id,
+        };
+      }
+      return {
+        toggle: prev.id === id ? !prev.toggle : prev.toggle,
+        id,
+      };
+    });
   };
 
   if (postIsLoading || commentIsLoading) {
@@ -25,7 +36,10 @@ const Comment = ({
   }
   return (
     <>
-      <CommentCount count={!postIsLoading && postDetail.post.comment_count}>
+      <CommentCount
+        key="count"
+        count={!postIsLoading && postDetail.post.comment_count}
+      >
         <p>댓글 {!postIsLoading && postDetail.post.comment_count}개</p>
       </CommentCount>
       {!commentIsLoading &&
@@ -68,7 +82,7 @@ const Comment = ({
                 </p>
               </div>
             </CommentDiv>
-            {replyToggle.toggle && (
+            {replyToggle.toggle && replyToggle.id === item.comment_id && (
               <CommentFormWrap>
                 <CommentForm commentReply="true" />
               </CommentFormWrap>

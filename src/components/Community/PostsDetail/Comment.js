@@ -10,6 +10,8 @@ const Comment = ({
   postDetail,
   commentList,
   onClickCommentRemove,
+  postRefetch,
+  commentRefetch,
 }) => {
   const [replyToggle, setReplyToggle] = useState({
     toggle: false,
@@ -84,7 +86,13 @@ const Comment = ({
             </CommentDiv>
             {replyToggle.toggle && replyToggle.id === item.comment_id && (
               <CommentFormWrap>
-                <CommentForm commentReply="true" />
+                <CommentForm
+                  commentReply="true"
+                  commentId={item.comment_id}
+                  postRefetch={postRefetch}
+                  commentRefetch={commentRefetch}
+                  setReplyToggle={setReplyToggle}
+                />
               </CommentFormWrap>
             )}
             {item.replies.map((childItem) => (
@@ -115,7 +123,7 @@ const Comment = ({
                       </div>
                       <div className="contents">
                         <div>
-                          {item.content.split('\n').map((line, index) => (
+                          {childItem.content.split('\n').map((line, index) => (
                             <p key={`${line} ${index}`}>{line}</p>
                           ))}
                         </div>

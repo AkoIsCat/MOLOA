@@ -3,7 +3,13 @@ import { useRef } from 'react';
 import { useParams } from 'react-router-dom';
 import { writingComment } from '../../api/Comments/CommentsAxios';
 
-const CommentForm = ({ postRefetch, commentRefetch, commentReply }) => {
+const CommentForm = ({
+  postRefetch,
+  commentRefetch,
+  commentReply,
+  commentId,
+  setReplyToggle,
+}) => {
   const commentRef = useRef();
 
   const { id } = useParams();
@@ -28,21 +34,28 @@ const CommentForm = ({ postRefetch, commentRefetch, commentReply }) => {
       const response = await writingComment({
         post_id: id,
         user_id: loginIsValid,
-        parent_comment_id: null,
+        parent_comment_id: commentId === undefined ? null : commentId,
         content: commentRef.current.value,
       });
       alert(response.message);
       postRefetch();
       commentRefetch();
       commentRef.current.value = '';
+      if (commentReply) {
+        setReplyToggle({
+          toggle: false,
+          id: undefined,
+        });
+      }
     }
   };
+
   return (
     <CommentFormBox onSubmit={onSubmitComment}>
       <Textarea
         ref={commentRef}
         commentReply={commentReply}
-        placeholder="타인의 권리를 침해하거나 명예를 훼손하는 댓글은 법적으로 문제가 될 수 있습니다.&#10;Shift+Enter 키를 동시에 누르면 줄바꿈이 됩니다."
+        placeholder="타인의 권리를 침해하거나 명예를 훼손하는 댓글은 법적으로 문제가 될 수 있습니다.&#10;Enter 키를 누르면 줄바꿈이 됩니다."
       ></Textarea>
       <CommentButton type="submit">등록</CommentButton>
     </CommentFormBox>

@@ -130,6 +130,8 @@ const PostsDetail = () => {
               postDetail={postDetail}
               commentList={commentList}
               onClickCommentRemove={onClickCommentRemove}
+              postRefetch={postRefetch}
+              commentRefetch={commentRefetch}
             />
             <CommentForm
               postRefetch={postRefetch}

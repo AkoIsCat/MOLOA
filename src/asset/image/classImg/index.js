@@ -14,7 +14,7 @@ import LanceMaster from './lance_master.png';
 import Infighter from './infighter.png';
 import FighterFemale from './fighter.png';
 import FighterMale from './fighter_male.png';
-import Breaker from '/breaker.png';
+import Breaker from './breaker.png';
 // 실린 아이콘
 import Arcana from './arcana.png';
 import Bard from './bard.png';

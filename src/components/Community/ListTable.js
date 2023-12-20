@@ -38,7 +38,9 @@ const ListTable = ({ postsListisLoading, postsList }) => {
                 {item.post_title} [{item.comment_count}]
               </td>
               <td className="writer">{item.writer_nk}</td>
-              <td className="date">{dateTransformation(item.post_date)}</td>
+              <td className="date">
+                {dateTransformation(item.post_date, 'md')}
+              </td>
               <td className="views">{item.view_count}</td>
               <td className="like">{item.like_count}</td>
             </tr>

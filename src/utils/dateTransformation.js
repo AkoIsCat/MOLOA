@@ -1,4 +1,4 @@
-export const dateTransformation = (stringDate) => {
+export const dateTransformation = (stringDate, type) => {
   const current = new Date();
   const currentMonth = current.getMonth() + 1;
   const currentDate = current.getDate();
@@ -14,5 +14,7 @@ export const dateTransformation = (stringDate) => {
 
   return sameMonth && sameDate
     ? `${postsHours}:${postsMinutes}`
-    : `${postsMonth}-${postsDate} ${postsHours}:${postsMinutes}`;
+    : sameMonth && sameDate && type !== 'md'
+    ? `${postsMonth}-${postsDate} ${postsHours}:${postsMinutes}`
+    : `${postsMonth}-${postsDate}`;
 };

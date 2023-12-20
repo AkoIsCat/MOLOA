@@ -40,6 +40,7 @@ import {
   WeatherArtist as 기상술사,
   SoulEater as 소울이터,
   WarriorFemale as 여전사,
+  Breaker as 브레이커,
 } from '../../../asset/image/classImg'; // 직업 아이콘
 
 const CharacterList = ({
@@ -253,6 +254,8 @@ const CharacterProfile = styled.div`
         ? 소울이터
         : props.CharacterClass === '전사(여)'
         ? 여전사
+        : props.CharacterClass === '브레이커'
+        ? 브레이커
         : ''});
     background-size: contain;
     background-repeat: no-repeat;

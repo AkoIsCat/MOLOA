@@ -51,7 +51,7 @@ const CommentForm = ({
   };
 
   return (
-    <CommentFormBox onSubmit={onSubmitComment}>
+    <CommentFormBox id="commentForm" onSubmit={onSubmitComment}>
       <Textarea
         ref={commentRef}
         commentReply={commentReply}

@@ -148,5 +148,6 @@ const ServerWrap = styled.div`
   flex-direction: column;
   align-items: end;
   width: auto;
-  margin: 100px 20px 100px 0;
+  margin: 100px 0px 100px 0px;
+  padding: 0 10px;
 `;

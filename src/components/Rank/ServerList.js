@@ -77,7 +77,6 @@ export const ServerWrap = styled.div`
   @media ${(props) => props.theme.mobile} {
     width: 100%;
     justify-content: center;
-    padding: 10px;
   }
 `;
 
@@ -94,17 +93,18 @@ export const ServerListBox = styled.div`
     list-style: none;
     margin: 0;
     padding: 0;
+    justify-content: space-between;
 
     @media ${(props) => props.theme.mobile} {
-      justify-content: center;
+      justify-content: space-between;
     }
   }
 `;
 
 export const ServerListli = styled.li`
   width: 40%;
-  margin: 8px 0;
-  padding-left: 10px;
+  margin: 8px;
+  // padding-left: 10px;
   color: ${(props) =>
     props.active ? '#fff' : props.active2 ? '#fff' : '#c1c1c1'};
   cursor: pointer;

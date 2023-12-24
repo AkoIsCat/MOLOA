@@ -10,7 +10,7 @@ const ClassListBox = ({
 }) => {
   const classListItem = (
     <ServerListBox>
-      <ul style={{ justifyContent: 'center' }}>
+      <ul>
         {classList &&
           classList.map((item, index) => (
             <ServerListli

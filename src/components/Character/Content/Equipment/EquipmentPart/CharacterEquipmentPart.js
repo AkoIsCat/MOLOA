@@ -141,7 +141,7 @@ const CharacterEquipmentPart = ({ equipment, engraving }) => {
         );
         const transcendenceCount = transcendenceTotal
           ?.split('</img>')[1]
-          .slice(0, 2);
+          .replace(/[^0-9]/g, '');
 
         if (transcendenceCount !== undefined) {
           transcendenceTotalNum = transcendenceCount;

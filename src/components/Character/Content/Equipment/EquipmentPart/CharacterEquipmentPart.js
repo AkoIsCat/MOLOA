@@ -59,7 +59,6 @@ const CharacterEquipmentPart = ({ equipment, engraving }) => {
           });
         }
       }
-
       // 엘릭서
       for (let key in sortEquipmentTooltip[i]) {
         const tooltip = sortEquipmentTooltip[i][key].value['Element_000'];
@@ -147,19 +146,11 @@ const CharacterEquipmentPart = ({ equipment, engraving }) => {
         if (transcendenceCount !== undefined) {
           transcendenceTotalNum = transcendenceCount;
         }
-
         if (
-          item.Tooltip &&
+          item.tooltip &&
           activateElixir === false &&
-          (item.tooltip[3].activate !== false ||
-            item.tooltip[4].activate === false)
-        ) {
-          activateElixir = item.tooltip[3].activate;
-        } else if (
-          item.Tooltip &&
-          activateElixir === false &&
-          (item.tooltip[3].activate === false ||
-            item.tooltip[4].activate !== false)
+          item.tooltip[4]?.activate !== undefined &&
+          item.tooltip[0].effect.includes('공격력') === false
         ) {
           activateElixir = item.tooltip[4].activate;
         }

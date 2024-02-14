@@ -28,7 +28,10 @@ const EquipmentDetail = ({
                       </ImageBoxColor>
                     </ImageBox>
                     <div className="desc">
-                      <p className="type">{items.Name}</p>
+                      <div className="type">
+                        <span className="item">+{item.ItemEnforce}</span>
+                        <span className="item">{item.ItemName}</span>
+                      </div>
                       <PercentBar
                         quality={
                           sortEquipmentTooltip[index] &&
@@ -36,6 +39,11 @@ const EquipmentDetail = ({
                             .qualityValue
                         }
                       >
+                        {item.TooltipValue.advancedReforging && (
+                          <span className="aR">
+                            ({item.TooltipValue.advancedReforging})
+                          </span>
+                        )}
                         <p>
                           {sortEquipmentTooltip[index] &&
                             sortEquipmentTooltip[index]['Element_001'].value
@@ -150,5 +158,9 @@ const PercentBar = styled.div`
           ? '#ce43fc'
           : '#fe9600'};
     }
+  }
+
+  .aR {
+    color: #85af3a;
   }
 `;

@@ -74,7 +74,8 @@ const EquipmentTooltip = ({ item }) => {
       <div className="levelWrap">
         <div>{item.TooltipValue.level}</div>
         <div>{item.TooltipValue.itemName}</div>
-        <div>{item.TooltipValue.itemLevel}</div>
+        <div className='itemLevel'>{item.TooltipValue.itemLevel}</div>
+        {item.TooltipValue.advancedReforging && <div className='aR'>상급재련 {item.TooltipValue.advancedReforging}단계</div>}
       </div>
     </EquipmentTooltipWrap>
   ) : (
@@ -118,6 +119,7 @@ const EquipmentTooltip = ({ item }) => {
         <div>{item.TooltipValue.level}</div>
         <div>{item.TooltipValue.itemName}</div>
         <div>{item.TooltipValue.itemLevel}</div>
+        {item.TooltipValue.advancedReforging && <div className='aR'>상급재련 {item.TooltipValue.advancedReforging}단계</div>}
       </div>
     </EquipmentTooltipWrap>
   );
@@ -237,6 +239,14 @@ const EquipmentTooltipWrap = styled.div`
       display: flex;
       margin: 0 auto;
       padding: 5px 0px;
+    }
+
+    .itemLevel {
+      color: rgb(254, 150, 0);
+    }
+
+    .aR {
+      color: #85af3a;
     }
   }
 `;

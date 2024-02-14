@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import EquipmentDetail from './EquipmentDetail';
 import MountedEngraving from './MountedEngraving';
 import AccessoriesDetail from './AccessoriesDetail';
+import Loading from '../../../../UI/Loading';
 
 const CharacterEquipmentPart = ({ equipment, engraving }) => {
   const isPc = useMediaQuery({
@@ -18,6 +19,10 @@ const CharacterEquipmentPart = ({ equipment, engraving }) => {
   });
   if (engraving === null) {
     return;
+  }
+
+  if (!equipment) {
+    return <Loading />;
   }
 
   const equipmentTooltip = [];
@@ -377,36 +382,36 @@ const CharacterEquipmentPart = ({ equipment, engraving }) => {
     {
       Type: '투구',
       Tooltip: '머리장식',
-      ItemName: equipment && equipment[1].Name,
+      ItemName: equipment[1].Name,
       TooltipValue: equipmentEffectTooltip[0],
     },
     {
       Type: '어깨',
       Tooltip: '견갑',
-      ItemName: equipment && equipment[5].Name,
+      ItemName: equipment[5].Name,
       TooltipValue: equipmentEffectTooltip[1],
     },
     {
       Type: '상의',
       Tooltip: '상의',
-      ItemName: equipment && equipment[2].Name,
+      ItemName: equipment[2].Name,
       TooltipValue: equipmentEffectTooltip[2],
     },
     {
       Type: '하의',
       Tooltip: '하의',
-      ItemName: equipment && equipment[3].Name,
+      ItemName: equipment[3].Name,
       TooltipValue: equipmentEffectTooltip[3],
     },
     {
       Type: '장갑',
       Tooltip: '장갑',
-      ItemName: equipment && equipment[4].Name,
+      ItemName: equipment[4].Name,
       TooltipValue: equipmentEffectTooltip[4],
     },
     {
       Type: '무기',
-      ItemName: equipment && equipment[0].Name,
+      ItemName: equipment[0].Name,
       TooltipValue: equipmentEffectTooltip[5],
     },
   ];

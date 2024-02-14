@@ -97,6 +97,19 @@ const CharacterEquipmentPart = ({ equipment, engraving }) => {
         }
       }
 
+      // 상급 재련
+      for (let key in sortEquipmentTooltip[i]) {
+        const tooltip = sortEquipmentTooltip[i][key].value;
+        if (typeof tooltip === 'string' && tooltip.includes('상급 재련')) {
+          const level = tooltip
+            .replace(removeFontTagRegex, '')
+            .replace(/[^0-9]/g, '');
+          filterValue.push({
+            advancedReforging: +level,
+          });
+        }
+      }
+      console.log('filterValue', filterValue);
       // 각각의 아이템 정보
       for (let key in sortEquipmentTooltip[i]) {
         if (sortEquipmentTooltip[i][key].type === 'ItemTitle') {
@@ -191,6 +204,9 @@ const CharacterEquipmentPart = ({ equipment, engraving }) => {
         ].itemLevel.replace(removeFontTagRegex, '');
 
         const itemQuality = item.tooltip[item.tooltip.length - 1].quality;
+        const advancedReforging = item.tooltip.filter(
+          (key) => key.advancedReforging
+        );
 
         if (index < 5) {
           equipmentEffectTooltip.push({
@@ -207,6 +223,7 @@ const CharacterEquipmentPart = ({ equipment, engraving }) => {
             elixir2,
             transcendenceStep,
             transcendenceTotal,
+            advancedReforging: advancedReforging[0]?.advancedReforging,
           });
         } else {
           equipmentEffectTooltip.push({
@@ -219,6 +236,7 @@ const CharacterEquipmentPart = ({ equipment, engraving }) => {
             elixirTotalLevel: totalSum,
             activateElixir,
             transcendenceTotalNum,
+            advancedReforging: item.tooltip[3].advancedReforging,
           });
         }
       });
@@ -431,7 +449,7 @@ const CharacterEquipmentPart = ({ equipment, engraving }) => {
       TooltipValue: accessoriesEffectTooltip[6],
     },
   ];
-
+  console.log(equipmentList);
   const stoneAndBracelet = [];
   // equipment에서 스톤과 팔찌를 추출한다.
   if (equipment) {

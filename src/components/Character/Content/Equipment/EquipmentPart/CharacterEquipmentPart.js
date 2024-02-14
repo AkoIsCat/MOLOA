@@ -114,7 +114,6 @@ const CharacterEquipmentPart = ({ equipment, engraving }) => {
           });
         }
       }
-      console.log('filterValue', filterValue);
       // 각각의 아이템 정보
       for (let key in sortEquipmentTooltip[i]) {
         if (sortEquipmentTooltip[i][key].type === 'ItemTitle') {
@@ -241,7 +240,7 @@ const CharacterEquipmentPart = ({ equipment, engraving }) => {
             elixirTotalLevel: totalSum,
             activateElixir,
             transcendenceTotalNum,
-            advancedReforging: item.tooltip[3].advancedReforging,
+            advancedReforging: advancedReforging[0]?.advancedReforging,
           });
         }
       });
@@ -382,36 +381,42 @@ const CharacterEquipmentPart = ({ equipment, engraving }) => {
     {
       Type: '투구',
       Tooltip: '머리장식',
-      ItemName: equipment[1].Name,
+      ItemName: equipment[1].Name.replace(/[0-9]/g, '').replace('+', '').trim(),
+      ItemEnforce: equipment[1].Name.replace(/[^0-9]/g, ''),
       TooltipValue: equipmentEffectTooltip[0],
     },
     {
       Type: '어깨',
       Tooltip: '견갑',
-      ItemName: equipment[5].Name,
+      ItemName: equipment[5].Name.replace(/[0-9]/g, '').replace('+', '').trim(),
+      ItemEnforce: equipment[5].Name.replace(/[^0-9]/g, ''),
       TooltipValue: equipmentEffectTooltip[1],
     },
     {
       Type: '상의',
       Tooltip: '상의',
-      ItemName: equipment[2].Name,
+      ItemName: equipment[2].Name.replace(/[0-9]/g, '').replace('+', '').trim(),
+      ItemEnforce: equipment[2].Name.replace(/[^0-9]/g, ''),
       TooltipValue: equipmentEffectTooltip[2],
     },
     {
       Type: '하의',
       Tooltip: '하의',
-      ItemName: equipment[3].Name,
+      ItemName: equipment[3].Name.replace(/[0-9]/g, '').replace('+', '').trim(),
+      ItemEnforce: equipment[3].Name.replace(/[^0-9]/g, ''),
       TooltipValue: equipmentEffectTooltip[3],
     },
     {
       Type: '장갑',
       Tooltip: '장갑',
-      ItemName: equipment[4].Name,
+      ItemName: equipment[4].Name.replace(/[0-9]/g, '').replace('+', '').trim(),
+      ItemEnforce: equipment[4].Name.replace(/[^0-9]/g, ''),
       TooltipValue: equipmentEffectTooltip[4],
     },
     {
       Type: '무기',
-      ItemName: equipment[0].Name,
+      ItemName: equipment[0].Name.replace(/[0-9]/g, '').replace('+', '').trim(),
+      ItemEnforce: equipment[0].Name.replace(/[^0-9]/g, ''),
       TooltipValue: equipmentEffectTooltip[5],
     },
   ];
@@ -454,7 +459,6 @@ const CharacterEquipmentPart = ({ equipment, engraving }) => {
       TooltipValue: accessoriesEffectTooltip[6],
     },
   ];
-  console.log(equipmentList);
   const stoneAndBracelet = [];
   // equipment에서 스톤과 팔찌를 추출한다.
   if (equipment) {
@@ -707,6 +711,10 @@ const EquipmentInner = styled.div`
         font-size: 15px;
         color: #fff;
         margin: 5px;
+      }
+
+      .item {
+        margin: 0 2px;
       }
 
       .name {

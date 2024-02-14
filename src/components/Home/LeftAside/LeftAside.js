@@ -19,11 +19,11 @@ const LeftAside = () => {
 
   const { data: moloaNotification, isLoading: moloaNotiIsLoading } =
     useGetFirebaseData('moloaNotification', `MoloaNoti`, 0, (data) => {
-      const sliceData = sliceList(data);
+      const sliceData = sliceList(data.slice(-5));
       const reverseData =
-        sliceData[0].id !== sliceData.length - 1
-          ? sliceData.reverse()
-          : sliceData;
+        sliceData[0].id === sliceData.length
+        ? sliceData
+          : sliceData.reverse()
       return reverseData;
     });
 

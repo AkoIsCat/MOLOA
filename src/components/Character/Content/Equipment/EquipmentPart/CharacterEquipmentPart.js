@@ -124,7 +124,7 @@ const CharacterEquipmentPart = ({ equipment, engraving }) => {
           });
         }
       }
-
+      
       filterTooltip.push({
         tooltip: filterValue,
       });
@@ -239,6 +239,8 @@ const CharacterEquipmentPart = ({ equipment, engraving }) => {
             itemQuality,
             elixirTotalLevel: totalSum,
             activateElixir,
+            transcendenceStep,
+            transcendenceTotal,
             transcendenceTotalNum,
             advancedReforging: advancedReforging[0]?.advancedReforging,
           });
@@ -246,7 +248,7 @@ const CharacterEquipmentPart = ({ equipment, engraving }) => {
       });
       return;
     };
-
+    
     ExtractNeedEquipmentDataAndPush(filterTooltip);
   }
 

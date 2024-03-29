@@ -74,8 +74,12 @@ const EquipmentTooltip = ({ item }) => {
       <div className="levelWrap">
         <div>{item.TooltipValue.level}</div>
         <div>{item.TooltipValue.itemName}</div>
-        <div className='itemLevel'>{item.TooltipValue.itemLevel}</div>
-        {item.TooltipValue.advancedReforging && <div className='aR'>상급재련 {item.TooltipValue.advancedReforging}단계</div>}
+        <div className="itemLevel">{item.TooltipValue.itemLevel}</div>
+        {item.TooltipValue.advancedReforging && (
+          <div className="aR">
+            상급재련 {item.TooltipValue.advancedReforging}단계
+          </div>
+        )}
       </div>
     </EquipmentTooltipWrap>
   ) : (
@@ -111,15 +115,32 @@ const EquipmentTooltip = ({ item }) => {
               </div>
             </div>
             <div className="ElixirItem">{item.TooltipValue.activateElixir}</div>
+            {item.TooltipValue.transcendenceStep && (
+              <span
+                dangerouslySetInnerHTML={{
+                  __html: item.TooltipValue.transcendenceStep,
+                }}
+              ></span>
+            )}
+            {item.TooltipValue.transcendenceTotal && (
+              <div
+                dangerouslySetInnerHTML={{
+                  __html: item.TooltipValue.transcendenceTotal,
+                }}
+              ></div>
+            )}
           </div>
         </div>
       )}
-
       <div className="levelWrap">
         <div>{item.TooltipValue.level}</div>
         <div>{item.TooltipValue.itemName}</div>
         <div>{item.TooltipValue.itemLevel}</div>
-        {item.TooltipValue.advancedReforging && <div className='aR'>상급재련 {item.TooltipValue.advancedReforging}단계</div>}
+        {item.TooltipValue.advancedReforging && (
+          <div className="aR">
+            상급재련 {item.TooltipValue.advancedReforging}단계
+          </div>
+        )}
       </div>
     </EquipmentTooltipWrap>
   );
@@ -196,7 +217,8 @@ const EquipmentTooltipWrap = styled.div`
     justify-content: center;
     align-items: center;
     border-bottom: 1px solid #c1c1c1;
-    padding: 0px;
+    padding: 10px;
+    text-align: center;
 
     .level {
       margin-left: 5px;

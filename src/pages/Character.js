@@ -99,6 +99,7 @@ const Character = () => {
         ? ~~((new Date().getTime() - dataUpdatedAt) / (60 * 1000))
         : 0
     );
+    setCurrentTab(0);
   }, [dataUpdatedAt]);
 
   const selectMenuHandler = (index) => {

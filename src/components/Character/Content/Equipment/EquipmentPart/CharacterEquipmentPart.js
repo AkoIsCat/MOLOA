@@ -50,6 +50,8 @@ const CharacterEquipmentPart = ({ equipment, engraving }) => {
   const removeFontTagRegex = /<\/?FONT[^>]*>/g;
   const removeLevelRegex = /.*Lv\.(\d+).*/;
 
+  console.log(sortEquipmentTooltip);
+
   // 장비 정보 추출
   if (sortEquipmentTooltip[0] !== undefined) {
     const filterTooltip = [];
@@ -66,8 +68,13 @@ const CharacterEquipmentPart = ({ equipment, engraving }) => {
       }
       // 엘릭서
       for (let key in sortEquipmentTooltip[i]) {
-        const tooltip = sortEquipmentTooltip[i][key].value['Element_000'];
+        console.log('key', i, key);
+        const tooltip =
+          sortEquipmentTooltip[i][key].value !== null &&
+          sortEquipmentTooltip[i][key].value['Element_000'];
+        console.log(tooltip);
         if (
+          tooltip !== false &&
           sortEquipmentTooltip[i][key].type === 'IndentStringGroup' &&
           Object.keys(sortEquipmentTooltip[i][key].value).length === 1 &&
           tooltip.contentStr['Element_000'].bPoint
@@ -85,8 +92,11 @@ const CharacterEquipmentPart = ({ equipment, engraving }) => {
 
       // 초월
       for (let key in sortEquipmentTooltip[i]) {
-        const tooltip = sortEquipmentTooltip[i][key].value['Element_000'];
+        const tooltip =
+          sortEquipmentTooltip[i][key].value !== null &&
+          sortEquipmentTooltip[i][key].value['Element_000'];
         if (
+          tooltip !== false &&
           sortEquipmentTooltip[i][key].type === 'IndentStringGroup' &&
           Object.keys(sortEquipmentTooltip[i][key].value).length === 1 &&
           Object.keys(tooltip.contentStr).length >= 4 &&
@@ -124,7 +134,7 @@ const CharacterEquipmentPart = ({ equipment, engraving }) => {
           });
         }
       }
-      
+
       filterTooltip.push({
         tooltip: filterValue,
       });
@@ -248,7 +258,7 @@ const CharacterEquipmentPart = ({ equipment, engraving }) => {
       });
       return;
     };
-    
+
     ExtractNeedEquipmentDataAndPush(filterTooltip);
   }
 
@@ -267,10 +277,12 @@ const CharacterEquipmentPart = ({ equipment, engraving }) => {
             });
           }
         }
+        console.log(sortAccessoriesTooltip);
 
         // 각인
         for (let key in sortAccessoriesTooltip[i]) {
-          if (sortAccessoriesTooltip[i][key].type === 'IndentStringGroup') {
+          console.log('key', i, key);
+          if (sortAccessoriesTooltip[i][key].type === 'IndentStringGroup' && sortAccessoriesTooltip[i][key].value !== null) {
             filterValue.push({
               engrave1:
                 sortAccessoriesTooltip[i][key]?.value['Element_000']
@@ -282,6 +294,7 @@ const CharacterEquipmentPart = ({ equipment, engraving }) => {
                 sortAccessoriesTooltip[i][key]?.value['Element_000']
                   ?.contentStr['Element_002']?.contentStr,
             });
+            console.log('filter', filterValue);
           }
         }
       }

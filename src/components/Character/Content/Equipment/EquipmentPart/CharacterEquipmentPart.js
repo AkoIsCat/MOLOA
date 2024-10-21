@@ -50,8 +50,6 @@ const CharacterEquipmentPart = ({ equipment, engraving }) => {
   const removeFontTagRegex = /<\/?FONT[^>]*>/g;
   const removeLevelRegex = /.*Lv\.(\d+).*/;
 
-  console.log(sortEquipmentTooltip);
-
   // 장비 정보 추출
   if (sortEquipmentTooltip[0] !== undefined) {
     const filterTooltip = [];
@@ -68,11 +66,9 @@ const CharacterEquipmentPart = ({ equipment, engraving }) => {
       }
       // 엘릭서
       for (let key in sortEquipmentTooltip[i]) {
-        console.log('key', i, key);
         const tooltip =
           sortEquipmentTooltip[i][key].value !== null &&
           sortEquipmentTooltip[i][key].value['Element_000'];
-        console.log(tooltip);
         if (
           tooltip !== false &&
           sortEquipmentTooltip[i][key].type === 'IndentStringGroup' &&
@@ -277,12 +273,13 @@ const CharacterEquipmentPart = ({ equipment, engraving }) => {
             });
           }
         }
-        console.log(sortAccessoriesTooltip);
 
         // 각인
         for (let key in sortAccessoriesTooltip[i]) {
-          console.log('key', i, key);
-          if (sortAccessoriesTooltip[i][key].type === 'IndentStringGroup' && sortAccessoriesTooltip[i][key].value !== null) {
+          if (
+            sortAccessoriesTooltip[i][key].type === 'IndentStringGroup' &&
+            sortAccessoriesTooltip[i][key].value !== null
+          ) {
             filterValue.push({
               engrave1:
                 sortAccessoriesTooltip[i][key]?.value['Element_000']
@@ -294,7 +291,6 @@ const CharacterEquipmentPart = ({ equipment, engraving }) => {
                 sortAccessoriesTooltip[i][key]?.value['Element_000']
                   ?.contentStr['Element_002']?.contentStr,
             });
-            console.log('filter', filterValue);
           }
         }
       }

@@ -33,7 +33,9 @@ const AccessoriesDetail = ({
       stoneAndBracelet[0][stoneIndex] &&
       stoneAndBracelet[0][stoneIndex].value['Element_000'].contentStr[
         elementNumber
-      ].contentStr.replace(/.*\+(\d+).*/, '$1')
+      ].contentStr
+        .split('</FONT>')[1]
+        .replace(/[^0-9]/g, '')
     );
   };
 

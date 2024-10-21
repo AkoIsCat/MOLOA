@@ -50,7 +50,8 @@ const MainContents = () => {
         today === '일'
           ? true
           : false,
-      image: 'https://i.postimg.cc/dVJGbSQv/image.jpg',
+      image:
+        'https://i.namu.wiki/i/XoJ_Fz72J0pwY0rWQD3mJhy19VUIzuJU6ZmTDvjmqcnyt9GgM6OTQ_EPjfDIXqk51Qd68aBdM4beKjNyTHgU00nssBlLI4LRfU5-avzXMNcOR7S4NhLR1-vKckBTWUerRYFaXrXDLe7hb5HEqHAXTg.webp',
     },
     {
       name: '모험섬',

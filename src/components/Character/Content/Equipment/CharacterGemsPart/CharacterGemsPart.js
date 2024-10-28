@@ -9,18 +9,23 @@ const CharacterGemsPart = ({ gems, getGemsList }) => {
   }
   function extractingGemsEffect(gems) {
     const gemsEffect = [];
-    const effectRegex = /<FONT COLOR='#[^>]+>([^<]+)<\/FONT>\s*([^\n]+)/;
+    const effectRegex =
+      /<FONT COLOR='#[^>]+>([^<]+)<\/FONT>\s*([^\n]+)<FONT COLOR='#[^>]+>([^<]+)<\/FONT>\s*([^\n]+)/;
+    const effectRegex2 = /<FONT COLOR='#[^>]+>([^<]+)<\/FONT>\s*([^\n]+)/;
     const gemsRegex = /<FONT[^>]*>(.*?)<\/FONT>/;
+    // const attackPowerRegex = ;
 
     for (let i = 0; i <= gems.Gems.length - 1; i++) {
       const tooltipObject = JSON.parse(gems.Gems[i].Tooltip);
-
+      console.log(tooltipObject);
       for (let key in tooltipObject) {
         if (tooltipObject[key].type === 'ItemPartBox') {
           const matchValue =
-            tooltipObject[key].value['Element_001'].match(effectRegex);
+            tooltipObject[key].value['Element_001'].match(effectRegex) === null
+              ? tooltipObject[key].value['Element_001'].match(effectRegex2)
+              : tooltipObject[key].value['Element_001'].match(effectRegex);
           const skillName = matchValue[1];
-          const skillShame = matchValue[2];
+          const skillShame = matchValue[2]?.replaceAll('<BR>', '');
 
           gemsEffect.push({
             level: gems.Gems[i].Level,

@@ -60,6 +60,9 @@ const Skill = ({ combatSkills, profile, getGems }) => {
           <div className="tooltip">
             <p className="itemName">{item.name}</p>
             <p className="skillShame">{item.skillShame}</p>
+            {item.attackPower && (
+              <p className="skillShame">{item.attackPower}</p>
+            )}
           </div>
         )}
         <ImageBoxColor
@@ -481,6 +484,7 @@ const GemsItemWrap = styled.div`
     width: 200px;
     height: auto;
     padding: 10px;
+    margin: -10px;
 
     .itemName {
       border-radius: 10px;

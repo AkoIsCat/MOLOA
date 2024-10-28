@@ -26,6 +26,8 @@ const CharacterGemsPart = ({ gems, getGemsList }) => {
               : tooltipObject[key].value['Element_001'].match(effectRegex);
           const skillName = matchValue[1];
           const skillShame = matchValue[2]?.replaceAll('<BR>', '');
+          const attackPower = matchValue[4]?.replaceAll('<BR>', '');
+          console.log(matchValue, attackPower);
 
           gemsEffect.push({
             level: gems.Gems[i].Level,
@@ -33,6 +35,7 @@ const CharacterGemsPart = ({ gems, getGemsList }) => {
             grade: gems.Gems[i].Grade,
             skillName,
             skillShame,
+            attackPower,
             icon: gems.Gems[i].Icon,
           });
         }

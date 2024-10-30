@@ -13,11 +13,9 @@ const CharacterGemsPart = ({ gems, getGemsList }) => {
       /<FONT COLOR='#[^>]+>([^<]+)<\/FONT>\s*([^\n]+)<FONT COLOR='#[^>]+>([^<]+)<\/FONT>\s*([^\n]+)/;
     const effectRegex2 = /<FONT COLOR='#[^>]+>([^<]+)<\/FONT>\s*([^\n]+)/;
     const gemsRegex = /<FONT[^>]*>(.*?)<\/FONT>/;
-    // const attackPowerRegex = ;
 
     for (let i = 0; i <= gems.Gems.length - 1; i++) {
       const tooltipObject = JSON.parse(gems.Gems[i].Tooltip);
-      console.log(tooltipObject);
       for (let key in tooltipObject) {
         if (tooltipObject[key].type === 'ItemPartBox') {
           const matchValue =
@@ -27,7 +25,6 @@ const CharacterGemsPart = ({ gems, getGemsList }) => {
           const skillName = matchValue[1];
           const skillShame = matchValue[2]?.replaceAll('<BR>', '');
           const attackPower = matchValue[4]?.replaceAll('<BR>', '');
-          console.log(matchValue, attackPower);
 
           gemsEffect.push({
             level: gems.Gems[i].Level,

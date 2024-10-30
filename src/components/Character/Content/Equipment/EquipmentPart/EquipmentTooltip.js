@@ -58,7 +58,8 @@ const EquipmentTooltip = ({ item }) => {
           {item.TooltipValue.transcendenceStep && (
             <span
               dangerouslySetInnerHTML={{
-                __html: item.TooltipValue.transcendenceStep,
+                __html:
+                  item.TooltipValue.transcendenceStep.split("'#FF9632'>")[1],
               }}
             ></span>
           )}

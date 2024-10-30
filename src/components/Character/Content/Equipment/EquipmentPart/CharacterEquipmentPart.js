@@ -1,11 +1,13 @@
 import React from 'react';
 import { useMediaQuery } from 'react-responsive';
+import { arcPassiveDivision } from '../../../../../utils/arcPassiveDivision';
 
 import styled from 'styled-components';
 import EquipmentDetail from './EquipmentDetail';
 import MountedEngraving from './MountedEngraving';
 import AccessoriesDetail from './AccessoriesDetail';
 import Loading from '../../../../UI/Loading';
+import { elixirEffectDivision } from '../../../../../utils/elixirEffectDivision';
 
 const CharacterEquipmentPart = ({ equipment, engraving }) => {
   const isPc = useMediaQuery({
@@ -151,7 +153,7 @@ const CharacterEquipmentPart = ({ equipment, engraving }) => {
           ''
         );
         let elixir1, elixir2;
-
+        const tier = arcPassiveDivision(item.tooltip);
         const transcendence = item.tooltip.filter((key) => key.transcendence);
         const transcendenceStep = transcendence[0]?.transcendence.replace(
           "<img src='emoticon_Transcendence_Grade'",
@@ -179,15 +181,9 @@ const CharacterEquipmentPart = ({ equipment, engraving }) => {
         }
 
         if (index < filterTooltip.length - 1) {
-          elixir1 = item.tooltip[3]?.Elixir?.replace(
-            removeFontTagRegex,
-            ''
-          ).split(/<br>|<BR>/);
+          elixir1 = elixirEffectDivision(item, tier, 1);
 
-          elixir2 = item.tooltip[3]?.Elixir2?.replace(
-            removeFontTagRegex,
-            ''
-          ).split(/<br>|<BR>/);
+          elixir2 = elixirEffectDivision(item, tier, 2);
 
           const elixir1Level =
             elixir1 &&

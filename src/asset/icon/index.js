@@ -7,6 +7,7 @@ import collect6 from './collect6.png';
 import collect7 from './collect7.png';
 import collect8 from './collect8.png';
 import collect9 from './collect9.png';
+import collect10 from './collect10.png';
 
 export {
   collect1,
@@ -18,4 +19,5 @@ export {
   collect7,
   collect8,
   collect9,
+  collect10,
 };

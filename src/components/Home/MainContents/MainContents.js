@@ -51,7 +51,7 @@ const MainContents = () => {
           ? true
           : false,
       image:
-        'https://i.namu.wiki/i/XoJ_Fz72J0pwY0rWQD3mJhy19VUIzuJU6ZmTDvjmqcnyt9GgM6OTQ_EPjfDIXqk51Qd68aBdM4beKjNyTHgU00nssBlLI4LRfU5-avzXMNcOR7S4NhLR1-vKckBTWUerRYFaXrXDLe7hb5HEqHAXTg.webp',
+        'https://i.namu.wiki/i/G4uhm0qoRz4FDWgQIH9mewjZFeIlQNFNM6pwpNjTVo0IrPhpbY3nh9XnknyiZKEgdoY63m3UjNzXXDe6kDU_JG6tXeCsV9sy7XS4YAuAD-O99M_nqjHcho2XrnnJiMnFZXov2UwamvjhbxJfKKy8cg.webp',
     },
     {
       name: '모험섬',

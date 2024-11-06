@@ -5,6 +5,7 @@ import ContentWrap from '../../UI/ContentWrap';
 
 import {
   collect1,
+  collect10,
   collect2,
   collect3,
   collect4,
@@ -28,6 +29,7 @@ const Collect = ({ collectibles, profile }) => {
     collect7,
     collect8,
     collect9,
+    collect10,
   ];
 
   const collectItemList = [];
@@ -75,6 +77,9 @@ const Collect = ({ collectibles, profile }) => {
     },
     {
       content: '기억의오르골',
+    },
+    {
+      content: '크림스네일의 해도',
     },
   ];
 

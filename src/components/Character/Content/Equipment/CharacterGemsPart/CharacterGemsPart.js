@@ -45,7 +45,7 @@ const CharacterGemsPart = ({ gems, getGemsList }) => {
     const extinction = [];
     const prominence = [];
     for (let i = 0; i < gems.length; i++) {
-      if (gems[i].name.includes('멸화')) {
+      if (gems[i].name.includes('멸화') || gems[i].name.includes('겁화')) {
         extinction.push(gems[i]);
       } else {
         prominence.push(gems[i]);

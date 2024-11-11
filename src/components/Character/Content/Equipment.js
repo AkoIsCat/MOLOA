@@ -22,7 +22,6 @@ const Equipment = ({
   cardsIsLoading,
   getGems,
   arkpassive,
-  arkpassiveIsLoading,
 }) => {
   const getGemsList = (data) => {
     getGems(data);

@@ -133,3 +133,12 @@ export const getCollectibles = async (id) => {
     throw new Error('Collectibles error');
   }
 };
+
+export const getArkpassive = async (id) => {
+  try {
+    const { data } = await LostArkCharacterInstance().get(`/${id}/arkpassive`);
+    return data;
+  } catch (error) {
+    throw new Error('Arkpassive error');
+  }
+};

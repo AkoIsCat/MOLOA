@@ -5,24 +5,28 @@ const MountedEngraving = ({
   mountedEngravingItem,
   elixirTotalLevel,
   activateElixir,
+  arkpassive,
 }) => {
+  console.log('mounted', arkpassive.IsArkPassive);
   return (
     <MountWrap>
-      <div>
-        {mountedEngraving &&
-          mountedEngraving.map((item, index) => (
-            <MountedEngravingBox
-              key={`${item.Name} ${item.Slot}`}
-              grade={mountedEngravingItem[index].slice(-10, -7)}
-            >
-              <img src={item.Icon} alt="장착된 각인" />
-              <div>
-                <p className="name">{item.Name}</p>
-                <p>{mountedEngravingItem[index].slice(-10, -7)}</p>
-              </div>
-            </MountedEngravingBox>
-          ))}
-      </div>
+      {!arkpassive.IsArkPassive && (
+        <div>
+          {mountedEngraving &&
+            mountedEngraving.map((item, index) => (
+              <MountedEngravingBox
+                key={`${item.Name} ${item.Slot}`}
+                grade={mountedEngravingItem[index].slice(-10, -7)}
+              >
+                <img src={item.Icon} alt="장착된 각인" />
+                <div>
+                  <p className="name">{item.Name}</p>
+                  <p>{mountedEngravingItem[index].slice(-10, -7)}</p>
+                </div>
+              </MountedEngravingBox>
+            ))}
+        </div>
+      )}
       <EffectTotal>
         <img
           src="https://firebasestorage.googleapis.com/v0/b/lostark-bf0ba.appspot.com/o/%EC%97%98%EB%A6%AD%EC%84%9C.png?alt=media&token=eb19bb1a-1aa2-48d5-8383-cf67336ac49f"
@@ -34,6 +38,16 @@ const MountedEngraving = ({
         <div className="elixir">{elixirTotalLevel && elixirTotalLevel}</div>
         <div className="activeExlixir">{activateElixir && activateElixir}</div>
       </EffectTotal>
+      {arkpassive.IsArkPassive && (
+        <div>
+          <div>아크패시브 적용중</div>
+          <div>
+            <div>진화</div>
+            <div>깨달음</div>
+            <div>도약</div>
+          </div>
+        </div>
+      )}
     </MountWrap>
   );
 };

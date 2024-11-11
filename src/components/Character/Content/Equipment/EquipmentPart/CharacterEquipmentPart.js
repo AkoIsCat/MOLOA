@@ -9,7 +9,7 @@ import AccessoriesDetail from './AccessoriesDetail';
 import Loading from '../../../../UI/Loading';
 import { elixirEffectDivision } from '../../../../../utils/elixirEffectDivision';
 
-const CharacterEquipmentPart = ({ equipment, engraving }) => {
+const CharacterEquipmentPart = ({ equipment, engraving, arkpassive }) => {
   const isPc = useMediaQuery({
     query: '(min-width:1024px)',
   });
@@ -583,6 +583,7 @@ const CharacterEquipmentPart = ({ equipment, engraving }) => {
                     : 0
                 }
                 activateElixir={equipmentList[5]?.TooltipValue?.activateElixir}
+                arkpassive={arkpassive}
               />
             </EquipmentInner>
             <AccessoriesInner>

@@ -21,17 +21,24 @@ const Equipment = ({
   cards,
   cardsIsLoading,
   getGems,
+  arkpassive,
+  arkpassiveIsLoading,
 }) => {
   const getGemsList = (data) => {
     getGems(data);
   };
+  console.log(arkpassive);
 
   return (
     <Wrap>
       {equipmentIsLoading || engravingIsLoading ? (
         <Loading />
       ) : (
-        <CharacterEquipmentPart equipment={equipment} engraving={engraving} />
+        <CharacterEquipmentPart
+          equipment={equipment}
+          engraving={engraving}
+          arkpassive={arkpassive}
+        />
       )}
       {gemsIsLoading ? (
         <Loading />

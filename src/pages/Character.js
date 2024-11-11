@@ -12,6 +12,7 @@ import {
   getEngravings,
   getGems,
   getEquipment,
+  getArkpassive,
 } from '../api/LostArk/LostarkAxios';
 import { useGetLostArkData } from '../hooks/useGetLostArkData';
 
@@ -91,6 +92,12 @@ const Character = () => {
     refetch: refetchCollectibles,
   } = useGetLostArkData('collectibles', id, getCollectibles, Infinity);
 
+  const {
+    data: arkpassive,
+    isLoading: arkpassiveIsLoading,
+    refetch: refetchArkpassive,
+  } = useGetLostArkData('arkpassive', id, getArkpassive, Infinity);
+
   useEffect(() => {
     // 컴포넌트가 렌더링 될 때마다 업데이트
     // 데이터가 업데이트 됐었던 시점을 기준으로 함
@@ -123,6 +130,7 @@ const Character = () => {
     refetchGems();
     refetchProfile();
     refetchSkills();
+    refetchArkpassive();
   };
 
   const navMenu = [
@@ -144,6 +152,8 @@ const Character = () => {
           cards={cards}
           cardsIsLoading={cardsIsLoading}
           getGems={getTransGems}
+          arkpassive={arkpassive}
+          arkpassiveIsLoading={arkpassiveIsLoading}
         />
       ),
     },

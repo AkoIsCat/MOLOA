@@ -7,10 +7,9 @@ const MountedEngraving = ({
   activateElixir,
   arkpassive,
 }) => {
-  console.log('mounted', arkpassive.IsArkPassive);
   return (
     <MountWrap>
-      {!arkpassive.IsArkPassive && (
+      {!arkpassive?.IsArkPassive && (
         <div>
           {mountedEngraving &&
             mountedEngraving.map((item, index) => (
@@ -38,14 +37,15 @@ const MountedEngraving = ({
         <div className="elixir">{elixirTotalLevel && elixirTotalLevel}</div>
         <div className="activeExlixir">{activateElixir && activateElixir}</div>
       </EffectTotal>
-      {arkpassive.IsArkPassive && (
+      {arkpassive?.IsArkPassive && (
         <div>
           <div>아크패시브 적용중</div>
-          <div>
-            <div>진화</div>
-            <div>깨달음</div>
-            <div>도약</div>
-          </div>
+          {arkpassive?.Points.map((item) => (
+            <div>
+              <div>{item.Name}</div>
+              <div>{item.Value}</div>
+            </div>
+          ))}
         </div>
       )}
     </MountWrap>

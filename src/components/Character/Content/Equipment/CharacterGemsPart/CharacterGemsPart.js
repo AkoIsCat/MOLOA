@@ -4,7 +4,6 @@ import React from 'react';
 import GemsItemTooltip from './GemsItemTooltip';
 
 const CharacterGemsPart = ({ gems, getGemsList }) => {
-  console.log(gems);
   if (gems === null || gems.Gems === null || gems.Gems === undefined) {
     return (
       <ContentWrap>

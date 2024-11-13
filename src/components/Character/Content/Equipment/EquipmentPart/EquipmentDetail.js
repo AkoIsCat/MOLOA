@@ -41,7 +41,7 @@ const EquipmentDetail = ({
                       >
                         {item.TooltipValue.advancedReforging && (
                           <span className="aR">
-                            ({item.TooltipValue.advancedReforging})
+                            (+{item.TooltipValue.advancedReforging})
                           </span>
                         )}
                         <p>

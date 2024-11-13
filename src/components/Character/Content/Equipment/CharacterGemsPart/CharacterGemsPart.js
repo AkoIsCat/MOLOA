@@ -5,7 +5,11 @@ import GemsItemTooltip from './GemsItemTooltip';
 
 const CharacterGemsPart = ({ gems, getGemsList }) => {
   if (gems.Gems === null || gems.Gems === undefined) {
-    return <ContentWrap />;
+    return (
+      <ContentWrap>
+        <div className="noGems">해당 캐릭터는 보석을 장착하지 않았습니다.</div>
+      </ContentWrap>
+    );
   }
 
   function extractingGemsEffect(gems) {
@@ -98,6 +102,13 @@ const ContentWrap = styled.div`
   border-radius: 10px;
   padding: 10px 0 35px 0px;
   margin: 20px 0 0 0;
+
+  .noGems {
+    margin-top: 20px;
+    font-size: 16px;
+    font-weight: bold;
+    color: #fff;
+  }
 
   @media ${(props) => props.theme.mobile} {
     flex-direction: column;

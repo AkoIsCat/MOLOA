@@ -4,7 +4,8 @@ import React from 'react';
 import GemsItemTooltip from './GemsItemTooltip';
 
 const CharacterGemsPart = ({ gems, getGemsList }) => {
-  if (gems.Gems === null || gems.Gems === undefined) {
+  console.log(gems);
+  if (gems === null || gems.Gems === null || gems.Gems === undefined) {
     return (
       <ContentWrap>
         <div className="noGems">해당 캐릭터는 보석을 장착하지 않았습니다.</div>

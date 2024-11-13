@@ -47,7 +47,7 @@ const MountedEngraving = ({
           </div>
           <div>
             {arkpassive?.Points.map((item) => (
-              <ArkPassivePoint name={item.Name}>
+              <ArkPassivePoint name={item.Name} key={`Point ${item.Name}`}>
                 <div className="point_type" key={item.Name}>
                   {item.Name}
                 </div>

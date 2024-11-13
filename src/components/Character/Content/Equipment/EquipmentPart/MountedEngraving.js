@@ -1,5 +1,7 @@
 import styled from 'styled-components';
 
+import ArkPassiveIcon from '../../../../../asset/icon/ico_arkpassive.png';
+
 const MountedEngraving = ({
   mountedEngraving,
   mountedEngravingItem,
@@ -38,15 +40,24 @@ const MountedEngraving = ({
         <div className="activeExlixir">{activateElixir && activateElixir}</div>
       </EffectTotal>
       {arkpassive?.IsArkPassive && (
-        <div>
-          <div>아크패시브 적용중</div>
-          {arkpassive?.Points.map((item) => (
-            <div>
-              <div>{item.Name}</div>
-              <div>{item.Value}</div>
-            </div>
-          ))}
-        </div>
+        <ArkPassive>
+          <div className="title">
+            <img src={ArkPassiveIcon} alt="아크패시브 아이콘" />
+            <div>아크패시브 적용중</div>
+          </div>
+          <div>
+            {arkpassive?.Points.map((item) => (
+              <ArkPassivePoint name={item.Name}>
+                <div className="point_type" key={item.Name}>
+                  {item.Name}
+                </div>
+                <div className="point_type" key={`${item.Name} ${item.Value}`}>
+                  {item.Value}
+                </div>
+              </ArkPassivePoint>
+            ))}
+          </div>
+        </ArkPassive>
       )}
     </MountWrap>
   );
@@ -145,5 +156,44 @@ const EffectTotal = styled.div`
 
   .transcendence {
     margin: 0 5px;
+  }
+`;
+
+const ArkPassive = styled.div`
+  display: flex;
+  flex-flow: column;
+  margin: 0;
+  font-size: 16px;
+  color: #7053c3;
+
+  .title {
+    margin-left: 20px;
+    align-items: center;
+
+    div {
+      margin-top: 8px;
+      font-weight: bold;
+    }
+  }
+
+  img {
+    width: 40px;
+    height: 40px;
+    margin: 0 10px;
+  }
+`;
+
+const ArkPassivePoint = styled.div`
+  display: flex;
+  margin: 0 10px;
+  font-size: 18px;
+
+  .point_type {
+    color: ${(props) =>
+      props.name === '진화'
+        ? '#F1D594'
+        : props.name === '깨달음'
+        ? '#83E9FF'
+        : '#C2EA55'};
   }
 `;

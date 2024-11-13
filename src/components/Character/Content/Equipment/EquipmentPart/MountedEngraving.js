@@ -189,6 +189,7 @@ const ArkPassivePoint = styled.div`
   font-size: 18px;
 
   .point_type {
+    margin: 0px 3px;
     color: ${(props) =>
       props.name === '진화'
         ? '#F1D594'

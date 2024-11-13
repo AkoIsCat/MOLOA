@@ -4,9 +4,10 @@ import React from 'react';
 import GemsItemTooltip from './GemsItemTooltip';
 
 const CharacterGemsPart = ({ gems, getGemsList }) => {
-  if (gems === null || gems === undefined) {
+  if (gems.Gems === null || gems.Gems === undefined) {
     return <ContentWrap />;
   }
+
   function extractingGemsEffect(gems) {
     const gemsEffect = [];
     const effectRegex =

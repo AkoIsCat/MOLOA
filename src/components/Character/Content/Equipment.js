@@ -51,6 +51,7 @@ const Equipment = ({
           combatSkills={combatSkills}
           profile={profile}
           engraving={engraving}
+          arkpassive={arkpassive}
         />
       )}
       {cardsIsLoading ? <Loading /> : <CharacterCards cards={cards} />}

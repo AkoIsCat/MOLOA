@@ -3,7 +3,7 @@ import React from 'react';
 
 import EngravingEffectTooltip from './EngravingEffectTooltip';
 
-const Characteristics = ({ combatSkills, profile, engraving }) => {
+const Characteristics = ({ combatSkills, profile, engraving, arkpassive }) => {
   if (profile === null || profile === undefined) {
     return <ContentWrap />;
   }
@@ -63,11 +63,22 @@ const Characteristics = ({ combatSkills, profile, engraving }) => {
     return deleteNotUsedTripodList;
   }
 
+  function extractionArkPassive(arkPassiveData) {
+    const evolution = [];
+    const enlightenment = [];
+    const leap = [];
+
+    return { evolution, enlightenment, leap };
+  }
+
   const [combatCharacteristics, basicCharacteristics] =
     extractingCharacteristics(profile.Stats);
 
   const engravingEffectList =
     engraving !== null && extractingEngravingList(engraving.Effects);
+
+  const arkPassiveEffectList =
+    arkpassive?.IsArkPassive && extractionArkPassive();
 
   const usingSkills = extractingSkillsOfLevel4OrHigher(combatSkills);
   const deleteNotUsedTripodList = deleteNotUsedTripods(usingSkills);
@@ -106,17 +117,20 @@ const Characteristics = ({ combatSkills, profile, engraving }) => {
         <NameAndLevelWrap>
           <CharacteristicsBox>각인</CharacteristicsBox>
           <div className="nameAndLevelWrap">
-            {engravingEffectList &&
+            {!arkpassive?.IsArkPassive &&
+              engravingEffectList &&
               engravingEffectList.map((item) => (
                 <div key={item.name}>{item.level}</div>
               ))}
           </div>
         </NameAndLevelWrap>
         <EffectListWrap>
-          {engravingEffectList &&
+          {!arkpassive?.IsArkPassive &&
+            engravingEffectList &&
             engravingEffectList.map((item) => (
               <EngravingEffectTooltip item={item} key={item.name} />
             ))}
+          {/* {arkpassive?.IsArkPassive && } */}
         </EffectListWrap>
       </ContentWrap>
       <ContentWrap characteristics="true">

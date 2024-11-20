@@ -3,9 +3,11 @@ import CharacterEquipmentPart from './Equipment/EquipmentPart/CharacterEquipment
 import CharacterGemsPart from './Equipment/CharacterGemsPart/CharacterGemsPart';
 import CharacterCards from './Equipment/CharacterCards';
 import Loading from '../../UI/Loading';
+import ArkPassiveEffectsComponent from './Equipment/ArkPassivePart/ArkPassiveEffects';
 
 import React from 'react';
 import styled from 'styled-components';
+import ArkPassiveEffects from './Equipment/ArkPassivePart/ArkPassiveEffects';
 
 const Equipment = ({
   equipment,
@@ -53,6 +55,9 @@ const Equipment = ({
           engraving={engraving}
           arkpassive={arkpassive}
         />
+      )}
+      {arkpassive?.IsArkPassive && (
+        <ArkPassiveEffectsComponent arkpassive={arkpassive} />
       )}
       {cardsIsLoading ? <Loading /> : <CharacterCards cards={cards} />}
     </Wrap>

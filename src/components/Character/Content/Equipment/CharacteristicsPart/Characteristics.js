@@ -68,6 +68,16 @@ const Characteristics = ({ combatSkills, profile, engraving, arkpassive }) => {
     const enlightenment = [];
     const leap = [];
 
+    for (let i = 0; i <= arkPassiveData.length - 1; i++) {
+      if (arkPassiveData[i].Name === '깨달음') {
+        evolution.push(arkPassiveData[i]);
+      } else if (arkPassiveData[i].Name === '진화') {
+        enlightenment.push(arkPassiveData[i]);
+      } else {
+        leap.push(arkPassiveData[i]);
+      }
+    }
+
     return { evolution, enlightenment, leap };
   }
 
@@ -78,7 +88,7 @@ const Characteristics = ({ combatSkills, profile, engraving, arkpassive }) => {
     engraving !== null && extractingEngravingList(engraving.Effects);
 
   const arkPassiveEffectList =
-    arkpassive?.IsArkPassive && extractionArkPassive();
+    arkpassive?.IsArkPassive && extractionArkPassive(arkpassive?.Effects);
 
   const usingSkills = extractingSkillsOfLevel4OrHigher(combatSkills);
   const deleteNotUsedTripodList = deleteNotUsedTripods(usingSkills);
@@ -115,7 +125,9 @@ const Characteristics = ({ combatSkills, profile, engraving, arkpassive }) => {
       </ContentWrap>
       <ContentWrap characteristics="true" style={{ flexDirection: 'column' }}>
         <NameAndLevelWrap>
-          <CharacteristicsBox>각인</CharacteristicsBox>
+          <CharacteristicsBox>
+            {!arkpassive?.IsArkPassive ? '각인' : '아크패시브'}
+          </CharacteristicsBox>
           <div className="nameAndLevelWrap">
             {!arkpassive?.IsArkPassive &&
               engravingEffectList &&
@@ -125,12 +137,24 @@ const Characteristics = ({ combatSkills, profile, engraving, arkpassive }) => {
           </div>
         </NameAndLevelWrap>
         <EffectListWrap>
+          {arkpassive?.IsArkPassive && (
+            <div>
+              {arkPassiveEffectList.evolution.map((item) => (
+                <div>{item.Name}</div>
+              ))}
+              {arkPassiveEffectList.enlightenment.map((item) => (
+                <div>{item.Name}</div>
+              ))}
+              {arkPassiveEffectList.leap.map((item) => (
+                <div>{item.Name}</div>
+              ))}
+            </div>
+          )}
           {!arkpassive?.IsArkPassive &&
             engravingEffectList &&
             engravingEffectList.map((item) => (
               <EngravingEffectTooltip item={item} key={item.name} />
             ))}
-          {/* {arkpassive?.IsArkPassive && } */}
         </EffectListWrap>
       </ContentWrap>
       <ContentWrap characteristics="true">
@@ -279,6 +303,10 @@ const NameAndLevelWrap = styled.div`
     font-family: 'Nanum Gothic';
   }
 
+  .arkPassiveEffects {
+    display: flex;
+  }
+
   @media ${(props) => props.theme.mobile} {
     width: 50%;
     margin: 10px;
@@ -288,7 +316,7 @@ const NameAndLevelWrap = styled.div`
 
 const EffectListWrap = styled.div`
   display: flex;
-  height: 265px;
+  min-height: 265px;
   flex-direction: column;
   justify-content: space-between;
 `;

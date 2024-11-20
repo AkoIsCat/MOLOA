@@ -91,18 +91,21 @@ const AccessoriesDetail = ({
                     </div>
                   </PercentBar>
                 )}
-                {index === 5 && (
+                {index === 5 && stoneAndBracelet[0][stoneIndex]?.value && (
                   <div>
                     <p style={{ margin: '0 8px', color: '#f8f5a4' }}>
-                      {removeSpecificString('Element_000')}
+                      {stoneAndBracelet[0][stoneIndex]?.value &&
+                        removeSpecificString('Element_000')}
                     </p>
                     <BsDot />
                     <p style={{ margin: '0 8px', color: '#f8f5a4' }}>
-                      {removeSpecificString('Element_001')}
+                      {stoneAndBracelet[0][stoneIndex]?.value &&
+                        removeSpecificString('Element_001')}
                     </p>
                     <BsDot />
                     <p style={{ margin: '0 8px', color: '#832c35' }}>
-                      {removeSpecificString('Element_002')}
+                      {stoneAndBracelet[0][stoneIndex]?.value &&
+                        removeSpecificString('Element_002')}
                     </p>
                   </div>
                 )}

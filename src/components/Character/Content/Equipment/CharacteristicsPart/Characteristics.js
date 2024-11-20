@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import React from 'react';
 
 import EngravingEffectTooltip from './EngravingEffectTooltip';
+import ArkPassiveEngravingEffects from './ArkPassiveEngravingEffectTooltip';
 
 const Characteristics = ({ combatSkills, profile, engraving, arkpassive }) => {
   if (profile === null || profile === undefined) {
@@ -135,19 +136,10 @@ const Characteristics = ({ combatSkills, profile, engraving, arkpassive }) => {
           </div>
         </NameAndLevelWrap>
         <EffectListWrap>
-          {arkpassive?.IsArkPassive && (
-            <div>
-              {arkPassiveEffectList.evolution.map((item) => (
-                <div>{item.Name}</div>
-              ))}
-              {arkPassiveEffectList.enlightenment.map((item) => (
-                <div>{item.Name}</div>
-              ))}
-              {arkPassiveEffectList.leap.map((item) => (
-                <div>{item.Name}</div>
-              ))}
-            </div>
-          )}
+          {arkpassive?.IsArkPassive &&
+            engraving?.ArkPassiveEffects.map((item) => (
+              <ArkPassiveEngravingEffects item={item} key={item.Name} />
+            ))}
           {!arkpassive?.IsArkPassive &&
             engravingEffectList &&
             engravingEffectList.map((item) => (

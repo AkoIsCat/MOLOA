@@ -7,7 +7,7 @@ import ArkPassiveEffectsComponent from './Equipment/ArkPassivePart/ArkPassiveEff
 
 import React from 'react';
 import styled from 'styled-components';
-import ArkPassiveEffects from './Equipment/ArkPassivePart/ArkPassiveEffects';
+// import ArkPassiveEffects from './Equipment/ArkPassivePart/ArkPassiveEffects';
 
 const Equipment = ({
   equipment,

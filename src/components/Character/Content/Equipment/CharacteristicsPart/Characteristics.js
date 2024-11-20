@@ -125,9 +125,7 @@ const Characteristics = ({ combatSkills, profile, engraving, arkpassive }) => {
       </ContentWrap>
       <ContentWrap characteristics="true" style={{ flexDirection: 'column' }}>
         <NameAndLevelWrap>
-          <CharacteristicsBox>
-            {!arkpassive?.IsArkPassive ? '각인' : '아크패시브'}
-          </CharacteristicsBox>
+          <CharacteristicsBox>각인</CharacteristicsBox>
           <div className="nameAndLevelWrap">
             {!arkpassive?.IsArkPassive &&
               engravingEffectList &&

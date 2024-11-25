@@ -5,13 +5,14 @@ import stone from '../../../../../asset/icon/stone_engraving.png';
 
 const ArkPassiveEngravingEffects = (item) => {
   const [showTooltip, setShowTooltip] = useState(false);
-  console.log(item.item);
 
   return (
     <EffectWrap>
       {showTooltip && <div className="tooltip">{item.item.Description}</div>}
       <EngravingBox>
-        <EngravingLevelBox>0</EngravingLevelBox>
+        <EngravingLevelBox Grade={item.item.Grade}>
+          {item.item.Level}
+        </EngravingLevelBox>
         <div
           className="name"
           onMouseOver={() => setShowTooltip(true)}
@@ -78,6 +79,10 @@ const EffectWrap = styled.div`
 
 const Stone = styled.div`
   display: flex;
+
+  div {
+    color: #fff;
+  }
 `;
 
 const EngravingBox = styled.div`
@@ -94,4 +99,19 @@ const EngravingLevelBox = styled.div`
   margin-right: 10px;
   padding: 3px 8px;
   border-radius: 5px;
+  color: #fff;
+  background: ${(props) =>
+    props.Grade === '전설'
+      ? '#9e5f04'
+      : props.Grade === '영웅'
+      ? '#480d5d'
+      : props.Grade === '희귀'
+      ? '#113d5d'
+      : props.Grade === '고대'
+      ? ' #dcc999'
+      : props.Grade === '유물'
+      ? '#a24006'
+      : props.Grade === '고급'
+      ? '#374e18'
+      : '#292e33'};
 `;

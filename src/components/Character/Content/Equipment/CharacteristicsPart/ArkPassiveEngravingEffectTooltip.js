@@ -105,13 +105,7 @@ const EngravingLevelBox = styled.div`
       ? '#9e5f04'
       : props.Grade === '영웅'
       ? '#480d5d'
-      : props.Grade === '희귀'
-      ? '#113d5d'
-      : props.Grade === '고대'
-      ? ' #dcc999'
       : props.Grade === '유물'
       ? '#a24006'
-      : props.Grade === '고급'
-      ? '#374e18'
       : '#292e33'};
 `;

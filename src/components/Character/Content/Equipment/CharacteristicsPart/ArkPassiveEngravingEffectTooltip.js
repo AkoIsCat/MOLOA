@@ -79,6 +79,7 @@ const EffectWrap = styled.div`
 
 const Stone = styled.div`
   display: flex;
+  align-items: center;
 
   div {
     color: #fff;

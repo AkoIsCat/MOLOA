@@ -22,7 +22,6 @@ const ArkPassiveEffects = ({ arkpassive }) => {
   const arkPassiveEffectList =
     arkpassive?.IsArkPassive && extractionArkPassive(arkpassive?.Effects);
 
-
   return (
     <div>
       <ContentWrap>
@@ -98,7 +97,7 @@ const EffectsBox = styled.div`
 `;
 
 const ItemBox = styled.div`
-  min-width: 230px;
+  min-width: 240px;
 `;
 
 const ItemTitle = styled.div`\
@@ -121,7 +120,8 @@ const Item = styled.div`
 
   div {
     display: flex;
-    margin: 5px;
+    margin: 4px;
+    font-size: 15px;
   }
 
   img {

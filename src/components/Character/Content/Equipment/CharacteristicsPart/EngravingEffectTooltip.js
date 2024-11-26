@@ -1,12 +1,16 @@
 import { useState } from 'react';
 import styled from 'styled-components';
 
+import removeTag from '../../../../../utils/removeTag';
+
 const EngravingEffectTooltip = ({ item }) => {
   const [showTooltip, setShowTooltip] = useState(false);
 
   return (
     <EffectWrap>
-      {showTooltip && <div className="tooltip">{item.description}</div>}
+      {showTooltip && (
+        <div className="tooltip">{removeTag(item.description, 'FONT')}</div>
+      )}
       <div
         className="name"
         onMouseOver={() => setShowTooltip(true)}

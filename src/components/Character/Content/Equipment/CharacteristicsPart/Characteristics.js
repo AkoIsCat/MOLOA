@@ -64,33 +64,11 @@ const Characteristics = ({ combatSkills, profile, engraving, arkpassive }) => {
     return deleteNotUsedTripodList;
   }
 
-  // function extractionArkPassive(arkPassiveData) {
-  //   const evolution = [];
-  //   const enlightenment = [];
-  //   const leap = [];
-
-  //   for (let i = 0; i <= arkPassiveData.length - 1; i++) {
-  //     if (arkPassiveData[i].Name === '깨달음') {
-  //       evolution.push(arkPassiveData[i]);
-  //     } else if (arkPassiveData[i].Name === '진화') {
-  //       enlightenment.push(arkPassiveData[i]);
-  //     } else {
-  //       leap.push(arkPassiveData[i]);
-  //     }
-  //   }
-
-  //   return { evolution, enlightenment, leap };
-  // }
-
   const [combatCharacteristics, basicCharacteristics] =
     extractingCharacteristics(profile.Stats);
 
   const engravingEffectList =
     engraving !== null && extractingEngravingList(engraving.Effects);
-
-  // const arkPassiveEffectList =
-  //   arkpassive?.IsArkPassive && extractionArkPassive(arkpassive?.Effects);
-
   const usingSkills = extractingSkillsOfLevel4OrHigher(combatSkills);
   const deleteNotUsedTripodList = deleteNotUsedTripods(usingSkills);
 

@@ -1,29 +1,18 @@
 /* eslint-disable */
 import styled from 'styled-components';
 import { useState } from 'react';
+import removeTag from '../../../../../utils/removeTag';
 
 import stone from '../../../../../asset/icon/stone_engraving.png';
 
 const ArkPassiveEngravingEffects = (item) => {
   const [showTooltip, setShowTooltip] = useState(false);
 
-  const removeFontTagDescription = (data) => {
-    const removeStartTag =
-      /<FONT[a-zA-Z0-9_\^\$\.\|\{\[\}\]\(\)\*\+\?\\~`!@#%&-=;:'",/\n\s]*>/g;
-
-    const removeCloseTag = /<\/FONT>/g;
-
-    const removeFontTag = data.replaceAll(removeStartTag, '');
-    const removeAllTag = removeFontTag.replaceAll(removeCloseTag, '');
-
-    return removeAllTag;
-  };
-
   return (
     <EffectWrap>
       {showTooltip && (
         <div className="tooltip">
-          {removeFontTagDescription(item.item.Description)}
+          {removeTag(item.item.Description, 'FONT')}
         </div>
       )}
       <EngravingBox>

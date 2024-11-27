@@ -4,6 +4,8 @@ import styled from 'styled-components';
 const GemsItemTooltip = ({ item }) => {
   const [showTooltip, setShowTooltip] = useState(false);
 
+  console.log(item);
+
   return (
     <GemsItemWrap grade={item.grade}>
       {showTooltip && (

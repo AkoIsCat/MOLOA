@@ -5,6 +5,7 @@ import {
 } from '../../../api/LostArk/LostarkAxios';
 import { useGetLostArkDataNotId } from '../../../hooks/useGetLostArkData';
 import useGetFirebaseData from '../../../hooks/useGetFirebaseData';
+import chaosGateImg from '../../../asset/icon/chaosgate.jpg';
 
 import MoloaNotification from './MoloaNotification';
 import Banner from './Banner';
@@ -50,8 +51,7 @@ const MainContents = () => {
         today === '일'
           ? true
           : false,
-      image:
-        'https://i.namu.wiki/i/G4uhm0qoRz4FDWgQIH9mewjZFeIlQNFNM6pwpNjTVo0IrPhpbY3nh9XnknyiZKEgdoY63m3UjNzXXDe6kDU_JG6tXeCsV9sy7XS4YAuAD-O99M_nqjHcho2XrnnJiMnFZXov2UwamvjhbxJfKKy8cg.webp',
+      image: chaosGateImg,
     },
     {
       name: '모험섬',

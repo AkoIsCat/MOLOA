@@ -4,7 +4,10 @@ import styled from 'styled-components';
 const GemsItemTooltip = ({ item }) => {
   const [showTooltip, setShowTooltip] = useState(false);
 
-  console.log(item);
+  const dividedSkillShame = item.skillShame
+    .split('<BR>')
+    .map((item) => item.trim())
+    .filter((item) => item);
 
   return (
     <GemsItemWrap grade={item.grade}>
@@ -12,7 +15,9 @@ const GemsItemTooltip = ({ item }) => {
         <div className="tooltip">
           <p className="itemName">{item.name}</p>
           <p className="skillName">{item.skillName}</p>
-          <p className="skillShame">{item.skillShame}</p>
+          {dividedSkillShame.map((item) => (
+            <p className="skillShame">{item}</p>
+          ))}
           {item.attackPower && <p className="skillShame">{item.attackPower}</p>}
         </div>
       )}
@@ -87,6 +92,7 @@ const GemsItemWrap = styled.div`
     height: auto;
     padding: 10px;
     margin: -5px;
+    z-index: 1;
 
     .itemName {
       border-radius: 10px;
@@ -109,6 +115,7 @@ const GemsItemWrap = styled.div`
       margin: 0;
       font-size: 14px;
       color: #fff;
+      z-index: 2;
     }
   }
 `;

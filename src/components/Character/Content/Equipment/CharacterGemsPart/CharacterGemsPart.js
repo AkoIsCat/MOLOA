@@ -2,7 +2,6 @@ import styled from 'styled-components';
 import React from 'react';
 
 import GemsItemTooltip from './GemsItemTooltip';
-import removeTag from '../../../../../utils/removeTag';
 
 const CharacterGemsPart = ({ gems, getGemsList }) => {
   if (gems === null || gems.Gems === null || gems.Gems === undefined) {
@@ -24,10 +23,6 @@ const CharacterGemsPart = ({ gems, getGemsList }) => {
       const tooltipObject = JSON.parse(gems.Gems[i].Tooltip);
       for (let key in tooltipObject) {
         if (tooltipObject[key].type === 'ItemPartBox') {
-          const value = removeTag(
-            tooltipObject[key].value['Element_001'],
-            'FONT'
-          );
           const matchValue =
             tooltipObject[key].value['Element_001'].match(effectRegex) === null
               ? tooltipObject[key].value['Element_001'].match(effectRegex2)
@@ -35,10 +30,9 @@ const CharacterGemsPart = ({ gems, getGemsList }) => {
 
           const skillName = matchValue[1];
           const skillShame = matchValue[2].replace(/\[.*?<\/FONT>/g, '');
-          // console.log('shame', skillShame);
+
           const attackPower = matchValue[4]?.replaceAll('<BR>', '');
 
-          console.log('match Value', skillShame);
           gemsEffect.push({
             level: gems.Gems[i].Level,
             name: gems.Gems[i].Name.match(gemsRegex)[1],

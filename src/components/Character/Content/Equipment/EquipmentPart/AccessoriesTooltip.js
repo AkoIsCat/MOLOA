@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 
 const AccessoriesTooltip = ({ item, quality }) => {
+  console.log('tooltip', item);
   return item && item.Type !== '팔찌' ? (
     <AccessoriesTooltipWrap>
       <div className="defaultEffectWrap">
@@ -16,16 +17,27 @@ const AccessoriesTooltip = ({ item, quality }) => {
         {quality !== -1 && (
           <QualityText quality={quality}>품질 {quality}</QualityText>
         )}
-        <div>
-          {item.TooltipValue.characteristic &&
-            item?.TooltipValue?.characteristic[0] &&
-            item?.TooltipValue?.characteristic[0]}
-        </div>
-        <div>
-          {item.TooltipValue.characteristic &&
-            item?.TooltipValue.characteristic[1] &&
-            item.TooltipValue.characteristic[1]}
-        </div>
+        <DefaultEffectBox>
+          {item.TooltipValue.defaultEffect.split('<BR>').map((item) => (
+            <div key={item.slice(0, 2)}>{item}</div>
+          ))}
+        </DefaultEffectBox>
+        <div>{item.TooltipValue.grade}</div>
+        <div>{item.TooltipValue.point}</div>
+        {item.TooltipValue.characteristic && (
+          <div>
+            {item.TooltipValue.characteristic &&
+              item?.TooltipValue?.characteristic[0] &&
+              item?.TooltipValue?.characteristic[0]}
+          </div>
+        )}
+        {item.TooltipValue.characteristic && (
+          <div>
+            {item.TooltipValue.characteristic &&
+              item?.TooltipValue?.characteristic[1] &&
+              item?.TooltipValue?.characteristic[1]}
+          </div>
+        )}
       </div>
       <div className="vitalityWrap">
         <div>{item.TooltipValue.engrave1}</div>
@@ -173,4 +185,9 @@ const QualityText = styled.div`
       : props.quality >= 90 && props.quality < 100
       ? '#ce43fc'
       : '#FFCD12'};
+`;
+
+const DefaultEffectBox = styled.div`
+  display: flex;
+  flex-direction: column;
 `;

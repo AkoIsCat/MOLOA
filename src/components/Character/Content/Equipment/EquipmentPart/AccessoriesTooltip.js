@@ -1,7 +1,6 @@
 import styled from 'styled-components';
 
-const AccessoriesTooltip = ({ item, quality }) => {
-  console.log('tooltip', item);
+const AccessoriesTooltip = ({ item, quality, arkPassiveActivity }) => {
   return item && item.Type !== '팔찌' ? (
     <AccessoriesTooltipWrap>
       <div className="defaultEffectWrap">
@@ -17,13 +16,15 @@ const AccessoriesTooltip = ({ item, quality }) => {
         {quality !== -1 && (
           <QualityText quality={quality}>품질 {quality}</QualityText>
         )}
-        <DefaultEffectBox>
-          {item.TooltipValue.defaultEffect.split('<BR>').map((item) => (
-            <div key={item.slice(0, 2)}>{item}</div>
-          ))}
-        </DefaultEffectBox>
-        <div>{item.TooltipValue.grade}</div>
-        <div>{item.TooltipValue.point}</div>
+        {arkPassiveActivity && (
+          <DefaultEffectBox>
+            {item.TooltipValue.defaultEffect.split('<BR>').map((item) => (
+              <div key={item.slice(0, 2)}>{item}</div>
+            ))}
+          </DefaultEffectBox>
+        )}
+        {arkPassiveActivity && <div>{item.TooltipValue.grade}</div>}
+        {arkPassiveActivity && <div>{item.TooltipValue.point}</div>}
         {item.TooltipValue.characteristic && (
           <div>
             {item.TooltipValue.characteristic &&

@@ -12,7 +12,10 @@ const AccessoriesDetail = ({
   breceletEffectList,
   stoneIndex,
   transcendenceTotalNum,
+  arkpassive,
 }) => {
+  const arkPassiveActivity = arkpassive?.IsArkPassive;
+
   const filterAccessories =
     equipment &&
     equipment.filter(
@@ -52,7 +55,13 @@ const AccessoriesDetail = ({
     return (
       <>
         <div>
-          {showTooltip && <AccessoriesTooltip item={item} quality={quality} />}
+          {showTooltip && (
+            <AccessoriesTooltip
+              item={item}
+              quality={quality}
+              arkPassiveActivity={arkPassiveActivity}
+            />
+          )}
           {accessoriesList[index].TooltipValue !== undefined && (
             <>
               <ImageBox>
@@ -88,7 +97,14 @@ const AccessoriesDetail = ({
                 )}
               </ImageBox>
               <div className="desc">
-                {index < 5 && (
+                {!arkPassiveActivity && (
+                  <p className="type">
+                    {filterAccessories &&
+                      filterAccessories[index] &&
+                      filterAccessories[index]?.Name}
+                  </p>
+                )}
+                {index < 5 && arkPassiveActivity && (
                   <AcEffectBox>
                     <GradePoint>
                       <div>{item.TooltipValue.grade}</div>
@@ -98,12 +114,12 @@ const AccessoriesDetail = ({
                       {item.TooltipValue?.trainingEffect
                         ?.split('<BR>')
                         .map((item) => (
-                          <div>{item}</div>
+                          <div key={item}>{item}</div>
                         ))}
                     </AcEffect>
                   </AcEffectBox>
                 )}
-                {index >= 5 && (
+                {index >= 5 && arkPassiveActivity && (
                   <p className="type">
                     {filterAccessories &&
                       filterAccessories[index] &&
@@ -295,7 +311,7 @@ const GradePoint = styled.div`
 const AcEffect = styled.div`
   display: flex;
   flex-direction: column;
-  font-size: 12px;
+  font-size: 11.5px;
   height: 50px;
   margin: 0 0 0 10px;
 

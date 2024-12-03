@@ -16,7 +16,9 @@ const GemsItemTooltip = ({ item }) => {
           <p className="itemName">{item.name}</p>
           <p className="skillName">{item.skillName}</p>
           {dividedSkillShame.map((item) => (
-            <p className="skillShame">{item}</p>
+            <p key={item} className="skillShame">
+              {item}
+            </p>
           ))}
           {item.attackPower && <p className="skillShame">{item.attackPower}</p>}
         </div>

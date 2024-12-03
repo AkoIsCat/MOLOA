@@ -39,10 +39,11 @@ const ServerList = ({ selectServer, serverNumber }) => {
             borderFirst="true"
             key={item.name}
             onClick={() => {
-              selectServer({
-                server: item.name,
-                number: index,
-              });
+              alert('현재는 사용할 수 없는 기능입니다.');
+              // selectServer({
+              //   server: item.name,
+              //   number: index,
+              // });
             }}
             active={serverNumber === index && 'true'}
           >

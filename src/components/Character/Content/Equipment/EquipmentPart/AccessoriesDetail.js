@@ -27,6 +27,8 @@ const AccessoriesDetail = ({
         item.Type !== '나침반'
     );
 
+  console.log(accessoriesList);
+
   const removeSpecificString = (elementNumber) => {
     return (
       stoneAndBracelet[0] !== undefined &&
@@ -71,13 +73,6 @@ const AccessoriesDetail = ({
                     />
                   )}
                 </ImageBoxColor>
-              </ImageBox>
-              <div className="desc">
-                <p className="type">
-                  {filterAccessories &&
-                    filterAccessories[index] &&
-                    filterAccessories[index]?.Name}
-                </p>
                 {index < 5 && (
                   <PercentBar
                     quality={quality}
@@ -90,6 +85,30 @@ const AccessoriesDetail = ({
                       <div></div>
                     </div>
                   </PercentBar>
+                )}
+              </ImageBox>
+              <div className="desc">
+                {index < 5 && (
+                  <AcEffectBox>
+                    <GradePoint>
+                      <div>{item.TooltipValue.grade}</div>
+                      <div>{item.TooltipValue.point}</div>
+                    </GradePoint>
+                    <AcEffect>
+                      {item.TooltipValue?.trainingEffect
+                        ?.split('<BR>')
+                        .map((item) => (
+                          <div>{item}</div>
+                        ))}
+                    </AcEffect>
+                  </AcEffectBox>
+                )}
+                {index >= 5 && (
+                  <p className="type">
+                    {filterAccessories &&
+                      filterAccessories[index] &&
+                      filterAccessories[index]?.Name}
+                  </p>
                 )}
                 {index === 5 && stoneAndBracelet[0][stoneIndex]?.value && (
                   <div>
@@ -164,6 +183,7 @@ const ImageBox = styled.div`
   height: 55px;
   border-radius: 10px;
   background: #292e33;
+  position: relative;
 
   img {
     border-radius: 10px;
@@ -194,35 +214,24 @@ const ImageBoxColor = styled.div`
   border-radius: 10px;
 `;
 
-const PercentBar = styled.div`
-  width: 190px;
-  height: 20px;
-  margin: 0 5px;
+const PercentBar = styled.div`\
+  position: absolute;
+  width: 95%;
+  left: 2.5px;
+    bottom: -17px;
   display: flex;
 
   p {
-    width: 40px;
-    color: ${(props) =>
-      props.quality === 0
-        ? '#fff'
-        : props.quality > 0 && props.quality < 11
-        ? '#ff0000'
-        : props.quality < 30
-        ? '#ffd200'
-        : props.quality >= 30 && props.quality < 70
-        ? '#91fe02'
-        : props.quality >= 70 && props.quality < 90
-        ? '#00b5ff'
-        : props.quality >= 90 && props.quality < 100
-        ? '#ce43fc'
-        : '#fe9600'};
-    margin: 2px 5px;
-    text-align: center;
+    position: absolute;
+    width: 10px;
+    color: black;
+    margin: 1.5px 19px;
+    font-size: 11px;
   }
 
   div {
     width: 100%;
-    height: 20px;
+    height: 13px;
     background: #292e33;
     border-radius: 10px;
 
@@ -270,5 +279,28 @@ const EffectTotal = styled.div`
 
   .transcendence {
     margin: 0 5px;
+  }
+`;
+
+const AcEffectBox = styled.div`
+  display: flex;
+`;
+
+const GradePoint = styled.div`
+  display: flex;
+  flex-direction: column;
+  font-size: 12px;
+`;
+
+const AcEffect = styled.div`
+  display: flex;
+  flex-direction: column;
+  font-size: 12px;
+  height: 50px;
+  margin: 0 0 0 10px;
+
+  div {
+    width: 165px;
+    padding: 0 0 0 10px;
   }
 `;

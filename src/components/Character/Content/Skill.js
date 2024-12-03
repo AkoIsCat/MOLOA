@@ -59,7 +59,9 @@ const Skill = ({ combatSkills, profile, getGems }) => {
         {showTooltip && (
           <div className="tooltip">
             <p className="itemName">{item.name}</p>
-            <p className="skillShame">{item.skillShame}</p>
+            <p className="skillShame">
+              {item.skillShame.replaceAll('<BR>', '')}
+            </p>
             {item.attackPower && (
               <p className="skillShame">{item.attackPower}</p>
             )}

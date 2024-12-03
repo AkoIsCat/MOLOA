@@ -8,6 +8,7 @@ import MountedEngraving from './MountedEngraving';
 import AccessoriesDetail from './AccessoriesDetail';
 import Loading from '../../../../UI/Loading';
 import { elixirEffectDivision } from '../../../../../utils/elixirEffectDivision';
+import removeTag from '../../../../../utils/removeTag';
 
 const CharacterEquipmentPart = ({ equipment, engraving, arkpassive }) => {
   const isPc = useMediaQuery({
@@ -260,46 +261,133 @@ const CharacterEquipmentPart = ({ equipment, engraving, arkpassive }) => {
     for (let i = 0; i < sortAccessoriesTooltip.length; i++) {
       const filterValue = [];
 
-      if (i !== sortAccessoriesTooltip.length) {
-        // 특성
-        for (let key in sortAccessoriesTooltip[i]) {
-          if (sortAccessoriesTooltip[i][key].type === 'ItemPartBox') {
-            filterValue.push({
-              effect: sortAccessoriesTooltip[i][key].value['Element_001'],
-            });
+      // 노앜패
+      if (!arkpassive?.IsArkPassive) {
+        if (i !== sortAccessoriesTooltip.length) {
+          // 특성
+          for (let key in sortAccessoriesTooltip[i]) {
+            if (sortAccessoriesTooltip[i][key].type === 'ItemPartBox') {
+              filterValue.push({
+                effect: sortAccessoriesTooltip[i][key].value['Element_001'],
+              });
+            }
+          }
+
+          // 각인
+          for (let key in sortAccessoriesTooltip[i]) {
+            if (
+              sortAccessoriesTooltip[i][key].type === 'IndentStringGroup' &&
+              sortAccessoriesTooltip[i][key].value !== null
+            ) {
+              filterValue.push({
+                engrave1:
+                  sortAccessoriesTooltip[i][key]?.value['Element_000']
+                    ?.contentStr['Element_000']?.contentStr,
+                engrave2:
+                  sortAccessoriesTooltip[i][key]?.value['Element_000']
+                    ?.contentStr['Element_001']?.contentStr,
+                engrave3:
+                  sortAccessoriesTooltip[i][key]?.value['Element_000']
+                    ?.contentStr['Element_002']?.contentStr,
+              });
+            }
           }
         }
+      }
 
-        // 각인
-        for (let key in sortAccessoriesTooltip[i]) {
-          if (
-            sortAccessoriesTooltip[i][key].type === 'IndentStringGroup' &&
-            sortAccessoriesTooltip[i][key].value !== null
-          ) {
-            filterValue.push({
-              engrave1:
-                sortAccessoriesTooltip[i][key]?.value['Element_000']
-                  ?.contentStr['Element_000']?.contentStr,
-              engrave2:
-                sortAccessoriesTooltip[i][key]?.value['Element_000']
-                  ?.contentStr['Element_001']?.contentStr,
-              engrave3:
-                sortAccessoriesTooltip[i][key]?.value['Element_000']
-                  ?.contentStr['Element_002']?.contentStr,
-            });
+      // 앜패
+      if (arkpassive?.IsArkPassive) {
+        if (i !== sortAccessoriesTooltip.length - 1) {
+          for (let key in sortAccessoriesTooltip[i]) {
+            const itemArray = [];
+            // 악세 이름
+            if (sortAccessoriesTooltip[i][key].type === 'NameTagBox') {
+              itemArray.push({
+                Name: removeTag(
+                  removeTag(sortAccessoriesTooltip[i][key].value, 'FONT'),
+                  'P'
+                ),
+              });
+            }
+
+            // 악세 품질, 등급
+            if (sortAccessoriesTooltip[i][key].type === 'ItemTitle') {
+              itemArray.push({
+                quality: sortAccessoriesTooltip[i][key].value.qualityValue,
+                grade: removeTag(
+                  sortAccessoriesTooltip[i][key].value.leftStr0,
+                  'FONT'
+                ).split(' ')[0],
+              });
+            }
+
+            // 악세 효과(기본, 연마, 깨포)
+            if (sortAccessoriesTooltip[i][key].type === 'ItemPartBox') {
+              itemArray.push({
+                effects: removeTag(
+                  removeTag(
+                    sortAccessoriesTooltip[i][key].value['Element_001'],
+                    'FONT'
+                  ),
+                  'img'
+                ),
+              });
+            }
+
+            // 어빌리티 스톤(각인)
+            if (
+              sortAccessoriesTooltip[i][key].type === 'ItemTitle' &&
+              sortAccessoriesTooltip[i][key].value.leftStr0.includes(
+                '어빌리티 스톤'
+              )
+            ) {
+              for (let key in sortAccessoriesTooltip[i]) {
+                if (
+                  sortAccessoriesTooltip[i][key].type === 'IndentStringGroup' &&
+                  sortAccessoriesTooltip[i][key].value
+                ) {
+                  const commonness =
+                    sortAccessoriesTooltip[i][key].value['Element_000'];
+                  const engrave1 = removeTag(
+                    commonness.contentStr['Element_000'].contentStr,
+                    'FONT'
+                  ).replace('<BR>', '');
+                  const engrave2 = removeTag(
+                    commonness.contentStr['Element_001'].contentStr,
+                    'FONT'
+                  ).replace('<BR>', '');
+                  const engrave3 = removeTag(
+                    commonness.contentStr['Element_002'].contentStr,
+                    'FONT'
+                  ).replace('<BR>', '');
+
+                  itemArray.push({ engrave1, engrave2, engrave3 });
+                }
+              }
+            }
+
+            itemArray && filterValue.push(...itemArray);
           }
         }
       }
 
       // 팔찌
-      if (i === sortAccessoriesTooltip.length) {
-        for (let key in sortAccessoriesTooltip[i + 1]) {
-          if (sortAccessoriesTooltip[i + 1][key].type === 'ItemPartBox') {
-            filterValue.push({
-              effect: sortAccessoriesTooltip[i + 1][key].value['Element_001'],
-            });
+      if (i === sortAccessoriesTooltip.length - 1) {
+        const itemArray = [];
+        for (let key in sortAccessoriesTooltip[i]) {
+          if (sortAccessoriesTooltip[i][key].type === 'ItemPartBox') {
+            itemArray.push(
+              removeTag(
+                removeTag(
+                  sortAccessoriesTooltip[i][key].value['Element_001'],
+                  'FONT'
+                ),
+                'img'
+              ).split('<BR>')
+            );
           }
         }
+        itemArray && filterValue.push(...itemArray);
       }
 
       filterTooltip.push({
@@ -329,7 +417,7 @@ const CharacterEquipmentPart = ({ equipment, engraving, arkpassive }) => {
 
     for (let i = 0; i < filterTooltip.length; i++) {
       const effectBR = filterTooltip[i].tooltip[1]?.effect?.split('<BR>');
-
+      // 어빌리티 스톤 각인, 활성화 수치를 따로 분리해주는 함수 getEngravingEffects, revemoSpecificString
       const engrave1 = getEngravingEffect(filterTooltip[i].tooltip, 2, 1);
       const engrave2 = getEngravingEffect(filterTooltip[i].tooltip, 2, 2);
       const engrave3 = getEngravingEffect(filterTooltip[i].tooltip, 2, 3);
@@ -347,7 +435,7 @@ const CharacterEquipmentPart = ({ equipment, engraving, arkpassive }) => {
           if (effectsplitBR[j].includes('[')) {
             const name = effectsplitBR[j].split('</FONT>]');
             effectsplitBR[j] = {
-              name: name[0].replace('[', '').replace("<FONT COLOR=''>", ''),
+              name: removeTag(name[0], 'FONT').replace('[', ''),
               effect: name[1],
             };
           }
@@ -371,15 +459,45 @@ const CharacterEquipmentPart = ({ equipment, engraving, arkpassive }) => {
         }
       }
 
-      if (i !== filterTooltip.length - 1) {
-        accessoriesEffectTooltip.push({
-          characteristic: effectBR,
-          engrave1,
-          engrave2,
-          engrave3,
-        });
-      } else {
-        accessoriesEffectTooltip.push({ breceletEffect: effectsplitBR });
+      if (arkpassive?.IsArkPassive) {
+        // 악세
+        if (i < filterTooltip.length - 2) {
+          accessoriesEffectTooltip.push({
+            defaultEffect: filterTooltip[i]?.tooltip[2]?.effects,
+            trainingEffect: filterTooltip[i]?.tooltip[3]?.effects,
+            point: filterTooltip[i].tooltip[4]?.effects,
+            grade: filterTooltip[i].tooltip[1]?.grade,
+            quality: filterTooltip[i].tooltip[1]?.quality,
+          });
+          // 돌
+        } else if (i !== filterTooltip.length - 1) {
+          accessoriesEffectTooltip.push({
+            defaultEffect: filterTooltip[i]?.tooltip[3]?.effects,
+            plusEffect: filterTooltip[i]?.tooltip[4]?.effects,
+            engrave1,
+            engrave2,
+            engrave3,
+          });
+          // 팔찌
+        } else {
+          accessoriesEffectTooltip.push({
+            breceletEffect: filterTooltip[i].tooltip[0],
+            point: filterTooltip[i].tooltip[1],
+          });
+        }
+      }
+
+      if (!arkpassive?.IsArkPassive) {
+        if (i !== filterTooltip.length - 1) {
+          accessoriesEffectTooltip.push({
+            characteristic: effectBR,
+            engrave1,
+            engrave2,
+            engrave3,
+          });
+        } else {
+          accessoriesEffectTooltip.push({ breceletEffect: effectsplitBR });
+        }
       }
     }
   }

@@ -708,6 +708,7 @@ const CharacterEquipmentPart = ({ equipment, engraving, arkpassive }) => {
               <AccessoriesDetail
                 accessoriesList={accessoriesList}
                 equipment={equipment}
+                arkpassive={arkpassive}
                 sortAccessoriesTooltip={sortAccessoriesTooltip}
                 stoneAndBracelet={stoneAndBracelet}
                 breceletEffectList={breceletEffectList}
@@ -743,6 +744,7 @@ const CharacterEquipmentPart = ({ equipment, engraving, arkpassive }) => {
                   stoneAndBracelet={stoneAndBracelet}
                   breceletEffectList={breceletEffectList}
                   stoneIndex={stoneIndex}
+                  arkpassive={arkpassive}
                   transcendenceTotalNum={
                     equipment &&
                     equipmentList[5]?.TooltipValue.transcendenceTotalNum

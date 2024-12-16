@@ -7,8 +7,14 @@ import {
   getProfile,
   getEngravings,
 } from '../api/LostArk/LostarkAxios';
+import removeTag from './removeTag';
 
-export const updateCharacter = async (name, engraving) => {
+export const updateCharacter = async (
+  name,
+  engraving,
+  activeArkPassive,
+  arkPassiveData
+) => {
   // 모로아 db 유무 체크
   const data = await getFirebaseData(`CharacterSearch/${name}`);
 
@@ -22,14 +28,29 @@ export const updateCharacter = async (name, engraving) => {
   const engravingsData = await getEngravings(name);
 
   let engravingItem = []; // 각인을 담을 배열
+  const evolution =
+    activeArkPassive && arkPassiveData.filter((item) => item.Name === '깨달음');
 
   // 활성화 된 직각 추출
-  if (engravingsData) {
+  if (engravingsData && !activeArkPassive) {
     for (let i = 0; i < engraving.length; i++) {
       for (let j = 0; j < engravingsData.Effects.length; j++) {
         const split = engravingsData.Effects[j].Name.split(' Lv. ');
         if (split[0] === engraving[i]) {
           engravingItem.push({ name: split[0], level: split[1] });
+        }
+      }
+    }
+  } else {
+    for (let i = 0; i < engraving.length; i++) {
+      for (let j = 0; j < evolution.length; j++) {
+        const engravingArkPassive = removeTag(
+          evolution[j].Description,
+          'FONT'
+        ).slice(8);
+        const [Name, Level] = engravingArkPassive.split(' Lv.');
+        if (Name === engraving[i]) {
+          engravingItem.push({ Name, Level });
         }
       }
     }

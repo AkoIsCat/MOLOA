@@ -2,7 +2,9 @@ import styled from 'styled-components';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { getFirebaseData } from '../../api/Firebase/FirebaseAxios';
+import { useGetLostArkData } from '../../hooks/useGetLostArkData';
 import { updateCharacter } from '../../utils/updateCharacter';
+import { getArkpassive } from '../../api/LostArk/LostarkAxios';
 import { NavLink } from 'react-router-dom';
 import { useQuery } from 'react-query';
 
@@ -24,6 +26,13 @@ const Search = () => {
     }
   );
 
+  const { data: arkpassive } = useGetLostArkData(
+    'arkpassive',
+    trimInput,
+    getArkpassive,
+    Infinity
+  );
+
   const onSubmitHandler = async (e) => {
     e.preventDefault();
 
@@ -31,7 +40,12 @@ const Search = () => {
       navigate(`/character/${trimInput}`);
       setSearchInput('');
     }
-    updateCharacter(trimInput, jobEngravings);
+    updateCharacter(
+      trimInput,
+      jobEngravings,
+      arkpassive.IsArkPassive,
+      arkpassive.Effects
+    );
   };
 
   return (

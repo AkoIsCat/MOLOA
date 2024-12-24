@@ -48,9 +48,9 @@ export const updateCharacter = async (
           evolution[j].Description,
           'FONT'
         ).slice(8);
-        const [Name, Level] = engravingArkPassive.split(' Lv.');
-        if (Name === engraving[i]) {
-          engravingItem.push({ Name, Level });
+        const [name, level] = engravingArkPassive.split(' Lv.');
+        if (name === engraving[i]) {
+          engravingItem.push({ name, level });
         }
       }
     }

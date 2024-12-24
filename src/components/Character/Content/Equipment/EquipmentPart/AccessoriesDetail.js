@@ -3,6 +3,7 @@ import { useState } from 'react';
 
 import AccessoriesTooltip from './AccessoriesTooltip';
 import { BsDot } from 'react-icons/bs';
+import removeTag from '../../../../../utils/removeTag';
 
 const AccessoriesDetail = ({
   equipment,
@@ -30,18 +31,18 @@ const AccessoriesDetail = ({
         item.Type !== '나침반'
     );
 
-  console.log(accessoriesList);
-
   const removeSpecificString = (elementNumber) => {
-    return (
-      stoneAndBracelet[0] !== undefined &&
-      stoneAndBracelet[0][stoneIndex] &&
-      stoneAndBracelet[0][stoneIndex].value['Element_000'].contentStr[
-        elementNumber
-      ].contentStr
-        .split('</FONT>')[1]
-        .replace(/[^0-9]/g, '')
-    );
+    return removeTag(
+      removeTag(
+        stoneAndBracelet[0][stoneIndex].value['Element_000'].contentStr[
+          elementNumber
+        ].contentStr,
+        'FONT'
+      ),
+      'img'
+    )
+      .replaceAll('<BR>', '')
+      .split('Lv.')[1];
   };
 
   const AccessoriesBox = ({ item, index }) => {
@@ -128,6 +129,7 @@ const AccessoriesDetail = ({
                 )}
                 {index === 5 && stoneAndBracelet[0][stoneIndex]?.value && (
                   <div>
+                    <p>{}</p>
                     <p style={{ margin: '0 8px', color: '#f8f5a4' }}>
                       {stoneAndBracelet[0][stoneIndex]?.value &&
                         removeSpecificString('Element_000')}

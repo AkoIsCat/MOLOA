@@ -41,6 +41,7 @@ import {
   SoulEater as 소울이터,
   WarriorFemale as 여전사,
   Breaker as 브레이커,
+  Alchemist as 환수사,
 } from '../../../asset/image/classImg'; // 직업 아이콘
 
 const CharacterList = ({
@@ -256,6 +257,8 @@ const CharacterProfile = styled.div`
         ? 여전사
         : props.CharacterClass === '브레이커'
         ? 브레이커
+        : props.CharacterClass === '환수사'
+        ? 환수사
         : ''});
     background-size: contain;
     background-repeat: no-repeat;

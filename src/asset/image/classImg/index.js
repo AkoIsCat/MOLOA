@@ -39,6 +39,7 @@ import HunterFemale from './hunter_female.png';
 import Aga from './yinyangshi.png';
 import WeatherArtist from './weather_artist.png';
 import SpecialList from './specialist.png';
+import Alchemist from './alchemist.png';
 
 export {
   SpecialList,
@@ -76,4 +77,5 @@ export {
   Aga,
   WeatherArtist,
   Breaker,
+  Alchemist,
 };

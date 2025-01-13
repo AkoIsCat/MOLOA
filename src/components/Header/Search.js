@@ -30,9 +30,7 @@ const Search = () => {
     'arkpassive',
     trimInput,
     getArkpassive,
-    {
-      enabled: false, // 자동으로 실행되지 않도록 설정
-    }
+    false
   );
 
   const onSubmitHandler = async (e) => {

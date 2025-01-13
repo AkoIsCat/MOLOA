@@ -93,10 +93,10 @@ export const ServerListBox = styled.div`
     list-style: none;
     margin: 0;
     padding: 0;
-    justify-content: space-between;
+    justify-content: space-evenly;
 
     @media ${(props) => props.theme.mobile} {
-      justify-content: space-between;
+      justify-content: space-evenly;
     }
   }
 `;

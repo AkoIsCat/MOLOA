@@ -5,13 +5,14 @@ export const useGetLostArkData = (
   id,
   queryFn,
   staleTimeValue,
-  selectFn
+  selectFn,
+  enabled = !!id
 ) => {
   const { data, isLoading, refetch, dataUpdatedAt } = useQuery(
     [`${queryKey}`, id],
     () => queryFn(id),
     {
-      enabled: !!id,
+      enabled,
       refetchOnWindowFocus: false,
       staleTime: staleTimeValue,
       select: (data) => (selectFn ? selectFn(data) : data),

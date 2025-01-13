@@ -32,7 +32,7 @@ export const updateCharacter = async (
     activeArkPassive && arkPassiveData.filter((item) => item.Name === '깨달음');
 
   // 활성화 된 직각 추출
-  if (engravingsData && !activeArkPassive) {
+  if (engravingsData && activeArkPassive === null) {
     for (let i = 0; i < engraving.length; i++) {
       for (let j = 0; j < engravingsData.Effects.length; j++) {
         const split = engravingsData.Effects[j].Name.split(' Lv. ');

@@ -26,28 +26,39 @@ const Search = () => {
     }
   );
 
-  const { data: arkpassive } = useGetLostArkData(
+  const { refetch } = useGetLostArkData(
     'arkpassive',
     trimInput,
     getArkpassive,
-    Infinity
+    {
+      enabled: false, // 자동으로 실행되지 않도록 설정
+    }
   );
 
   const onSubmitHandler = async (e) => {
     e.preventDefault();
 
     if (trimInput.length !== 0) {
-      navigate(`/character/${trimInput}`);
-      setSearchInput('');
+      try {
+        // Arkpassive 데이터 요청
+        const { data: arkpassiveData } = await refetch();
+        console.log('앜패', arkpassiveData);
+        // 데이터가 받아와지면 처리
+        if (arkpassiveData) {
+          updateCharacter(
+            trimInput,
+            jobEngravings,
+            arkpassiveData.IsArkPassive,
+            arkpassiveData.Effects
+          );
+          navigate(`/character/${trimInput}`);
+          setSearchInput('');
+        }
+      } catch (error) {
+        console.error('Failed to fetch arkpassive data:', error);
+      }
     }
-    updateCharacter(
-      trimInput,
-      jobEngravings,
-      arkpassive.IsArkPassive,
-      arkpassive.Effects
-    );
   };
-
   return (
     <BackgroundSearch>
       <NavLinkTitle to="/">

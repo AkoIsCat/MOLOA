@@ -58,12 +58,21 @@ export const getCharacterExist = async (id) => {
   }
 };
 
+export const getCharacterData = async (id) => {
+  try {
+    const { data } = await LostArkCharacterInstance().get(`/${id}`);
+    return data;
+  } catch (error) {
+    throw new Error('Character error');
+  }
+};
+
 export const getProfile = async (id) => {
   try {
     const { data } = await LostArkCharacterInstance().get(`/${id}/profiles`);
     return data;
   } catch (error) {
-    throw new Error('Profile error');
+    throw new Error('Profile error', error);
   }
 };
 

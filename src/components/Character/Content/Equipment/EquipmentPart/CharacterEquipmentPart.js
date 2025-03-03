@@ -121,7 +121,6 @@ const CharacterEquipmentPart = ({ equipment, engraving, arkpassive }) => {
             .split('\n')[0]
             .replace(/[^0-9]/g, '');
 
-          console.log('상급재련', level);
           filterValue.push({
             advancedReforging: +level,
           });
@@ -153,10 +152,11 @@ const CharacterEquipmentPart = ({ equipment, engraving, arkpassive }) => {
     const ExtractNeedEquipmentDataAndPush = (tooltipData) => {
       tooltipData.forEach((item, index) => {
         const splitBR = item.tooltip[0].effect.split('<BR>');
-        const removeFont = item.tooltip[2]?.effect?.replace(
-          removeFontTagRegex,
-          ''
-        );
+        // 어떤 데이터인지 잘 모르겠음
+        // const removeFont = item.tooltip[2]?.effect?.replace(
+        //   removeFontTagRegex,
+        //   ''
+        // );
         let elixir1, elixir2;
         const tier = arcPassiveDivision(item.tooltip);
         const transcendence = item.tooltip.filter((key) => key.transcendence);
@@ -226,7 +226,6 @@ const CharacterEquipmentPart = ({ equipment, engraving, arkpassive }) => {
             characteristic: splitBR[2],
             health: splitBR[3],
             vitality: item.tooltip[1].effect,
-            level: removeFont,
             itemName,
             itemLevel,
             itemQuality,
@@ -240,7 +239,6 @@ const CharacterEquipmentPart = ({ equipment, engraving, arkpassive }) => {
           equipmentEffectTooltip.push({
             offensePower: item.tooltip[0].effect,
             additionalDamage: item.tooltip[1].effect,
-            level: removeFont,
             itemName,
             itemLevel,
             itemQuality,

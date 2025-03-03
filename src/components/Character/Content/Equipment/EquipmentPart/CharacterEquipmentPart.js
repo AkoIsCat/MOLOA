@@ -114,10 +114,14 @@ const CharacterEquipmentPart = ({ equipment, engraving, arkpassive }) => {
       // 상급 재련
       for (let key in sortEquipmentTooltip[i]) {
         const tooltip = sortEquipmentTooltip[i][key].value;
+
         if (typeof tooltip === 'string' && tooltip.includes('상급 재련')) {
           const level = tooltip
             .replace(removeFontTagRegex, '')
+            .split('\n')[0]
             .replace(/[^0-9]/g, '');
+
+          console.log('상급재련', level);
           filterValue.push({
             advancedReforging: +level,
           });

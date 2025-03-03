@@ -27,7 +27,6 @@ const Equipment = ({
   const getGemsList = (data) => {
     getGems(data);
   };
-  console.log(arkpassive);
 
   return (
     <Wrap>

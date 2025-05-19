@@ -10,7 +10,7 @@
 - 프로젝트명: MOLOA (모로아)
 - 개발기간: 2023.03 - 2023.05 (총 11주)
 - 주요기능: 캐릭터 정보 조회, 인기 순위, 일일 콘텐츠 확인, 경매 계산기 등
-- 핵심 기술: React,Styled-components, React-Query, Firebase
+- 핵심 기술: React, Styled-components, React-Query, Firebase
 - 100% 개인 개발
 
 

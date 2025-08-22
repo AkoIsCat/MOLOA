@@ -1,5 +1,5 @@
 export const sortEquipment = (data) => {
-  // equipment 데이터에서 장비 데이터만 따로 모으는 유틸 함수
+  // equipment 데이터에서 장비 데이터만 따로 모아 원하는 순서로 정렬해주는 유틸 함수
   const equipmentArray = [];
 
   for (const item in data) {

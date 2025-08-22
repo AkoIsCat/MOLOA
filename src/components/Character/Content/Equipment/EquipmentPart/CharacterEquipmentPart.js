@@ -9,11 +9,11 @@ import AccessoriesDetail from './AccessoriesDetail';
 import Loading from '../../../../UI/Loading';
 import { elixirEffectDivision } from '../../../../../utils/elixirEffectDivision';
 import removeTag from '../../../../../utils/removeTag';
-import { sortEquipment } from '../../../../../utils/sortEquipment';
-import { equipmentBasicEffect } from '../../../../../utils/equipmentBasicEffect';
+import { sortEquipment } from '../../../../../utils/equipment/sortEquipment';
+import { equipmentSummary } from '../../../../../utils/equipment/equipmentSummary';
 
 const CharacterEquipmentPart = ({ equipment, engraving, arkpassive }) => {
-  const [sortedEquipment, setSortedEquipment] = useState();
+  // const [sortedEquipment, setSortedEquipment] = useState();
   const isPc = useMediaQuery({
     query: '(min-width:1024px)',
   });
@@ -24,17 +24,16 @@ const CharacterEquipmentPart = ({ equipment, engraving, arkpassive }) => {
     query: '(max-width:767px)',
   });
 
-  useEffect(() => {
-    if (equipment) {
-      setSortedEquipment(sortEquipment(equipment));
-    }
-  }, [equipment]);
+  const sortedEquipment = useMemo(
+    () => (equipment ? sortEquipment(equipment) : undefined),
+    [equipment]
+  );
 
   const basicEffect = useMemo(
-    () => equipmentBasicEffect(sortedEquipment),
+    () => equipmentSummary(sortedEquipment),
     [sortedEquipment]
   );
-  console.log(basicEffect);
+  console.log(basicEffect, 'sort', sortedEquipment);
 
   if (engraving === null) {
     return null;
@@ -50,10 +49,13 @@ const CharacterEquipmentPart = ({ equipment, engraving, arkpassive }) => {
   // 장비들끼리 모으는 함수(투,어,상,하,장,무)
   // 악세들끼리 모으는 함수
   // 장비 정보 추출
-  // 1. 기본, 추가효과, 세트레벨
-  // 2. 엘릭서
-  // 3. 초월
-  // 4. 상급 재련
+  // 1. 기본, 추가효과, 세트레벨 o
+  // 2. 엘릭서 o
+  // 3. 초월 o
+  // 4. 상급 재련 o
+  // 5. 무기 이름 o
+  // 6. 무기 등급 o
+  // 7. 부위 이름 o
 
   // 악세 정보 추출
   // 일단 냅둬봐 장비 먼저 리팩토링

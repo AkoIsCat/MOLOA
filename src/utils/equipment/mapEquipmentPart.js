@@ -4,7 +4,7 @@ import { getSingleTextBox } from './getSingleTextBox';
 
 export const mapEquipmentPart = (fullData, idx, tooltips) => {
   const data = tooltips[idx] || {};
-  const BasicEffectBoxes = getPartBoxes(data);
+  const PartBoxesBoxes = getPartBoxes(data);
   const IndentStringBoxes = getIdenStringGroups(data);
   const SingleTextBox = getSingleTextBox(data);
 
@@ -12,7 +12,7 @@ export const mapEquipmentPart = (fullData, idx, tooltips) => {
     PartName: fullData.Type,
     ItemName: fullData.Name,
     Grade: fullData.Grade,
-    BasicEffect: BasicEffectBoxes.map((pb) => pb.Element_001),
+    PartBoxes: PartBoxesBoxes.map((pb) => pb.Element_001),
     IndentStrings: IndentStringBoxes,
     SingleText: SingleTextBox,
   };

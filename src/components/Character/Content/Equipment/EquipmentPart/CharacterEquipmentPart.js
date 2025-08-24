@@ -11,6 +11,7 @@ import { elixirEffectDivision } from '../../../../../utils/elixirEffectDivision'
 import removeTag from '../../../../../utils/removeTag';
 import { sortEquipment } from '../../../../../utils/equipment/sortEquipment';
 import { equipmentSummary } from '../../../../../utils/equipment/equipmentSummary';
+import { accessoriesSummary } from '../../../../../utils/accessories/accessoriesSummary';
 
 const CharacterEquipmentPart = ({ equipment, engraving, arkpassive }) => {
   // const [sortedEquipment, setSortedEquipment] = useState();
@@ -24,16 +25,21 @@ const CharacterEquipmentPart = ({ equipment, engraving, arkpassive }) => {
     query: '(max-width:767px)',
   });
 
+  // 장비 순서 정렬
   const sortedEquipment = useMemo(
     () => (equipment ? sortEquipment(equipment) : undefined),
     [equipment]
   );
-
-  const basicEffect = useMemo(
+  // 장비 필요 데이터 가공
+  const equipmentData = useMemo(
     () => equipmentSummary(sortedEquipment),
     [sortedEquipment]
   );
-  console.log(basicEffect, 'sort', sortedEquipment);
+
+  const accessories = useMemo(() => accessoriesSummary(equipment), []);
+
+  console.log('equipmentData', equipmentData);
+  console.log('accessoriesData', accessories);
 
   if (engraving === null) {
     return null;
@@ -44,7 +50,6 @@ const CharacterEquipmentPart = ({ equipment, engraving, arkpassive }) => {
   }
 
   console.log(equipment, 'equipment');
-  console.log(sortedEquipment);
 
   // 장비들끼리 모으는 함수(투,어,상,하,장,무)
   // 악세들끼리 모으는 함수
@@ -56,9 +61,25 @@ const CharacterEquipmentPart = ({ equipment, engraving, arkpassive }) => {
   // 5. 무기 이름 o
   // 6. 무기 등급 o
   // 7. 부위 이름 o
+  // 8. 품질 o
 
   // 악세 정보 추출
-  // 일단 냅둬봐 장비 먼저 리팩토링
+  // 1. 악세 이름 o
+  // 2. 악세 품질 "ItemTitle"
+  // 3. 악세 효과 "ItemPartBox"
+  // 4. 깨달음 수치 "ItemPartBox"
+  // 5. 악세 등급 o
+  // 6. 기본 효과 "ItemPartBox"
+  // 7. 악세 부위 o
+
+  // todo
+  // 어빌리티 스톤, 팔찌
+  // 보석
+  // 트포, 스킬탭 트포 레벨
+  // 보유 캐릭터
+  // 아이템 레벨, 전투력
+  // 아크그리드
+  // 고칠거 개많고..
 
   // const equipmentTooltip = [];
 

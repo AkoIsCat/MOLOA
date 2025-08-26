@@ -12,6 +12,7 @@ import removeTag from '../../../../../utils/removeTag';
 import { sortEquipment } from '../../../../../utils/equipment/sortEquipment';
 import { equipmentSummary } from '../../../../../utils/equipment/equipmentSummary';
 import { accessoriesSummary } from '../../../../../utils/accessories/accessoriesSummary';
+import { StoneSummary } from '../../../../../utils/stone/StoneSummary';
 
 const CharacterEquipmentPart = ({ equipment, engraving, arkpassive }) => {
   // const [sortedEquipment, setSortedEquipment] = useState();
@@ -36,10 +37,12 @@ const CharacterEquipmentPart = ({ equipment, engraving, arkpassive }) => {
     [sortedEquipment]
   );
 
-  const accessories = useMemo(() => accessoriesSummary(equipment), []);
+  const accessories = useMemo(() => accessoriesSummary(equipment), [equipment]);
+  const stone = useMemo(() => StoneSummary(equipment), [equipment]);
 
   console.log('equipmentData', equipmentData);
   console.log('accessoriesData', accessories);
+  console.log('stone', stone);
 
   if (engraving === null) {
     return null;
@@ -65,15 +68,27 @@ const CharacterEquipmentPart = ({ equipment, engraving, arkpassive }) => {
 
   // 악세 정보 추출
   // 1. 악세 이름 o
-  // 2. 악세 품질 "ItemTitle"
-  // 3. 악세 효과 "ItemPartBox"
-  // 4. 깨달음 수치 "ItemPartBox"
+  // 2. 악세 품질 "ItemTitle" o
+  // 3. 악세 효과 "ItemPartBox" o
+  // 4. 깨달음 수치 "ItemPartBox" o
   // 5. 악세 등급 o
-  // 6. 기본 효과 "ItemPartBox"
+  // 6. 기본 효과 "ItemPartBox" o
   // 7. 악세 부위 o
 
+  // 어빌리티 스톤
+  // 돌 이름 o
+  // 티어(고대 어빌리티 스톤 항목도 같이) "ItemTitle" o
+  // 기본 효과 "ItemPartBox" o
+  // 세공 단계 보너스 "ItemPartBox" o
+  // 활성화 각인 "IndentStringGroup" o
+  // 감소 "IndentStringGroup" o
+
+  // 팔찌
+  // 팔찌 이름
+  // 팔찌 티어 (어빌리티 스톤과 동일) "ItemTitle"
+  // 팔찌 효과 "ItemPartBox"
+
   // todo
-  // 어빌리티 스톤, 팔찌
   // 보석
   // 트포, 스킬탭 트포 레벨
   // 보유 캐릭터

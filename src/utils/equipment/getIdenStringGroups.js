@@ -1,4 +1,4 @@
-import { findByType } from '../findBtType';
+import { findByType } from '../findByType';
 
 // IdenStringGroups 데이터 추출(초월, 엘릭서)
 export const getIdenStringGroups = (data) => {

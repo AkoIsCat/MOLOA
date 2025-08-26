@@ -1,4 +1,4 @@
-import { findByType } from '../findBtType';
+import { findByType } from '../findByType';
 
 // ItemTitle 데이터 (품질)
 export const getItemTitle = (data) => {

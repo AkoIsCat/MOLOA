@@ -1,4 +1,4 @@
-import { findByType } from '../findBtType';
+import { findByType } from '../findByType';
 
 // 부위별 ItemPartBox들의 value만 추출(물/마방, 힘/민/지, 체력, 생명 활성력, 세트 효과)
 export const getPartBoxes = (data) => {

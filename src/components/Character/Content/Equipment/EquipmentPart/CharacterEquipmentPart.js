@@ -13,6 +13,7 @@ import { sortEquipment } from '../../../../../utils/equipment/sortEquipment';
 import { equipmentSummary } from '../../../../../utils/equipment/equipmentSummary';
 import { accessoriesSummary } from '../../../../../utils/accessories/accessoriesSummary';
 import { StoneSummary } from '../../../../../utils/stone/StoneSummary';
+import { braceletSummary } from '../../../../../utils/bracelet/braceletSummary';
 
 const CharacterEquipmentPart = ({ equipment, engraving, arkpassive }) => {
   // const [sortedEquipment, setSortedEquipment] = useState();
@@ -39,10 +40,12 @@ const CharacterEquipmentPart = ({ equipment, engraving, arkpassive }) => {
 
   const accessories = useMemo(() => accessoriesSummary(equipment), [equipment]);
   const stone = useMemo(() => StoneSummary(equipment), [equipment]);
+  const bracelet = useMemo(() => braceletSummary(equipment), [equipment]);
 
   console.log('equipmentData', equipmentData);
   console.log('accessoriesData', accessories);
   console.log('stone', stone);
+  console.log('bracelet', bracelet);
 
   if (engraving === null) {
     return null;
@@ -84,9 +87,9 @@ const CharacterEquipmentPart = ({ equipment, engraving, arkpassive }) => {
   // 감소 "IndentStringGroup" o
 
   // 팔찌
-  // 팔찌 이름
-  // 팔찌 티어 (어빌리티 스톤과 동일) "ItemTitle"
-  // 팔찌 효과 "ItemPartBox"
+  // 팔찌 이름 o
+  // 팔찌 티어 (어빌리티 스톤과 동일) "ItemTitle" o
+  // 팔찌 효과 "ItemPartBox" o
 
   // todo
   // 보석
@@ -768,16 +771,14 @@ const CharacterEquipmentPart = ({ equipment, engraving, arkpassive }) => {
   return (
     <div>
       리팩토링중
-      {/* {(isPc || isTablet) && (
+      {(isPc || isTablet) && (
         <EquipmentWrap>
           <FlexWrap>
             <EquipmentInner>
               <EquipmentDetail
-                equipment={equipment}
-                equipmentList={equipmentList}
-                sortEquipmentTooltip={sortEquipmentTooltip}
+                equipment={equipmentData}
               />
-              <MountedEngraving
+              {/* <MountedEngraving
                 mountedEngraving={mountedEngraving}
                 mountedEngravingItem={mountedEngravingItem}
                 elixirTotalLevel={
@@ -788,9 +789,9 @@ const CharacterEquipmentPart = ({ equipment, engraving, arkpassive }) => {
                 }
                 activateElixir={equipmentList[5]?.TooltipValue?.activateElixir}
                 arkpassive={arkpassive}
-              />
+              /> */}
             </EquipmentInner>
-            <AccessoriesInner>
+            {/* <AccessoriesInner>
               <AccessoriesDetail
                 accessoriesList={accessoriesList}
                 equipment={equipment}
@@ -804,7 +805,7 @@ const CharacterEquipmentPart = ({ equipment, engraving, arkpassive }) => {
                   equipmentList[5]?.TooltipValue?.transcendenceTotalNum
                 }
               />
-            </AccessoriesInner>
+            </AccessoriesInner> */}
           </FlexWrap>
         </EquipmentWrap>
       )}
@@ -814,14 +815,14 @@ const CharacterEquipmentPart = ({ equipment, engraving, arkpassive }) => {
             <div style={{ margin: '0 auto' }}>
               <EquipmentInner>
                 <EquipmentDetail
-                  equipment={equipment}
-                  equipmentList={equipmentList}
-                  sortEquipmentTooltip={sortEquipmentTooltip}
+                  equipment={equipmentData}
+                  // equipmentList={equipmentList}
+                  // sortEquipmentTooltip={sortEquipmentTooltip}
                 />
               </EquipmentInner>
             </div>
             <hr width="100%" color="#292e33" size="2" />
-            <div style={{ margin: '0 auto' }}>
+            {/* <div style={{ margin: '0 auto' }}>
               <AccessoriesInner>
                 <AccessoriesDetail
                   accessoriesList={accessoriesList}
@@ -840,8 +841,8 @@ const CharacterEquipmentPart = ({ equipment, engraving, arkpassive }) => {
                   }
                 />
               </AccessoriesInner>
-            </div>
-            <div style={{ margin: '0 auto' }}>
+            </div> */}
+            {/* <div style={{ margin: '0 auto' }}>
               <MountedEngraving
                 mountedEngraving={mountedEngraving}
                 mountedEngravingItem={mountedEngravingItem}
@@ -853,10 +854,10 @@ const CharacterEquipmentPart = ({ equipment, engraving, arkpassive }) => {
                 }
                 activateElixir={equipmentList[5]?.TooltipValue.activateElixir}
               />
-            </div>
+            </div> */}
           </FlexWrap>
         </EquipmentWrap>
-      )} */}
+      )}
     </div>
   );
 };
@@ -929,6 +930,10 @@ const EquipmentInner = styled.div`
 
       .item {
         margin: 0 2px;
+      }
+
+      .single {
+        color: #85af3a;
       }
 
       .name {

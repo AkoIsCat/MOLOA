@@ -1,12 +1,10 @@
 import styled from 'styled-components';
 import { useState, Fragment } from 'react';
 import EquipmentTooltip from './EquipmentTooltip';
+import transcendence from '../../../../../asset/icon/transcendence.png';
+import removeTag from '../../../../../utils/removeTag';
 
-const EquipmentDetail = ({
-  equipment,
-  equipmentList,
-  sortEquipmentTooltip,
-}) => {
+const EquipmentDetail = ({ equipment }) => {
   const EquipmentBox = ({ item, index }) => {
     const [showTooltip, setShowTooltip] = useState(false);
 
@@ -14,50 +12,46 @@ const EquipmentDetail = ({
       <>
         <div>
           {showTooltip && <EquipmentTooltip item={item} />}
-          {equipmentList[0].TooltipValue !== undefined &&
-            equipment.map(
-              (items) =>
-                items.Type === item.Type && (
-                  <Fragment key={item.Type}>
-                    <ImageBox
-                      onMouseOver={() => setShowTooltip(true)}
-                      onMouseLeave={() => setShowTooltip(false)}
-                    >
-                      <ImageBoxColor key={items.Tooltip} exist={items.Grade}>
-                        <img src={items.Icon} alt="장비" />
-                      </ImageBoxColor>
-                    </ImageBox>
-                    <div className="desc">
-                      <div className="type">
-                        <span className="item">+{item.ItemEnforce}</span>
-                        <span className="item">{item.ItemName}</span>
-                      </div>
-                      <PercentBar
-                        quality={
-                          sortEquipmentTooltip[index] &&
-                          sortEquipmentTooltip[index]['Element_001'].value
-                            .qualityValue
-                        }
-                      >
-                        {item.TooltipValue.advancedReforging && (
-                          <span className="aR">
-                            (+{item.TooltipValue.advancedReforging})
-                          </span>
-                        )}
-                        <p>
-                          {sortEquipmentTooltip[index] &&
-                            sortEquipmentTooltip[index]['Element_001'].value
-                              .qualityValue}
-                        </p>
-                        <div>
-                          <div></div>
-                        </div>
-                      </PercentBar>
-                    </div>
-                  </Fragment>
-                )
-            )}
-          {equipmentList[0].TooltipValue === undefined && <div></div>}
+          <Fragment key={item.Type}>
+            <ImageBox
+              onMouseOver={() => setShowTooltip(true)}
+              onMouseLeave={() => setShowTooltip(false)}
+            >
+              <ImageBoxColor key={item.ItemName} exist={item.Grade}>
+                <img src={item.Icon} alt="장비" />
+              </ImageBoxColor>
+            </ImageBox>
+            <div className="desc">
+              <div className="type">
+                <span className="item single">
+                  +{item.SingleText.slice(0, 2)}
+                </span>
+                <span className="item">{item.ItemName}</span>
+              </div>
+              <PercentBar quality={item.ItemTitle}>
+                <span className="aR">
+                  <img src={transcendence} width={20} alt="초월 아이콘" />
+                  <div
+                    dangerouslySetInnerHTML={{
+                      __html: removeTag(
+                        removeTag(
+                          item.IndentStrings[0].IdenStringGroup2.split('총')[1],
+                          'img'
+                        ),
+                        'FONT'
+                      ).replace(/개$/, ''),
+                    }}
+                  />
+                </span>
+                <p>{item.ItemTitle}</p>
+                <div>
+                  <div></div>
+                </div>
+              </PercentBar>
+            </div>
+          </Fragment>
+
+          {<div></div>}
         </div>
       </>
     );
@@ -65,7 +59,7 @@ const EquipmentDetail = ({
 
   return (
     <>
-      {equipmentList.map((item, index) => (
+      {equipment.map((item, index) => (
         <EquipmentBox item={item} index={index} key={index} />
       ))}
     </>
@@ -161,6 +155,16 @@ const PercentBar = styled.div`
   }
 
   .aR {
-    color: #85af3a;
+    color: #fff;
+    display: inline-block;
+    display: flex;
+
+    img {
+      display: inline-block;
+    }
+    div {
+      background: transparent;
+      display: inline-block;
+    }
   }
 `;

@@ -11,6 +11,7 @@ export const mapEquipmentPart = (fullData, idx, tooltips) => {
   const ItemTitleBox = getItemTitle(data);
 
   return {
+    Icon: fullData.Icon,
     PartName: fullData.Type,
     ItemName: fullData.Name,
     Grade: fullData.Grade,

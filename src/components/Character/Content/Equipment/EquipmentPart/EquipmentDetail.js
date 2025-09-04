@@ -158,6 +158,8 @@ const PercentBar = styled.div`
     color: #fff;
     display: inline-block;
     display: flex;
+    justify-content: center;
+    align-items: center;
 
     img {
       display: inline-block;
@@ -165,6 +167,8 @@ const PercentBar = styled.div`
     div {
       background: transparent;
       display: inline-block;
+      margin-bottom: 0;
+      margin-top: 5px;
     }
   }
 `;

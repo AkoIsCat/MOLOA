@@ -2,7 +2,6 @@ import styled from 'styled-components';
 import transcendence from '../../../../../asset/icon/transcendence.png';
 
 const EquipmentTooltip = ({ item }) => {
-  console.log(item);
   return item.Type !== '무기' ? (
     <EquipmentTooltipWrap>
       <div className="defaultEffectWrap">
@@ -34,6 +33,7 @@ const EquipmentTooltip = ({ item }) => {
           {item.PartBoxes.map((d) =>
             d.includes('진화') ? (
               <div
+                key={d}
                 dangerouslySetInnerHTML={{ __html: d.split('</FONT>')[0] }}
               />
             ) : (

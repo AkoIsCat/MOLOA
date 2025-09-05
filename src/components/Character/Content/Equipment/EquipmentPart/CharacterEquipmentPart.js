@@ -91,257 +91,18 @@ const CharacterEquipmentPart = ({ equipment, engraving, arkpassive }) => {
   // 팔찌 티어 (어빌리티 스톤과 동일) "ItemTitle" o
   // 팔찌 효과 "ItemPartBox" o
 
+  // 엘릭서, 초월 합계 함수 새로 작성하기
+
   // todo
   // 보석
   // 트포, 스킬탭 트포 레벨
   // 보유 캐릭터
   // 아이템 레벨, 전투력
   // 아크그리드
+  // 전 레벨대 아크패시브 적용 이후 접속한 적이 없는 캐릭터는 안내 문구 or 아무것도 안보여주기
   // 고칠거 개많고..
 
-  // const equipmentTooltip = [];
-
-  // for (const item in equipment) {
-  //   equipmentTooltip.push(JSON.parse(equipment[item].Tooltip));
-  // }
-
-  // const sortEquipmentTooltip = [
-  //   equipmentTooltip[1],
-  //   equipmentTooltip[5],
-  //   equipmentTooltip[2],
-  //   equipmentTooltip[3],
-  //   equipmentTooltip[4],
-  //   equipmentTooltip[0],
-  // ];
-
   // const sortAccessoriesTooltip = equipmentTooltip.slice(6, 13);
-
-  // // 장비 툴팁 추출
-  // const equipmentEffectTooltip = [];
-  // const accessoriesEffectTooltip = []; // 악세 툴팁
-
-  // // 자주 쓰이는 정규표현식
-  // const removeFontTagRegex = /<\/?FONT[^>]*>/g;
-  // const removeLevelRegex = /.*Lv\.(\d+).*/;
-
-  // // 장비 정보 추출
-  // if (sortEquipmentTooltip[0] !== undefined) {
-  //   const filterTooltip = [];
-  //   for (let i = 0; i <= sortEquipmentTooltip.length - 1; i++) {
-  //     const filterValue = [];
-  //     // console.log(sortEquipmentTooltip, 'tt', i);
-  //     // 기본, 추가효과, 세트레벨
-  //     for (let key in sortEquipmentTooltip[i]) {
-  //       if (
-  //         sortEquipmentTooltip[i][key] !== null &&
-  //         sortEquipmentTooltip[i][key].type === 'ItemPartBox'
-  //       ) {
-  //         filterValue.push({
-  //           effect: sortEquipmentTooltip[i][key].value['Element_001'],
-  //         });
-  //       }
-  //     }
-  //     // 엘릭서
-  //     for (let _ in sortEquipmentTooltip[i]) {
-  //       // console.log(
-  //       //   sortEquipmentTooltip,
-  //       //   i,
-  //       //   tooltip,
-  //       //   '장비툴팁',
-  //       //   sortEquipmentTooltip[i]
-  //       // );
-  //       // 새롭게 엘릭서 데이터를 모아놓음. 이 이후에 어떻게 해야할지 고민.
-  //       const tooltip2 = Object.values(sortEquipmentTooltip[i]).filter(
-  //         (item) =>
-  //           item?.type === 'IndentStringGroup' &&
-  //           typeof item.value?.['Element_000']?.contentStr === 'object' &&
-  //           Object.keys(item.value['Element_000'].contentStr).length === 2
-  //       );
-  //       // console.log('툴팁2', tooltip2, sortEquipmentTooltip[i], i);
-  //       if (tooltip2 !== null) {
-  //         // console.log('yes', tooltip2);
-  //         const tooltipData = tooltip2 && tooltip2[0]?.value['Element_000'];
-  //         const activateElixir =
-  //           tooltip2 &&
-  //           tooltipData[1]?.topStr.includes('단계') &&
-  //           tooltipData[1]?.topStr
-  //             .replace(removeFontTagRegex, '')
-  //             .split('<br>')[1];
-  //         filterValue.push({
-  //           Elixir: tooltipData?.contentStr['Element_000']?.contentStr,
-  //           Elixir2: tooltipData?.contentStr['Element_001']?.contentStr,
-  //           activate: activateElixir,
-  //         });
-  //       }
-  //       // console.log(filterValue, 'fv');
-  //     }
-
-  //     // 초월
-  //     for (let key in sortEquipmentTooltip[i]) {
-  //       const tooltip =
-  //         sortEquipmentTooltip[i][key].value !== null &&
-  //         sortEquipmentTooltip[i][key].value['Element_000'];
-  //       if (
-  //         tooltip !== false &&
-  //         sortEquipmentTooltip[i][key].type === 'IndentStringGroup' &&
-  //         Object.keys(sortEquipmentTooltip[i][key].value).length === 1 &&
-  //         Object.keys(tooltip.contentStr).length >= 4 &&
-  //         tooltip.topStr
-  //       ) {
-  //         const transcendence = tooltip.topStr;
-  //         const transcendenceCount =
-  //           tooltip.contentStr['Element_001'].contentStr;
-  //         filterValue.push({
-  //           transcendence,
-  //           transcendenceCount,
-  //         });
-  //       }
-  //     }
-
-  //     // 상급 재련
-  //     for (let key in sortEquipmentTooltip[i]) {
-  //       const tooltip = sortEquipmentTooltip[i][key].value;
-  //       if (typeof tooltip === 'string' && tooltip.includes('상급 재련')) {
-  //         const level = tooltip
-  //           .replace(removeFontTagRegex, '')
-  //           .replace(/[^0-9]/g, '');
-  //         filterValue.push({
-  //           advancedReforging: +level,
-  //         });
-  //       }
-  //     }
-  //     // 각각의 아이템 정보
-  //     for (let key in sortEquipmentTooltip[i]) {
-  //       if (sortEquipmentTooltip[i][key].type === 'ItemTitle') {
-  //         filterValue.push({
-  //           itemName: sortEquipmentTooltip[i][key].value.leftStr0,
-  //           quality: sortEquipmentTooltip[i][key].value.qualityValue,
-  //           itemLevel: sortEquipmentTooltip[i][key].value.leftStr2,
-  //         });
-  //       }
-  //     }
-
-  //     filterTooltip.push({
-  //       tooltip: filterValue,
-  //     });
-  //     // console.log(filterTooltip);
-  //   }
-
-  //   let sum1 = 0,
-  //     sum2 = 0,
-  //     totalSum = 0;
-  //   let activateElixir = false;
-  //   let transcendenceTotalNum = '';
-
-  //   // 데이터를 추출한 filterValue를 이용해 더 세부적인 정보를 추출하고 최종 장비 tooltip 배열에 저장하는 함수
-  //   const ExtractNeedEquipmentDataAndPush = (tooltipData) => {
-  //     tooltipData.forEach((item, index) => {
-  //       const splitBR = item.tooltip[0].effect.split('<BR>');
-  //       const removeFont = item.tooltip[2]?.effect?.replace(
-  //         removeFontTagRegex,
-  //         ''
-  //       );
-  //       let elixir1, elixir2;
-  //       const tier = arcPassiveDivision(item.tooltip);
-  //       const transcendence = item.tooltip.filter((key) => key.transcendence);
-  //       const transcendenceStep = transcendence[0]?.transcendence.replace(
-  //         "<img src='emoticon_Transcendence_Grade'",
-  //         '<img src="https://firebasestorage.googleapis.com/v0/b/lostark-bf0ba.appspot.com/o/transcendence.png?alt=media&token=cddea62b-27e1-489a-a571-07e8e43ff3bb"'
-  //       );
-
-  //       const transcendenceTotal = transcendence[0]?.transcendenceCount.replace(
-  //         "<img src='emoticon_Transcendence_Grade'",
-  //         '<img src="https://firebasestorage.googleapis.com/v0/b/lostark-bf0ba.appspot.com/o/transcendence.png?alt=media&token=cddea62b-27e1-489a-a571-07e8e43ff3bb"'
-  //       );
-  //       const transcendenceCount = transcendenceTotal
-  //         ?.split('</img>')[1]
-  //         .replace(/[^0-9]/g, '');
-
-  //       if (transcendenceCount !== undefined) {
-  //         transcendenceTotalNum = transcendenceCount;
-  //       }
-  //       if (
-  //         item.tooltip &&
-  //         activateElixir === false &&
-  //         item.tooltip[4]?.activate !== undefined &&
-  //         item.tooltip[0].effect.includes('공격력') === false
-  //       ) {
-  //         activateElixir = item.tooltip[4].activate;
-  //       }
-
-  //       if (index < filterTooltip.length - 1) {
-  //         elixir1 = elixirEffectDivision(item, tier, 1);
-
-  //         elixir2 = elixirEffectDivision(item, tier, 2);
-
-  //         const elixir1Level =
-  //           elixir1 &&
-  //           elixir1 !== undefined &&
-  //           parseInt(elixir1[0].replace(removeLevelRegex, '$1'));
-  //         const elixir2Level =
-  //           elixir2 &&
-  //           elixir2 !== undefined &&
-  //           parseInt(elixir2[0].replace(removeLevelRegex, '$1'));
-
-  //         sum1 += elixir1Level !== undefined && elixir1Level;
-  //         sum2 += elixir2Level !== undefined && elixir2Level;
-  //       }
-
-  //       totalSum = sum1 + sum2;
-
-  //       const itemName = item.tooltip[item.tooltip.length - 1].itemName.replace(
-  //         removeFontTagRegex,
-  //         ''
-  //       );
-
-  //       const itemLevel = item.tooltip[
-  //         item.tooltip.length - 1
-  //       ].itemLevel.replace(removeFontTagRegex, '');
-
-  //       const itemQuality = item.tooltip[item.tooltip.length - 1].quality;
-  //       const advancedReforging = item.tooltip.filter(
-  //         (key) => key.advancedReforging
-  //       );
-
-  //       if (index < 5) {
-  //         equipmentEffectTooltip.push({
-  //           physics: splitBR[0],
-  //           magic: splitBR[1],
-  //           characteristic: splitBR[2],
-  //           health: splitBR[3],
-  //           vitality: item.tooltip[1].effect,
-  //           level: removeFont,
-  //           itemName,
-  //           itemLevel,
-  //           itemQuality,
-  //           elixir1,
-  //           elixir2,
-  //           transcendenceStep,
-  //           transcendenceTotal,
-  //           advancedReforging: advancedReforging[0]?.advancedReforging,
-  //         });
-  //       } else {
-  //         equipmentEffectTooltip.push({
-  //           offensePower: item.tooltip[0].effect,
-  //           additionalDamage: item.tooltip[1].effect,
-  //           level: removeFont,
-  //           itemName,
-  //           itemLevel,
-  //           itemQuality,
-  //           elixirTotalLevel: totalSum,
-  //           activateElixir,
-  //           transcendenceStep,
-  //           transcendenceTotal,
-  //           transcendenceTotalNum,
-  //           advancedReforging: advancedReforging[0]?.advancedReforging,
-  //         });
-  //       }
-  //     });
-  //     return;
-  //   };
-
-  //   ExtractNeedEquipmentDataAndPush(filterTooltip);
-  // }
 
   // // 악세 정보 추출
   // if (sortAccessoriesTooltip[0] !== undefined) {
@@ -590,50 +351,6 @@ const CharacterEquipmentPart = ({ equipment, engraving, arkpassive }) => {
   //   }
   // }
 
-  // const equipmentList = [
-  //   {
-  //     Type: '투구',
-  //     Tooltip: '머리장식',
-  //     ItemName: equipment[1].Name.replace(/[0-9]/g, '').replace('+', '').trim(),
-  //     ItemEnforce: equipment[1].Name.replace(/[^0-9]/g, ''),
-  //     TooltipValue: equipmentEffectTooltip[0],
-  //   },
-  //   {
-  //     Type: '어깨',
-  //     Tooltip: '견갑',
-  //     ItemName: equipment[5].Name.replace(/[0-9]/g, '').replace('+', '').trim(),
-  //     ItemEnforce: equipment[5].Name.replace(/[^0-9]/g, ''),
-  //     TooltipValue: equipmentEffectTooltip[1],
-  //   },
-  //   {
-  //     Type: '상의',
-  //     Tooltip: '상의',
-  //     ItemName: equipment[2].Name.replace(/[0-9]/g, '').replace('+', '').trim(),
-  //     ItemEnforce: equipment[2].Name.replace(/[^0-9]/g, ''),
-  //     TooltipValue: equipmentEffectTooltip[2],
-  //   },
-  //   {
-  //     Type: '하의',
-  //     Tooltip: '하의',
-  //     ItemName: equipment[3].Name.replace(/[0-9]/g, '').replace('+', '').trim(),
-  //     ItemEnforce: equipment[3].Name.replace(/[^0-9]/g, ''),
-  //     TooltipValue: equipmentEffectTooltip[3],
-  //   },
-  //   {
-  //     Type: '장갑',
-  //     Tooltip: '장갑',
-  //     ItemName: equipment[4].Name.replace(/[0-9]/g, '').replace('+', '').trim(),
-  //     ItemEnforce: equipment[4].Name.replace(/[^0-9]/g, ''),
-  //     TooltipValue: equipmentEffectTooltip[4],
-  //   },
-  //   {
-  //     Type: '무기',
-  //     ItemName: equipment[0].Name.replace(/[0-9]/g, '').replace('+', '').trim(),
-  //     ItemEnforce: equipment[0].Name.replace(/[^0-9]/g, ''),
-  //     TooltipValue: equipmentEffectTooltip[5],
-  //   },
-  // ];
-
   // const accessoriesList = [
   //   {
   //     Type: '목걸이',
@@ -775,9 +492,7 @@ const CharacterEquipmentPart = ({ equipment, engraving, arkpassive }) => {
         <EquipmentWrap>
           <FlexWrap>
             <EquipmentInner>
-              <EquipmentDetail
-                equipment={equipmentData}
-              />
+              <EquipmentDetail equipment={equipmentData} />
               {/* <MountedEngraving
                 mountedEngraving={mountedEngraving}
                 mountedEngravingItem={mountedEngravingItem}
@@ -814,11 +529,7 @@ const CharacterEquipmentPart = ({ equipment, engraving, arkpassive }) => {
           <FlexWrap>
             <div style={{ margin: '0 auto' }}>
               <EquipmentInner>
-                <EquipmentDetail
-                  equipment={equipmentData}
-                  // equipmentList={equipmentList}
-                  // sortEquipmentTooltip={sortEquipmentTooltip}
-                />
+                <EquipmentDetail equipment={equipmentData} />
               </EquipmentInner>
             </div>
             <hr width="100%" color="#292e33" size="2" />
@@ -916,6 +627,11 @@ const EquipmentInner = styled.div`
   div {
     display: flex;
     margin-bottom: 13px;
+
+    .itemPartBox {
+      margin-bottom: 0;
+      margin-top: 1rem;
+    }
 
     .desc {
       display: flex;

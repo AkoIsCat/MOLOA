@@ -1,4 +1,5 @@
 import { findByType } from '../findByType';
+import removeTag from '../removeTag';
 
 // IdenStringGroups 데이터 추출(초월, 엘릭서)
 export const getIdenStringGroups = (data) => {
@@ -10,8 +11,14 @@ export const getIdenStringGroups = (data) => {
       const IdenStringGroup2 = content?.contentStr?.Element_001?.contentStr;
 
       return {
-        IdenStringGroup1,
-        IdenStringGroup2,
+        IdenStringGroup1: removeTag(
+          removeTag(IdenStringGroup1, 'FONT'),
+          'font'
+        ),
+        IdenStringGroup2: removeTag(
+          removeTag(removeTag(IdenStringGroup2, 'FONT'), 'font'),
+          'img'
+        ),
       };
     })
     .filter(Boolean);

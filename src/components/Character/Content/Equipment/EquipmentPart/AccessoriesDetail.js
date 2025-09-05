@@ -7,6 +7,7 @@ import removeTag from '../../../../../utils/removeTag';
 
 const AccessoriesDetail = ({
   equipment,
+  accessories,
   accessoriesList,
   sortAccessoriesTooltip,
   stoneAndBracelet,
@@ -15,6 +16,7 @@ const AccessoriesDetail = ({
   transcendenceTotalNum,
   arkpassive,
 }) => {
+  console.log(accessories);
   const arkPassiveActivity = arkpassive?.IsArkPassive;
 
   const filterAccessories =
@@ -63,7 +65,7 @@ const AccessoriesDetail = ({
               arkPassiveActivity={arkPassiveActivity}
             />
           )}
-          {accessoriesList[index].TooltipValue !== undefined && (
+          {accessories !== undefined && (
             <>
               <ImageBox>
                 <ImageBoxColor
@@ -85,12 +87,12 @@ const AccessoriesDetail = ({
                 </ImageBoxColor>
                 {index < 5 && (
                   <PercentBar
-                    quality={quality}
-                    key={`${quality} ${
+                    quality={item.qualityValue}
+                    key={`${item.qualityValue} ${
                       filterAccessories && filterAccessories[index]?.Name
                     } `}
                   >
-                    <p>{quality}</p>
+                    <p>{item.qualityValue}</p>
                     <div>
                       <div></div>
                     </div>
@@ -160,7 +162,7 @@ const AccessoriesDetail = ({
               </div>
             </>
           )}
-          {accessoriesList[0].TooltipValue === undefined && <div></div>}
+          {accessories === undefined && <div></div>}
         </div>
       </>
     );
@@ -168,15 +170,15 @@ const AccessoriesDetail = ({
 
   return (
     <>
-      {accessoriesList &&
-        accessoriesList.map((item, index) => (
+      {accessories &&
+        accessories.map((item, index) => (
           <AccessoriesBox
             item={item}
             index={index}
             key={`${index + 1} ${item.ItemName}`}
           />
         ))}
-      <EffectTotal>
+      {/* <EffectTotal>
         <div>
           <img
             src="https://firebasestorage.googleapis.com/v0/b/lostark-bf0ba.appspot.com/o/transcendence.png?alt=media&token=cddea62b-27e1-489a-a571-07e8e43ff3bb"
@@ -189,7 +191,7 @@ const AccessoriesDetail = ({
         <div className="activeExlixir">
           {transcendenceTotalNum?.length === 0 ? '0개' : transcendenceTotalNum}
         </div>
-      </EffectTotal>
+      </EffectTotal> */}
     </>
   );
 };

@@ -506,21 +506,22 @@ const CharacterEquipmentPart = ({ equipment, engraving, arkpassive }) => {
                 arkpassive={arkpassive}
               /> */}
             </EquipmentInner>
-            {/* <AccessoriesInner>
+            <AccessoriesInner>
               <AccessoriesDetail
-                accessoriesList={accessoriesList}
+                // accessoriesList={accessoriesList}
+                accessories={accessories}
                 equipment={equipment}
-                arkpassive={arkpassive}
-                sortAccessoriesTooltip={sortAccessoriesTooltip}
-                stoneAndBracelet={stoneAndBracelet}
-                breceletEffectList={breceletEffectList}
-                stoneIndex={stoneIndex}
-                transcendenceTotalNum={
-                  equipment &&
-                  equipmentList[5]?.TooltipValue?.transcendenceTotalNum
-                }
+                // arkpassive={arkpassive}
+                // sortAccessoriesTooltip={sortAccessoriesTooltip}
+                // stoneAndBracelet={stoneAndBracelet}
+                // breceletEffectList={breceletEffectList}
+                // stoneIndex={stoneIndex}
+                // transcendenceTotalNum={
+                //   equipment &&
+                //   equipmentList[5]?.TooltipValue?.transcendenceTotalNum
+                // }
               />
-            </AccessoriesInner> */}
+            </AccessoriesInner>
           </FlexWrap>
         </EquipmentWrap>
       )}
@@ -533,26 +534,27 @@ const CharacterEquipmentPart = ({ equipment, engraving, arkpassive }) => {
               </EquipmentInner>
             </div>
             <hr width="100%" color="#292e33" size="2" />
-            {/* <div style={{ margin: '0 auto' }}>
+            <div style={{ margin: '0 auto' }}>
               <AccessoriesInner>
                 <AccessoriesDetail
-                  accessoriesList={accessoriesList}
+                  // accessoriesList={accessoriesList}
+                  accessories={accessories}
                   equipment={equipment}
-                  sortAccessoriesTooltip={sortAccessoriesTooltip}
-                  stoneAndBracelet={stoneAndBracelet}
-                  breceletEffectList={breceletEffectList}
-                  stoneIndex={stoneIndex}
-                  arkpassive={arkpassive}
-                  transcendenceTotalNum={
-                    equipment &&
-                    equipmentList[5]?.TooltipValue.transcendenceTotalNum
-                      .length === 0
-                      ? 0
-                      : equipmentList[5]?.TooltipValue.transcendenceTotalNum
-                  }
+                  // sortAccessoriesTooltip={sortAccessoriesTooltip}
+                  // stoneAndBracelet={stoneAndBracelet}
+                  // breceletEffectList={breceletEffectList}
+                  // stoneIndex={stoneIndex}
+                  // arkpassive={arkpassive}
+                  // transcendenceTotalNum={
+                  //   equipment &&
+                  //   equipmentList[5]?.TooltipValue.transcendenceTotalNum
+                  //     .length === 0
+                  //     ? 0
+                  //     : equipmentList[5]?.TooltipValue.transcendenceTotalNum
+                  // }
                 />
               </AccessoriesInner>
-            </div> */}
+            </div>
             {/* <div style={{ margin: '0 auto' }}>
               <MountedEngraving
                 mountedEngraving={mountedEngraving}

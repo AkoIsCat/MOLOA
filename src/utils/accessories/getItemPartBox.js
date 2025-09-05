@@ -18,9 +18,11 @@ export const getItemPartBox = (data) => {
 
   // 필요 데이터 통합 객체
   const extractDesiredValues = {
-    BasicEffect: removeTag(BasicEffect, 'FONT'),
-    GrindingEffect: removeTag(removeTag(GrindingEffect, 'img'), 'FONT'),
-    AwakeNumber,
+    BasicEffect: BasicEffect ? removeTag(BasicEffect, 'FONT') : '',
+    GrindingEffect: GrindingEffect
+      ? removeTag(removeTag(GrindingEffect, 'img'), 'FONT')
+      : '',
+    AwakeNumber: AwakeNumber ? AwakeNumber : '',
   };
 
   return extractDesiredValues;

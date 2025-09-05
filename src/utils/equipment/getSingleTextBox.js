@@ -7,6 +7,11 @@ export const getSingleTextBox = (data) => {
   const extractDesiredValues = findData.filter((item) =>
     item.value.includes('상급 재련')
   );
+
+  if (extractDesiredValues.length === 0) {
+    return null;
+  }
+
   const splitFont = extractDesiredValues[0].value.split('\n');
   const removeFontTag = removeTag(splitFont[0], 'FONT');
 

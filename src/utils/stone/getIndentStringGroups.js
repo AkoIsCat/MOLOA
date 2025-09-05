@@ -6,6 +6,10 @@ export const getIndentStringGroups = (data) => {
     (item) => item.value !== null
   );
 
+  if (findData.length === 0) {
+    return null;
+  }
+
   const commonDept = findData[0].value.Element_000.contentStr;
   const activate = {
     first: removeTag(

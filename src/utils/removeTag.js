@@ -1,5 +1,9 @@
 /* eslint-disable */
 const removeTag = (data, tag) => {
+  if (!data) {
+    return null;
+  }
+
   const removeStartTag = new RegExp(
     `<${tag}[a-zA-Z0-9_\\^\\$\\.\\|\\{\\[\\}\\]\\(\\)\\*\\+\\?\\\\~'!@#%&-=;:'",/\\n\\s]*>`,
     'g'

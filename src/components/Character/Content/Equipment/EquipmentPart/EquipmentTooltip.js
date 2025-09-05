@@ -1,85 +1,74 @@
 import styled from 'styled-components';
+import transcendence from '../../../../../asset/icon/transcendence.png';
 
 const EquipmentTooltip = ({ item }) => {
+  console.log(item);
   return item.Type !== '무기' ? (
     <EquipmentTooltipWrap>
       <div className="defaultEffectWrap">
         <div
           style={{
-            color: 'rgb(254, 150, 0)',
+            color: '#fff',
             fontSize: '17px',
             textAlign: 'center',
           }}
         >
           {item.ItemName}
         </div>
-        <QualityText quality={item.TooltipValue.itemQuality}>
-          품질 {item.TooltipValue.itemQuality}
-        </QualityText>
-        <div>{item.TooltipValue.physics}</div>
-        <div>{item.TooltipValue.magic}</div>
-        <div>{item.TooltipValue.characteristic}</div>
-        <div>{item.TooltipValue.health}</div>
+        <ItemContainer>
+          <QualityText quality={item.ItemTitle.qualityValue}>
+            <span>품질</span>
+            <span>{item.ItemTitle.qualityValue}</span>
+          </QualityText>
+          <ItemContainer>
+            <p className="flex no-mp">
+              <span className="no-mp">{item.Grade}</span>
+              <span className="no-mp">{item.PartName}</span>
+            </p>
+          </ItemContainer>
+          <div className="itemLevel">{item.ItemTitle.itemLevel}</div>
+        </ItemContainer>
       </div>
-      {item.TooltipValue.vitality && (
-        <div className="vitalityWrap">
-          {item.TooltipValue.vitality !== undefined &&
-            item.TooltipValue.vitality.includes('<BR>') !== undefined && (
-              <div style={{ display: 'flex', flexDirection: 'column' }}>
-                <div>{item.TooltipValue.vitality.split('<BR>')[0]}</div>
-                <div>{item.TooltipValue.vitality.split('<BR>')[1]}</div>
-                <div>{item.TooltipValue.vitality.split('<BR>')[2]}</div>
-              </div>
-            )}
-          {item.TooltipValue.vitality !== undefined &&
-            item.TooltipValue.vitality.includes('<BR>') === undefined && (
-              <div>{item.TooltipValue.vitality}</div>
-            )}
-        </div>
+      {item.PartBoxes && (
+        <ItemPartBox className="itemPartBox">
+          {item.PartBoxes.map((d) =>
+            d.includes('진화') ? (
+              <div
+                dangerouslySetInnerHTML={{ __html: d.split('</FONT>')[0] }}
+              />
+            ) : (
+              <div dangerouslySetInnerHTML={{ __html: d }} />
+            )
+          )}
+        </ItemPartBox>
       )}
-      {item.TooltipValue.elixir1 !== undefined && (
+      {item.IndentStrings && (
         <div className="elixirWrap">
-          <div>
-            {item.TooltipValue.elixir1 &&
-              item.TooltipValue.elixir1.map((item, index) => (
-                <EffectNameColorBox key={index} color={index}>
-                  {item}
-                </EffectNameColorBox>
-              ))}
-          </div>
-          <div>
-            {item.TooltipValue.elixir2 &&
-              item.TooltipValue.elixir2.map((item, index) => (
-                <EffectNameColorBox key={index} color={index}>
-                  {item}
-                </EffectNameColorBox>
-              ))}
-          </div>
-          {item.TooltipValue.transcendenceStep && (
-            <span
-              dangerouslySetInnerHTML={{
-                __html:
-                  item.TooltipValue.transcendenceStep.split("'#FF9632'>")[1],
-              }}
-            ></span>
-          )}
-          {item.TooltipValue.transcendenceTotal && (
-            <div
-              dangerouslySetInnerHTML={{
-                __html: item.TooltipValue.transcendenceTotal,
-              }}
-            ></div>
-          )}
+          {item.IndentStrings.map((i) => (
+            <div key={i.IdenStringGroup1}>
+              <div dangerouslySetInnerHTML={{ __html: i.IdenStringGroup1 }} />
+              {i.IdenStringGroup2?.includes('총') ? (
+                <div className="row">
+                  <img
+                    src={transcendence}
+                    alt="초월 이미지"
+                    width={20}
+                    height={20}
+                  />
+                  <div
+                    dangerouslySetInnerHTML={{ __html: i.IdenStringGroup2 }}
+                  />
+                </div>
+              ) : (
+                <div dangerouslySetInnerHTML={{ __html: i.IdenStringGroup2 }} />
+              )}
+            </div>
+          ))}
         </div>
       )}
       <div className="levelWrap">
-        <div>{item.TooltipValue.level}</div>
-        <div>{item.TooltipValue.itemName}</div>
-        <div className="itemLevel">{item.TooltipValue.itemLevel}</div>
-        {item.TooltipValue.advancedReforging && (
-          <div className="aR">
-            상급재련 {item.TooltipValue.advancedReforging}단계
-          </div>
+        {item.SingleText && (
+          <div className="aR">상급재련 {item.SingleText}</div>
         )}
       </div>
     </EquipmentTooltipWrap>
@@ -105,7 +94,7 @@ const EquipmentTooltip = ({ item }) => {
           <div>{item.TooltipValue.additionalDamage}</div>
         </div>
       )}
-      {!isNaN(item.TooltipValue.elixirTotalLevel) && (
+      {/* 엘릭서, 초월 총 합 (해야함) {!isNaN(item.TooltipValue.elixirTotalLevel) && (
         <div className="ElixirWrap">
           <div className="totalElixir">
             <div className="ElixirItem">
@@ -126,7 +115,7 @@ const EquipmentTooltip = ({ item }) => {
             )}
           </div>
         </div>
-      )}
+      )} */}
       <div className="levelWrap">
         <div>{item.TooltipValue.level}</div>
         <div>{item.TooltipValue.itemName}</div>
@@ -181,7 +170,7 @@ const EquipmentTooltipWrap = styled.div`
     div {
       width: auto;
       margin: 0 auto;
-      padding: 5px 0px;
+      padding-top: 5px;
     }
   }
 
@@ -241,6 +230,10 @@ const EquipmentTooltipWrap = styled.div`
       margin: 0 auto;
       padding: 5px 0px;
       text-align: center;
+    }
+
+    .row {
+      flex-direction: row;
     }
   }
 
@@ -302,4 +295,30 @@ const QualityText = styled.div`
       : props.quality >= 90 && props.quality < 100
       ? '#ce43fc'
       : '#FFCD12'};
+`;
+
+const ItemContainer = styled.div`
+  display: flex;
+  gap: 0.625rem;
+  align-items: center;
+  justify-content: center;
+
+  .flex {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .no-mp {
+    margin: 0;
+    parring: 0;
+  }
+`;
+
+const ItemPartBox = styled.div`
+  flex-direction: column;
+  align-items: center;
+  gap: 0.625rem;
+  margin-top: 1.5rem;
+  margin-bottom: 0;
 `;

@@ -23,12 +23,14 @@ const EquipmentDetail = ({ equipment }) => {
             </ImageBox>
             <div className="desc">
               <div className="type">
-                <span className="item single">
-                  +{item.SingleText.slice(0, 2)}
-                </span>
+                {item.SingleText && (
+                  <span className="item single">
+                    +{item.SingleText.slice(0, 2)}
+                  </span>
+                )}
                 <span className="item">{item.ItemName}</span>
               </div>
-              <PercentBar quality={item.ItemTitle}>
+              <PercentBar quality={item.ItemTitle.qualityValue}>
                 <span className="aR">
                   <img src={transcendence} width={20} alt="초월 아이콘" />
                   <div
@@ -43,7 +45,7 @@ const EquipmentDetail = ({ equipment }) => {
                     }}
                   />
                 </span>
-                <p>{item.ItemTitle}</p>
+                <p>{item.ItemTitle.qualityValue}</p>
                 <div>
                   <div></div>
                 </div>

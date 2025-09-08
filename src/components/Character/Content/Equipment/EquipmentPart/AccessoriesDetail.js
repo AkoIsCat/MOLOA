@@ -6,32 +6,17 @@ import { BsDot } from 'react-icons/bs';
 import removeTag from '../../../../../utils/removeTag';
 
 const AccessoriesDetail = ({
-  equipment,
   accessories,
-  accessoriesList,
   sortAccessoriesTooltip,
   stoneAndBracelet,
   breceletEffectList,
+  stone,
+  bracelet,
   stoneIndex,
-  transcendenceTotalNum,
-  arkpassive,
 }) => {
   console.log(accessories);
-  const arkPassiveActivity = arkpassive?.IsArkPassive;
 
-  const filterAccessories =
-    equipment &&
-    equipment.filter(
-      (item) =>
-        item.Type !== '투구' &&
-        item.Type !== '무기' &&
-        item.Type !== '상의' &&
-        item.Type !== '하의' &&
-        item.Type !== '어깨' &&
-        item.Type !== '장갑' &&
-        item.Type !== '부적' &&
-        item.Type !== '나침반'
-    );
+  const FullData = [...accessories, stone, bracelet]; // 악세, 스톤, 팔찌를 모두 합친 데이터
 
   const removeSpecificString = (elementNumber) => {
     return removeTag(
@@ -47,50 +32,38 @@ const AccessoriesDetail = ({
       .split('Lv.')[1];
   };
 
-  const AccessoriesBox = ({ item, index }) => {
+  const AccessoriesBox = ({ item }) => {
     const [showTooltip, setShowTooltip] = useState(false);
-
-    const quality =
-      sortAccessoriesTooltip &&
-      sortAccessoriesTooltip[index] &&
-      sortAccessoriesTooltip[index]['Element_001'].value.qualityValue;
+    console.log('box', item);
+    const stoneIsTrue = item.partName.includes('스톤');
+    const braceletIsTrue = item.partName.includes('팔찌');
 
     return (
       <>
         <div>
           {showTooltip && (
-            <AccessoriesTooltip
-              item={item}
-              quality={quality}
-              arkPassiveActivity={arkPassiveActivity}
-            />
+            <AccessoriesTooltip item={item} quality={item.qualityValue} />
           )}
           {accessories !== undefined && (
-            <>
+            <Wrap>
               <ImageBox>
-                <ImageBoxColor
-                  key={filterAccessories && filterAccessories[index]?.Name}
-                  exist={
-                    filterAccessories[index] !== undefined &&
-                    filterAccessories[index].Grade
-                  }
-                >
-                  {filterAccessories && filterAccessories[index] && (
+                <ImageBoxColor exist={item.Grade}>
+                  {item.icon && (
                     <img
-                      key={filterAccessories[index].Icon}
-                      src={filterAccessories[index].Icon}
+                      src={item.icon}
                       alt="악세"
-                      onMouseOver={() => setShowTooltip(true)}
+                      onMouseOver={() => setShowTooltip(false)}
                       onMouseLeave={() => setShowTooltip(false)}
                     />
                   )}
                 </ImageBoxColor>
-                {index < 5 && (
+                {!(
+                  item.partName.includes('스톤') ||
+                  item.partName.includes('팔찌')
+                ) && (
                   <PercentBar
                     quality={item.qualityValue}
-                    key={`${item.qualityValue} ${
-                      filterAccessories && filterAccessories[index]?.Name
-                    } `}
+                    key={`${item.qualityValue} ${item.ItemName} `}
                   >
                     <p>{item.qualityValue}</p>
                     <div>
@@ -99,68 +72,58 @@ const AccessoriesDetail = ({
                   </PercentBar>
                 )}
               </ImageBox>
-              <div className="desc">
-                {!arkPassiveActivity && (
-                  <p className="type">
-                    {filterAccessories &&
-                      filterAccessories[index] &&
-                      filterAccessories[index]?.Name}
-                  </p>
-                )}
-                {index < 5 && arkPassiveActivity && (
-                  <AcEffectBox>
-                    <GradePoint>
-                      <div>{item.TooltipValue.grade}</div>
-                      <div>{item.TooltipValue.point}</div>
-                    </GradePoint>
-                    <AcEffect>
-                      {item.TooltipValue?.trainingEffect
-                        ?.split('<BR>')
-                        .map((item) => (
-                          <div key={item}>{item}</div>
-                        ))}
-                    </AcEffect>
-                  </AcEffectBox>
-                )}
-                {index >= 5 && arkPassiveActivity && (
-                  <p className="type">
-                    {filterAccessories &&
-                      filterAccessories[index] &&
-                      filterAccessories[index]?.Name}
-                  </p>
-                )}
-                {index === 5 && stoneAndBracelet[0][stoneIndex]?.value && (
-                  <div>
-                    <p>{}</p>
-                    <p style={{ margin: '0 8px', color: '#f8f5a4' }}>
-                      {stoneAndBracelet[0][stoneIndex]?.value &&
-                        removeSpecificString('Element_000')}
-                    </p>
-                    <BsDot />
-                    <p style={{ margin: '0 8px', color: '#f8f5a4' }}>
-                      {stoneAndBracelet[0][stoneIndex]?.value &&
-                        removeSpecificString('Element_001')}
-                    </p>
-                    <BsDot />
-                    <p style={{ margin: '0 8px', color: '#832c35' }}>
-                      {stoneAndBracelet[0][stoneIndex]?.value &&
-                        removeSpecificString('Element_002')}
-                    </p>
-                  </div>
-                )}
-                <div style={{ display: 'flex' }}>
-                  {index === 6 &&
-                    breceletEffectList.map((item) => (
-                      <p
-                        key={`${item.text} ${item.description}`}
-                        style={{ margin: '0 2px 0 4px' }}
-                      >
-                        {item?.text}
-                      </p>
-                    ))}
+              {!(stoneIsTrue || braceletIsTrue) && (
+                <div className="desc">
+                  {<p className="type">{item.ItemName}</p>}
+                  {
+                    <AcEffectBox>
+                      <GradePoint className="m-l-5">
+                        <div>{item?.Grade}</div>
+                        <div>
+                          {item?.itemPartBox?.AwakeNumber.split(' ')[1]}
+                        </div>
+                      </GradePoint>
+                      <AcEffect>
+                        {item?.itemPartBox?.GrindingEffect.split('<br>').map(
+                          (data) => (
+                            <div
+                              key={data}
+                              dangerouslySetInnerHTML={{ __html: data }}
+                            />
+                          )
+                        )}
+                      </AcEffect>
+                    </AcEffectBox>
+                  }
                 </div>
-              </div>
-            </>
+              )}
+              {stoneIsTrue && (
+                <div className="desc">
+                  <p className="type">{item.itemName}</p>
+                  <div className="flex-row m-5 around">
+                    <div className="activate">
+                      {item.indentStringGroup.activate1.level}
+                    </div>
+                    <BsDot />
+                    <div className="activate">
+                      {item.indentStringGroup.activate2.level}
+                    </div>
+                    <BsDot />
+                    <div className="decrease">
+                      {item.indentStringGroup.decrease.level}
+                    </div>
+                  </div>
+                </div>
+              )}
+              {braceletIsTrue && (
+                <div className="desc">
+                  <p className="type">{item.itemName}</p>
+                  <p className="type">
+                    <span>{item.partName}</span>
+                  </p>
+                </div>
+              )}
+            </Wrap>
           )}
           {accessories === undefined && <div></div>}
         </div>
@@ -171,10 +134,12 @@ const AccessoriesDetail = ({
   return (
     <>
       {accessories &&
-        accessories.map((item, index) => (
+        FullData.map((item, index) => (
           <AccessoriesBox
             item={item}
             index={index}
+            stone={stone}
+            bracelet={bracelet}
             key={`${index + 1} ${item.ItemName}`}
           />
         ))}
@@ -310,6 +275,7 @@ const GradePoint = styled.div`
   display: flex;
   flex-direction: column;
   font-size: 12px;
+  margin-left: 5px;
 `;
 
 const AcEffect = styled.div`
@@ -322,5 +288,10 @@ const AcEffect = styled.div`
   div {
     width: 165px;
     padding: 0 0 0 10px;
+    font-size: 10px;
   }
+`;
+
+const Wrap = styled.div`
+  margin-bottom: 6px;
 `;

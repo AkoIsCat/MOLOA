@@ -62,8 +62,8 @@ const CharacterList = ({
   const holdingCharacterList = [];
 
   const sortHoldingCharacterList = holdingCharacter.sort((a, b) => {
-    const itemMaxLevelA = parseFloat(a.ItemMaxLevel.replace(/,/g, '')); // 쉼표 제거 후 숫자로 변환
-    const itemMaxLevelB = parseFloat(b.ItemMaxLevel.replace(/,/g, '')); // 쉼표 제거 후 숫자로 변환
+    const itemMaxLevelA = parseFloat(a.ItemAvgLevel.replace(/,/g, '')); // 쉼표 제거 후 숫자로 변환
+    const itemMaxLevelB = parseFloat(b.ItemAvgLevel.replace(/,/g, '')); // 쉼표 제거 후 숫자로 변환
     return itemMaxLevelB - itemMaxLevelA; // 내림차순으로 정렬
   });
 
@@ -121,7 +121,7 @@ const CharacterList = ({
                                 Lv.{items.obj.CharacterLevel}
                               </div>
                               <div className="itemLevel">
-                                {items.obj.ItemMaxLevel}
+                                {items.obj.ItemAvgLevel}
                               </div>
                             </div>
                           </div>

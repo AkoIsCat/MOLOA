@@ -96,10 +96,12 @@ const CharacterEquipmentPart = ({ equipment, engraving, arkpassive }) => {
   // todo
   // 보석
   // 트포, 스킬탭 트포 레벨
-  // 보유 캐릭터
-  // 아이템 레벨, 전투력
+  // 보유 캐릭터 o
+  // 아이템 레벨, 전투력 o
   // 아크그리드
   // 전 레벨대 아크패시브 적용 이후 접속한 적이 없는 캐릭터는 안내 문구 or 아무것도 안보여주기
+  // 발키리 추가
+  // 랭킹 버그 수정
   // 고칠거 개많고..
 
   // const sortAccessoriesTooltip = equipmentTooltip.slice(6, 13);
@@ -511,6 +513,8 @@ const CharacterEquipmentPart = ({ equipment, engraving, arkpassive }) => {
                 // accessoriesList={accessoriesList}
                 accessories={accessories}
                 equipment={equipment}
+                stone={stone}
+                bracelet={bracelet}
                 // arkpassive={arkpassive}
                 // sortAccessoriesTooltip={sortAccessoriesTooltip}
                 // stoneAndBracelet={stoneAndBracelet}
@@ -703,6 +707,30 @@ const AccessoriesInner = styled.div`
       .name {
         color: #fff;
         margin: 5px;
+      }
+
+      .m-l-5 {
+        margin-left: 5px;
+      }
+
+      .m-5 {
+        margin: 5px;
+      }
+
+      .around {
+        justify-content: space-around;
+      }
+
+      .decrease {
+        color: #832c35;
+      }
+
+      .activate {
+        color: #f8f5a4;
+      }
+
+      .flex-row {
+        flex-direction: row;
       }
 
       div {

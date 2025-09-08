@@ -8,6 +8,7 @@ export const mapAccessoriesPart = (fullData, idx, tooltips) => {
   const itemPartBox = getItemPartBox(data);
 
   return {
+    icon: fullData.Icon,
     partName: fullData.Type,
     ItemName: fullData.Name,
     Grade: fullData.Grade,

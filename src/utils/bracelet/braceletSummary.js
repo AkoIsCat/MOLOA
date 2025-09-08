@@ -10,6 +10,8 @@ export const braceletSummary = (data) => {
   const ItemPartBox = getItemPartBox(tooltip);
 
   return {
+    Grade: braceletData[0].Grade,
+    icon: braceletData[0].Icon,
     itemName: braceletData[0].Name,
     partName: itemTitle.partName,
     partTier: itemTitle.partTier,

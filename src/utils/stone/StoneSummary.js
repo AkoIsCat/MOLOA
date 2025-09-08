@@ -12,6 +12,8 @@ export const StoneSummary = (data) => {
   const indentStringGroup = getIndentStringGroups(tooltip);
 
   return {
+    Grade: stoneData[0].Grade,
+    icon: stoneData[0].Icon,
     itemName: stoneData[0].Name,
     partName: itemTitle.partName,
     partTier: itemTitle.partTier,

@@ -47,7 +47,7 @@ const Aside = ({
   const isMobile = useMediaQuery({
     query: '(max-width:767px)',
   });
-
+  console.log(profile);
   const infoItem = profile && (
     <CharacterInfo>
       {profileIsLoading && <Loading />}
@@ -75,7 +75,11 @@ const Aside = ({
           </InfoItem>
           <InfoItem>
             <div>아이템</div>
-            <p>{profile.ItemMaxLevel}</p>
+            <p>{profile.ItemAvgLevel}</p>
+          </InfoItem>
+          <InfoItem>
+            <div>전투력</div>
+            <p>{profile.CombatPower}</p>
           </InfoItem>
           <InfoItem>
             <div>원정대</div>

@@ -2,39 +2,13 @@ import styled from 'styled-components';
 import { useState } from 'react';
 
 import AccessoriesTooltip from './AccessoriesTooltip';
-import { BsDot } from 'react-icons/bs';
-import removeTag from '../../../../../utils/removeTag';
+import StoneDetail from './StoneDetail';
 
-const AccessoriesDetail = ({
-  accessories,
-  sortAccessoriesTooltip,
-  stoneAndBracelet,
-  breceletEffectList,
-  stone,
-  bracelet,
-  stoneIndex,
-}) => {
-  console.log(accessories);
-
+const AccessoriesDetail = ({ accessories, stone, bracelet }) => {
   const FullData = [...accessories, stone, bracelet]; // 악세, 스톤, 팔찌를 모두 합친 데이터
-
-  const removeSpecificString = (elementNumber) => {
-    return removeTag(
-      removeTag(
-        stoneAndBracelet[0][stoneIndex].value['Element_000'].contentStr[
-          elementNumber
-        ].contentStr,
-        'FONT'
-      ),
-      'img'
-    )
-      .replaceAll('<BR>', '')
-      .split('Lv.')[1];
-  };
 
   const AccessoriesBox = ({ item }) => {
     const [showTooltip, setShowTooltip] = useState(false);
-    console.log('box', item);
     const stoneIsTrue = item.partName.includes('스톤');
     const braceletIsTrue = item.partName.includes('팔찌');
 
@@ -52,7 +26,7 @@ const AccessoriesDetail = ({
                     <img
                       src={item.icon}
                       alt="악세"
-                      onMouseOver={() => setShowTooltip(false)}
+                      onMouseOver={() => setShowTooltip(true)}
                       onMouseLeave={() => setShowTooltip(false)}
                     />
                   )}
@@ -97,24 +71,7 @@ const AccessoriesDetail = ({
                   }
                 </div>
               )}
-              {stoneIsTrue && (
-                <div className="desc">
-                  <p className="type">{item.itemName}</p>
-                  <div className="flex-row m-5 around">
-                    <div className="activate">
-                      {item.indentStringGroup.activate1.level}
-                    </div>
-                    <BsDot />
-                    <div className="activate">
-                      {item.indentStringGroup.activate2.level}
-                    </div>
-                    <BsDot />
-                    <div className="decrease">
-                      {item.indentStringGroup.decrease.level}
-                    </div>
-                  </div>
-                </div>
-              )}
+              {stoneIsTrue && <StoneDetail item={stone} />}
               {braceletIsTrue && (
                 <div className="desc">
                   <p className="type">{item.itemName}</p>

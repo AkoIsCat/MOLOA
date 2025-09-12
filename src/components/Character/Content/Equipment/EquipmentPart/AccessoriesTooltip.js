@@ -1,81 +1,75 @@
 import styled from 'styled-components';
+import StoneTooltip from './StoneTooltip';
+import BraceletTooltip from './BraceletTooltip';
 
-const AccessoriesTooltip = ({ item, quality, arkPassiveActivity }) => {
-  return item && item.Type !== '팔찌' ? (
+const AccessoriesTooltip = ({ item }) => {
+  return item &&
+    !item.partName.includes('팔찌') &&
+    !item.partName.includes('스톤') ? (
     <AccessoriesTooltipWrap>
       <div className="defaultEffectWrap">
         <div
           style={{
-            color: 'rgb(254, 150, 0)',
             fontSize: '17px',
             textAlign: 'center',
           }}
         >
           {item.ItemName}
         </div>
-        {quality !== -1 && (
-          <QualityText quality={quality}>품질 {quality}</QualityText>
-        )}
-        {arkPassiveActivity && (
+        <ItemContainer>
+          {item.qualityValue !== -1 && (
+            <QualityText quality={item.qualityValue}>
+              품질 {item.qualityValue}
+            </QualityText>
+          )}
+          {
+            <div className="flex">
+              <span>{item.Grade}</span>
+              <span>{item.partName}</span>
+            </div>
+          }
+          {<div>{item?.itemPartBox?.AwakeNumber}</div>}
+        </ItemContainer>
+        {
           <DefaultEffectBox>
-            {item.TooltipValue.defaultEffect.split('<BR>').map((item) => (
-              <div key={item.slice(0, 2)}>{item}</div>
+            {item?.itemPartBox?.BasicEffect.split('<BR>').map((d) => (
+              <div
+                key={`${item.ItemName} ${d}`}
+                dangerouslySetInnerHTML={{ __html: d }}
+              />
             ))}
           </DefaultEffectBox>
-        )}
-        {arkPassiveActivity && <div>{item.TooltipValue.grade}</div>}
-        {arkPassiveActivity && <div>{item.TooltipValue.point}</div>}
-        {item.TooltipValue.characteristic && (
-          <div>
-            {item.TooltipValue.characteristic &&
-              item?.TooltipValue?.characteristic[0] &&
-              item?.TooltipValue?.characteristic[0]}
-          </div>
-        )}
-        {item.TooltipValue.characteristic && (
-          <div>
-            {item.TooltipValue.characteristic &&
-              item?.TooltipValue?.characteristic[1] &&
-              item?.TooltipValue?.characteristic[1]}
-          </div>
-        )}
+        }
       </div>
-      <div className="vitalityWrap">
-        <div>{item.TooltipValue.engrave1}</div>
-        <div>{item.TooltipValue.engrave2}</div>
-        <div className="decrease">{item.TooltipValue.engrave3}</div>
-      </div>
+      <div
+        className="vitalityWrap"
+        dangerouslySetInnerHTML={{ __html: item?.itemPartBox?.GrindingEffect }}
+      />
     </AccessoriesTooltipWrap>
+  ) : item.partName.includes('스톤') ? (
+    <StoneTooltip item={item} />
   ) : (
-    <AccessoriesTooltipWrap>
-      <div className="vitalityWrap">
-        <div
-          style={{
-            color: 'rgb(254, 150, 0)',
-            fontSize: '17px',
-            textAlign: 'center',
-          }}
-        >
-          {item.ItemName}
-        </div>
-        {item.TooltipValue.breceletEffect.map((items, index) =>
-          !items.name ? (
-            <div key={index}>{items}</div>
-          ) : (
-            <div className="elixirWrap" key={index}>
-              <div>{items.name}</div>
-              <div>{items.effect}</div>
-            </div>
-          )
-        )}
-      </div>
-    </AccessoriesTooltipWrap>
+    <BraceletTooltip item={item} />
+    // <AccessoriesTooltipWrap>
+    //   <div className="vitalityWrap">
+    //     {/* {item.TooltipValue.breceletEffect.map((items, index) =>
+    //       !items.name ? (
+    //         <div key={index}>{items}</div>
+    //       ) : (
+    //         <div className="elixirWrap" key={index}>
+    //           <div>{items.name}</div>
+    //           <div>{items.effect}</div>
+    //         </div>
+    //       )
+    //     )} */}
+    //   </div>
+    // </AccessoriesTooltipWrap>
   );
 };
 
 export default AccessoriesTooltip;
 
-const AccessoriesTooltipWrap = styled.div`
+export const AccessoriesTooltipWrap = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -111,10 +105,26 @@ const AccessoriesTooltipWrap = styled.div`
     padding: 10px;
     border-bottom: 1px solid #c1c1c1;
     div {
-      width: auto;
+      // width: auto;
       margin: 0 auto;
       padding: 5px 0px;
+
+      .px-1 {
+        padding: 0 5px;
+      }
     }
+  }
+
+  .no-line {
+    border: 0;
+  }
+
+  .activate {
+    color: #f8f5a4;
+  }
+
+  .decrease {
+    color: #832c35;
   }
 
   .vitalityWrap {
@@ -125,14 +135,18 @@ const AccessoriesTooltipWrap = styled.div`
     align-items: center;
     padding: 10px;
 
-    .decrease {
-      color: #d32614;
-    }
-
     div {
       width: auto;
       margin: 0 auto;
       padding: 5px 0px;
+    }
+
+    .tooltip-text {
+      display: block;
+      text-align: center;
+      white-space: normal; /* 기본 줄바꿈 허용 */
+      word-break: keep-all; /* 한글은 어절 단위로만 끊기도록 */
+      overflow-wrap: break-word; /* 박스를 넘어가면 줄바꿈 */
     }
   }
 
@@ -188,7 +202,28 @@ const QualityText = styled.div`
       : '#FFCD12'};
 `;
 
-const DefaultEffectBox = styled.div`
+export const DefaultEffectBox = styled.div`
   display: flex;
   flex-direction: column;
+`;
+
+export const ItemContainer = styled.div`
+  display: flex;
+  gap: 0.625rem;
+  align-items: center;
+  justify-content: center;
+  border-bottom: 1px solid #c1c1c1;
+  font-size: 13px;
+  width: 100%;
+
+  .flex {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .no-mp {
+    margin: 0;
+    parring: 0;
+  }
 `;

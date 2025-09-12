@@ -37,7 +37,7 @@ const EquipmentTooltip = ({ item }) => {
                 dangerouslySetInnerHTML={{ __html: d.split('</FONT>')[0] }}
               />
             ) : (
-              <div dangerouslySetInnerHTML={{ __html: d }} />
+              <div key={d} dangerouslySetInnerHTML={{ __html: d }} />
             )
           )}
         </ItemPartBox>

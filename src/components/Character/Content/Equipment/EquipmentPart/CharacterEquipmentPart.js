@@ -1,14 +1,11 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useMemo } from 'react';
 import { useMediaQuery } from 'react-responsive';
-import { arcPassiveDivision } from '../../../../../utils/arcPassiveDivision';
 
 import styled from 'styled-components';
 import EquipmentDetail from './EquipmentDetail';
-import MountedEngraving from './MountedEngraving';
 import AccessoriesDetail from './AccessoriesDetail';
+import MountedEngraving from './MountedEngraving';
 import Loading from '../../../../UI/Loading';
-import { elixirEffectDivision } from '../../../../../utils/elixirEffectDivision';
-import removeTag from '../../../../../utils/removeTag';
 import { sortEquipment } from '../../../../../utils/equipment/sortEquipment';
 import { equipmentSummary } from '../../../../../utils/equipment/equipmentSummary';
 import { accessoriesSummary } from '../../../../../utils/accessories/accessoriesSummary';
@@ -16,7 +13,6 @@ import { StoneSummary } from '../../../../../utils/stone/StoneSummary';
 import { braceletSummary } from '../../../../../utils/bracelet/braceletSummary';
 
 const CharacterEquipmentPart = ({ equipment, engraving, arkpassive }) => {
-  // const [sortedEquipment, setSortedEquipment] = useState();
   const isPc = useMediaQuery({
     query: '(min-width:1024px)',
   });
@@ -42,6 +38,7 @@ const CharacterEquipmentPart = ({ equipment, engraving, arkpassive }) => {
   const stone = useMemo(() => StoneSummary(equipment), [equipment]);
   const bracelet = useMemo(() => braceletSummary(equipment), [equipment]);
 
+  console.log('equipment', equipment);
   console.log('equipmentData', equipmentData);
   console.log('accessoriesData', accessories);
   console.log('stone', stone);
@@ -54,8 +51,6 @@ const CharacterEquipmentPart = ({ equipment, engraving, arkpassive }) => {
   if (!equipment) {
     return <Loading />;
   }
-
-  console.log(equipment, 'equipment');
 
   // 장비들끼리 모으는 함수(투,어,상,하,장,무)
   // 악세들끼리 모으는 함수
@@ -104,392 +99,8 @@ const CharacterEquipmentPart = ({ equipment, engraving, arkpassive }) => {
   // 랭킹 버그 수정
   // 고칠거 개많고..
 
-  // const sortAccessoriesTooltip = equipmentTooltip.slice(6, 13);
-
-  // // 악세 정보 추출
-  // if (sortAccessoriesTooltip[0] !== undefined) {
-  //   const filterTooltip = [];
-  //   for (let i = 0; i < sortAccessoriesTooltip.length; i++) {
-  //     const filterValue = [];
-
-  //     // 노앜패
-  //     if (!arkpassive?.IsArkPassive) {
-  //       if (i !== sortAccessoriesTooltip.length) {
-  //         // 특성
-  //         for (let key in sortAccessoriesTooltip[i]) {
-  //           if (sortAccessoriesTooltip[i][key].type === 'ItemPartBox') {
-  //             filterValue.push({
-  //               effect: sortAccessoriesTooltip[i][key].value['Element_001'],
-  //             });
-  //           }
-  //         }
-
-  //         // 각인
-  //         for (let key in sortAccessoriesTooltip[i]) {
-  //           if (
-  //             sortAccessoriesTooltip[i][key].type === 'IndentStringGroup' &&
-  //             sortAccessoriesTooltip[i][key].value !== null
-  //           ) {
-  //             filterValue.push({
-  //               engrave1:
-  //                 sortAccessoriesTooltip[i][key]?.value['Element_000']
-  //                   ?.contentStr['Element_000']?.contentStr,
-  //               engrave2:
-  //                 sortAccessoriesTooltip[i][key]?.value['Element_000']
-  //                   ?.contentStr['Element_001']?.contentStr,
-  //               engrave3:
-  //                 sortAccessoriesTooltip[i][key]?.value['Element_000']
-  //                   ?.contentStr['Element_002']?.contentStr,
-  //             });
-  //           }
-  //         }
-  //       }
-  //     }
-
-  //     // 앜패
-  //     if (arkpassive?.IsArkPassive) {
-  //       if (i !== sortAccessoriesTooltip.length - 1) {
-  //         for (let key in sortAccessoriesTooltip[i]) {
-  //           const itemArray = [];
-  //           // 악세 이름
-  //           if (sortAccessoriesTooltip[i][key].type === 'NameTagBox') {
-  //             itemArray.push({
-  //               Name: removeTag(
-  //                 removeTag(sortAccessoriesTooltip[i][key].value, 'FONT'),
-  //                 'P'
-  //               ),
-  //             });
-  //           }
-
-  //           // 악세 품질, 등급
-  //           if (sortAccessoriesTooltip[i][key].type === 'ItemTitle') {
-  //             itemArray.push({
-  //               quality: sortAccessoriesTooltip[i][key].value.qualityValue,
-  //               grade: removeTag(
-  //                 sortAccessoriesTooltip[i][key].value.leftStr0,
-  //                 'FONT'
-  //               ).split(' ')[0],
-  //             });
-  //           }
-
-  //           // 악세 효과(기본, 연마, 깨포)
-  //           if (sortAccessoriesTooltip[i][key].type === 'ItemPartBox') {
-  //             itemArray.push({
-  //               effects: removeTag(
-  //                 removeTag(
-  //                   sortAccessoriesTooltip[i][key].value['Element_001'],
-  //                   'FONT'
-  //                 ),
-  //                 'img'
-  //               ),
-  //             });
-  //           }
-
-  //           // 어빌리티 스톤(각인)
-  //           if (
-  //             sortAccessoriesTooltip[i][key].type === 'ItemTitle' &&
-  //             sortAccessoriesTooltip[i][key].value.leftStr0.includes(
-  //               '어빌리티 스톤'
-  //             )
-  //           ) {
-  //             for (let key in sortAccessoriesTooltip[i]) {
-  //               if (
-  //                 sortAccessoriesTooltip[i][key].type === 'IndentStringGroup' &&
-  //                 sortAccessoriesTooltip[i][key].value
-  //               ) {
-  //                 const commonness =
-  //                   sortAccessoriesTooltip[i][key].value['Element_000'];
-  //                 const engrave1 = removeTag(
-  //                   commonness.contentStr['Element_000'].contentStr,
-  //                   'FONT'
-  //                 ).replace('<BR>', '');
-  //                 const engrave2 = removeTag(
-  //                   commonness.contentStr['Element_001'].contentStr,
-  //                   'FONT'
-  //                 ).replace('<BR>', '');
-  //                 const engrave3 = removeTag(
-  //                   commonness.contentStr['Element_002'].contentStr,
-  //                   'FONT'
-  //                 ).replace('<BR>', '');
-
-  //                 itemArray.push({ engrave1, engrave2, engrave3 });
-  //               }
-  //             }
-  //           }
-
-  //           itemArray && filterValue.push(...itemArray);
-  //         }
-  //       }
-  //     }
-
-  //     // 팔찌
-  //     if (i === sortAccessoriesTooltip.length - 1) {
-  //       const itemArray = [];
-  //       for (let key in sortAccessoriesTooltip[i]) {
-  //         if (sortAccessoriesTooltip[i][key].type === 'ItemPartBox') {
-  //           itemArray.push(
-  //             removeTag(
-  //               removeTag(
-  //                 sortAccessoriesTooltip[i][key].value['Element_001'],
-  //                 'FONT'
-  //               ),
-  //               'img'
-  //             ).split('<BR>')
-  //           );
-  //         }
-  //       }
-  //       itemArray && filterValue.push(...itemArray);
-  //     }
-
-  //     filterTooltip.push({
-  //       tooltip: filterValue,
-  //     });
-  //   }
-
-  //   const removeSpecificString = (effect) => {
-  //     return effect
-  //       ?.replace(/(<([^>]+)>|\[|\]|<BR>)/gi, '')
-  //       .replace(/(활성도\s*\+\s*\d+)/gi, '$1 ')
-  //       .replace(/활성도\s+/gi, '');
-  //   };
-
-  //   const getEngravingEffect = (tooltip, index, number) => {
-  //     if (Object.keys(tooltip).length === 2) {
-  //       index -= 1;
-  //     }
-  //     const tooptipValue =
-  //       number === 1
-  //         ? tooltip[index]?.engrave1
-  //         : number === 2
-  //         ? tooltip[index]?.engrave2
-  //         : tooltip[index]?.engrave3;
-  //     return removeSpecificString(tooptipValue);
-  //   };
-
-  //   for (let i = 0; i < filterTooltip.length; i++) {
-  //     const effectBR = filterTooltip[i].tooltip[1]?.effect?.split('<BR>');
-  //     // 어빌리티 스톤 각인, 활성화 수치를 따로 분리해주는 함수 getEngravingEffects, revemoSpecificString
-  //     const engrave1 = getEngravingEffect(filterTooltip[i].tooltip, 2, 1);
-  //     const engrave2 = getEngravingEffect(filterTooltip[i].tooltip, 2, 2);
-  //     const engrave3 = getEngravingEffect(filterTooltip[i].tooltip, 2, 3);
-
-  //     const breceletEffect = filterTooltip[
-  //       filterTooltip.length - 1
-  //     ].tooltip[0]?.effect
-  //       ?.replace(/<\/?img[^>]*>/g, '')
-  //       .replace(/undefined/g, '');
-
-  //     let effectsplitBR = breceletEffect?.split('<BR>');
-
-  //     if (effectsplitBR) {
-  //       for (let j = 0; j < effectsplitBR.length; j++) {
-  //         if (effectsplitBR[j].includes('[')) {
-  //           const name = effectsplitBR[j].split('</FONT>]');
-  //           effectsplitBR[j] = {
-  //             name: removeTag(name[0], 'FONT').replace('[', ''),
-  //             effect: name[1],
-  //           };
-  //         }
-
-  //         // 팔찌효과 설명이 string이고, font태그가 들어가면 정규표현식을 이용해 추출함.
-  //         if (
-  //           typeof effectsplitBR[j] === 'string' &&
-  //           effectsplitBR[j].includes('</FONT>')
-  //         ) {
-  //           effectsplitBR[j] = effectsplitBR[j].replace(removeFontTagRegex, '');
-  //           // 팔찌 효과 이름이 특수효과면 name/effect로 객체로 나눠놨으므로 효과의 effect가 string이고 font태그가 들어가면 추출.
-  //         } else if (
-  //           typeof effectsplitBR[j].effect === 'string' &&
-  //           effectsplitBR[j].effect.includes('</FONT>')
-  //         ) {
-  //           effectsplitBR[j].effect = effectsplitBR[j].effect.replace(
-  //             removeFontTagRegex,
-  //             ''
-  //           );
-  //         }
-  //       }
-  //     }
-
-  //     if (arkpassive?.IsArkPassive) {
-  //       // 악세
-  //       if (i < filterTooltip.length - 2) {
-  //         accessoriesEffectTooltip.push({
-  //           defaultEffect: filterTooltip[i]?.tooltip[2]?.effects,
-  //           trainingEffect: filterTooltip[i]?.tooltip[3]?.effects,
-  //           point: filterTooltip[i].tooltip[4]?.effects,
-  //           grade: filterTooltip[i].tooltip[1]?.grade,
-  //           quality: filterTooltip[i].tooltip[1]?.quality,
-  //         });
-  //         // 돌
-  //       } else if (i !== filterTooltip.length - 1) {
-  //         accessoriesEffectTooltip.push({
-  //           defaultEffect: filterTooltip[i]?.tooltip[3]?.effects,
-  //           plusEffect: filterTooltip[i]?.tooltip[4]?.effects,
-  //           engrave1,
-  //           engrave2,
-  //           engrave3,
-  //         });
-  //         // 팔찌
-  //       } else {
-  //         accessoriesEffectTooltip.push({
-  //           breceletEffect: filterTooltip[i].tooltip[0],
-  //           point: filterTooltip[i].tooltip[1],
-  //         });
-  //       }
-  //     }
-
-  //     if (!arkpassive?.IsArkPassive) {
-  //       if (i !== filterTooltip.length - 1) {
-  //         accessoriesEffectTooltip.push({
-  //           characteristic: effectBR,
-  //           engrave1,
-  //           engrave2,
-  //           engrave3,
-  //         });
-  //       } else {
-  //         accessoriesEffectTooltip.push({ breceletEffect: effectsplitBR });
-  //       }
-  //     }
-  //   }
-  // }
-
-  // const accessoriesList = [
-  //   {
-  //     Type: '목걸이',
-  //     ItemName: equipment && equipment[6].Name,
-  //     TooltipValue: accessoriesEffectTooltip[0],
-  //   },
-  //   {
-  //     Type: '귀걸이',
-  //     ItemName: equipment && equipment[7].Name,
-  //     TooltipValue: accessoriesEffectTooltip[1],
-  //   },
-  //   {
-  //     Type: '귀걸이',
-  //     ItemName: equipment && equipment[8].Name,
-  //     TooltipValue: accessoriesEffectTooltip[2],
-  //   },
-  //   {
-  //     Type: '반지',
-  //     ItemName: equipment && equipment[9].Name,
-  //     TooltipValue: accessoriesEffectTooltip[3],
-  //   },
-  //   {
-  //     Type: '반지',
-  //     ItemName: equipment && equipment[10].Name,
-  //     TooltipValue: accessoriesEffectTooltip[4],
-  //   },
-  //   {
-  //     Type: '어빌리티 스톤',
-  //     ItemName: equipment && equipment[11]?.Name,
-  //     TooltipValue: accessoriesEffectTooltip[5],
-  //   },
-  //   {
-  //     Type: '팔찌',
-  //     ItemName:
-  //       equipment && equipment[12] !== undefined ? equipment[12].Name : -1,
-  //     TooltipValue: accessoriesEffectTooltip[6],
-  //   },
-  // ];
-  // const stoneAndBracelet = [];
-  // // equipment에서 스톤과 팔찌를 추출한다.
-  // if (equipment) {
-  //   for (const key in equipment) {
-  //     if (
-  //       equipment[key].Type !== '무기' &&
-  //       equipment[key].Type !== '투구' &&
-  //       equipment[key].Type !== '상의' &&
-  //       equipment[key].Type !== '하의' &&
-  //       equipment[key].Type !== '장갑' &&
-  //       equipment[key].Type !== '어깨' &&
-  //       equipment[key].Type !== '나침반' &&
-  //       equipment[key].Type !== '부적' &&
-  //       equipment[key].Type !== '목걸이' &&
-  //       equipment[key].Type !== '귀걸이' &&
-  //       equipment[key].Type !== '반지'
-  //     ) {
-  //       stoneAndBracelet.push({ ...equipmentTooltip[key] });
-  //     }
-  //   }
-  // }
-
-  // let stoneIndex = -1;
-  // let braceletIndex = -1;
-  // const breceletEffectList = [];
-  // // 팔찌효과 추출
-  // if (stoneAndBracelet) {
-  //   // 어빌리티 스톤 각인 활성화가 들어있는 인덱스를 탐색하는 for..in문
-  //   for (const key in stoneAndBracelet[0]) {
-  //     if (stoneAndBracelet[0][key].type === 'IndentStringGroup') {
-  //       stoneIndex = key;
-  //       break;
-  //     }
-  //   }
-  //   // 팔찌에서 팔찌 효과가 들어있는 인덱스를 탐색
-  //   if (stoneAndBracelet[1] !== undefined) {
-  //     for (const key in stoneAndBracelet[1]) {
-  //       if (stoneAndBracelet[1][key].type === 'ItemPartBox') {
-  //         braceletIndex = key;
-  //         break;
-  //       }
-  //     }
-  //     const braceletEffect =
-  //       stoneAndBracelet &&
-  //       stoneAndBracelet[1] !== undefined &&
-  //       stoneAndBracelet[1][braceletIndex].value['Element_001'];
-
-  //     const braceletElements = braceletEffect.split('<BR>');
-  //     const regularExpressionResult = [];
-  //     for (let i = 0; i < braceletElements.length; i++) {
-  //       const text = braceletElements[i]
-  //         .replace(/<[^>]+>/g, '')
-  //         .replace(/\[|\]/g, '')
-  //         .replace(/['"]/g, '')
-  //         .trim();
-
-  //       if (text[text.length - 1] === ')' || !isNaN(text[text.length - 1])) {
-  //         regularExpressionResult.push(text);
-  //         const textSplit = text.split(':');
-
-  //         if (textSplit.length > 1) {
-  //           breceletEffectList.push({
-  //             text: textSplit[0],
-  //             description: textSplit[1],
-  //           });
-  //         } else {
-  //           const textSplice = text.split(' ');
-  //           breceletEffectList.push({
-  //             text: textSplice[0],
-  //             description: textSplice[1],
-  //           });
-  //         }
-  //       } else {
-  //         regularExpressionResult.concat(text);
-  //       }
-  //     }
-  //   }
-  // }
-
-  // // 장착 각인
-
-  // const mountedEngraving = engraving && engraving.Engravings;
-  // const mountedEngravingTooltip = [];
-
-  // // 문자열로 되어있는 객체를 객체로 변환
-  // mountedEngraving &&
-  //   mountedEngraving.map((item) =>
-  //     mountedEngravingTooltip.push(JSON.parse(item.Tooltip))
-  //   );
-
-  // // 장착된 각인 활성화를 추출한다.
-  // const mountedEngravingItem = mountedEngravingTooltip
-  //   .map((obj) => obj.Element_001)
-  //   .filter((obj) => obj.type === 'EngraveSkillTitle')
-  //   .map((obj) => obj.value.leftText);
-
   return (
     <div>
-      리팩토링중
       {(isPc || isTablet) && (
         <EquipmentWrap>
           <FlexWrap>
@@ -507,23 +118,19 @@ const CharacterEquipmentPart = ({ equipment, engraving, arkpassive }) => {
                 activateElixir={equipmentList[5]?.TooltipValue?.activateElixir}
                 arkpassive={arkpassive}
               /> */}
+              <MountedEngraving
+                transcendenceTotal={
+                  equipmentData[0]?.IndentStrings[0]?.IdenStringGroup2
+                }
+                elixirTotalLevel
+              />
             </EquipmentInner>
             <AccessoriesInner>
               <AccessoriesDetail
-                // accessoriesList={accessoriesList}
                 accessories={accessories}
                 equipment={equipment}
                 stone={stone}
                 bracelet={bracelet}
-                // arkpassive={arkpassive}
-                // sortAccessoriesTooltip={sortAccessoriesTooltip}
-                // stoneAndBracelet={stoneAndBracelet}
-                // breceletEffectList={breceletEffectList}
-                // stoneIndex={stoneIndex}
-                // transcendenceTotalNum={
-                //   equipment &&
-                //   equipmentList[5]?.TooltipValue?.transcendenceTotalNum
-                // }
               />
             </AccessoriesInner>
           </FlexWrap>
@@ -541,21 +148,8 @@ const CharacterEquipmentPart = ({ equipment, engraving, arkpassive }) => {
             <div style={{ margin: '0 auto' }}>
               <AccessoriesInner>
                 <AccessoriesDetail
-                  // accessoriesList={accessoriesList}
                   accessories={accessories}
                   equipment={equipment}
-                  // sortAccessoriesTooltip={sortAccessoriesTooltip}
-                  // stoneAndBracelet={stoneAndBracelet}
-                  // breceletEffectList={breceletEffectList}
-                  // stoneIndex={stoneIndex}
-                  // arkpassive={arkpassive}
-                  // transcendenceTotalNum={
-                  //   equipment &&
-                  //   equipmentList[5]?.TooltipValue.transcendenceTotalNum
-                  //     .length === 0
-                  //     ? 0
-                  //     : equipmentList[5]?.TooltipValue.transcendenceTotalNum
-                  // }
                 />
               </AccessoriesInner>
             </div>

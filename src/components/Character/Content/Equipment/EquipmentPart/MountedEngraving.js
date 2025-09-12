@@ -1,33 +1,9 @@
 import styled from 'styled-components';
+import Transcendence_icon from '../../../../../asset/icon/transcendence_icon.png';
 
-import ArkPassiveIcon from '../../../../../asset/icon/ico_arkpassive.png';
-
-const MountedEngraving = ({
-  mountedEngraving,
-  mountedEngravingItem,
-  elixirTotalLevel,
-  activateElixir,
-  arkpassive,
-}) => {
+const MountedEngraving = ({ elixirTotalLevel, transcendenceTotal }) => {
   return (
     <MountWrap>
-      {!arkpassive?.IsArkPassive && (
-        <div>
-          {mountedEngraving &&
-            mountedEngraving.map((item, index) => (
-              <MountedEngravingBox
-                key={`${item.Name} ${item.Slot}`}
-                grade={mountedEngravingItem[index].slice(-10, -7)}
-              >
-                <img src={item.Icon} alt="장착된 각인" />
-                <div>
-                  <p className="name">{item.Name}</p>
-                  <p>{mountedEngravingItem[index].slice(-10, -7)}</p>
-                </div>
-              </MountedEngravingBox>
-            ))}
-        </div>
-      )}
       <EffectTotal>
         <img
           src="https://firebasestorage.googleapis.com/v0/b/lostark-bf0ba.appspot.com/o/%EC%97%98%EB%A6%AD%EC%84%9C.png?alt=media&token=eb19bb1a-1aa2-48d5-8383-cf67336ac49f"
@@ -35,30 +11,23 @@ const MountedEngraving = ({
           width="14"
           height="17"
         />
-        <div className="transcendence">엘릭서 연성레벨 합 </div>
-        <div className="elixir">{elixirTotalLevel && elixirTotalLevel}</div>
-        <div className="activeExlixir">{activateElixir && activateElixir}</div>
+        <div className="transcendence">엘릭서 연성 레벨 합 </div>
+        {/* <div className="elixir"></div> */}
+        <div className="activeExlixir">11</div>
       </EffectTotal>
-      {arkpassive?.IsArkPassive && (
-        <ArkPassive>
-          <div className="title">
-            <img src={ArkPassiveIcon} alt="아크패시브 아이콘" />
-            <div>아크패시브 적용중</div>
-          </div>
-          <div>
-            {arkpassive?.Points.map((item) => (
-              <ArkPassivePoint name={item.Name} key={`Point ${item.Name}`}>
-                <div className="point_type" key={item.Name}>
-                  {item.Name}
-                </div>
-                <div className="point_type" key={`${item.Name} ${item.Value}`}>
-                  {item.Value}
-                </div>
-              </ArkPassivePoint>
-            ))}
-          </div>
-        </ArkPassive>
-      )}
+      {/*초월 합계*/}
+      <EffectTotal>
+        <img
+          src={Transcendence_icon}
+          alt="초월 아이콘"
+          width={17}
+          height={20}
+        />
+        <div className="transcendence">초월 합계</div>
+        <div className="activeExlixir">
+          {transcendenceTotal.split('총')[1].replace(/개$/, '')}
+        </div>
+      </EffectTotal>
     </MountWrap>
   );
 };

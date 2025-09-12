@@ -2,7 +2,6 @@ import styled from 'styled-components';
 import { useState, Fragment } from 'react';
 import EquipmentTooltip from './EquipmentTooltip';
 import transcendence from '../../../../../asset/icon/transcendence.png';
-import removeTag from '../../../../../utils/removeTag';
 
 const EquipmentDetail = ({ equipment }) => {
   const EquipmentBox = ({ item, index }) => {
@@ -35,13 +34,8 @@ const EquipmentDetail = ({ equipment }) => {
                   <img src={transcendence} width={20} alt="초월 아이콘" />
                   <div
                     dangerouslySetInnerHTML={{
-                      __html: removeTag(
-                        removeTag(
-                          item.IndentStrings[0].IdenStringGroup2.split('총')[1],
-                          'img'
-                        ),
-                        'FONT'
-                      ).replace(/개$/, ''),
+                      __html:
+                        item.IndentStrings[0].Transcendence.split('</img>')[1],
                     }}
                   />
                 </span>
@@ -52,7 +46,6 @@ const EquipmentDetail = ({ equipment }) => {
               </PercentBar>
             </div>
           </Fragment>
-
           {<div></div>}
         </div>
       </>

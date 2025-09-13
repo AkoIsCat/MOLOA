@@ -21,10 +21,10 @@ const BraceletTooltip = ({ item }) => {
         {item.effect
           .replace(/<img[^>]*>|<\/img>/gi, '')
           .split('<BR>')
-          .map((d) => (
+          .map((d, idx) => (
             <div
               className="tooltip-text"
-              key={d}
+              key={`${d} ${idx}`}
               dangerouslySetInnerHTML={{ __html: d }}
             />
           ))}

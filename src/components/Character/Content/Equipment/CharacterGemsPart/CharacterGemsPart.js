@@ -2,9 +2,9 @@ import styled from 'styled-components';
 import React from 'react';
 
 import GemsItemTooltip from './GemsItemTooltip';
+import { GemSummary } from '../../../../../utils/gem/GemSummary';
 
 const CharacterGemsPart = ({ gems, getGemsList }) => {
-  console.log(gems.Effects.Skills, '보석');
   if (gems === null || gems.Gems === null || gems.Gems === undefined) {
     return (
       <ContentWrap>
@@ -13,84 +13,30 @@ const CharacterGemsPart = ({ gems, getGemsList }) => {
     );
   }
 
-  // function extractingGemsEffect(gems) {
-  //   const gemsEffect = [];
-  //   const effectRegex =
-  //     /<FONT COLOR='#[^>]+>([^<]+)<\/FONT>\s*([^\n]+)<FONT COLOR='#[^>]+>([^<]+)<\/FONT>\s*([^\n]+)/;
-  //   const effectRegex2 = /<FONT COLOR='#[^>]+>([^<]+)<\/FONT>\s*([^\n]+)/;
-  //   const gemsRegex = /<FONT[^>]*>(.*?)<\/FONT>/;
+  const gemsData = GemSummary(gems.Gems);
 
-  //   for (let i = 0; i <= gems.Gems.length - 1; i++) {
-  //     const tooltipObject = JSON.parse(gems.Gems[i].Tooltip);
-  //     for (let key in tooltipObject) {
-  //       if (tooltipObject[key].type === 'ItemPartBox') {
-  //         const matchValue =
-  //           tooltipObject[key].value['Element_001'].match(effectRegex) === null
-  //             ? tooltipObject[key].value['Element_001'].match(effectRegex2)
-  //             : tooltipObject[key].value['Element_001'].match(effectRegex);
-
-  //         const skillName = matchValue[1];
-  //         const skillShame = matchValue[2].replace(/\[.*?<\/FONT>/g, '');
-
-  //         const attackPower = matchValue[4]?.replaceAll('<BR>', '');
-
-  //         gemsEffect.push({
-  //           level: gems.Gems[i].Level,
-  //           name: gems.Gems[i].Name.match(gemsRegex)[1],
-  //           grade: gems.Gems[i].Grade,
-  //           skillName,
-  //           skillShame,
-  //           attackPower,
-  //           icon: gems.Gems[i].Icon,
-  //         });
-  //       }
-  //     }
-  //   }
-  //   return gemsEffect;
-  // }
-
-  // function devideAndSortGems(gems) {
-  //   const extinction = [];
-  //   const prominence = [];
-  //   for (let i = 0; i < gems.length; i++) {
-  //     if (gems[i].name.includes('멸화') || gems[i].name.includes('겁화')) {
-  //       extinction.push(gems[i]);
-  //     } else {
-  //       prominence.push(gems[i]);
-  //     }
-  //     // 보석 레벨 순으로 정렬
-  //     extinction.sort((a, b) => b.level - a.level);
-  //     prominence.sort((a, b) => b.level - a.level);
-  //   }
-
-  //   return [extinction, prominence];
-  // }
-
-  // const extractedGems = gems !== null && extractingGemsEffect(gems);
-  // const [extinction, prominence] = devideAndSortGems(extractedGems);
-
-  // if (extractedGems.length > 1) {
-  //   getGemsList(extractedGems);
-  // }
+  if (gemsData) {
+    getGemsList(gemsData);
+  }
 
   return (
     <ContentWrap>
-      {/* <GemsFlex>
-        {extinction.map((item, index) => (
+      <GemsFlex>
+        {gemsData.extinction.map((item) => (
           <GemsItemTooltip
-            key={`${item.skillName} ${item.name} ${index}`}
+            key={`${item.SkillName} ${item.GemName} ${item.Level}`}
             item={item}
           />
         ))}
       </GemsFlex>
       <GemsFlex>
-        {prominence.map((item, index) => (
+        {gemsData.prominence.map((item) => (
           <GemsItemTooltip
-            key={`${item.skillName} ${item.name} ${index}`}
+            key={`${item.SkillName} ${item.GemName} ${item.Level}`}
             item={item}
           />
         ))}
-      </GemsFlex> */}
+      </GemsFlex>
     </ContentWrap>
   );
 };

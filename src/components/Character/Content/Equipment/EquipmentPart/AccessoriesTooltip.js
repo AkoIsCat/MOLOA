@@ -50,20 +50,6 @@ const AccessoriesTooltip = ({ item }) => {
     <StoneTooltip item={item} />
   ) : (
     <BraceletTooltip item={item} />
-    // <AccessoriesTooltipWrap>
-    //   <div className="vitalityWrap">
-    //     {/* {item.TooltipValue.breceletEffect.map((items, index) =>
-    //       !items.name ? (
-    //         <div key={index}>{items}</div>
-    //       ) : (
-    //         <div className="elixirWrap" key={index}>
-    //           <div>{items.name}</div>
-    //           <div>{items.effect}</div>
-    //         </div>
-    //       )
-    //     )} */}
-    //   </div>
-    // </AccessoriesTooltipWrap>
   );
 };
 

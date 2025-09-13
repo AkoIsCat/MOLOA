@@ -4,32 +4,31 @@ import styled from 'styled-components';
 const GemsItemTooltip = ({ item }) => {
   const [showTooltip, setShowTooltip] = useState(false);
 
-  const dividedSkillShame = item.skillShame
-    .split('<BR>')
-    .map((item) => item.trim())
-    .filter((item) => item);
+  // 보석 효과
+  const gemsEffect = item.GemEffect.split('<BR>')
+    .map((i) => i.trim())
+    .filter((d) => d.length > 1);
 
   return (
-    <GemsItemWrap grade={item.grade}>
+    <GemsItemWrap grade={item.Grade}>
       {showTooltip && (
         <div className="tooltip">
-          <p className="itemName">{item.name}</p>
-          <p className="skillName">{item.skillName}</p>
-          {dividedSkillShame.map((item) => (
-            <p key={item} className="skillShame">
-              {item}
+          <p className="itemName">{item.GemName}</p>
+          <p className="skillName">{item.SkillName}</p>
+          {gemsEffect.map((d) => (
+            <p key={`${item.SkillName} ${d}`} className="skillShame">
+              {d}
             </p>
           ))}
-          {item.attackPower && <p className="skillShame">{item.attackPower}</p>}
         </div>
       )}
       <ImageBoxColor
-        exist={item.grade}
+        exist={item.Grade}
         style={{ borderRadius: '10px 10px 0 0' }}
       >
         <img
-          src={item.icon}
-          alt="멸화"
+          src={item.Icon}
+          alt="보석"
           onMouseEnter={() => setShowTooltip(true)}
           onMouseLeave={() => setShowTooltip(false)}
         />
@@ -38,7 +37,7 @@ const GemsItemTooltip = ({ item }) => {
         onMouseEnter={() => setShowTooltip(true)}
         onMouseLeave={() => setShowTooltip(false)}
       >
-        {item.level}
+        {item.Level}
       </p>
     </GemsItemWrap>
   );

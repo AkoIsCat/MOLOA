@@ -5,6 +5,10 @@ import AccessoriesTooltip from './AccessoriesTooltip';
 import StoneDetail from './StoneDetail';
 
 const AccessoriesDetail = ({ accessories, stone, bracelet }) => {
+  if (!accessories) {
+    return;
+  }
+
   const FullData = [...accessories, stone, bracelet]; // 악세, 스톤, 팔찌를 모두 합친 데이터
 
   const AccessoriesBox = ({ item }) => {
@@ -18,7 +22,7 @@ const AccessoriesDetail = ({ accessories, stone, bracelet }) => {
           {showTooltip && (
             <AccessoriesTooltip item={item} quality={item.qualityValue} />
           )}
-          {accessories !== undefined && (
+          {
             <Wrap>
               <ImageBox>
                 <ImageBoxColor exist={item.Grade}>
@@ -81,7 +85,7 @@ const AccessoriesDetail = ({ accessories, stone, bracelet }) => {
                 </div>
               )}
             </Wrap>
-          )}
+          }
           {accessories === undefined && <div></div>}
         </div>
       </>

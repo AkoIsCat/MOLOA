@@ -7,6 +7,10 @@ export const StoneSummary = (data) => {
   const stoneData = data.filter((item) => item.Type === '어빌리티 스톤');
   const tooltip = parseTooltips(stoneData)[0];
 
+  if (stoneData.length === 0) {
+    return null;
+  }
+
   const itemTitle = getItemTitle(tooltip);
   const itemPartBox = getItemPartBox(tooltip);
   const indentStringGroup = getIndentStringGroups(tooltip);

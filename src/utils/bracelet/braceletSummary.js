@@ -6,6 +6,10 @@ export const braceletSummary = (data) => {
   const braceletData = data.filter((item) => item.Type === '팔찌');
   const tooltip = parseTooltips(braceletData)[0];
 
+  if (braceletData.length === 0) {
+    return null;
+  }
+
   const itemTitle = getItemTitle(tooltip);
   const ItemPartBox = getItemPartBox(tooltip);
 

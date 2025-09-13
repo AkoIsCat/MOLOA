@@ -261,24 +261,24 @@ const EquipmentTooltipWrap = styled.div`
   }
 `;
 
-const EffectNameColorBox = styled.div`
-  width: 80%;
-  margin: 0 auto;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 10px;
-  color: ${(props) => props.color === 0 && '#e4b021'};
+// const EffectNameColorBox = styled.div`
+//   width: 80%;
+//   margin: 0 auto;
+//   display: flex;
+//   flex-direction: column;
+//   align-items: center;
+//   padding: 10px;
+//   color: ${(props) => props.color === 0 && '#e4b021'};
 
-  div {
-    width: auto;
-    display: flex;
-    flex-direction: column;
-    margin: 0 auto;
-    padding: 5px 0px;
-    text-align: center;
-  }
-`;
+//   div {
+//     width: auto;
+//     display: flex;
+//     flex-direction: column;
+//     margin: 0 auto;
+//     padding: 5px 0px;
+//     text-align: center;
+//   }
+// `;
 
 const QualityText = styled.div`
   color: ${(props) =>

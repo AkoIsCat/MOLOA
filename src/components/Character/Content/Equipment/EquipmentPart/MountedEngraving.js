@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import Transcendence_icon from '../../../../../asset/icon/transcendence_icon.png';
 
 const MountedEngraving = ({ elixirTotalLevel, transcendenceTotal }) => {
+  // console.log(transcendenceTotal);
   return (
     <MountWrap>
       <EffectTotal>
@@ -17,16 +18,20 @@ const MountedEngraving = ({ elixirTotalLevel, transcendenceTotal }) => {
       </EffectTotal>
       {/*초월 합계*/}
       <EffectTotal>
-        <img
-          src={Transcendence_icon}
-          alt="초월 아이콘"
-          width={17}
-          height={20}
-        />
-        <div className="transcendence">초월 합계</div>
-        <div className="activeExlixir">
-          {transcendenceTotal.split('총')[1].replace(/개$/, '')}
-        </div>
+        {transcendenceTotal && (
+          <>
+            <img
+              src={Transcendence_icon}
+              alt="초월 아이콘"
+              width={17}
+              height={20}
+            />
+            <div className="transcendence">초월 합계</div>
+            <div className="activeExlixir">
+              {transcendenceTotal.split('총')[1].replace(/개$/, '')}
+            </div>
+          </>
+        )}
       </EffectTotal>
     </MountWrap>
   );

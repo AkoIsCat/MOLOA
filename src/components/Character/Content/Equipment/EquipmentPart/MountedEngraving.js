@@ -39,58 +39,58 @@ const MountedEngraving = ({ elixirTotalLevel, transcendenceTotal }) => {
 
 export default MountedEngraving;
 
-const MountedEngravingBox = styled.div`
-  display: flex;
-  align-items: center;
-  width: auto;
+// const MountedEngravingBox = styled.div`
+//   display: flex;
+//   align-items: center;
+//   width: auto;
 
-  @media ${(props) => props.theme.mobile} {
-    margin: 10px 0;
-  }
+//   @media ${(props) => props.theme.mobile} {
+//     margin: 10px 0;
+//   }
 
-  img {
-    border-radius: 50%;
-    width: 50px;
-    height: 50px;
-    object-fit: cover;
-    margin-right: 5px;
-  }
+//   img {
+//     border-radius: 50%;
+//     width: 50px;
+//     height: 50px;
+//     object-fit: cover;
+//     margin-right: 5px;
+//   }
 
-  div {
-    width: 98px;
-    margin: 0 15px 0 0;
-    display: flex;
-    flex-direction: column;
+//   div {
+//     width: 98px;
+//     margin: 0 15px 0 0;
+//     display: flex;
+//     flex-direction: column;
 
-    p {
-      font-size: 15px;
-      margin: 0 0px 5px 5px;
-      font-family: 'Nanum Gothic';
-      color: #fff;
-    }
+//     p {
+//       font-size: 15px;
+//       margin: 0 0px 5px 5px;
+//       font-family: 'Nanum Gothic';
+//       color: #fff;
+//     }
 
-    @media ${(props) => props.theme.mobile} {
-      .name {
-        font-size: 13px;
-      }
-    }
+//     @media ${(props) => props.theme.mobile} {
+//       .name {
+//         font-size: 13px;
+//       }
+//     }
 
-    .name {
-      width: 100px;
-      margin: 5px;
-      color: ${(props) =>
-        props.grade === '+12'
-          ? '#fe9600'
-          : props.grade === ' +9'
-          ? '#9e24ca'
-          : props.grade === ' +6'
-          ? '#113d5d'
-          : props.grade === ' +3'
-          ? '#46812d'
-          : ''};
-    }
-  }
-`;
+//     .name {
+//       width: 100px;
+//       margin: 5px;
+//       color: ${(props) =>
+//         props.grade === '+12'
+//           ? '#fe9600'
+//           : props.grade === ' +9'
+//           ? '#9e24ca'
+//           : props.grade === ' +6'
+//           ? '#113d5d'
+//           : props.grade === ' +3'
+//           ? '#46812d'
+//           : ''};
+//     }
+//   }
+// `;
 
 const MountWrap = styled.div`
   min-width: 200px;
@@ -133,42 +133,42 @@ const EffectTotal = styled.div`
   }
 `;
 
-const ArkPassive = styled.div`
-  display: flex;
-  flex-flow: column;
-  margin: 0;
-  font-size: 16px;
-  color: #7053c3;
+// const ArkPassive = styled.div`
+//   display: flex;
+//   flex-flow: column;
+//   margin: 0;
+//   font-size: 16px;
+//   color: #7053c3;
 
-  .title {
-    margin-left: 20px;
-    align-items: center;
+//   .title {
+//     margin-left: 20px;
+//     align-items: center;
 
-    div {
-      margin-top: 8px;
-      font-weight: bold;
-    }
-  }
+//     div {
+//       margin-top: 8px;
+//       font-weight: bold;
+//     }
+//   }
 
-  img {
-    width: 40px;
-    height: 40px;
-    margin: 0 10px;
-  }
-`;
+//   img {
+//     width: 40px;
+//     height: 40px;
+//     margin: 0 10px;
+//   }
+// `;
 
-const ArkPassivePoint = styled.div`
-  display: flex;
-  margin: 0 10px;
-  font-size: 18px;
+// const ArkPassivePoint = styled.div`
+//   display: flex;
+//   margin: 0 10px;
+//   font-size: 18px;
 
-  .point_type {
-    margin: 0px 3px;
-    color: ${(props) =>
-      props.name === '진화'
-        ? '#F1D594'
-        : props.name === '깨달음'
-        ? '#83E9FF'
-        : '#C2EA55'};
-  }
-`;
+//   .point_type {
+//     margin: 0px 3px;
+//     color: ${(props) =>
+//       props.name === '진화'
+//         ? '#F1D594'
+//         : props.name === '깨달음'
+//         ? '#83E9FF'
+//         : '#C2EA55'};
+//   }
+// `;

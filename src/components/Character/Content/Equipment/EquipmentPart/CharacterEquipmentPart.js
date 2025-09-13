@@ -38,11 +38,11 @@ const CharacterEquipmentPart = ({ equipment, engraving, arkpassive }) => {
   const stone = useMemo(() => StoneSummary(equipment), [equipment]);
   const bracelet = useMemo(() => braceletSummary(equipment), [equipment]);
 
-  console.log('equipment', equipment);
-  console.log('equipmentData', equipmentData);
-  console.log('accessoriesData', accessories);
-  console.log('stone', stone);
-  console.log('bracelet', bracelet);
+  // console.log('equipment', equipment);
+  // console.log('equipmentData', equipmentData);
+  // console.log('accessoriesData', accessories);
+  // console.log('stone', stone);
+  // console.log('bracelet', bracelet);
 
   if (engraving === null) {
     return null;
@@ -86,17 +86,19 @@ const CharacterEquipmentPart = ({ equipment, engraving, arkpassive }) => {
   // 팔찌 티어 (어빌리티 스톤과 동일) "ItemTitle" o
   // 팔찌 효과 "ItemPartBox" o
 
-  // 엘릭서, 초월 합계 함수 새로 작성하기
-
-  // todo
-  // 보석
-  // 트포, 스킬탭 트포 레벨
+  // 보석 o
   // 보유 캐릭터 o
   // 아이템 레벨, 전투력 o
+  
+  // todo
+  // 엘릭서, 초월 합계 함수 새로 작성하기
+  // 트포, 스킬탭 트포 레벨
   // 아크그리드
   // 전 레벨대 아크패시브 적용 이후 접속한 적이 없는 캐릭터는 안내 문구 or 아무것도 안보여주기
   // 발키리 추가
   // 랭킹 버그 수정
+  // 앜패 모바일 해상도 ui 수정
+  // 보유 캐릭터 탭 전투력 추가
   // 고칠거 개많고..
 
   return (
@@ -105,7 +107,7 @@ const CharacterEquipmentPart = ({ equipment, engraving, arkpassive }) => {
         <EquipmentWrap>
           <FlexWrap>
             <EquipmentInner>
-              <EquipmentDetail equipment={equipmentData} />
+              {equipmentData && <EquipmentDetail equipment={equipmentData} />}
               {/* <MountedEngraving
                 mountedEngraving={mountedEngraving}
                 mountedEngravingItem={mountedEngravingItem}
@@ -120,7 +122,12 @@ const CharacterEquipmentPart = ({ equipment, engraving, arkpassive }) => {
               /> */}
               <MountedEngraving
                 transcendenceTotal={
-                  equipmentData[0]?.IndentStrings[0]?.IdenStringGroup2
+                  equipmentData &&
+                  equipmentData[0]?.IndentStrings[0]?.IdenStringGroup2?.includes(
+                    '총'
+                  )
+                    ? equipmentData[0]?.IndentStrings[0]?.IdenStringGroup2
+                    : null
                 }
                 elixirTotalLevel
               />
@@ -150,6 +157,8 @@ const CharacterEquipmentPart = ({ equipment, engraving, arkpassive }) => {
                 <AccessoriesDetail
                   accessories={accessories}
                   equipment={equipment}
+                  stone={stone}
+                  bracelet={bracelet}
                 />
               </AccessoriesInner>
             </div>

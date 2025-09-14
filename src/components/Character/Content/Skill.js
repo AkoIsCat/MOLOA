@@ -66,7 +66,10 @@ const Skill = ({ combatSkills, profile, getGems }) => {
           <div className="tooltip">
             <p className="itemName">{item.GemName}</p>
             {gemsEffect.map((d) => (
-              <p key={`${item.SkillName} ${d}`} className="skillShame">
+              <p
+                key={`${item.SkillName} ${item.GemEffect} ${d}`}
+                className="skillShame"
+              >
                 {d}
               </p>
             ))}
@@ -114,7 +117,6 @@ const Skill = ({ combatSkills, profile, getGems }) => {
           />
           <div className="tripodNameAndLevel">
             <div className="tripodName">{items.Name}</div>
-            <div className="tripodLevel">Lv.{items.Level}</div>
           </div>
         </div>
       </div>
@@ -174,7 +176,7 @@ const Skill = ({ combatSkills, profile, getGems }) => {
                     {item.skillGems.map((items) => (
                       <GemsItem
                         item={items}
-                        key={`${items.GemName} ${items.SkillName}`}
+                        key={`${items.GemName} ${items.SkillName} ${items.GemEffect}`}
                       />
                     ))}
                   </div>
@@ -227,7 +229,7 @@ const Skill = ({ combatSkills, profile, getGems }) => {
                     {item.skillGems.map((items) => (
                       <GemsItem
                         item={items}
-                        key={`${items.GemName} ${items.SkillName}`}
+                        key={`${items.GemName} ${items.SkillName} ${items.GemEffect}`}
                       />
                     ))}
                   </div>

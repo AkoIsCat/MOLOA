@@ -42,6 +42,7 @@ import {
   WarriorFemale as 여전사,
   Breaker as 브레이커,
   Alchemist as 환수사,
+  Valkyrie as 발키리,
 } from '../../../asset/image/classImg'; // 직업 아이콘
 
 const CharacterList = ({
@@ -259,6 +260,8 @@ const CharacterProfile = styled.div`
         ? 브레이커
         : props.CharacterClass === '환수사'
         ? 환수사
+        : props.CharacterClass === '발키리'
+        ? 발키리
         : ''});
     background-size: contain;
     background-repeat: no-repeat;

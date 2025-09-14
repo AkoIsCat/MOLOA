@@ -6,6 +6,7 @@ import Destoyer from './destroyer.png';
 import BerserkerFemale from './berserker_female.png';
 import Warrior from './warrior.png';
 import WarriorFemale from './warrior_female.png';
+import Valkyrie from './holyknight_female_s.png';
 // 애니츠 아이콘
 import BattleMaster from './battle_master.png';
 import BattleMasterMale from './battle_master_male.png';
@@ -78,4 +79,5 @@ export {
   WeatherArtist,
   Breaker,
   Alchemist,
+  Valkyrie,
 };

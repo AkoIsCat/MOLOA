@@ -40,7 +40,7 @@ const Search = () => {
       try {
         // Arkpassive 데이터 요청
         const { data: arkpassiveData } = await refetch();
-        console.log('앜패', arkpassiveData);
+
         // 데이터가 받아와지면 처리
         if (arkpassiveData) {
           updateCharacter(

@@ -24,7 +24,7 @@ export const updateCharacter = async (
   // 캐릭터 정보 조회
   const profileData = await getProfile(name);
 
-  // 각인 조회
+  // 각인 조회s
   const engravingsData = await getEngravings(name);
 
   let engravingItem = []; // 각인을 담을 배열
@@ -60,7 +60,7 @@ export const updateCharacter = async (
     // 이미 등록된 닉네임인 경우 조회수를 업데이트
     const updatedData = {
       ...data,
-      level: profileData.ItemMaxLevel,
+      level: profileData.ItemAvgLevel,
       guild: profileData.GuildName,
       engravings: engravingItem,
       views: data.views + 1,
@@ -74,7 +74,7 @@ export const updateCharacter = async (
       name: name,
       views: 1,
       server: profileData.ServerName,
-      level: profileData.ItemMaxLevel,
+      level: profileData.ItemAvgLevel,
       class: profileData.CharacterClassName,
       engravings: engravingItem,
       guild: profileData.GuildName,

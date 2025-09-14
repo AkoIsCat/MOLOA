@@ -3,6 +3,10 @@ import { getItemPartBox } from './getItemPartBox';
 import { getItemTitle } from './getItemTitle';
 
 export const braceletSummary = (data) => {
+  if (data === null || data === undefined) {
+    return null;
+  }
+
   const braceletData = data.filter((item) => item.Type === '팔찌');
   const tooltip = parseTooltips(braceletData)[0];
 

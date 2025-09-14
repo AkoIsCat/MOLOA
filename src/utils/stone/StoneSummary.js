@@ -4,6 +4,10 @@ import { getItemPartBox } from './getItemPartBox';
 import { getIndentStringGroups } from './getIndentStringGroups';
 
 export const StoneSummary = (data) => {
+  if (data === undefined || data === null) {
+    return null;
+  }
+
   const stoneData = data.filter((item) => item.Type === '어빌리티 스톤');
   const tooltip = parseTooltips(stoneData)[0];
 

@@ -2,6 +2,11 @@ import { parseTooltips } from '../parseTooltips';
 import { mapAccessoriesPart } from './mapAccessoriesPart';
 
 export const accessoriesSummary = (data) => {
+  console.log('ac', data);
+  if (data === undefined || data === null) {
+    return null;
+  }
+
   const accessoriesList = data.filter(
     (item) =>
       item.Type === '목걸이' || item.Type === '귀걸이' || item.Type === '반지'

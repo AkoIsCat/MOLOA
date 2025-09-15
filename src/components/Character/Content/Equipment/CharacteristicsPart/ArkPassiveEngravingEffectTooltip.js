@@ -40,7 +40,7 @@ const ArkPassiveEngravingEffects = (item) => {
 export default ArkPassiveEngravingEffects;
 
 const EffectWrap = styled.div`
-  margin: 0 20px;
+  margin: 0 10px;
   display: flex;
   justify-content: space-between;
   position: relative;

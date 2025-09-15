@@ -49,8 +49,18 @@ const Search = () => {
             arkpassiveData.IsArkPassive,
             arkpassiveData.Effects
           );
-          navigate(`/character/${trimInput}`);
+          navigate(`/character/${trimInput}`, {
+            state: {
+              notActivated: false,
+            },
+          });
           setSearchInput('');
+        } else {
+          navigate(`character/${trimInput}`, {
+            state: {
+              notActivated: true,
+            },
+          });
         }
       } catch (error) {
         console.error('Failed to fetch arkpassive data:', error);

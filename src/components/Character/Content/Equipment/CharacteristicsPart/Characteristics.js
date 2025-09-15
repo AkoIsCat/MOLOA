@@ -103,32 +103,34 @@ const Characteristics = ({ combatSkills, profile, engraving, arkpassive }) => {
         </TriportAndCharacteristicsWrap>
       </ContentWrap>
       <ContentWrap characteristics="true" style={{ flexDirection: 'column' }}>
-        <NameAndLevelWrap>
-          <CharacteristicsBox>각인</CharacteristicsBox>
-          <div className="nameAndLevelWrap">
+        <div style={{ padding: '10px' }}>
+          <div style={{ margin: '10px 0' }}>
+            <CharacteristicsBox>각인</CharacteristicsBox>
+            <div className="nameAndLevelWrap">
+              {!arkpassive?.IsArkPassive &&
+                engravingEffectList &&
+                engravingEffectList.map((item) => (
+                  <div key={item.name}>{item.level}</div>
+                ))}
+            </div>
+          </div>
+          <EffectListWrap>
+            {arkpassive?.IsArkPassive &&
+              engraving?.ArkPassiveEffects.map((item) => (
+                <ArkPassiveEngravingEffects item={item} key={item.Name} />
+              ))}
             {!arkpassive?.IsArkPassive &&
               engravingEffectList &&
               engravingEffectList.map((item) => (
-                <div key={item.name}>{item.level}</div>
+                <EngravingEffectTooltip item={item} key={item.name} />
               ))}
-          </div>
-        </NameAndLevelWrap>
-        <EffectListWrap>
-          {arkpassive?.IsArkPassive &&
-            engraving?.ArkPassiveEffects.map((item) => (
-              <ArkPassiveEngravingEffects item={item} key={item.Name} />
-            ))}
-          {!arkpassive?.IsArkPassive &&
-            engravingEffectList &&
-            engravingEffectList.map((item) => (
-              <EngravingEffectTooltip item={item} key={item.name} />
-            ))}
-        </EffectListWrap>
+          </EffectListWrap>
+        </div>
       </ContentWrap>
       <ContentWrap characteristics="true">
         <div style={{ padding: '20px 0 0 0' }}>
           <CharacteristicsBox style={{ margin: '0 0 15px 15px' }}>
-            트라이포드
+            아크그리드
           </CharacteristicsBox>
           <SkillWrap>
             {deleteNotUsedTripodList.map((item) => (
@@ -151,6 +153,9 @@ const Characteristics = ({ combatSkills, profile, engraving, arkpassive }) => {
               </div>
             ))}
           </SkillWrap>
+          <CharacteristicsBox style={{ margin: '0 0 15px 15px' }}>
+            아크그리드
+          </CharacteristicsBox>
         </div>
       </ContentWrap>
     </ContentWrapWrap>
@@ -276,7 +281,7 @@ const NameAndLevelWrap = styled.div`
   }
 
   @media ${(props) => props.theme.mobile} {
-    width: 50%;
+    // width: 50%;
     margin: 10px;
     padding: 0;
   }

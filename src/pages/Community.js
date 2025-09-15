@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import { getPosts } from '../api/Posts/PostAxios';
-import { useQuery } from 'react-query';
+import { useQuery } from '@tanstack/react-query';
 
 import Background from '../components/UI/BackBox';
 import Header from '../components/Header/Header';
@@ -26,16 +26,14 @@ const Coummunity = () => {
     }
   };
 
-  const { data: postsList, isLoading: postsListisLoading } = useQuery(
-    'postsList',
-    () => getPosts(),
-    {
-      enabled: toggle,
-      staleTime: 0,
-      refetchOnWindowFocus: false,
-      select: (data) => data.sort((a, b) => b.post_id - a.post_id),
-    }
-  );
+  const { data: postsList, isLoading: postsListisLoading } = useQuery({
+    queryKey: 'postsList',
+    queryFn: () => getPosts(),
+    enabled: toggle,
+    staleTime: 0,
+    refetchOnWindowFocus: false,
+    select: (data) => data.sort((a, b) => b.post_id - a.post_id),
+  });
 
   return (
     <Background>

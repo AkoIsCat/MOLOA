@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { useNavigate, useParams } from 'react-router-dom';
-import { useQuery } from 'react-query';
+import { useQuery } from '@tanstack/react-query';
 import {
   getDetailPosts,
   removePosts,
@@ -25,7 +25,9 @@ const PostsDetail = () => {
     data: postDetail,
     isLoading: postDetailIsLoading,
     refetch: postRefetch,
-  } = useQuery(['posts-detail', id], () => getDetailPosts({ postId: id }), {
+  } = useQuery({
+    queryKey: ['posts-detail', id],
+    queryFn: () => getDetailPosts({ postId: id }),
     refetchOnWindowFocus: false,
   });
 
@@ -33,7 +35,9 @@ const PostsDetail = () => {
     data: commentList,
     isLoading: commentListIsLoading,
     refetch: commentRefetch,
-  } = useQuery(['comment', id], () => getComments(id), {
+  } = useQuery({
+    queryKey: ['comment', id],
+    queryFn: () => getComments(id),
     refetchOnWindowFocus: false,
     select: (data) => data.sort((a, b) => a.comment_id - b.comment_id),
   });

@@ -120,7 +120,6 @@ const Character = () => {
     return () => clearInterval(interval);
   }, [dataUpdatedAt]);
 
-
   const selectMenuHandler = (index) => {
     setCurrentTab(index);
   };
@@ -130,7 +129,7 @@ const Character = () => {
       setCurrentGems(data);
     }, 0);
   }, []);
-  console.log('update');
+
   const onClickUpdateBtn = () => {
     setTimer(0);
     setCurrentTab(0);

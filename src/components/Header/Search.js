@@ -6,7 +6,7 @@ import { useGetLostArkData } from '../../hooks/useGetLostArkData';
 import { updateCharacter } from '../../utils/updateCharacter';
 import { getArkpassive } from '../../api/LostArk/LostarkAxios';
 import { NavLink } from 'react-router-dom';
-import { useQuery } from 'react-query';
+import { useQuery } from '@tanstack/react-query';
 
 import { BsSearch } from 'react-icons/bs';
 
@@ -16,15 +16,13 @@ const Search = () => {
 
   const navigate = useNavigate();
 
-  const { data: jobEngravings } = useQuery(
-    'jobEngravings',
-    () => getFirebaseData('JobEngraving'),
-    {
-      select: (data) => Object.values(data),
-      refetchOnWindowFocus: false,
-      staleTime: Infinity,
-    }
-  );
+  const { data: jobEngravings } = useQuery({
+    queryKey: ['jobEngravings'],
+    queryFn: () => getFirebaseData('JobEngraving'),
+    select: (data) => Object.values(data),
+    refetchOnWindowFocus: false,
+    staleTime: Infinity,
+  });
 
   const { refetch } = useGetLostArkData(
     'arkpassive',

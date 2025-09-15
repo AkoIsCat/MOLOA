@@ -13,7 +13,7 @@ import ModifyPosts from './pages/ModifyPosts';
 
 import React from 'react';
 import { Route, Routes, redirect } from 'react-router-dom';
-import { QueryClient, QueryClientProvider } from 'react-query';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 function App() {
   const queryClient = new QueryClient();

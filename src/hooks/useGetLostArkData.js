@@ -1,4 +1,4 @@
-import { useQuery } from 'react-query';
+import { useQuery } from '@tanstack/react-query';
 
 export const useGetLostArkData = (
   queryKey,
@@ -8,16 +8,14 @@ export const useGetLostArkData = (
   selectFn,
   enabled = !!id
 ) => {
-  const { data, isLoading, refetch, dataUpdatedAt } = useQuery(
-    [`${queryKey}`, id],
-    () => queryFn(id),
-    {
-      enabled,
-      refetchOnWindowFocus: false,
-      staleTime: staleTimeValue,
-      select: (data) => (selectFn ? selectFn(data) : data),
-    }
-  );
+  const { data, isLoading, refetch, dataUpdatedAt } = useQuery({
+    queryKey: [`${queryKey}`, id],
+    queryFn: () => queryFn(id),
+    enabled,
+    refetchOnWindowFocus: false,
+    staleTime: staleTimeValue,
+    select: (data) => (selectFn ? selectFn(data) : data),
+  });
 
   return { data, isLoading, refetch, dataUpdatedAt };
 };
@@ -28,15 +26,13 @@ export const useGetLostArkDataNotId = (
   staleTimeValue,
   selectFn
 ) => {
-  const { data, isLoading, refetch, dataUpdatedAt } = useQuery(
-    [`${queryKey}`],
-    () => queryFn(),
-    {
-      refetchOnWindowFocus: false,
-      staleTime: staleTimeValue,
-      select: (data) => (selectFn ? selectFn(data) : data),
-    }
-  );
+  const { data, isLoading, refetch, dataUpdatedAt } = useQuery({
+    queryKey: [`${queryKey}`],
+    queryFn: () => queryFn(),
+    refetchOnWindowFocus: false,
+    staleTime: staleTimeValue,
+    select: (data) => (selectFn ? selectFn(data) : data),
+  });
 
   return { data, isLoading, refetch, dataUpdatedAt };
 };

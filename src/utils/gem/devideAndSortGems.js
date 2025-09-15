@@ -1,5 +1,4 @@
 export function devideAndSortGems(gems) {
-  console.log(gems);
   const extinction = [];
   const prominence = [];
   for (let i = 0; i < gems.length; i++) {

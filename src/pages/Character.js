@@ -102,7 +102,6 @@ const Character = () => {
   } = useGetLostArkData('arkpassive', id, getArkpassive, Infinity);
 
   useEffect(() => {
-    console.log(dataUpdatedAt, 'effect');
     if (!dataUpdatedAt) {
       setTimer(0);
       return;
@@ -286,7 +285,7 @@ const Character = () => {
                     {timer < 60 ? `${timer}분 전` : `${~~(timer / 60)}시간 전`}
                   </TimerMessage>
                   <UpdateButton
-                    // disabled={timer >= 5 ? false : true}
+                    disabled={timer >= 5 ? false : true}
                     onClick={onClickUpdateBtn}
                   >
                     갱신하기

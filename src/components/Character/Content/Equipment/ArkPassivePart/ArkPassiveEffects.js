@@ -1,6 +1,20 @@
 import styled from 'styled-components';
+import { useMediaQuery } from 'react-responsive';
 
 const ArkPassiveEffects = ({ arkpassive }) => {
+  const isPc = useMediaQuery({
+    query: '(min-width:1024px)',
+  });
+  const isTablet = useMediaQuery({
+    query: '(min-width:768px) and (max-width:1023px)',
+  });
+  const isMobile = useMediaQuery({
+    query: '(max-width:767px)',
+  });
+
+  const mobileScreen = isMobile;
+  const fullScreen = isPc || isTablet;
+
   function extractionArkPassive(arkPassiveData) {
     const evolution = [];
     const enlightenment = [];
@@ -26,7 +40,7 @@ const ArkPassiveEffects = ({ arkpassive }) => {
     <div>
       <ContentWrap>
         <CharacteristicsBox>아크패시브</CharacteristicsBox>
-        <EffectsBox>
+        <EffectsBox fullScreen={fullScreen} mobileScreen={mobileScreen}>
           <ItemBox>
             <ItemTitle type="진화">진화</ItemTitle>
             <Item>
@@ -89,18 +103,29 @@ const CharacteristicsBox = styled.div`
   font-family: 'Nanum Gothic';
   color: #fff;
   margin-left: 10px;
+
+  @media ${(props) => props.theme.mobile} {
+    width: 90%;
+    margin: 10px;
+    padding: 0;
+  }
 `;
 
 const EffectsBox = styled.div`
   display: flex;
   margin-left: 10px;
+  flex-direction: ${(props) => (props.fullScreen ? 'row' : 'column')};
+  align-items: ${(props) => (props.fullScreen ? 'left' : 'center')};
 `;
 
 const ItemBox = styled.div`
   min-width: 240px;
+  display: ${(props) => (props.fullScreen ? '' : 'flex')};
+  flex-direction: ${(props) => (props.fullScreen ? 'row' : 'column')};
+  align-items: ${(props) => (props.fullScreen ? 'left' : 'center')};
 `;
 
-const ItemTitle = styled.div`\
+const ItemTitle = styled.div`
   display: flex;
   margin: 10px 5px;
   justify-content: center;

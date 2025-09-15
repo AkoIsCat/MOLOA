@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { useState, useCallback, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useLocation } from 'react-router-dom';
 import Loading from '../components/UI/Loading';
 import {
   getCharacterExist,
@@ -34,6 +34,9 @@ const Character = () => {
   const [timer, setTimer] = useState();
 
   const { id } = useParams();
+
+  const location = useLocation();
+  const notActivatedCharacter = location?.state?.notActivated ?? false;
 
   const {
     data: holdingCharacter,
@@ -99,15 +102,24 @@ const Character = () => {
   } = useGetLostArkData('arkpassive', id, getArkpassive, Infinity);
 
   useEffect(() => {
-    // 컴포넌트가 렌더링 될 때마다 업데이트
-    // 데이터가 업데이트 됐었던 시점을 기준으로 함
-    setTimer(
-      dataUpdatedAt !== 0
-        ? ~~((new Date().getTime() - dataUpdatedAt) / (60 * 1000))
-        : 0
-    );
-    setCurrentTab(0);
+    console.log(dataUpdatedAt, 'effect');
+    if (!dataUpdatedAt) {
+      setTimer(0);
+      return;
+    }
+
+    // mount or dataUpdatedAt 변경될 때만 interval 생성
+    const tick = () => {
+      const minutes = ~~((Date.now() - dataUpdatedAt) / (60 * 1000));
+      setTimer(minutes);
+    };
+
+    tick(); // 초기 한 번 실행
+    const interval = setInterval(tick, 60 * 1000);
+
+    return () => clearInterval(interval);
   }, [dataUpdatedAt]);
+
 
   const selectMenuHandler = (index) => {
     setCurrentTab(index);
@@ -118,9 +130,10 @@ const Character = () => {
       setCurrentGems(data);
     }, 0);
   }, []);
-
+  console.log('update');
   const onClickUpdateBtn = () => {
     setTimer(0);
+    setCurrentTab(0);
     refetchHoldingCharacter();
     refetchAvartars();
     refetchCards();
@@ -129,8 +142,8 @@ const Character = () => {
     refetchEquipment();
     refetchGems();
     refetchProfile();
-    refetchSkills();
     refetchArkpassive();
+    refetchSkills();
   };
 
   const navMenu = [
@@ -214,7 +227,13 @@ const Character = () => {
             입니다.
           </Message>
         )}
-        {isExist && !characterIsLoading && (
+        {notActivatedCharacter && (
+          <Message>
+            모험가 님의 계정이 정지된 상태이거나 시즌3 업데이트 이후 접속하지
+            않으셨습니다.
+          </Message>
+        )}
+        {isExist && !notActivatedCharacter && !characterIsLoading && (
           <ContentBox>
             <Aside
               collectibles={collectibles}
@@ -268,7 +287,7 @@ const Character = () => {
                     {timer < 60 ? `${timer}분 전` : `${~~(timer / 60)}시간 전`}
                   </TimerMessage>
                   <UpdateButton
-                    disabled={timer >= 5 ? false : true}
+                    // disabled={timer >= 5 ? false : true}
                     onClick={onClickUpdateBtn}
                   >
                     갱신하기
@@ -363,7 +382,7 @@ const Navigation = styled.nav`
 
   @media ${(props) => props.theme.mobile} {
     width: 93%;
-    margin-left: 10px;
+    margin: 0 10px;
   }
 `;
 
@@ -414,6 +433,10 @@ const InnerSection = styled.div`
 const UpdateBox = styled.div`
   display: flex;
   align-items: center;
+
+  @media ${(props) => props.theme.mobile} {
+    flex-direction: column;
+  }
 `;
 
 const TimerMessage = styled.p`
@@ -421,6 +444,10 @@ const TimerMessage = styled.p`
   margin: 0 10px;
   color: #f1ffff;
   font-size: 13px;
+
+  @media ${(props) => props.theme.mobile} {
+    margin-top: 15px;
+  }
 `;
 
 const UpdateButton = styled.button`
@@ -437,6 +464,11 @@ const UpdateButton = styled.button`
   &:disabled {
     background: #292e33;
     color: black;
+  }
+
+  @media ${(props) => props.theme.mobile} {
+    margin-right: 0;
+    margin: 10px 15px;
   }
 `;
 

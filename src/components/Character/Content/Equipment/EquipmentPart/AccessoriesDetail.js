@@ -8,8 +8,7 @@ const AccessoriesDetail = ({ accessories, stone, bracelet }) => {
   if (!accessories) {
     return;
   }
-
-  const FullData = [...accessories, stone, bracelet]; // 악세, 스톤, 팔찌를 모두 합친 데이터
+  const FullData = [...accessories, stone, bracelet].filter(Boolean); // 악세, 스톤, 팔찌를 모두 합친 데이터
 
   const AccessoriesBox = ({ item }) => {
     const [showTooltip, setShowTooltip] = useState(false);

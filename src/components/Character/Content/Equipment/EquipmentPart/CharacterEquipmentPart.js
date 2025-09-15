@@ -28,6 +28,7 @@ const CharacterEquipmentPart = ({ equipment, engraving, arkpassive }) => {
     () => (equipment ? sortEquipment(equipment) : undefined),
     [equipment]
   );
+
   // 장비 필요 데이터 가공
   const equipmentData = useMemo(
     () => equipmentSummary(sortedEquipment),
@@ -89,16 +90,15 @@ const CharacterEquipmentPart = ({ equipment, engraving, arkpassive }) => {
   // 보석 o
   // 보유 캐릭터 o
   // 아이템 레벨, 전투력 o
-  
+  // 트포 o
+  // 발키리 추가 o
+  // 랭킹 버그 수정 o
+  // 전 레벨대 아크패시브 적용 이후 접속한 적이 없는 캐릭터는 안내 문구 or 아무것도 안보여주기 o
+  // 앜패 모바일 해상도 ui 수정 o
+
   // todo
   // 엘릭서, 초월 합계 함수 새로 작성하기
-  // 트포, 스킬탭 트포 레벨
   // 아크그리드
-  // 전 레벨대 아크패시브 적용 이후 접속한 적이 없는 캐릭터는 안내 문구 or 아무것도 안보여주기
-  // 발키리 추가
-  // 랭킹 버그 수정
-  // 앜패 모바일 해상도 ui 수정
-  // 보유 캐릭터 탭 전투력 추가
   // 고칠거 개많고..
 
   return (

@@ -70,11 +70,17 @@ const EffectWrap = styled.div`
     background-color: rgb(41, 46, 51);
     border-radius: 10px;
     top: 50%;
-    left: -95%;
-    transform: translate(-50%, -50%);
+    left: 50%;
+    transform: translate(0, -50%);
+    margin-left: 12px;
 
     @media ${(props) => props.theme.mobile} {
       left: 53%;
+      top: 100%;
+      transform: translate(-50%, 0);
+      left: 53%;
+      margin-top: 5px;
+      z-index: 9999;
     }
     margin: 0;
     padding: 10px;

@@ -62,12 +62,13 @@ const EffectWrap = styled.div`
     background-color: rgb(41, 46, 51);
     border-radius: 10px;
     top: 50%;
-    left: -95%;
+    left: 0%;
     transform: translate(-50%, -50%);
 
     @media ${(props) => props.theme.mobile} {
       left: 53%;
     }
+
     margin: 0;
     padding: 10px;
     color: #c1c1c1;

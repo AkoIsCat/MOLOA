@@ -4,10 +4,11 @@ import React from 'react';
 import EngravingEffectTooltip from './EngravingEffectTooltip';
 import ArkPassiveEngravingEffects from './ArkPassiveEngravingEffectTooltip';
 
-const Characteristics = ({ combatSkills, profile, engraving, arkpassive }) => {
+const Characteristics = ({ profile, engraving, arkpassive }) => {
   if (profile === null || profile === undefined) {
     return <ContentWrap />;
   }
+
   // 특성
   function extractingCharacteristics(stats) {
     const combat = [];
@@ -40,37 +41,11 @@ const Characteristics = ({ combatSkills, profile, engraving, arkpassive }) => {
     return engravingsList;
   }
 
-  // 트라이포드
-  function extractingSkillsOfLevel4OrHigher(skills) {
-    const skillsOfLevel4OrHigher = [];
-
-    for (let key in skills) {
-      if (skills[key].Level >= 4) {
-        skillsOfLevel4OrHigher.push(skills[key]);
-      }
-    }
-    return skillsOfLevel4OrHigher;
-  }
-
-  function deleteNotUsedTripods(usingSkills) {
-    const deleteNotUsedTripodList = usingSkills;
-    for (let key in usingSkills) {
-      for (let keys in usingSkills[key].Tripods) {
-        if (usingSkills[key].Tripods[keys]?.IsSelected === false) {
-          delete deleteNotUsedTripodList[key].Tripods[keys];
-        }
-      }
-    }
-    return deleteNotUsedTripodList;
-  }
-
   const [combatCharacteristics, basicCharacteristics] =
     extractingCharacteristics(profile.Stats);
 
   const engravingEffectList =
     engraving !== null && extractingEngravingList(engraving.Effects);
-  const usingSkills = extractingSkillsOfLevel4OrHigher(combatSkills);
-  const deleteNotUsedTripodList = deleteNotUsedTripods(usingSkills);
 
   return (
     <ContentWrapWrap
@@ -127,37 +102,6 @@ const Characteristics = ({ combatSkills, profile, engraving, arkpassive }) => {
           </EffectListWrap>
         </div>
       </ContentWrap>
-      <ContentWrap characteristics="true">
-        <div style={{ padding: '20px 0 0 0' }}>
-          <CharacteristicsBox style={{ margin: '0 0 15px 15px' }}>
-            아크그리드
-          </CharacteristicsBox>
-          <SkillWrap>
-            {deleteNotUsedTripodList.map((item) => (
-              <div className="skillWrap" key={item.Name}>
-                <div className="skillName">{item.Name}</div>
-                <TripodWrap>
-                  {item.Tripods.map(
-                    (tripodItem) =>
-                      tripodItem && (
-                        <SkillLevel
-                          key={`${item.Name} ${tripodItem.Tier} ${tripodItem.Level}`}
-                          className={`${tripodItem.Tier} skillLevel`}
-                          tier={tripodItem.Tier}
-                        >
-                          {tripodItem.Level}
-                        </SkillLevel>
-                      )
-                  )}
-                </TripodWrap>
-              </div>
-            ))}
-          </SkillWrap>
-          <CharacteristicsBox style={{ margin: '0 0 15px 15px' }}>
-            아크그리드
-          </CharacteristicsBox>
-        </div>
-      </ContentWrap>
     </ContentWrapWrap>
   );
 };
@@ -165,7 +109,7 @@ const Characteristics = ({ combatSkills, profile, engraving, arkpassive }) => {
 export default Characteristics;
 
 const ContentWrap = styled.div`
-  width: ${(props) => (props.characteristics ? '32%' : '100%')};
+  width: ${(props) => (props.characteristics ? '48.5%' : '100%')};
   display: flex;
   justify-content: center;
   background: #181c1e;
@@ -222,6 +166,7 @@ const CombatWrap = styled.div`
   .combatItemWrap {
     width: 50%;
     display: flex;
+    justify-content: space-between;
 
     .type {
       width: 50px;
@@ -236,6 +181,7 @@ const CombatWrap = styled.div`
       width: 35px;
       margin: 5px 0;
       text-align: right;
+      margin-right: 30px;
     }
   }
 `;
@@ -263,82 +209,11 @@ const BasicWrap = styled.div`
   }
 `;
 
-const NameAndLevelWrap = styled.div`
-  display: flex;
-  width: 100%;
-  justify-content: space-around;
-  align-items: center;
-  margin: 15px 3px;
-
-  .nameAndLevelWrap {
-    display: flex;
-    color: #fff;
-    font-family: 'Nanum Gothic';
-  }
-
-  .arkPassiveEffects {
-    display: flex;
-  }
-
-  @media ${(props) => props.theme.mobile} {
-    // width: 50%;
-    margin: 10px;
-    padding: 0;
-  }
-`;
-
 const EffectListWrap = styled.div`
   display: flex;
   min-height: 265px;
   flex-direction: column;
   justify-content: space-between;
-`;
-
-const SkillWrap = styled.div`
-  display: flex;
-  flex-direction: column;
-  backgruond: pink;
-  margin: 5px 0;
-  width: 100%;
-
-  @media ${(props) => props.theme.mobile} {
-    width: 100%;
-    margin: 10px 0;
-    padding: 0;
-  }
-
-  .skillWrap {
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-    margin: 1px 0;
-
-    @media ${(props) => props.theme.mobile} {
-      margin: 10px 0;
-    }
-  }
-
-  .skillName {
-    width: 120px;
-    font-family: 'Nanum Gothic';
-    color: #fff;
-    font-size: 16px;
-    margin: 0 10px;
-    padding-left: 10px;
-  }
-`;
-
-const TripodWrap = styled.div`
-  display: flex;
-  margin-right: 5px;
-`;
-
-const SkillLevel = styled.div`
-  font-size: 20px;
-  margin: 0 5px;
-  padding-right: 10px;
-  color: ${(props) =>
-    props.tier === 0 ? '#00b5ff' : props.tier === 1 ? '#91fe02' : '#fe9600'};
 `;
 
 const ContentWrapWrap = styled.div`

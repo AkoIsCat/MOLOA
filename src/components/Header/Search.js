@@ -54,7 +54,7 @@ const Search = () => {
           });
           setSearchInput('');
         } else {
-          navigate(`character/${trimInput}`, {
+          navigate(`/character/${trimInput}`, {
             state: {
               notActivated: true,
             },

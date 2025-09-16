@@ -7,6 +7,7 @@ import ArkPassiveEffectsComponent from './Equipment/ArkPassivePart/ArkPassiveEff
 
 import React from 'react';
 import styled from 'styled-components';
+import ArkgridEffects from './Equipment/ArkgridPart/ArkgridEffects';
 
 const Equipment = ({
   equipment,
@@ -23,6 +24,7 @@ const Equipment = ({
   cardsIsLoading,
   getGems,
   arkpassive,
+  arkgrid,
 }) => {
   const getGemsList = (data) => {
     getGems(data);
@@ -52,11 +54,13 @@ const Equipment = ({
           profile={profile}
           engraving={engraving}
           arkpassive={arkpassive}
+          arkgrid={arkgrid}
         />
       )}
       {arkpassive?.IsArkPassive && (
         <ArkPassiveEffectsComponent arkpassive={arkpassive} />
       )}
+      {arkgrid?.Effects && <ArkgridEffects arkgrid={arkgrid} />}
       {cardsIsLoading ? <Loading /> : <CharacterCards cards={cards} />}
     </Wrap>
   );

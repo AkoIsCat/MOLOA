@@ -41,7 +41,7 @@ const ArkPassiveEffects = ({ arkpassive }) => {
       <ContentWrap>
         <CharacteristicsBox>아크패시브</CharacteristicsBox>
         <EffectsBox fullScreen={fullScreen} mobileScreen={mobileScreen}>
-          <ItemBox>
+          <ItemBox fullScreen={fullScreen} mobileScreen={mobileScreen}>
             <ItemTitle type="진화">진화</ItemTitle>
             <Item>
               {arkPassiveEffectList.enlightenment.map((item, index) => (
@@ -52,7 +52,7 @@ const ArkPassiveEffects = ({ arkpassive }) => {
               ))}
             </Item>
           </ItemBox>
-          <ItemBox>
+          <ItemBox fullScreen={fullScreen} mobileScreen={mobileScreen}>
             <ItemTitle type="깨달음">깨달음</ItemTitle>
             <Item>
               {arkPassiveEffectList.evolution.map((item, index) => (
@@ -63,7 +63,7 @@ const ArkPassiveEffects = ({ arkpassive }) => {
               ))}
             </Item>
           </ItemBox>
-          <ItemBox>
+          <ItemBox fullScreen={fullScreen} mobileScreen={mobileScreen}>
             <ItemTitle type="도약">도약</ItemTitle>
             <Item>
               {arkPassiveEffectList.leap.map((item, index) => (

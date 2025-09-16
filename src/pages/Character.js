@@ -13,6 +13,7 @@ import {
   getGems,
   getEquipment,
   getArkpassive,
+  getArkgrid,
 } from '../api/LostArk/LostarkAxios';
 import { useGetLostArkData } from '../hooks/useGetLostArkData';
 
@@ -101,6 +102,12 @@ const Character = () => {
     refetch: refetchArkpassive,
   } = useGetLostArkData('arkpassive', id, getArkpassive, Infinity);
 
+  const {
+    data: arkgrid,
+    isLoading: arkgridIsLoading,
+    refetch: refetchArkgrid,
+  } = useGetLostArkData('arkgrid', id, getArkgrid, Infinity);
+
   useEffect(() => {
     if (!dataUpdatedAt) {
       setTimer(0);
@@ -142,6 +149,7 @@ const Character = () => {
     refetchProfile();
     refetchArkpassive();
     refetchSkills();
+    refetchArkgrid();
   };
 
   const navMenu = [
@@ -165,6 +173,8 @@ const Character = () => {
           getGems={getTransGems}
           arkpassive={arkpassive}
           arkpassiveIsLoading={arkpassiveIsLoading}
+          arkgrid={arkgrid}
+          arkgridIsLoading={arkgridIsLoading}
         />
       ),
     },

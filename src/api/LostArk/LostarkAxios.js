@@ -151,3 +151,12 @@ export const getArkpassive = async (id) => {
     throw new Error('Arkpassive error');
   }
 };
+
+export const getArkgrid = async (id) => {
+  try {
+    const { data } = await LostArkCharacterInstance().get(`/${id}/arkgrid`);
+    return data;
+  } catch (error) {
+    throw new Error('Arkgrid error');
+  }
+};

@@ -12,7 +12,7 @@ import { accessoriesSummary } from '../../../../../utils/accessories/accessories
 import { StoneSummary } from '../../../../../utils/stone/StoneSummary';
 import { braceletSummary } from '../../../../../utils/bracelet/braceletSummary';
 
-const CharacterEquipmentPart = ({ equipment, engraving, arkpassive }) => {
+const CharacterEquipmentPart = ({ equipment, engraving }) => {
   const isPc = useMediaQuery({
     query: '(min-width:1024px)',
   });

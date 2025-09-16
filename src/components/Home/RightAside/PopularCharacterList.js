@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import { updateCharacter } from '../../../utils/updateCharacter';
-import { useGetLostArkData } from '../../../hooks/useGetLostArkData';
+// import { useGetLostArkData } from '../../../hooks/useGetLostArkData';
 
 import InnerContent from '../../UI/InnerContent';
 import CommonContentBox from '../../UI/CommonContentBox';

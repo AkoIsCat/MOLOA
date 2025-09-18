@@ -1,7 +1,9 @@
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import { updateCharacter } from '../../../utils/updateCharacter';
+import { useQueryClient } from '@tanstack/react-query';
 // import { useGetLostArkData } from '../../../hooks/useGetLostArkData';
+import { getArkpassive } from '../../../api/LostArk/LostarkAxios';
 
 import InnerContent from '../../UI/InnerContent';
 import CommonContentBox from '../../UI/CommonContentBox';
@@ -12,16 +14,30 @@ const PopularCharacterList = ({
   popularCharacter,
   jobEngravings,
 }) => {
+  const queryClient = useQueryClient();
   const navigate = useNavigate();
 
-  // const { refetch } = useGetLostArkData(
-  //   'arkpassive',
-  //   items.name,
-  //   getArkpassive,
-  //   false
-  // );
+  const handleClick = async (name) => {
+    try {
+      // 클릭한 캐릭터의 arkpassive 데이터 가져오기
+      const arkpassiveData = await queryClient.fetchQuery({
+        queryKey: ['arkpassive'],
+        queryFn: () => getArkpassive(name),
+      });
+      // 데이터 업데이트
+      updateCharacter(
+        name,
+        jobEngravings,
+        arkpassiveData.IsArkPassive,
+        arkpassiveData.Effects
+      );
 
-  // 아크패시브 데이터도 같이 전달해주기
+      // 페이지 이동
+      navigate(`/character/${name}`);
+    } catch (error) {
+      console.error('arkpassive 불러오기 실패:', error);
+    }
+  };
 
   const popularCharacterList =
     popularCharacter &&
@@ -40,10 +56,7 @@ const PopularCharacterList = ({
             </PopularText>
             <PopularText
               style={{ fontSize: '15px', color: '#fff' }}
-              onClick={() => {
-                navigate(`/character/${items.name}`);
-                updateCharacter(items.name, jobEngravings);
-              }}
+              onClick={() => handleClick(items.name)}
             >
               {items.name}
             </PopularText>
@@ -57,10 +70,7 @@ const PopularCharacterList = ({
             </PopularText>
             <PopularText
               style={{ fontSize: '15px', color: '#fff' }}
-              onClick={() => {
-                navigate(`/character/${items.name}`);
-                updateCharacter(items.name, jobEngravings);
-              }}
+              onClick={() => handleClick(items.name)}
             >
               {items.name}
             </PopularText>

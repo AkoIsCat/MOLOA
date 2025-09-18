@@ -4,7 +4,7 @@ import removeTag from '../removeTag';
 // IdenStringGroups 데이터 추출(초월, 엘릭서)
 export const getIdenStringGroups = (data) => {
   const findData = findByType(data, 'IndentStringGroup');
-  console.log(findData);
+
   const extractDesiredValues = findData
     .map((n) => {
       const content = n?.value?.Element_000;

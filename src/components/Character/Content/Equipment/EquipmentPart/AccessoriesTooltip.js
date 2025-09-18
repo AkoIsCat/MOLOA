@@ -91,7 +91,6 @@ export const AccessoriesTooltipWrap = styled.div`
     padding: 10px;
     border-bottom: 1px solid #c1c1c1;
     div {
-      // width: auto;
       margin: 0 auto;
       padding: 5px 0px;
 

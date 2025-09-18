@@ -200,32 +200,6 @@ const PercentBar = styled.div`\
   }
 `;
 
-// const EffectTotal = styled.div`
-//   font-family: 'Nanum Gothic';
-//   color: #fff;
-//   display: flex;
-//   align-items: center;
-//   margin: 10px 0;
-
-//   img {
-//     margin: 5px 0 0 0;
-// }
-//   }
-
-//   .elixir {
-//     margin: 0 5px;
-//     color: rgb(254, 150, 0);
-//   }
-
-//   .activeExlixir {
-//     margin: 0 5px;
-//     color: #ffd200;
-//   }
-
-//   .transcendence {
-//     margin: 0 5px;
-//   }
-// `;
 
 const AcEffectBox = styled.div`
   display: flex;

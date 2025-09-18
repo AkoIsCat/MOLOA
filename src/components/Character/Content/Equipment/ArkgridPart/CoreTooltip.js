@@ -3,7 +3,7 @@ import { useState } from 'react';
 
 const CoreTooltip = ({ item }) => {
   const [showTooltip, setShowTooltip] = useState(false);
-
+  console.log(item);
   return (
     <EffectWrap>
       {showTooltip && (
@@ -15,11 +15,11 @@ const CoreTooltip = ({ item }) => {
       <div key={item.CoreName} className="arkgrid">
         <img src={item.Icon} alt="코어 이미지" width={40} height={40} />
         <div
-          className="skillName"
+          className="skillName coreName"
           onMouseOver={() => setShowTooltip(true)}
           onMouseLeave={() => setShowTooltip(false)}
         >
-          {item.CoreName}
+          <CoreName Grade={item.Grade}>{item.CoreName}</CoreName>
         </div>
       </div>
     </EffectWrap>
@@ -75,4 +75,15 @@ const EffectWrap = styled.div`
     color: #c1c1c1;
     font-family: 'Nanum Gothic';
   }
+`;
+
+const CoreName = styled.div`
+  color: ${(props) =>
+    props.Grade === '전설'
+      ? '#FFC310'
+      : props.Grade === '영웅'
+      ? '#ce43fc'
+      : props.Grade === '유물'
+      ? '#ff8740'
+      : '#fff'};
 `;

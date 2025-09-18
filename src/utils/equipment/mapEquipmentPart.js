@@ -2,6 +2,7 @@ import { getPartBoxes } from './getPartBoxes';
 import { getIdenStringGroups } from './getIdenStringGroups';
 import { getSingleTextBox } from './getSingleTextBox';
 import { getItemTitle } from './getItemTitle';
+import { getElixirTotal } from './getElixirTotal';
 
 export const mapEquipmentPart = (fullData, idx, tooltips) => {
   const data = tooltips[idx] || {};
@@ -9,6 +10,7 @@ export const mapEquipmentPart = (fullData, idx, tooltips) => {
   const IndentStringBoxes = getIdenStringGroups(data);
   const SingleTextBox = getSingleTextBox(data);
   const ItemTitleBox = getItemTitle(data);
+  const ElixirTotal = getElixirTotal(data);
 
   return {
     Icon: fullData.Icon,
@@ -19,5 +21,6 @@ export const mapEquipmentPart = (fullData, idx, tooltips) => {
     IndentStrings: IndentStringBoxes,
     SingleText: SingleTextBox,
     ItemTitle: ItemTitleBox,
+    ElixirTotal: isNaN(ElixirTotal) ? null : ElixirTotal,
   };
 };

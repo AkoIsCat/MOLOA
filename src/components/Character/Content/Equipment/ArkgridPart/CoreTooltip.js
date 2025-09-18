@@ -3,7 +3,7 @@ import { useState } from 'react';
 
 const CoreTooltip = ({ item }) => {
   const [showTooltip, setShowTooltip] = useState(false);
-  console.log(item);
+
   return (
     <EffectWrap>
       {showTooltip && (

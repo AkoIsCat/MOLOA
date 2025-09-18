@@ -11,11 +11,11 @@ export const getElixirTotal = (data) => {
   });
 
   const elixirLevel1 = +elixirElements[0]?.contentStr
-    .split('Lv.')[1]
-    .slice(0, 1);
+    ?.split('Lv.')[1]
+    ?.slice(0, 1);
   const elixirLevel2 = +elixirElements[1]?.contentStr
-    .split('Lv.')[1]
-    .slice(0, 1);
+    ?.split('Lv.')[1]
+    ?.slice(0, 1);
 
   const total = elixirLevel1 + elixirLevel2;
   return total;

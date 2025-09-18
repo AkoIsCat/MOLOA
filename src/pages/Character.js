@@ -113,6 +113,7 @@ const Character = () => {
       setTimer(0);
       return;
     }
+    setCurrentTab(0);
 
     // mount or dataUpdatedAt 변경될 때만 interval 생성
     const tick = () => {
@@ -138,7 +139,6 @@ const Character = () => {
 
   const onClickUpdateBtn = () => {
     setTimer(0);
-    setCurrentTab(0);
     refetchHoldingCharacter();
     refetchAvartars();
     refetchCards();

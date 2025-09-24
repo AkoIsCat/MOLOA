@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const BASE_URL = 'https://developer-lostark.game.onstove.com';
-const key = process.env.REACT_APP_LOSTARK_KEY;
+const key = import.meta.env.VITE_LOSTARK_KEY;
 
 const createAxiosInstance = (url) => {
   const instance = axios.create({

@@ -1,3 +1,8 @@
+[build]
+  command = "npm run build"
+  publish = "dist"
+  environment = { NODE_VERSION = "20" } # Netlify가 Node 20으로 빌드하도록 지정
+
 [[redirects]]
   from = "/api/*"
   to = "https://developer-lostark.game.onstove.com:splat"

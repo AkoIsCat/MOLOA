@@ -6,6 +6,7 @@ import ContentWrap from '../../UI/ContentWrap';
 import {
   collect1,
   collect10,
+  collect11,
   collect2,
   collect3,
   collect4,
@@ -30,6 +31,7 @@ const Collect = ({ collectibles, profile }) => {
     collect8,
     collect9,
     collect10,
+    collect11,
   ];
 
   const collectItemList = [];
@@ -81,12 +83,15 @@ const Collect = ({ collectibles, profile }) => {
     {
       content: '크림스네일의 해도',
     },
+    {
+      content: '누크만의 환영석',
+    },
   ];
 
   const selectCollectMenuHandler = (index) => {
     setCurrentCollectTab(index);
   };
-
+  console.log(collectibles, collectNav);
   return (
     <div style={{ width: '95%' }}>
       <ContentWrap>

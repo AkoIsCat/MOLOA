@@ -41,6 +41,8 @@ import Aga from './yinyangshi.png';
 import WeatherArtist from './weather_artist.png';
 import SpecialList from './specialist.png';
 import Alchemist from './alchemist.png';
+// 오리지널 아이콘
+import DragonKnight from './dragon_knight.png';
 
 export {
   SpecialList,
@@ -80,4 +82,5 @@ export {
   Breaker,
   Alchemist,
   Valkyrie,
+  DragonKnight,
 };

@@ -43,6 +43,7 @@ import {
   Breaker as 브레이커,
   Alchemist as 환수사,
   Valkyrie as 발키리,
+  DragonKnight as 가디언나이트,
 } from '../../../asset/image/classImg'; // 직업 아이콘
 
 const CharacterList = ({
@@ -262,6 +263,8 @@ const CharacterProfile = styled.div`
         ? 환수사
         : props.CharacterClass === '발키리'
         ? 발키리
+        : props.CharacterClass === '가디언나이트'
+        ? 가디언나이트
         : ''});
     background-size: contain;
     background-repeat: no-repeat;

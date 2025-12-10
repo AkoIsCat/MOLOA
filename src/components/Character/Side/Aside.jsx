@@ -16,6 +16,7 @@ import collect7 from '../../../asset/icon/collect7.png';
 import collect8 from '../../../asset/icon/collect8.png';
 import collect9 from '../../../asset/icon/collect9.png';
 import collect10 from '../../../asset/icon/collect10.png';
+import { collect11 } from '../../../asset/icon';
 import Loading from '../../UI/Loading';
 
 const collectImg = [
@@ -29,6 +30,7 @@ const collectImg = [
   collect8,
   collect9,
   collect10,
+  collect11,
 ];
 
 const Aside = ({

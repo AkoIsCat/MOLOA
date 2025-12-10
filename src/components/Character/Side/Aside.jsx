@@ -18,6 +18,7 @@ import collect9 from '../../../asset/icon/collect9.png';
 import collect10 from '../../../asset/icon/collect10.png';
 import { collect11 } from '../../../asset/icon';
 import Loading from '../../UI/Loading';
+import removeTag from '../../../utils/removeTag';
 
 const collectImg = [
   collect1,
@@ -49,6 +50,11 @@ const Aside = ({
   const isMobile = useMediaQuery({
     query: '(max-width:767px)',
   });
+  console.log(
+    profile,
+    profile.Title.includes('img'),
+    removeTag(profile.Title, 'img')
+  );
 
   const infoItem = profile && (
     <CharacterInfo>
@@ -69,7 +75,13 @@ const Aside = ({
           </InfoItem>
           <InfoItem>
             <div>칭호</div>
-            <p>{profile.Title === null ? '-' : profile.Title}</p>
+            <p>
+              {profile.Title === null
+                ? '-'
+                : profile.Title.includes('img')
+                ? removeTag(profile.Title, 'img')
+                : profile.Title}
+            </p>
           </InfoItem>
           <InfoItem>
             <div>전투</div>

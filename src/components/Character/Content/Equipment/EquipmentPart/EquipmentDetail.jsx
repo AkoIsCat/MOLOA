@@ -30,15 +30,6 @@ const EquipmentDetail = ({ equipment }) => {
                 <span className="item">{item.ItemName}</span>
               </div>
               <PercentBar quality={item.ItemTitle.qualityValue}>
-                <span className="aR">
-                  <img src={transcendence} width={20} alt="초월 아이콘" />
-                  <div
-                    dangerouslySetInnerHTML={{
-                      __html:
-                        item.IndentStrings[0].Transcendence.split('</img>')[1],
-                    }}
-                  />
-                </span>
                 <p>{item.ItemTitle.qualityValue}</p>
                 <div>
                   <div></div>

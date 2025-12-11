@@ -50,11 +50,6 @@ const Aside = ({
   const isMobile = useMediaQuery({
     query: '(max-width:767px)',
   });
-  console.log(
-    profile,
-    profile.Title.includes('img'),
-    removeTag(profile.Title, 'img')
-  );
 
   const infoItem = profile && (
     <CharacterInfo>

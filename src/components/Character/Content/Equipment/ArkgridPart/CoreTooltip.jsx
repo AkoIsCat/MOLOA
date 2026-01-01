@@ -19,7 +19,10 @@ const CoreTooltip = ({ item }) => {
           onMouseOver={() => setShowTooltip(true)}
           onMouseLeave={() => setShowTooltip(false)}
         >
-          <CoreName Grade={item.Grade}>{item.CoreName}</CoreName>
+          <CoreWrap>
+            <CoreName Grade={item.Grade}>{item.CoreName}</CoreName>
+            <CoreName Grade={item.Grade}>{item.Point}P</CoreName>
+          </CoreWrap>
         </div>
       </div>
     </EffectWrap>
@@ -86,4 +89,9 @@ const CoreName = styled.div`
       : props.Grade === '유물'
       ? '#ff8740'
       : '#fff'};
+`;
+
+const CoreWrap = styled.div`
+  display: flex;
+  gap: 0.4rem;
 `;

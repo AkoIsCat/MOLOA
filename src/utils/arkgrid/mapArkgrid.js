@@ -14,5 +14,6 @@ export const mapArkgrid = (fullData, idx, tooltips) => {
     Icon: fullData.Icon,
     Grade: fullData.Grade,
     Effect: findData,
+    Point: fullData.Point,
   };
 };

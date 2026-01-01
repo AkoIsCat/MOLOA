@@ -99,6 +99,10 @@ const Aside = ({
             <p>{profile.PvpGradeName}</p>
           </InfoItem>
           <InfoItem>
+            <div>명예</div>
+            <p>{profile.HonorPoint}</p>
+          </InfoItem>
+          <InfoItem>
             <div>영지</div>
             <p>{profile.TownName === null ? '-' : profile.TownName}</p>
           </InfoItem>{' '}

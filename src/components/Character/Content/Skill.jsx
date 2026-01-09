@@ -14,7 +14,14 @@ const Skill = ({ combatSkills, profile, getGems }) => {
     );
   }
 
-  const gemsList = [...getGems.extinction, ...getGems.prominence];
+  const extinction = getGems.hasOwnProperty('extinction')
+    ? getGems.extinction
+    : [];
+  const prominence = getGems.hasOwnProperty('prominence')
+    ? getGems.prominence
+    : [];
+
+  const gemsList = [...extinction, ...prominence];
 
   const notNullRune = combatSkills.filter(
     (item) => item.Rune !== null || item.Level >= 2
@@ -52,6 +59,8 @@ const Skill = ({ combatSkills, profile, getGems }) => {
       skillGems,
     });
   }
+
+  // console.log(skillList);
 
   const GemsItem = ({ item }) => {
     const [showTooltip, setShowTooltip] = useState(false);
